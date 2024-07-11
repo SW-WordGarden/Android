@@ -8,7 +8,20 @@ import javax.inject.Inject
 class WordRepositoryImpl @Inject constructor(
     private val serverDataSource: ServerDataSource
 ) : WordRepository {
-    override suspend fun getWordList(): List<WordEntity>? {
+    override suspend fun insertLikedWord(word: WordEntity) {
         TODO("Not yet implemented")
     }
+
+    override suspend fun deleteLikedWord(wordId: String) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getLikedWordList(): List<WordEntity>? {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getWeeklyWordList(): List<WordEntity>? {
+        TODO("Not yet implemented")
+    }
+
 }

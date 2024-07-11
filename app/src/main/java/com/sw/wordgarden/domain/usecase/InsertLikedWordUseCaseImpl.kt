@@ -4,10 +4,10 @@ import com.sw.wordgarden.domain.entity.WordEntity
 import com.sw.wordgarden.domain.repository.WordRepository
 import javax.inject.Inject
 
-class GetWordListUseCaseImpl @Inject constructor(
+class InsertLikedWordUseCaseImpl @Inject constructor(
     private val wordRepository: WordRepository
-) : GetWordListUseCase {
-    override suspend fun invoke(): List<WordEntity>? {
+) : InsertLikedWordUseCase {
+    override suspend fun invoke(word: WordEntity) {
         TODO("Not yet implemented")
     }
 }

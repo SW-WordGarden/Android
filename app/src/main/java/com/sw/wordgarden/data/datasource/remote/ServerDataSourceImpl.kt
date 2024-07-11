@@ -40,7 +40,19 @@ class ServerDataSourceImpl @Inject constructor() : ServerDataSource {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getWordList(): List<WordDto>? {
+    override suspend fun insertLikedWord(word: WordDto) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun deleteLikedWord(wordId: String) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getLikedWordList(): List<WordDto>? {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getWeeklyWordList(): List<WordDto>? {
         TODO("Not yet implemented")
     }
 
@@ -64,7 +76,10 @@ class ServerDataSourceImpl @Inject constructor() : ServerDataSource {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getQuizListDoneByUserAndPeriod(startDate: Date, endDate: Date): List<QuizListDto>? {
+    override suspend fun getQuizListDoneByUserAndPeriod(
+        startDate: Date,
+        endDate: Date
+    ): List<QuizListDto>? {
         TODO("Not yet implemented")
     }
 

@@ -2,7 +2,6 @@ package com.sw.wordgarden.domain.usecase
 
 import com.sw.wordgarden.domain.entity.WordEntity
 
-interface GetWordListUseCase {
+interface GetWeeklyWordListUseCase {
     suspend operator fun invoke(): List<WordEntity>?
-
 }

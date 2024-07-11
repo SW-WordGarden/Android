@@ -20,7 +20,10 @@ interface ServerDataSource {
     suspend fun getFriendList(): List<UserDto>?
 
     //words
-    suspend fun getWordList(): List<WordDto>?
+    suspend fun insertLikedWord(word: WordDto)
+    suspend fun deleteLikedWord(wordId: String)
+    suspend fun getLikedWordList(): List<WordDto>?
+    suspend fun getWeeklyWordList(): List<WordDto>?
 
     //quizzes
     suspend fun insertQuizList(quizList: QuizListDto)

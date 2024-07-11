@@ -18,8 +18,8 @@ import com.sw.wordgarden.domain.usecase.GetTreeListUseCase
 import com.sw.wordgarden.domain.usecase.GetTreeListUseCaseImpl
 import com.sw.wordgarden.domain.usecase.GetUserInfoUseCase
 import com.sw.wordgarden.domain.usecase.GetUserInfoUseCaseImpl
-import com.sw.wordgarden.domain.usecase.GetWordListUseCase
-import com.sw.wordgarden.domain.usecase.GetWordListUseCaseImpl
+import com.sw.wordgarden.domain.usecase.GetWeeklyWordListUseCase
+import com.sw.wordgarden.domain.usecase.GetWeelkyWordListUseCaseImpl
 import com.sw.wordgarden.domain.usecase.InsertFriendUseCase
 import com.sw.wordgarden.domain.usecase.InsertFriendUseCaseImpl
 import com.sw.wordgarden.domain.usecase.InsertQuizListUseCase
@@ -100,8 +100,8 @@ abstract class UseCaseModule {
     @Binds
     @ViewModelScoped
     abstract fun bindGetWordListUseCase(
-        getWordListUseCaseImpl: GetWordListUseCaseImpl
-    ): GetWordListUseCase
+        getWordListUseCaseImpl: GetWeelkyWordListUseCaseImpl
+    ): GetWeeklyWordListUseCase
 
     @Binds
     @ViewModelScoped
