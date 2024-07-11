@@ -1,9 +1,13 @@
 package com.sw.wordgarden.data.repository
 
+import com.sw.wordgarden.data.datasource.remote.ServerDataSource
 import com.sw.wordgarden.domain.entity.UserEntity
 import com.sw.wordgarden.domain.repository.UserRepository
+import javax.inject.Inject
 
-class UserRepositoryImpl: UserRepository {
+class UserRepositoryImpl @Inject constructor(
+    private val serverDataSource: ServerDataSource
+) : UserRepository {
     override suspend fun insertUser(userDto: UserEntity) {
         TODO("Not yet implemented")
     }

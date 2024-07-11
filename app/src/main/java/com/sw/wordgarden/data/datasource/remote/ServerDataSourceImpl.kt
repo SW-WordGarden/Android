@@ -5,8 +5,9 @@ import com.sw.wordgarden.data.dto.TreeDto
 import com.sw.wordgarden.data.dto.UserDto
 import com.sw.wordgarden.data.dto.WordDto
 import java.util.Date
+import javax.inject.Inject
 
-class ServerDataSourceImpl: ServerDataSource {
+class ServerDataSourceImpl @Inject constructor() : ServerDataSource {
     override suspend fun insertUser(userDto: UserDto) {
         TODO("Not yet implemented")
     }

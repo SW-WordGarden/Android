@@ -1,10 +1,14 @@
 package com.sw.wordgarden.data.repository
 
+import com.sw.wordgarden.data.datasource.remote.ServerDataSource
 import com.sw.wordgarden.domain.entity.QuizListEntity
 import com.sw.wordgarden.domain.repository.QuizRepository
 import java.util.Date
+import javax.inject.Inject
 
-class QuizRepositoryImpl: QuizRepository {
+class QuizRepositoryImpl @Inject constructor(
+    private val serverDataSource: ServerDataSource
+) : QuizRepository {
     override suspend fun insertQuizList(quizList: QuizListEntity) {
         TODO("Not yet implemented")
     }
