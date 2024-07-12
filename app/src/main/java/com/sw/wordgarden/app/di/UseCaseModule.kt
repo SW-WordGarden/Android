@@ -8,6 +8,8 @@ import com.sw.wordgarden.domain.usecase.DeleteUserUseCase
 import com.sw.wordgarden.domain.usecase.DeleteUserUseCaseImpl
 import com.sw.wordgarden.domain.usecase.GetFriendListUseCase
 import com.sw.wordgarden.domain.usecase.GetFriendListUseCaseImpl
+import com.sw.wordgarden.domain.usecase.GetQuizListAllTypeUseCase
+import com.sw.wordgarden.domain.usecase.GetQuizListAllTypeUseCaseImpl
 import com.sw.wordgarden.domain.usecase.GetQuizListByTypeUseCase
 import com.sw.wordgarden.domain.usecase.GetQuizListByTypeUseCaseImpl
 import com.sw.wordgarden.domain.usecase.GetQuizListMadeByUserUseCase
@@ -28,8 +30,6 @@ import com.sw.wordgarden.domain.usecase.InsertUserUseCase
 import com.sw.wordgarden.domain.usecase.InsertUserUseCaseImpl
 import com.sw.wordgarden.domain.usecase.ReportFriendUseCase
 import com.sw.wordgarden.domain.usecase.ReportFriendUseCaseImpl
-import com.sw.wordgarden.domain.usecase.UpdateQuizListUseCase
-import com.sw.wordgarden.domain.usecase.UpdateQuizListUseCaseImpl
 import com.sw.wordgarden.domain.usecase.UpdateTreeUseCase
 import com.sw.wordgarden.domain.usecase.UpdateTreeUseCaseImpl
 import com.sw.wordgarden.domain.usecase.UpdateUserUseCase
@@ -46,7 +46,7 @@ abstract class UseCaseModule {
     @Binds
     @ViewModelScoped
     abstract fun bindDeleteFriendUseCase(
-    deleteFriendUseCaseImpl: DeleteFriendUseCaseImpl
+        deleteFriendUseCaseImpl: DeleteFriendUseCaseImpl
     ): DeleteFriendUseCase
 
     @Binds
@@ -72,6 +72,12 @@ abstract class UseCaseModule {
     abstract fun bindGetQuizeListDoneByUserAndPeriodUseCase(
         getQuizeListDoneByUserAndPeriodUseCaseImpl: GetQuizeListDoneByUserAndPeriodUseCaseImpl
     ): GetQuizeListDoneByUserAndPeriodUseCase
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindGetQuizListAllTypeUseCase(
+        getQuizListAllTypeUseCaseImpl: GetQuizListAllTypeUseCaseImpl
+    ): GetQuizListAllTypeUseCase
 
     @Binds
     @ViewModelScoped
@@ -126,12 +132,6 @@ abstract class UseCaseModule {
     abstract fun bindReportFriendUseCase(
         reportFriendUseCaseImpl: ReportFriendUseCaseImpl
     ): ReportFriendUseCase
-
-    @Binds
-    @ViewModelScoped
-    abstract fun bindUpdateQuizListUseCase(
-        updateQuizListUseCaseImpl: UpdateQuizListUseCaseImpl
-    ): UpdateQuizListUseCase
 
     @Binds
     @ViewModelScoped

@@ -17,11 +17,11 @@ class QuizRepositoryImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun updateQuizList(quizList: QuizListEntity) {
+    override suspend fun getQuizListByType(type: Boolean): QuizListEntity? {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getQuizListByType(type: Boolean): List<QuizListEntity>? {
+    override suspend fun getQuizListAllType(): QuizListEntity? {
         TODO("Not yet implemented")
     }
 

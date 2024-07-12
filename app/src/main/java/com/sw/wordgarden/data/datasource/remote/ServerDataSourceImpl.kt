@@ -64,11 +64,11 @@ class ServerDataSourceImpl @Inject constructor() : ServerDataSource {
         TODO("Not yet implemented")
     }
 
-    override suspend fun updateQuizList(quizList: QuizListDto) {
+    override suspend fun getQuizListByType(type: Boolean): QuizListDto? {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getQuizListByType(type: Boolean): List<QuizListDto>? {
+    override suspend fun getQuizListAllType(): QuizListDto? {
         TODO("Not yet implemented")
     }
 

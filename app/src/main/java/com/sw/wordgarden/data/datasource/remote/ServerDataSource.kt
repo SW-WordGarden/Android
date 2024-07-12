@@ -28,8 +28,8 @@ interface ServerDataSource {
     //quizzes
     suspend fun insertQuizList(quizList: QuizListDto)
     suspend fun deleteQuizList(quizListId: String)
-    suspend fun updateQuizList(quizList: QuizListDto)
-    suspend fun getQuizListByType(type: Boolean): List<QuizListDto>?
+    suspend fun getQuizListByType(type: Boolean): QuizListDto? //0: 4지선다, 1: OX 퀴즈 (default: 0)
+    suspend fun getQuizListAllType(): QuizListDto? //각 타입별 5개씩
     suspend fun getQuizListMadeByUser(): List<QuizListDto>?
     suspend fun getQuizListDoneByUserAndPeriod(startDate: Date, endDate: Date): List<QuizListDto>?
 

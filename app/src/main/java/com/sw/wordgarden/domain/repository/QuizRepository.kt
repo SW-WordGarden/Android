@@ -6,8 +6,8 @@ import java.util.Date
 interface QuizRepository {
     suspend fun insertQuizList(quizList: QuizListEntity)
     suspend fun deleteQuizList(quizListId: String)
-    suspend fun updateQuizList(quizList: QuizListEntity)
-    suspend fun getQuizListByType(type: Boolean): List<QuizListEntity>?
+    suspend fun getQuizListByType(type: Boolean): QuizListEntity?
+    suspend fun getQuizListAllType(): QuizListEntity?
     suspend fun getQuizListMadeByUser(): List<QuizListEntity>?
     suspend fun getQuizListDoneByUserAndPeriod(startDate: Date, endDate: Date): List<QuizListEntity>?
 }

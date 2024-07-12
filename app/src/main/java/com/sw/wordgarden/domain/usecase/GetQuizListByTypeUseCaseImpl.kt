@@ -7,7 +7,7 @@ import javax.inject.Inject
 class GetQuizListByTypeUseCaseImpl @Inject constructor(
     private val quizRepository: QuizRepository
 ) : GetQuizListByTypeUseCase {
-    override suspend fun invoke(type: Boolean): List<QuizListEntity>? {
+    override suspend fun invoke(type: Boolean): QuizListEntity? {
         TODO("Not yet implemented")
     }
 }
