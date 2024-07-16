@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">WordGarden</string>
+
+    <!-- mypage -->
+    <string name="mypage_title">마이페이지</string>
+    <string name="mypage_point_title">포인트</string>
+    <string name="mypage_rank_title">등수</string>
+    <string name="mypage_weekly_score_title">이번 주 퀴즈 성적</string>
 </resources>
