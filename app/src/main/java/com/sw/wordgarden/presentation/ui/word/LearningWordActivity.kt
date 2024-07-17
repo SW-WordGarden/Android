@@ -1,4 +1,4 @@
-package com.sw.wordgarden.presentation.ui.world
+package com.sw.wordgarden.presentation.ui.word
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
@@ -7,7 +7,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.sw.wordgarden.R
 
-class LearningWorldActivity : AppCompatActivity() {
+class LearningWordActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
