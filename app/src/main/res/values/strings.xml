@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">WordGarden</string>
+
+    <string name="quiz_title">퀴즈 게임</string>
+    <string name="quiz_support_name">님을 위한</string>
+    <string name="quiz_support_name2">맞춤 퀴즈가 준비되어있어요.</string>
+    <string name="quiz_support_btn">친구가 만든 퀴즈를 맞혀보세요!</string>
+    <string name="quiz_alone">혼자서 풀기</string>
+    <string name="quiz_friend">친구랑 풀기</string>
+    <string name="quiz_custom"><u>퀴즈 만들러 가기</u></string>
+
+    <string name="make_quiz_title">퀴즈 만들기</string>
+    <string name="make_quiz_input_name">퀴즈 이름을 작성해 주세요.</string>
+    <string name="make_quiz_question">문제</string>
+    <string name="make_quiz_answer">답</string>
 </resources>
