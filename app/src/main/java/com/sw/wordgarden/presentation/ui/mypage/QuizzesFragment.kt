@@ -5,14 +5,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.sw.wordgarden.R
+import com.sw.wordgarden.databinding.FragmentQuizzesBinding
 
 class QuizzesFragment : Fragment() {
+
+    private var _binding: FragmentQuizzesBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_quizzes, container, false)
+    ): View {
+        _binding = FragmentQuizzesBinding.inflate(inflater, container, false)
+        return binding.root
     }
 }

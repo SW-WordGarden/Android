@@ -20,4 +20,6 @@
     <string name="make_quiz_input_name">퀴즈 이름을 작성해 주세요.</string>
     <string name="make_quiz_question">문제</string>
     <string name="make_quiz_answer">답</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
