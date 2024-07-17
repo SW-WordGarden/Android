@@ -7,6 +7,7 @@
     <string name="mypage_rank_title">등수</string>
     <string name="mypage_weekly_score_title">이번 주 퀴즈 성적</string>
 
+    <!-- quiz -->
     <string name="quiz_title">퀴즈 게임</string>
     <string name="quiz_support_name">님을 위한</string>
     <string name="quiz_support_name2">맞춤 퀴즈가 준비되어있어요.</string>
