@@ -34,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/mypage_title"
-                android:textColor="#2A664D"
+                android:textColor="@color/green"
                 android:textSize="@dimen/text_caption"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_my_back"
                 app:layout_constraintEnd_toStartOf="@+id/iv_my_menu"
@@ -56,7 +56,7 @@
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_marginTop="@dimen/margin_small"
-            android:src="#2A664D"
+            android:src="@color/green"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cl_my_bar" />
