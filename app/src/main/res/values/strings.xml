@@ -1,6 +1,13 @@
 <resources>
     <string name="app_name">WordGarden</string>
 
+    <!-- mypage -->
+    <string name="mypage_title">마이페이지</string>
+    <string name="mypage_point_title">포인트</string>
+    <string name="mypage_rank_title">등수</string>
+    <string name="mypage_weekly_score_title">이번 주 퀴즈 성적</string>
+
+    <!-- quiz -->
     <string name="quiz_title">퀴즈 게임</string>
     <string name="quiz_support_name">님을 위한</string>
     <string name="quiz_support_name2">맞춤 퀴즈가 준비되어있어요.</string>
@@ -13,4 +20,6 @@
     <string name="make_quiz_input_name">퀴즈 이름을 작성해 주세요.</string>
     <string name="make_quiz_question">문제</string>
     <string name="make_quiz_answer">답</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
