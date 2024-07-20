@@ -1,6 +1,7 @@
 package com.sw.wordgarden.data.datasource.remote
 
 import com.sw.wordgarden.data.dto.QuizListDto
+import com.sw.wordgarden.data.dto.SignUpDto
 import com.sw.wordgarden.data.dto.TreeDto
 import com.sw.wordgarden.data.dto.UserDto
 import com.sw.wordgarden.data.dto.WordDto
@@ -8,10 +9,10 @@ import java.util.Date
 
 interface ServerDataSource {
     //user
-    suspend fun insertUser(userDto: UserDto)
+    suspend fun insertUser(signUpDto: SignUpDto)
     suspend fun deleteUser()
     suspend fun updateUser(userDto: UserDto)
-    suspend fun getUserInfo(): UserDto?
+    suspend fun getUserInfo(uid: String): UserDto?
 
     //friends
     suspend fun insertFriend(friendId: String)

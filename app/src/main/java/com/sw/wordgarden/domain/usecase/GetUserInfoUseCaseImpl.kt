@@ -7,7 +7,7 @@ import javax.inject.Inject
 class GetUserInfoUseCaseImpl @Inject constructor(
     private val userRepository: UserRepository
 ) : GetUserInfoUseCase {
-    override suspend fun invoke(): UserEntity? {
+    override suspend fun invoke(uid: String): UserEntity? {
         TODO("Not yet implemented")
     }
 }

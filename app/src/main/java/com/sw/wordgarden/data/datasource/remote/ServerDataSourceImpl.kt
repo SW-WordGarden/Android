@@ -1,6 +1,7 @@
 package com.sw.wordgarden.data.datasource.remote
 
 import com.sw.wordgarden.data.dto.QuizListDto
+import com.sw.wordgarden.data.dto.SignUpDto
 import com.sw.wordgarden.data.dto.TreeDto
 import com.sw.wordgarden.data.dto.UserDto
 import com.sw.wordgarden.data.dto.WordDto
@@ -8,7 +9,7 @@ import java.util.Date
 import javax.inject.Inject
 
 class ServerDataSourceImpl @Inject constructor() : ServerDataSource {
-    override suspend fun insertUser(userDto: UserDto) {
+    override suspend fun insertUser(signUpDto: SignUpDto) {
         TODO("Not yet implemented")
     }
 
@@ -20,7 +21,7 @@ class ServerDataSourceImpl @Inject constructor() : ServerDataSource {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getUserInfo(): UserDto? {
+    override suspend fun getUserInfo(uid: String): UserDto? {
         TODO("Not yet implemented")
     }
 
