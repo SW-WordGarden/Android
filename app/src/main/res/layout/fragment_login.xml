@@ -1,14 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cl_login_inner"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/light_kaki"
     tools:context=".presentation.ui.login.LoginFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_login_logo_upside"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="130dp"
+        android:src="@drawable/img_logo_upside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_login_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_extra_small"
+        android:src="@drawable/img_logo"
+        app:layout_constraintEnd_toEndOf="@+id/iv_login_logo_upside"
+        app:layout_constraintStart_toStartOf="@+id/iv_login_logo_upside"
+        app:layout_constraintTop_toBottomOf="@+id/iv_login_logo_upside" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_login_logo_downside"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_extra_small"
+        android:src="@drawable/img_logo_downside"
+        app:layout_constraintEnd_toEndOf="@+id/iv_login_logo_upside"
+        app:layout_constraintStart_toStartOf="@+id/iv_login_logo_upside"
+        app:layout_constraintTop_toBottomOf="@+id/iv_login_logo" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_large"
+        android:text="@string/login_start"
+        android:textSize="@dimen/text_caption"
+        app:layout_constraintBottom_toTopOf="@+id/ll_login_naver"
+        app:layout_constraintStart_toStartOf="@+id/ll_login_naver" />
+
+    <!--    <LinearLayout-->
+    <!--        android:id="@+id/ll_login_google"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="60dp"-->
+    <!--        android:layout_marginStart="@dimen/margin_larger"-->
+    <!--        android:layout_marginEnd="@dimen/margin_larger"-->
+    <!--        android:layout_marginBottom="@dimen/margin_large"-->
+    <!--        android:background="@drawable/bg_rectangle_white"-->
+    <!--        android:gravity="center_vertical"-->
+    <!--        android:padding="@dimen/margin_extra_small"-->
+    <!--        app:layout_constraintBottom_toTopOf="@+id/ll_login_naver"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintHorizontal_bias="0.0"-->
+    <!--        app:layout_constraintStart_toStartOf="parent">-->
+
+    <!--        <androidx.appcompat.widget.AppCompatImageView-->
+    <!--            android:id="@+id/iv_login_google"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:src="@drawable/img_google" />-->
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/tv_login_google"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:text="@string/login_google"-->
+    <!--            android:textSize="@dimen/text_text" />-->
+    <!--    </LinearLayout>-->
+
+    <LinearLayout
+        android:id="@+id/ll_login_naver"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="@dimen/margin_larger"
+        android:layout_marginEnd="@dimen/margin_larger"
+        android:layout_marginBottom="@dimen/margin_large"
+        android:background="@drawable/bg_rectangle_white"
+        android:gravity="center_vertical"
+        android:padding="@dimen/margin_extra_small"
+        app:layout_constraintBottom_toTopOf="@+id/ll_login_kakao"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_login_naver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/img_naver" />
+
+        <TextView
+            android:id="@+id/tv_login_naver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_naver"
+            android:textSize="@dimen/text_text" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_login_kakao"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="@dimen/margin_larger"
+        android:layout_marginEnd="@dimen/margin_larger"
+        android:layout_marginBottom="@dimen/margin_extra_larger"
+        android:background="@drawable/bg_rectangle_white"
+        android:gravity="center_vertical"
+        android:padding="@dimen/margin_extra_small"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_login_kakao"
+            android:paddingTop="@dimen/padding_extra_smaller_smaller"
+            android:paddingBottom="@dimen/padding_extra_smaller_smaller"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/img_kakao" />
+
+        <TextView
+            android:id="@+id/tv_login_kakao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_kakao"
+            android:textSize="@dimen/text_text" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
