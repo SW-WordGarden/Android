@@ -1,4 +1,4 @@
-package com.sw.wordgarden.Oauth
+package com.sw.wordgarden.app
 
 import android.content.ContentValues.TAG
 import android.os.Bundle

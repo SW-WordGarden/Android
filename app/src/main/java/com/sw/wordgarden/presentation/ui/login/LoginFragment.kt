@@ -25,7 +25,7 @@ import com.navercorp.nid.profile.data.NidProfileResponse
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentLoginBinding
 import com.sw.wordgarden.domain.entity.SignUpEntity
-import com.sw.wordgarden.presentation.model.DefaultEvent
+import com.sw.wordgarden.presentation.model.UserCheckEvent
 import com.sw.wordgarden.presentation.ui.login.OnBoardingFragment.Companion.LOGIN_TO_ONBOARDING_BUNDLE_KEY
 import com.sw.wordgarden.presentation.ui.login.OnBoardingFragment.Companion.LOGIN_TO_ONBOARDING_REQUEST_KEY
 import com.sw.wordgarden.presentation.ui.main.MainActivity
@@ -184,13 +184,11 @@ class LoginFragment : Fragment() {
         lifecycleScope.launch {
             viewmodel.checkEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
                 when (event) {
-                    is DefaultEvent.Failure -> {
-                        goOnboarding()
+                    is UserCheckEvent.Failure -> {
+                        ToastMaker.make(requireContext(), event.msg)
                     }
-
-                    DefaultEvent.Success -> {
-                        goMain()
-                    }
+                    is UserCheckEvent.NotFound -> { goOnboarding() }
+                    UserCheckEvent.Success -> { goMain() }
                 }
             }
         }
