@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.sw.wordgarden.databinding.FragmentWeeklyBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class WeeklyFragment : Fragment() {
 
     private var _binding: FragmentWeeklyBinding? = null
@@ -18,5 +20,10 @@ class WeeklyFragment : Fragment() {
     ): View {
         _binding = FragmentWeeklyBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

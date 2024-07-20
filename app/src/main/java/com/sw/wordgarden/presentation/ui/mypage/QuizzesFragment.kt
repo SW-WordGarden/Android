@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.sw.wordgarden.databinding.FragmentQuizzesBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class QuizzesFragment : Fragment() {
 
     private var _binding: FragmentQuizzesBinding? = null
@@ -18,5 +20,10 @@ class QuizzesFragment : Fragment() {
     ): View {
         _binding = FragmentQuizzesBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

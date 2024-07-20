@@ -7,7 +7,9 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.ActivityMypageBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MyPageActivity : AppCompatActivity() {
 
     private val binding: ActivityMypageBinding by lazy {

@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentMypageBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MypageFragment : Fragment() {
 
     private var _binding: FragmentMypageBinding? = null
@@ -54,5 +56,10 @@ class MypageFragment : Fragment() {
                 .addToBackStack(null)
                 .commit()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
