@@ -63,6 +63,13 @@ dependencies {
     // CircleImageView
     implementation(libs.circleimageview)
 
+    //네이버 로그인
+    implementation(libs.oauth)
+    implementation(libs.kotlinx.coroutines.android)
+
+    // 카카오 로그인
+    implementation(libs.v2.user)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
