@@ -5,12 +5,23 @@ import com.sw.wordgarden.data.dto.SignUpDto
 import com.sw.wordgarden.data.dto.TreeDto
 import com.sw.wordgarden.data.dto.UserDto
 import com.sw.wordgarden.data.dto.WordDto
+import retrofit2.HttpException
 import java.util.Date
 import javax.inject.Inject
 
-class ServerDataSourceImpl @Inject constructor() : ServerDataSource {
+class ServerDataSourceImpl @Inject constructor(
+    private val service: Service
+) : ServerDataSource {
     override suspend fun insertUser(signUpDto: SignUpDto) {
-        TODO("Not yet implemented")
+        try {
+            val response = service.insertUser(signUpDto)
+            if (!response.isSuccessful) {
+                throw HttpException(response)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            throw e
+        }
     }
 
     override suspend fun deleteUser() {
@@ -22,7 +33,17 @@ class ServerDataSourceImpl @Inject constructor() : ServerDataSource {
     }
 
     override suspend fun getUserInfo(uid: String): UserDto? {
-        TODO("Not yet implemented")
+        return try {
+            val response = service.getUserInfo(uid)
+            if (!response.isSuccessful) {
+                throw HttpException(response)
+            } else {
+                response.body()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
     }
 
     override suspend fun insertFriend(friendId: String) {

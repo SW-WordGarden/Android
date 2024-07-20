@@ -7,24 +7,35 @@
     tools:context=".presentation.ui.login.OnBoardingFragment">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tv_onboarding_nickname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginTop="160dp"
-        android:text="@string/login_input_nickname"
+        android:text="@string/onboarding_input_nickname"
         android:textSize="@dimen/text_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/et_onboarding_nickname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginTop="@dimen/margin_large"
         android:layout_marginEnd="50dp"
-        app:layout_constraintEnd_toEndOf="@+id/textView"
-        app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_onboarding_nickname" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_onboarding_next"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_extra_small"
+        android:layout_marginEnd="50dp"
+        android:text="@string/onboarding_next"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_onboarding_nickname" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

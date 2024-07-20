@@ -7,6 +7,7 @@ import com.sw.wordgarden.data.dto.UserDto
 import com.sw.wordgarden.data.dto.WordDto
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
 import java.util.Date
@@ -22,7 +23,7 @@ interface Service {
     //    @POST("login/login")
     suspend fun updateUser(@Body userDto: UserDto): Response<Unit>
 
-    @POST("login/user/{uid}")
+    @GET("login/user/{uid}")
     suspend fun getUserInfo(@Path("uid") uid: String): Response<UserDto>
 
     //friend

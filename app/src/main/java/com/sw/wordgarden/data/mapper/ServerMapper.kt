@@ -59,7 +59,7 @@ object ServerMapper {
         url = url
     )
 
-    fun SignUpDto.toEntity() = SignUpEntity(
+    fun SignUpEntity.toDto() = SignUpDto(
         uid = uid,
         nickname = nickname,
         provider = provider,
