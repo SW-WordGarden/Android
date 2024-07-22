@@ -64,6 +64,8 @@ dependencies {
     implementation(libs.okhttp)
     implementation(libs.okhttp.logging)
 
+    implementation(libs.androidx.datastore.preferences)
+
     // CircleImageView
     implementation(libs.circleimageview)
 
