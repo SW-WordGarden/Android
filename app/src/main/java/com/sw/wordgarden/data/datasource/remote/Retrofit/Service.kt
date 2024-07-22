@@ -1,4 +1,4 @@
-package com.sw.wordgarden.data.datasource.remote
+package com.sw.wordgarden.data.datasource.remote.Retrofit
 
 import com.sw.wordgarden.data.dto.QuizListDto
 import com.sw.wordgarden.data.dto.SignUpDto
