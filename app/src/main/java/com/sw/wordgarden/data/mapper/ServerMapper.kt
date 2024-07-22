@@ -2,12 +2,16 @@ package com.sw.wordgarden.data.mapper
 
 import com.sw.wordgarden.data.dto.QuizDto
 import com.sw.wordgarden.data.dto.QuizListDto
+import com.sw.wordgarden.data.dto.SignUpDto
 import com.sw.wordgarden.data.dto.TreeDto
 import com.sw.wordgarden.data.dto.UserDto
 import com.sw.wordgarden.data.dto.WordDto
 import com.sw.wordgarden.domain.entity.QuizEntity
 import com.sw.wordgarden.domain.entity.QuizListEntity
+import com.sw.wordgarden.domain.entity.SignUpEntity
 import com.sw.wordgarden.domain.entity.TreeEntity
+import com.sw.wordgarden.domain.entity.UserEntity
+import com.sw.wordgarden.domain.entity.WordEntity
 
 object ServerMapper {
     fun QuizDto.toEntity() = QuizEntity(
@@ -45,7 +49,7 @@ object ServerMapper {
         growth = growth
     )
 
-    fun UserDto.toEntity() = UserDto(
+    fun UserDto.toEntity() = UserEntity(
         uid = uid,
         point = point,
         rank = rank,
@@ -55,7 +59,13 @@ object ServerMapper {
         url = url
     )
 
-    fun WordDto.toEntity() = WordDto(
+    fun SignUpEntity.toDto() = SignUpDto(
+        uid = uid,
+        nickname = nickname,
+        provider = provider,
+    )
+
+    fun WordDto.toEntity() = WordEntity(
         id = id,
         title = title,
         description = description,

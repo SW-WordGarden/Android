@@ -1,30 +1,27 @@
 package com.sw.wordgarden.app.di
 
-import com.sw.wordgarden.BuildConfig
+import com.sw.wordgarden.data.datasource.remote.RetrofitClient
+import com.sw.wordgarden.data.datasource.remote.Service
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import okhttp3.logging.HttpLoggingInterceptor
-import javax.inject.Qualifier
+import retrofit2.Retrofit
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
-    private const val SERVER_URL = "https://"
-
-    @Qualifier
-    @Retention(AnnotationRetention.BINARY)
-    annotation class ServerInterceptorOkHttpClient
 
     @Provides
-    fun provideLoggingInterceptor(): HttpLoggingInterceptor {
-        return HttpLoggingInterceptor().apply {
-            level = if (BuildConfig.DEBUG) {
-                HttpLoggingInterceptor.Level.BODY
-            } else {
-                HttpLoggingInterceptor.Level.NONE
-            }
-        }
+    @Singleton
+    fun provideRetrofit(): Retrofit {
+        return RetrofitClient.instance
+    }
+
+    @Provides
+    @Singleton
+    fun provideApiService(retrofit: Retrofit): Service {
+        return retrofit.create(Service::class.java)
     }
 }

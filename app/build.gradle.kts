@@ -49,6 +49,10 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.activity.ktx)
+    implementation(libs.androidx.fragment.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.navigation.compose)
 
     //Hilt
     implementation(libs.hilt.android)
@@ -62,6 +66,13 @@ dependencies {
 
     // CircleImageView
     implementation(libs.circleimageview)
+
+    //네이버 로그인
+    implementation(libs.oauth)
+    implementation(libs.kotlinx.coroutines.android)
+
+    // 카카오 로그인
+    implementation(libs.v2.user)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
