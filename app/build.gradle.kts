@@ -74,6 +74,9 @@ dependencies {
     // 카카오 로그인
     implementation(libs.v2.user)
 
+    //Splash
+    implementation(libs.androidx.core.splashscreen)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
