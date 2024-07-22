@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">WordGarden</string>
 
+    <!-- uid -->
+    <string name="uid_msg_fail_check">내부 데이터 읽기에 실패했습니다.</string>
+
+
     <!-- login -->
     <string name="login_google">구글로 계속하기</string>
     <string name="login_naver">네이버로 계속하기</string>
@@ -9,10 +13,12 @@
     <string name="login_msg_fail_check">회원 정보 조회에 실패했습니다.</string>
     <string name="login_msg_result_null">회원 정보가 없습니다.</string>
     <string name="login_msg_not_user">회원 가입이 필요합니다.</string>
+    <string name="login_msg_can_not_delete_uid">회원 정보 초기화에 실패했습니다.</string>
+    <string name="login_msg_can_not_save_uid">회원 정보 저장에 실패했습니다.</string>
     <string name="onboarding_input_nickname">닉네임을 입력하세요</string>
     <string name="onboarding_next">다음</string>
     <string name="onboarding_msg_fill">닉네임을 입력해주세요.</string>
-    <string name="onboarding_msg_fail_signup">회원가입에 실패했습니다.</string>
+    <string name="onboarding_msg_fail_signup">회원 가입에 실패했습니다.</string>
 
     <!-- mypage -->
     <string name="mypage_title">마이페이지</string>

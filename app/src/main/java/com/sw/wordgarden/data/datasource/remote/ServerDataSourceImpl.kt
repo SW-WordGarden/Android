@@ -1,5 +1,6 @@
 package com.sw.wordgarden.data.datasource.remote
 
+import com.sw.wordgarden.data.datasource.remote.Retrofit.Service
 import com.sw.wordgarden.data.dto.QuizListDto
 import com.sw.wordgarden.data.dto.SignUpDto
 import com.sw.wordgarden.data.dto.TreeDto

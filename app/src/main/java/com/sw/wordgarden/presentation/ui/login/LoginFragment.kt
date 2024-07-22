@@ -25,6 +25,7 @@ import com.navercorp.nid.profile.data.NidProfileResponse
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentLoginBinding
 import com.sw.wordgarden.domain.entity.SignUpEntity
+import com.sw.wordgarden.presentation.model.DefaultEvent
 import com.sw.wordgarden.presentation.model.UserCheckEvent
 import com.sw.wordgarden.presentation.ui.login.OnBoardingFragment.Companion.LOGIN_TO_ONBOARDING_BUNDLE_KEY
 import com.sw.wordgarden.presentation.ui.login.OnBoardingFragment.Companion.LOGIN_TO_ONBOARDING_REQUEST_KEY
@@ -58,7 +59,7 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupListener()
-        setCheckEvent()
+        setViewModelEvent()
     }
 
     private fun setupListener() {
@@ -180,15 +181,41 @@ class LoginFragment : Fragment() {
         viewmodel.checkUserInfo(uid)
     }
 
-    private fun setCheckEvent() {
+    private fun setViewModelEvent() {
         lifecycleScope.launch {
-            viewmodel.checkEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
+            viewmodel.checkUserEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
                 when (event) {
                     is UserCheckEvent.Failure -> {
                         ToastMaker.make(requireContext(), event.msg)
                     }
                     is UserCheckEvent.NotFound -> { goOnboarding() }
                     UserCheckEvent.Success -> { goMain() }
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            viewmodel.deleteUidEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
+                when (event) {
+                    is DefaultEvent.Failure -> {
+                        ToastMaker.make(requireContext(), event.msg)
+                    }
+                    DefaultEvent.Success -> {
+                        Log.i(TAG, "기기에 저장된 UID 초기화 완료")
+                    }
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            viewmodel.saveUidEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
+                when (event) {
+                    is DefaultEvent.Failure -> {
+                        ToastMaker.make(requireContext(), event.msg)
+                    }
+                    DefaultEvent.Success -> {
+                        Log.i(TAG, "UID 기기 저장 완료")
+                    }
                 }
             }
         }
