@@ -2,7 +2,9 @@ package com.sw.wordgarden.presentation.ui.login
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.sw.wordgarden.R
@@ -16,14 +18,23 @@ class LogInActivity : AppCompatActivity() {
         ActivityLoginBinding.inflate(layoutInflater)
     }
 
+    private val viewmodel: LoginViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        uiSetting()
+        setupSplash()
+        setupUi()
         setFragment(savedInstanceState)
     }
 
-    private fun uiSetting() {
+    private fun setupSplash() {
+        installSplashScreen().apply {
+            setKeepOnScreenCondition { viewmodel.isLoading.value }
+        }
+    }
+
+    private fun setupUi() {
         enableEdgeToEdge()
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(binding.clLoginMain) { v, insets ->
