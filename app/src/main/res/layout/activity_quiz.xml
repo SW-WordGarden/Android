@@ -59,7 +59,7 @@
                 android:id="@+id/civ_quiz_image"
                 android:layout_width="130dp"
                 android:layout_height="130dp"
-                android:src="@color/kaki"
+                android:src="@color/khaki"
                 android:layout_marginTop="100dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"

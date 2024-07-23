@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId = "com.sw.wordgarden"
-        minSdk = 33
+        minSdk = 28
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -73,6 +73,9 @@ dependencies {
 
     // 카카오 로그인
     implementation(libs.v2.user)
+
+    //Splash
+    implementation(libs.androidx.core.splashscreen)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
