@@ -1,4 +1,4 @@
-package com.sw.wordgarden.presentation.ui.util
+package com.sw.wordgarden.presentation.util
 
 import android.content.Context
 import android.widget.Toast

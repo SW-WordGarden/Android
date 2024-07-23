@@ -17,7 +17,7 @@ import com.sw.wordgarden.databinding.FragmentOnboardingBinding
 import com.sw.wordgarden.domain.entity.SignUpEntity
 import com.sw.wordgarden.presentation.model.DefaultEvent
 import com.sw.wordgarden.presentation.ui.main.MainActivity
-import com.sw.wordgarden.presentation.ui.util.ToastMaker
+import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

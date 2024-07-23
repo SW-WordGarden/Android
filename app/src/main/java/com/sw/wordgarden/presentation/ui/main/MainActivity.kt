@@ -10,7 +10,7 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.ActivityMainBinding
-import com.sw.wordgarden.presentation.ui.quiz.QuizFragment
+import com.sw.wordgarden.presentation.ui.quiz.quiz.QuizFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

@@ -30,7 +30,7 @@ import com.sw.wordgarden.presentation.model.UserCheckEvent
 import com.sw.wordgarden.presentation.ui.login.OnBoardingFragment.Companion.LOGIN_TO_ONBOARDING_BUNDLE_KEY
 import com.sw.wordgarden.presentation.ui.login.OnBoardingFragment.Companion.LOGIN_TO_ONBOARDING_REQUEST_KEY
 import com.sw.wordgarden.presentation.ui.main.MainActivity
-import com.sw.wordgarden.presentation.ui.util.ToastMaker
+import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
