@@ -1,10 +1,10 @@
 package com.sw.wordgarden.data.dto
 
+import com.google.gson.annotations.SerializedName
+
 data class QuizListDto(
-    val id: String?,
-    val title: String?,
-    val quiz: List<QuizDto>?,
-    val creatorId: String?,
-    val type: Boolean?,
-    val url: String,
+    @SerializedName("uid") val uid: String?,
+    @SerializedName("quizTitle") val title: String?,
+    @SerializedName("questionsAndAnswers") val quiz: List<QuizDto>?,
+    @SerializedName("sqresults") val quizResult : List<QuizResultDto>?,
 )

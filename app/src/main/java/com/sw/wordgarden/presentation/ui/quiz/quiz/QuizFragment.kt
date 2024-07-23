@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentQuizBinding
+import com.sw.wordgarden.presentation.ui.quiz.makequiz.MakeQuizFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -20,6 +22,41 @@ class QuizFragment : Fragment() {
     ): View {
         _binding = FragmentQuizBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setupUi()
+        setupListener()
+    }
+
+    private fun setupUi() = with(binding) {
+//        ivQuizUserThumbnail.setImageResource()
+//        tvQuizUserName.text = ""
+    }
+
+    private fun setupListener() = with(binding) {
+        btnQuizBack.setOnClickListener {
+            //findNavController().popBackStack()
+        }
+        btnQuizAlone.setOnClickListener {
+            //findNavController().navigate(해당 화면)
+        }
+        btnQuizFriend.setOnClickListener {
+            //findNavController().navigate(해당 화면)
+        }
+        btnMakeQuiz.setOnClickListener {
+            //findNavController().navigate(해당 화면)
+
+            /**
+             * test용 이동 코드
+             */
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.cl_quiz_main, MakeQuizFragment())
+                .addToBackStack(null)
+                .commit()
+        }
     }
 
     override fun onDestroyView() {

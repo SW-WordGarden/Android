@@ -7,7 +7,7 @@ import javax.inject.Inject
 class InsertQuizListUseCaseImpl @Inject constructor(
     private val quizRepository: QuizRepository
 ) : InsertQuizListUseCase {
-    override suspend fun invoke(): QuizListEntity {
-        TODO("Not yet implemented")
+    override suspend fun invoke(quizList: QuizListEntity) {
+        quizRepository.insertQuizList(quizList)
     }
 }

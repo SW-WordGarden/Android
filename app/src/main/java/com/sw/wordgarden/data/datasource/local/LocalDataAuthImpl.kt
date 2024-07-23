@@ -7,9 +7,9 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
-class LocalDataSourceImpl @Inject constructor(
+class LocalDataAuthImpl @Inject constructor(
     private val uidPreferencesStore: DataStore<Preferences>
-) : LocalDataSource {
+) : LocalDataAuth {
 
     private val USER_KEY = stringPreferencesKey("user_key")
 
