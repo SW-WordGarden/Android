@@ -8,7 +8,9 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.ActivityMainBinding
+import com.sw.wordgarden.presentation.ui.quiz.QuizFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -26,13 +28,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(binding.clMain) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
         getUidTest()
+        goQuiz()
     }
 
     private fun getUidTest() {
@@ -43,5 +46,14 @@ class MainActivity : AppCompatActivity() {
                 binding.tvMain.text = uid
             }
         }
+    }
+
+    /**
+     * quiz fragment 확인을 위한 테스트 코드입니다.
+     */
+    private fun goQuiz() {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.cl_main, QuizFragment())
+            .commit()
     }
 }
