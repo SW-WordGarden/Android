@@ -1,6 +1,7 @@
 package com.sw.wordgarden.data.repository
 
 import com.sw.wordgarden.data.datasource.remote.ServerDataSource
+import com.sw.wordgarden.data.mapper.ServerMapper.toEntity
 import com.sw.wordgarden.domain.entity.UserEntity
 import com.sw.wordgarden.domain.repository.FriendRepository
 import javax.inject.Inject
@@ -20,7 +21,6 @@ class FriendRepositoryImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun getFriendList(): List<UserEntity>? {
-        TODO("Not yet implemented")
-    }
+    override suspend fun getFriendList(): List<UserEntity> =
+        serverDataSource.getFriendList()?.map { it.toEntity() } ?: emptyList()
 }

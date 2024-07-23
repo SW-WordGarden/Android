@@ -19,6 +19,7 @@ class ServerDataSourceImpl @Inject constructor(
 
     private val TAG = "ServerDataSourceImpl"
 
+    //user
     override suspend fun insertUser(signUpDto: SignUpDto) {
         try {
             val response = service.insertUser(signUpDto)
@@ -53,6 +54,7 @@ class ServerDataSourceImpl @Inject constructor(
         }
     }
 
+    //friends
     override suspend fun insertFriend(friendId: String) {
         TODO("Not yet implemented")
     }
@@ -66,9 +68,22 @@ class ServerDataSourceImpl @Inject constructor(
     }
 
     override suspend fun getFriendList(): List<UserDto>? {
-        TODO("Not yet implemented")
+        return try {
+            val uid = getUid()
+
+            val response = service.getFriendList(uid!!)
+            if (!response.isSuccessful) {
+                throw HttpException(response)
+            } else {
+                response.body()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
     }
 
+    //words
     override suspend fun insertLikedWord(word: WordDto) {
         TODO("Not yet implemented")
     }
@@ -85,6 +100,7 @@ class ServerDataSourceImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
+    //quizzes
     override suspend fun insertQuizList(quizList: QuizListDto) {
         try {
             val uid = getUid()
@@ -127,6 +143,7 @@ class ServerDataSourceImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
+    //garden
     override suspend fun updateTree(treeId: String) {
         TODO("Not yet implemented")
     }

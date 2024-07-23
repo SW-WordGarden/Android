@@ -16,6 +16,35 @@ import com.sw.wordgarden.domain.entity.UserEntity
 import com.sw.wordgarden.domain.entity.WordEntity
 
 object ServerMapper {
+    //user
+    fun UserDto.toEntity() = UserEntity(
+        uid = uid,
+        point = point,
+        rank = rank,
+        nickname = nickname,
+        email = email,
+        thumbnail = thumbnail,
+        url = url
+    )
+
+    fun SignUpEntity.toDto() = SignUpDto(
+        uid = uid,
+        nickname = nickname,
+        provider = provider,
+    )
+
+    //friends
+
+    //words
+    fun WordDto.toEntity() = WordEntity(
+        id = id,
+        title = title,
+        description = description,
+        thumbnail = thumbnail,
+        category = category
+    )
+
+    //quizzes
     fun QuizDto.toEntity() = QuizEntity(
         question = question,
         answer = answer,
@@ -55,37 +84,6 @@ object ServerMapper {
         answerNumber = answerNumber,
     )
 
-    fun TreeDto.toEntity() = TreeEntity(
-        id = id,
-        name = name,
-        image = image,
-        growth = growth
-    )
-
-    fun UserDto.toEntity() = UserEntity(
-        uid = uid,
-        point = point,
-        rank = rank,
-        nickname = nickname,
-        email = email,
-        thumbnail = thumbnail,
-        url = url
-    )
-
-    fun SignUpEntity.toDto() = SignUpDto(
-        uid = uid,
-        nickname = nickname,
-        provider = provider,
-    )
-
-    fun WordDto.toEntity() = WordEntity(
-        id = id,
-        title = title,
-        description = description,
-        thumbnail = thumbnail,
-        category = category
-    )
-
     private fun quizDtoToEntity(quiz: List<QuizDto>?): List<QuizEntity> =
         quiz?.map { it.toEntity() } ?: emptyList()
 
@@ -98,4 +96,11 @@ object ServerMapper {
     private fun quizResultEntityToDto(quiz: List<QuizResultEntity>?): List<QuizResultDto> =
         quiz?.map { it.toDto() } ?: emptyList()
 
+    //garden
+    fun TreeDto.toEntity() = TreeEntity(
+        id = id,
+        name = name,
+        image = image,
+        growth = growth
+    )
 }

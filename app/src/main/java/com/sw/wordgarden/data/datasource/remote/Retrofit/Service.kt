@@ -36,8 +36,8 @@ interface Service {
     //    @POST("login/login")
     suspend fun reportFriend(@Body friendId: String, contents: String): Response<Unit>
 
-    //    @POST("login/login")
-    suspend fun getFriendList(@Body uid: String): Response<List<UserDto>>
+    @GET("/user/friendlist/{uid}")
+    suspend fun getFriendList(@Path("uid") uid: String): Response<List<UserDto>>
 
     //word
     //    @POST("login/login")
