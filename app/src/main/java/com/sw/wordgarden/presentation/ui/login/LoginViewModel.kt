@@ -10,8 +10,11 @@ import com.sw.wordgarden.domain.usecase.SaveUidUseCase
 import com.sw.wordgarden.presentation.model.DefaultEvent
 import com.sw.wordgarden.presentation.model.UserCheckEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import retrofit2.HttpException
 import javax.inject.Inject
@@ -23,6 +26,9 @@ class LoginViewModel @Inject constructor(
     private val saveUidUserCase: SaveUidUseCase,
 ) : ViewModel() {
 
+    private val _isLoading: MutableStateFlow<Boolean> = MutableStateFlow(true)
+    val isLoading: StateFlow<Boolean> get() = _isLoading
+
     private val _checkUserEvent = MutableSharedFlow<UserCheckEvent>()
     val checkUserEvent: SharedFlow<UserCheckEvent> = _checkUserEvent.asSharedFlow()
 
@@ -31,6 +37,13 @@ class LoginViewModel @Inject constructor(
 
     private val _saveUidEvent = MutableSharedFlow<DefaultEvent>()
     val saveUidEvent: SharedFlow<DefaultEvent> = _saveUidEvent.asSharedFlow()
+
+    init {
+        viewModelScope.launch {
+            delay(1000)
+            _isLoading.value = false
+        }
+    }
 
     fun checkUserInfo(uid: String) {
         viewModelScope.launch {
