@@ -674,6 +674,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/iv_answer10"
                 android:textColor="@color/green"
                 android:textSize="@dimen/text_smaller"
+                android:elevation="15dp"
                 android:layout_marginTop="60dp"
                 android:layout_marginBottom="50dp"
                 app:layout_constraintBottom_toBottomOf="parent"
