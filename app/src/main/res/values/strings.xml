@@ -41,6 +41,9 @@
     <string name="make_quiz_question_title">문제</string>
     <string name="make_quiz_answer">답</string>
 
+    <string name="share_quiz_title">퀴즈 공유하기</string>
+    <string name="share_quiz_description">친구랑 같이 퀴즈를 풀어보세요!</string>
+
     <!-- keys -->
     <string name="naver_client_id">fYtp0C5dQV4enao8hy1Q</string>
     <string name="naver_client_secret">EFmMabs3BG</string>
