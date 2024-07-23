@@ -19,7 +19,6 @@ class MyPageActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(binding.root)
         uiSetting()
         setFragment(savedInstanceState)
     }
