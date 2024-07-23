@@ -1,5 +1,7 @@
 package com.sw.wordgarden.app.di
 
+import com.sw.wordgarden.data.datasource.local.LocalDataSource
+import com.sw.wordgarden.data.datasource.local.LocalDataSourceImpl
 import com.sw.wordgarden.data.datasource.remote.ServerDataSource
 import com.sw.wordgarden.data.datasource.remote.ServerDataSourceImpl
 import dagger.Binds
@@ -16,4 +18,10 @@ abstract class DataSourceModule {
     abstract fun bindSererDataSource(
         serverDataSourceImpl: ServerDataSourceImpl
     ): ServerDataSource
+
+    @Binds
+    @Singleton
+    abstract fun bindLocalDataSource(
+        localDataSourceImpl: LocalDataSourceImpl
+    ): LocalDataSource
 }

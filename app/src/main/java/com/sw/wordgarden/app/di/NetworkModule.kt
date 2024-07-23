@@ -1,7 +1,7 @@
 package com.sw.wordgarden.app.di
 
-import com.sw.wordgarden.data.datasource.remote.RetrofitClient
-import com.sw.wordgarden.data.datasource.remote.Service
+import com.sw.wordgarden.data.datasource.remote.Retrofit.RetrofitClient
+import com.sw.wordgarden.data.datasource.remote.Retrofit.Service
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

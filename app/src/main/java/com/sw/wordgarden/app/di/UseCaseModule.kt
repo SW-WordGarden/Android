@@ -4,6 +4,8 @@ import com.sw.wordgarden.domain.usecase.DeleteFriendUseCase
 import com.sw.wordgarden.domain.usecase.DeleteFriendUseCaseImpl
 import com.sw.wordgarden.domain.usecase.DeleteQuizListUseCase
 import com.sw.wordgarden.domain.usecase.DeleteQuizListUseCaseImpl
+import com.sw.wordgarden.domain.usecase.DeleteUidUseCase
+import com.sw.wordgarden.domain.usecase.DeleteUidUseCaseImpl
 import com.sw.wordgarden.domain.usecase.DeleteUserUseCase
 import com.sw.wordgarden.domain.usecase.DeleteUserUseCaseImpl
 import com.sw.wordgarden.domain.usecase.GetFriendListUseCase
@@ -18,6 +20,8 @@ import com.sw.wordgarden.domain.usecase.GetQuizeListDoneByUserAndPeriodUseCase
 import com.sw.wordgarden.domain.usecase.GetQuizeListDoneByUserAndPeriodUseCaseImpl
 import com.sw.wordgarden.domain.usecase.GetTreeListUseCase
 import com.sw.wordgarden.domain.usecase.GetTreeListUseCaseImpl
+import com.sw.wordgarden.domain.usecase.GetUidUseCase
+import com.sw.wordgarden.domain.usecase.GetUidUseCaseImpl
 import com.sw.wordgarden.domain.usecase.GetUserInfoUseCase
 import com.sw.wordgarden.domain.usecase.GetUserInfoUseCaseImpl
 import com.sw.wordgarden.domain.usecase.GetWeeklyWordListUseCase
@@ -30,6 +34,8 @@ import com.sw.wordgarden.domain.usecase.InsertUserUseCase
 import com.sw.wordgarden.domain.usecase.InsertUserUseCaseImpl
 import com.sw.wordgarden.domain.usecase.ReportFriendUseCase
 import com.sw.wordgarden.domain.usecase.ReportFriendUseCaseImpl
+import com.sw.wordgarden.domain.usecase.SaveUidUseCase
+import com.sw.wordgarden.domain.usecase.SaveUidUseCaseImpl
 import com.sw.wordgarden.domain.usecase.UpdateTreeUseCase
 import com.sw.wordgarden.domain.usecase.UpdateTreeUseCaseImpl
 import com.sw.wordgarden.domain.usecase.UpdateUserUseCase
@@ -54,6 +60,12 @@ abstract class UseCaseModule {
     abstract fun bindDeleteQuizListUseCase(
         deleteQuizListUseCaseImpl: DeleteQuizListUseCaseImpl
     ): DeleteQuizListUseCase
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindDeleteUidUseCase(
+        deleteUidUseCaseImpl: DeleteUidUseCaseImpl
+    ): DeleteUidUseCase
 
     @Binds
     @ViewModelScoped
@@ -99,6 +111,12 @@ abstract class UseCaseModule {
 
     @Binds
     @ViewModelScoped
+    abstract fun bindGetUidUseCase(
+        getUidUseCaseImpl: GetUidUseCaseImpl
+    ): GetUidUseCase
+
+    @Binds
+    @ViewModelScoped
     abstract fun bindGetUserInfoUseCase(
         getUserInfoUseCaseImpl: GetUserInfoUseCaseImpl
     ): GetUserInfoUseCase
@@ -132,6 +150,12 @@ abstract class UseCaseModule {
     abstract fun bindReportFriendUseCase(
         reportFriendUseCaseImpl: ReportFriendUseCaseImpl
     ): ReportFriendUseCase
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindSaveUidUseCase(
+        saveUidUseCaseImpl: SaveUidUseCaseImpl
+    ): SaveUidUseCase
 
     @Binds
     @ViewModelScoped
