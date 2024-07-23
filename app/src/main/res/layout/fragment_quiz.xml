@@ -5,7 +5,7 @@
     android:id="@+id/cl_quiz_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.ui.quiz.QuizFragment"
+    tools:context=".presentation.ui.quiz.quiz.QuizFragment"
     android:background="@color/light_green">
 
     <androidx.constraintlayout.widget.ConstraintLayout
