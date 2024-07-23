@@ -38,7 +38,7 @@
     <string name="make_quiz_share">친구에게 공유하러 가기</string>
     <string name="make_quiz_title">퀴즈 만들기</string>
     <string name="make_quiz_input_name">퀴즈 이름을 작성해 주세요.</string>
-    <string name="make_quiz_question">문제</string>
+    <string name="make_quiz_question_title">문제</string>
     <string name="make_quiz_answer">답</string>
 
     <!-- keys -->
@@ -46,4 +46,6 @@
     <string name="naver_client_secret">EFmMabs3BG</string>
     <string name="kakao_native_key">9132f18301634afbec5f2618e16f5f09</string>
     <string name="kakao_native_key_kakao">kakao9132f18301634afbec5f2618e16f5f09</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
