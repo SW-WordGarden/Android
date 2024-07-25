@@ -1,6 +1,5 @@
 package com.sw.wordgarden.presentation.ui.quiz.makequiz
 
-import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -24,11 +23,13 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class MakeQuizFragment : Fragment() {
 
+    private val TAG = "MakeQuizFragment"
+
     private var _binding: FragmentMakeQuizBinding? = null
     private val binding get() = _binding!!
 
     private val viewmodel: MakeQuizViewModel by viewModels()
-    private val onlyQuizList: List<SelfQuizModel> = List(10) { SelfQuizModel("", "") }
+    private val onlyQuizList: List<SelfQuizModel> = List(10) { SelfQuizModel("test", "test") }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,6 +41,8 @@ class MakeQuizFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        shareQuiz("testQuiz4")
 
         setupUi()
         setUpListener()

@@ -1,5 +1,6 @@
 package com.sw.wordgarden.data.datasource.remote
 
+import android.util.Log
 import com.sw.wordgarden.data.datasource.local.LocalDataAuth
 import com.sw.wordgarden.data.datasource.remote.Retrofit.Service
 import com.sw.wordgarden.data.dto.QuizListDto
@@ -15,6 +16,8 @@ class ServerDataSourceImpl @Inject constructor(
     private val service: Service,
     private val localDataAuth: LocalDataAuth
 ) : ServerDataSource {
+
+    private val TAG = "ServerDataSourceImpl"
 
     override suspend fun insertUser(signUpDto: SignUpDto) {
         try {
@@ -88,6 +91,8 @@ class ServerDataSourceImpl @Inject constructor(
             val quizListData = quizList.copy(
                 uid = uid
             )
+
+            Log.i(TAG, "서버에 전달한 퀴즈 데이터 : $quizListData")
 
             val response = service.insertQuizList(quizListData)
             if (!response.isSuccessful) {

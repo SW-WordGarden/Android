@@ -1,6 +1,5 @@
 package com.sw.wordgarden.app
 
-import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +9,8 @@ import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
 
 class AuthCodeHandlerActivity : AppCompatActivity() {
+
+    private val TAG = "AuthCodeHandlerActivity"
 
     private val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
         if (error != null) {

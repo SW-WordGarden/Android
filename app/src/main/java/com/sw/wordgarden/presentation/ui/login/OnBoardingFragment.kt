@@ -1,6 +1,5 @@
 package com.sw.wordgarden.presentation.ui.login
 
-import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -24,6 +23,8 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class OnBoardingFragment : Fragment() {
+
+    private val TAG = "OnBoardingFragment"
 
     private var _binding: FragmentOnboardingBinding? = null
     private val binding get() = _binding!!
