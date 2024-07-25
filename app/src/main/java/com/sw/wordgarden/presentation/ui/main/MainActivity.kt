@@ -32,16 +32,20 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        setNavigation()
         getUidTest()
+    }
+    private fun setNavigation(){
+        binding.mainNavigation.itemIconTintList = null
     }
 
     private fun getUidTest() {
         viewmodel.getUid()
 
-        lifecycleScope.launch {
-            viewmodel.uid.flowWithLifecycle(lifecycle).collectLatest { uid ->
-                binding.tvMain.text = uid
-            }
-        }
+//        lifecycleScope.launch {
+//            viewmodel.uid.flowWithLifecycle(lifecycle).collectLatest { uid ->
+//                binding.tvMain.text = uid
+//            }
+//        }
     }
 }

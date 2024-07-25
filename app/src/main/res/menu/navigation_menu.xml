@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/navigation_word"
+        android:icon="@drawable/bottom_word"
+        android:title="@string/navigation_word"/>
+    <item android:id="@+id/navigation_quiz"
+        android:icon="@drawable/bottom_quiz"
+        android:title="@string/navigation_quiz"/>
+    <item android:id="@+id/navigation_home"
+        android:icon="@drawable/bottom_home"
+        android:title="@string/navigation_home"/>
+    <item android:id="@+id/navigation_mypage"
+        android:icon="@drawable/bottom_mypage"
+        android:title="@string/navigation_mypage"/>
+    <item android:id="@+id/navigation_garden"
+        android:icon="@drawable/bottom_garden"
+        android:title="@string/navigation_garden"/>
+</menu>

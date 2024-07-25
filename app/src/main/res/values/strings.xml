@@ -45,4 +45,11 @@
     <string name="naver_client_secret">EFmMabs3BG</string>
     <string name="kakao_native_key">9132f18301634afbec5f2618e16f5f09</string>
     <string name="kakao_native_key_kakao">kakao9132f18301634afbec5f2618e16f5f09</string>
+
+    <!-- navigation -->
+    <string name="navigation_word">단어</string>
+    <string name="navigation_quiz">퀴즈</string>
+    <string name="navigation_home">홈</string>
+    <string name="navigation_mypage">마이페이지</string>
+    <string name="navigation_garden">정원</string>
 </resources>
