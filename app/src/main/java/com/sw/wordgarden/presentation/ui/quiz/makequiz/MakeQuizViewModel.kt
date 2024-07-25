@@ -8,12 +8,14 @@ import com.sw.wordgarden.domain.entity.QuizListEntity
 import com.sw.wordgarden.domain.entity.QuizResultEntity
 import com.sw.wordgarden.domain.usecase.InsertQuizListUseCase
 import com.sw.wordgarden.presentation.model.DefaultEvent
+import com.sw.wordgarden.presentation.model.ErrorMessage
 import com.sw.wordgarden.presentation.model.SelfQuizModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -31,8 +33,17 @@ class MakeQuizViewModel @Inject constructor(
         viewModelScope.launch {
             runCatching {
                 insertQuizListUseCase.invoke(quizListEntity)
-            }.onFailure {
-                _insertQuizEvent.emit(DefaultEvent.Failure(R.string.make_quiz_msg_fail_make_quiz))
+            }.onFailure { throwable ->
+                when (throwable) {
+                    is HttpException -> {
+                        val errorResponse = throwable.response()?.errorBody()?.string()
+                        if (throwable.code() == 403 && errorResponse == ErrorMessage.DUPLICATION_QUIZ_TITLE.name) {
+                            _insertQuizEvent.emit(DefaultEvent.Failure(R.string.make_quiz_msg_duplication_quiz_title))
+                        } else {
+                            _insertQuizEvent.emit(DefaultEvent.Failure(R.string.make_quiz_msg_fail_make_quiz))
+                        }
+                    }
+                }
             }.onSuccess {
                 _insertQuizEvent.emit(DefaultEvent.Success)
             }

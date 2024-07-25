@@ -9,6 +9,7 @@ import com.sw.wordgarden.domain.usecase.GetUserInfoUseCase
 import com.sw.wordgarden.domain.usecase.SaveUidUseCase
 import com.sw.wordgarden.presentation.model.DefaultEvent
 import com.sw.wordgarden.presentation.model.UserCheckEvent
+import com.sw.wordgarden.presentation.model.ErrorMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -62,7 +63,7 @@ class LoginViewModel @Inject constructor(
                 when (throwable) {
                     is HttpException -> {
                         val errorResponse = throwable.response()?.errorBody()?.string()
-                        if (throwable.code() == 404 && errorResponse == "User not found") {
+                        if (throwable.code() == 404 && errorResponse == ErrorMessage.USER_NOT_FOUND.name) {
                             _checkUserEvent.emit(UserCheckEvent.NotFound)
                         } else {
                             _checkUserEvent.emit(UserCheckEvent.Failure(R.string.login_msg_fail_check))
