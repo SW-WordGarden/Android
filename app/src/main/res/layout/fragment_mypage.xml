@@ -1,265 +1,274 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/sv_my_main"
+    android:id="@+id/cl_my_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_gradient_my"
     tools:context=".presentation.ui.mypage.MypageFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_my_inner"
+        android:id="@+id/cl_my_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/padding_medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_my_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_small"
+            android:src="@drawable/ic_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_my_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mypage_title"
+            android:textColor="@color/green"
+            android:textSize="@dimen/text_caption"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_my_back"
+            app:layout_constraintEnd_toStartOf="@+id/iv_my_menu"
+            app:layout_constraintStart_toEndOf="@+id/iv_my_back"
+            app:layout_constraintTop_toTopOf="@+id/iv_my_back" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_my_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_small"
+            android:src="@drawable/ic_menu"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:id="@+id/sv_my_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cl_my_bar">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_my_bar"
+            android:id="@+id/cl_my_inner_scroll"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/padding_medium"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="wrap_content">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_my_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_small"
-                android:src="@drawable/ic_back"
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_my_profile"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="@dimen/margin_small"
+                android:src="@color/green"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/tv_my_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/mypage_title"
-                android:textColor="@color/green"
-                android:textSize="@dimen/text_caption"
-                app:layout_constraintBottom_toBottomOf="@+id/iv_my_back"
-                app:layout_constraintEnd_toStartOf="@+id/iv_my_menu"
-                app:layout_constraintStart_toEndOf="@+id/iv_my_back"
-                app:layout_constraintTop_toTopOf="@+id/iv_my_back" />
+            <FrameLayout
+                android:id="@+id/fl_my_edit"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginBottom="-8dp"
+                android:background="@drawable/bg_circle_white"
+                android:padding="@dimen/padding_extra_smaller"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_my_profile"
+                app:layout_constraintEnd_toEndOf="@+id/iv_my_profile">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_my_menu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_small"
-                android:src="@drawable/ic_menu"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/iv_my_profile"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginTop="@dimen/margin_small"
-            android:src="@color/green"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cl_my_bar" />
-
-        <FrameLayout
-            android:id="@+id/fl_my_edit"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginBottom="-8dp"
-            android:background="@drawable/bg_circle_white"
-            android:padding="@dimen/padding_extra_smaller"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_my_profile"
-            app:layout_constraintEnd_toEndOf="@+id/iv_my_profile">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_my_edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_edit" />
-        </FrameLayout>
-
-        <TextView
-            android:id="@+id/tv_my_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_small"
-            android:text="username"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_content"
-            app:layout_constraintEnd_toEndOf="@+id/iv_my_profile"
-            app:layout_constraintStart_toStartOf="@+id/iv_my_profile"
-            app:layout_constraintTop_toBottomOf="@+id/iv_my_profile" />
-
-        <TextView
-            android:id="@+id/tv_my_point_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_large"
-            android:text="@string/mypage_point_title"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_smaller"
-            app:layout_constraintEnd_toStartOf="@+id/view"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_my_name" />
-
-        <TextView
-            android:id="@+id/tv_my_point"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0000점"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_text"
-            app:layout_constraintBottom_toBottomOf="@+id/view"
-            app:layout_constraintEnd_toEndOf="@+id/tv_my_point_title"
-            app:layout_constraintStart_toStartOf="@+id/tv_my_point_title"
-            app:layout_constraintTop_toTopOf="@+id/view" />
-
-        <View
-            android:id="@+id/view"
-            android:layout_width="1dp"
-            android:layout_height="26dp"
-            android:layout_marginTop="@dimen/margin_small"
-            android:background="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_my_point_title" />
-
-        <TextView
-            android:id="@+id/tv_my_rank_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_large"
-            android:text="@string/mypage_rank_title"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_smaller"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/view"
-            app:layout_constraintTop_toBottomOf="@+id/tv_my_name" />
-
-        <TextView
-            android:id="@+id/tv_my_rank"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0000위"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_text"
-            app:layout_constraintBottom_toBottomOf="@+id/view"
-            app:layout_constraintEnd_toEndOf="@+id/tv_my_rank_title"
-            app:layout_constraintStart_toStartOf="@+id/tv_my_rank_title"
-            app:layout_constraintTop_toTopOf="@+id/view" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_my_weekly_score"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="32dp"
-            android:layout_marginTop="32dp"
-            android:background="@drawable/bg_rectangle_15"
-            android:padding="@dimen/padding_medium"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view">
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_my_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_edit" />
+            </FrameLayout>
 
             <TextView
-                android:id="@+id/tv_my_weekly_score_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start|center_vertical"
-                android:text="@string/mypage_weekly_score_title"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_my_weekly_score_more"
-                android:layout_width="9dp"
-                android:layout_height="9dp"
-                android:layout_gravity="end|center_vertical"
-                android:src="@drawable/ic_plus"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tv_my_score"
+                android:id="@+id/tv_my_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_small"
-                android:text="0문제 중 0문제 정답!"
-                android:textSize="@dimen/padding_medium_18"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_my_weekly_score_title" />
-
-            <ProgressBar
-                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_extra_small"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_my_score" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_my_quizzes"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_extra_large"
-            android:layout_marginTop="@dimen/margin_extra_large"
-            android:background="@drawable/bg_rectangle_15"
-            android:padding="@dimen/padding_medium"
-            app:layout_constraintTop_toBottomOf="@+id/cl_my_weekly_score">
+                android:text="username"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_content"
+                app:layout_constraintEnd_toEndOf="@+id/iv_my_profile"
+                app:layout_constraintStart_toStartOf="@+id/iv_my_profile"
+                app:layout_constraintTop_toBottomOf="@+id/iv_my_profile" />
 
             <TextView
-                android:id="@+id/tv_my_quizzes_title"
+                android:id="@+id/tv_my_point_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start|center_vertical"
-                android:text="퀴즈"
+                android:layout_marginTop="@dimen/margin_large"
+                android:text="@string/mypage_point_title"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_smaller"
+                app:layout_constraintEnd_toStartOf="@+id/view"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_my_name" />
+
+            <TextView
+                android:id="@+id/tv_my_point"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0000점"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_text"
+                app:layout_constraintBottom_toBottomOf="@+id/view"
+                app:layout_constraintEnd_toEndOf="@+id/tv_my_point_title"
+                app:layout_constraintStart_toStartOf="@+id/tv_my_point_title"
+                app:layout_constraintTop_toTopOf="@+id/view" />
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="1dp"
+                android:layout_height="26dp"
+                android:layout_marginTop="@dimen/margin_small"
+                android:background="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_my_point_title" />
+
+            <TextView
+                android:id="@+id/tv_my_rank_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_large"
+                android:text="@string/mypage_rank_title"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_smaller"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/view"
+                app:layout_constraintTop_toBottomOf="@+id/tv_my_name" />
+
+            <TextView
+                android:id="@+id/tv_my_rank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0000위"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_text"
+                app:layout_constraintBottom_toBottomOf="@+id/view"
+                app:layout_constraintEnd_toEndOf="@+id/tv_my_rank_title"
+                app:layout_constraintStart_toStartOf="@+id/tv_my_rank_title"
+                app:layout_constraintTop_toTopOf="@+id/view" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_my_weekly_score"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="32dp"
+                android:layout_marginTop="32dp"
+                android:background="@drawable/bg_rectangle_15"
+                android:padding="@dimen/padding_medium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view">
+
+                <TextView
+                    android:id="@+id/tv_my_weekly_score_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start|center_vertical"
+                    android:text="@string/mypage_weekly_score_title"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_my_weekly_score_more"
+                    android:layout_width="9dp"
+                    android:layout_height="9dp"
+                    android:layout_gravity="end|center_vertical"
+                    android:src="@drawable/ic_plus"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_my_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:text="0문제 중 0문제 정답!"
+                    android:textSize="@dimen/padding_medium_18"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_my_weekly_score_title" />
+
+                <ProgressBar
+                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_extra_small"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_my_score" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_my_quizzes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_extra_large"
+                android:layout_marginTop="@dimen/margin_extra_large"
+                android:background="@drawable/bg_rectangle_15"
+                android:padding="@dimen/padding_medium"
+                app:layout_constraintTop_toBottomOf="@+id/cl_my_weekly_score">
+
+                <TextView
+                    android:id="@+id/tv_my_quizzes_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start|center_vertical"
+                    android:text="퀴즈"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_my_quizzes_more"
+                    android:layout_width="9dp"
+                    android:layout_height="9dp"
+                    android:layout_gravity="end|center_vertical"
+                    android:src="@drawable/ic_plus"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/tv_my_friends_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/margin_extra_large"
+                android:text="친구 목록"
+                app:layout_constraintStart_toStartOf="@+id/cl_my_quizzes"
+                app:layout_constraintTop_toBottomOf="@+id/cl_my_quizzes" />
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_my_quizzes_more"
-                android:layout_width="9dp"
-                android:layout_height="9dp"
-                android:layout_gravity="end|center_vertical"
+                android:id="@+id/iv_my_friends_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:src="@drawable/ic_plus"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintBottom_toBottomOf="@id/tv_my_friends_title"
+                app:layout_constraintEnd_toEndOf="@+id/cl_my_quizzes"
+                app:layout_constraintTop_toTopOf="@id/tv_my_friends_title" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_my_friends_list"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginStart="52dp"
+                android:layout_marginEnd="52dp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@id/tv_my_friends_title"
+                tools:itemCount="4"
+                tools:listitem="@layout/item_my_friends" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <TextView
-            android:id="@+id/tv_my_friends_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_medium"
-            android:layout_marginTop="@dimen/margin_extra_large"
-            android:text="친구 목록"
-            app:layout_constraintStart_toStartOf="@+id/cl_my_quizzes"
-            app:layout_constraintTop_toBottomOf="@+id/cl_my_quizzes" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_my_friends_more"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_plus"
-            app:layout_constraintBottom_toBottomOf="@id/tv_my_friends_title"
-            app:layout_constraintEnd_toEndOf="@+id/cl_my_quizzes"
-            app:layout_constraintTop_toTopOf="@id/tv_my_friends_title" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_my_friends_list"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginStart="52dp"
-            android:layout_marginEnd="52dp"
-            android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toBottomOf="@id/tv_my_friends_title"
-            tools:itemCount="4"
-            tools:listitem="@layout/item_my_friends" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,6 +12,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.ActivityMainBinding
 import com.sw.wordgarden.presentation.ui.login.login.LoginFragment
+import com.sw.wordgarden.presentation.ui.mypage.MypageFragment
 import com.sw.wordgarden.presentation.ui.quiz.quiz.QuizFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -29,8 +30,9 @@ class MainActivity : AppCompatActivity() {
 
         setupSplash()
         setupUi()
-        goLogin()
+//        goLogin()
 //        goQuiz()
+        goMy()
     }
 
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
@@ -71,6 +73,15 @@ class MainActivity : AppCompatActivity() {
     private fun goQuiz() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.cl_main, QuizFragment())
+            .commit()
+    }
+
+    /**
+     * mypage fragment 확인을 위한 테스트 코드입니다.
+     */
+    private fun goMy() {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.cl_main, MypageFragment())
             .commit()
     }
 }
