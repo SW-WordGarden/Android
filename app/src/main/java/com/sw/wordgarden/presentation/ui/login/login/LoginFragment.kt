@@ -1,6 +1,5 @@
-package com.sw.wordgarden.presentation.ui.login
+package com.sw.wordgarden.presentation.ui.login.login
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -26,9 +25,10 @@ import com.sw.wordgarden.databinding.FragmentLoginBinding
 import com.sw.wordgarden.domain.entity.SignUpEntity
 import com.sw.wordgarden.presentation.model.DefaultEvent
 import com.sw.wordgarden.presentation.model.UserCheckEvent
-import com.sw.wordgarden.presentation.ui.login.OnBoardingFragment.Companion.LOGIN_TO_ONBOARDING_BUNDLE_KEY
-import com.sw.wordgarden.presentation.ui.login.OnBoardingFragment.Companion.LOGIN_TO_ONBOARDING_REQUEST_KEY
-import com.sw.wordgarden.presentation.ui.main.MainActivity
+import com.sw.wordgarden.presentation.ui.home.HomeFragment
+import com.sw.wordgarden.presentation.ui.login.onboarding.OnBoardingFragment
+import com.sw.wordgarden.presentation.ui.login.onboarding.OnBoardingFragment.Companion.LOGIN_TO_ONBOARDING_BUNDLE_KEY
+import com.sw.wordgarden.presentation.ui.login.onboarding.OnBoardingFragment.Companion.LOGIN_TO_ONBOARDING_REQUEST_KEY
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -190,7 +190,7 @@ class LoginFragment : Fragment() {
                         ToastMaker.make(requireContext(), event.msg)
                     }
                     is UserCheckEvent.NotFound -> { goOnboarding() }
-                    UserCheckEvent.Success -> { goMain() }
+                    UserCheckEvent.Success -> { goHome() }
                 }
             }
         }
@@ -222,10 +222,11 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun goMain() {
-        val intent = Intent(context, MainActivity::class.java)
-        startActivity(intent)
-        requireActivity().finish()
+    private fun goHome() {
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.cl_login_main, HomeFragment())
+            .addToBackStack(null)
+            .commit()
     }
 
     private fun goOnboarding() {

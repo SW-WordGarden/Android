@@ -1,4 +1,4 @@
-package com.sw.wordgarden.presentation.ui.login
+package com.sw.wordgarden.presentation.ui.login.onboarding
 
 import androidx.lifecycle.*
 import com.sw.wordgarden.R
