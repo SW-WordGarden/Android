@@ -52,7 +52,7 @@
                 android:text="@string/make_quiz_input_name"
                 android:textColor="@color/green"
                 android:textSize="@dimen/text_smaller"
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="50dp"
                 app:layout_constraintStart_toStartOf="@+id/et_input_title"
                 app:layout_constraintTop_toTopOf="parent"/>
             <androidx.appcompat.widget.AppCompatEditText
@@ -89,7 +89,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_quiz1"
                 app:layout_constraintStart_toStartOf="@+id/tv_quiz1"/>
             <androidx.appcompat.widget.AppCompatEditText
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/et_question1"
                 android:background="@drawable/question_rec"
@@ -100,7 +100,7 @@
                 android:minHeight="100dp"
                 android:textSize="@dimen/text_caption"
                 android:padding="@dimen/padding_smaller"
-                android:layout_marginTop="@dimen/margin_extra_small"
+                android:layout_margin="@dimen/margin_extra_small"
                 app:layout_constraintTop_toBottomOf="@+id/tv_question1"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"/>
@@ -115,7 +115,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/et_question1"
                 app:layout_constraintStart_toStartOf="@id/et_question1"/>
             <androidx.appcompat.widget.AppCompatEditText
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/iv_answer1"
                 android:maxLength="35"
@@ -123,7 +123,7 @@
                 android:textSize="@dimen/text_caption"
                 android:background="@drawable/answer_rec"
                 android:padding="@dimen/padding_extra_small"
-                android:layout_marginTop="@dimen/margin_extra_small"
+                android:layout_margin="@dimen/margin_extra_small"
                 app:layout_constraintTop_toBottomOf="@+id/tv_answer1"
                 app:layout_constraintStart_toStartOf="@+id/et_question1"/>
 
@@ -149,7 +149,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_quiz2"
                 app:layout_constraintStart_toStartOf="@+id/tv_quiz1"/>
             <androidx.appcompat.widget.AppCompatEditText
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/et_question2"
                 android:background="@drawable/question_rec"
@@ -160,7 +160,7 @@
                 android:minHeight="100dp"
                 android:textSize="@dimen/text_caption"
                 android:padding="@dimen/padding_smaller"
-                android:layout_marginTop="@dimen/margin_extra_small"
+                android:layout_margin="@dimen/margin_extra_small"
                 app:layout_constraintTop_toBottomOf="@+id/tv_question2"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"/>
@@ -175,7 +175,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/et_question2"
                 app:layout_constraintStart_toStartOf="@id/et_question1"/>
             <androidx.appcompat.widget.AppCompatEditText
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/iv_answer2"
                 android:maxLength="35"
@@ -183,7 +183,7 @@
                 android:textSize="@dimen/text_caption"
                 android:background="@drawable/answer_rec"
                 android:padding="@dimen/padding_extra_small"
-                android:layout_marginTop="@dimen/margin_extra_small"
+                android:layout_margin="@dimen/margin_extra_small"
                 app:layout_constraintTop_toBottomOf="@+id/tv_answer2"
                 app:layout_constraintStart_toStartOf="@+id/et_question1"/>
 
@@ -209,7 +209,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_quiz3"
                 app:layout_constraintStart_toStartOf="@+id/tv_quiz1"/>
             <androidx.appcompat.widget.AppCompatEditText
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/et_question3"
                 android:background="@drawable/question_rec"
@@ -220,7 +220,7 @@
                 android:minHeight="100dp"
                 android:textSize="@dimen/text_caption"
                 android:padding="@dimen/padding_smaller"
-                android:layout_marginTop="@dimen/margin_extra_small"
+                android:layout_margin="@dimen/margin_extra_small"
                 app:layout_constraintTop_toBottomOf="@+id/tv_question3"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"/>
@@ -235,7 +235,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/et_question3"
                 app:layout_constraintStart_toStartOf="@id/et_question1"/>
             <androidx.appcompat.widget.AppCompatEditText
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/iv_answer3"
                 android:maxLength="35"
@@ -243,7 +243,7 @@
                 android:textSize="@dimen/text_caption"
                 android:background="@drawable/answer_rec"
                 android:padding="@dimen/padding_extra_small"
-                android:layout_marginTop="@dimen/margin_extra_small"
+                android:layout_margin="@dimen/margin_extra_small"
                 app:layout_constraintTop_toBottomOf="@+id/tv_answer3"
                 app:layout_constraintStart_toStartOf="@+id/et_question1"/>
 
@@ -269,7 +269,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_quiz4"
                 app:layout_constraintStart_toStartOf="@+id/tv_quiz1"/>
             <androidx.appcompat.widget.AppCompatEditText
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/et_question4"
                 android:background="@drawable/question_rec"
@@ -280,7 +280,7 @@
                 android:minHeight="100dp"
                 android:textSize="@dimen/text_caption"
                 android:padding="@dimen/padding_smaller"
-                android:layout_marginTop="@dimen/margin_extra_small"
+                android:layout_margin="@dimen/margin_extra_small"
                 app:layout_constraintTop_toBottomOf="@+id/tv_question4"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"/>
@@ -295,7 +295,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/et_question4"
                 app:layout_constraintStart_toStartOf="@id/et_question1"/>
             <androidx.appcompat.widget.AppCompatEditText
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/iv_answer4"
                 android:maxLength="35"
@@ -303,7 +303,7 @@
                 android:textSize="@dimen/text_caption"
                 android:background="@drawable/answer_rec"
                 android:padding="@dimen/padding_extra_small"
-                android:layout_marginTop="@dimen/margin_extra_small"
+                android:layout_margin="@dimen/margin_extra_small"
                 app:layout_constraintTop_toBottomOf="@+id/tv_answer4"
                 app:layout_constraintStart_toStartOf="@+id/et_question1"/>
 
@@ -329,7 +329,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_quiz5"
                 app:layout_constraintStart_toStartOf="@+id/tv_quiz1"/>
             <androidx.appcompat.widget.AppCompatEditText
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/et_question5"
                 android:background="@drawable/question_rec"
@@ -340,7 +340,7 @@
                 android:minHeight="100dp"
                 android:textSize="@dimen/text_caption"
                 android:padding="@dimen/padding_smaller"
-                android:layout_marginTop="@dimen/margin_extra_small"
+                android:layout_margin="@dimen/margin_extra_small"
                 app:layout_constraintTop_toBottomOf="@+id/tv_question5"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"/>
@@ -355,7 +355,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/et_question5"
                 app:layout_constraintStart_toStartOf="@id/et_question1"/>
             <androidx.appcompat.widget.AppCompatEditText
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/iv_answer5"
                 android:maxLength="35"
@@ -363,7 +363,7 @@
                 android:textSize="@dimen/text_caption"
                 android:background="@drawable/answer_rec"
                 android:padding="@dimen/padding_extra_small"
-                android:layout_marginTop="@dimen/margin_extra_small"
+                android:layout_margin="@dimen/margin_extra_small"
                 app:layout_constraintTop_toBottomOf="@+id/tv_answer5"
                 app:layout_constraintStart_toStartOf="@+id/et_question1"/>
 
@@ -389,7 +389,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_quiz6"
                 app:layout_constraintStart_toStartOf="@+id/tv_quiz1"/>
             <androidx.appcompat.widget.AppCompatEditText
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/et_question6"
                 android:background="@drawable/question_rec"
@@ -400,7 +400,7 @@
                 android:minHeight="100dp"
                 android:textSize="@dimen/text_caption"
                 android:padding="@dimen/padding_smaller"
-                android:layout_marginTop="@dimen/margin_extra_small"
+                android:layout_margin="@dimen/margin_extra_small"
                 app:layout_constraintTop_toBottomOf="@+id/tv_question6"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"/>
@@ -415,7 +415,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/et_question6"
                 app:layout_constraintStart_toStartOf="@id/et_question1"/>
             <androidx.appcompat.widget.AppCompatEditText
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/iv_answer6"
                 android:maxLength="35"
@@ -423,7 +423,7 @@
                 android:textSize="@dimen/text_caption"
                 android:background="@drawable/answer_rec"
                 android:padding="@dimen/padding_extra_small"
-                android:layout_marginTop="@dimen/margin_extra_small"
+                android:layout_margin="@dimen/margin_extra_small"
                 app:layout_constraintTop_toBottomOf="@+id/tv_answer6"
                 app:layout_constraintStart_toStartOf="@+id/et_question1"/>
 
@@ -449,7 +449,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_quiz7"
                 app:layout_constraintStart_toStartOf="@+id/tv_quiz1"/>
             <androidx.appcompat.widget.AppCompatEditText
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/et_question7"
                 android:background="@drawable/question_rec"
@@ -460,7 +460,7 @@
                 android:minHeight="100dp"
                 android:textSize="@dimen/text_caption"
                 android:padding="@dimen/padding_smaller"
-                android:layout_marginTop="@dimen/margin_extra_small"
+                android:layout_margin="@dimen/margin_extra_small"
                 app:layout_constraintTop_toBottomOf="@+id/tv_question7"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"/>
@@ -475,7 +475,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/et_question7"
                 app:layout_constraintStart_toStartOf="@id/et_question1"/>
             <androidx.appcompat.widget.AppCompatEditText
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/iv_answer7"
                 android:maxLength="35"
@@ -483,7 +483,7 @@
                 android:textSize="@dimen/text_caption"
                 android:background="@drawable/answer_rec"
                 android:padding="@dimen/padding_extra_small"
-                android:layout_marginTop="@dimen/margin_extra_small"
+                android:layout_margin="@dimen/margin_extra_small"
                 app:layout_constraintTop_toBottomOf="@+id/tv_answer7"
                 app:layout_constraintStart_toStartOf="@+id/et_question1"/>
 
@@ -509,7 +509,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_quiz8"
                 app:layout_constraintStart_toStartOf="@+id/tv_quiz1"/>
             <androidx.appcompat.widget.AppCompatEditText
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/et_question8"
                 android:background="@drawable/question_rec"
@@ -520,7 +520,7 @@
                 android:minHeight="100dp"
                 android:textSize="@dimen/text_caption"
                 android:padding="@dimen/padding_smaller"
-                android:layout_marginTop="@dimen/margin_extra_small"
+                android:layout_margin="@dimen/margin_extra_small"
                 app:layout_constraintTop_toBottomOf="@+id/tv_question8"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"/>
@@ -535,7 +535,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/et_question8"
                 app:layout_constraintStart_toStartOf="@id/et_question1"/>
             <androidx.appcompat.widget.AppCompatEditText
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/iv_answer8"
                 android:maxLength="35"
@@ -543,7 +543,7 @@
                 android:textSize="@dimen/text_caption"
                 android:background="@drawable/answer_rec"
                 android:padding="@dimen/padding_extra_small"
-                android:layout_marginTop="@dimen/margin_extra_small"
+                android:layout_margin="@dimen/margin_extra_small"
                 app:layout_constraintTop_toBottomOf="@+id/tv_answer8"
                 app:layout_constraintStart_toStartOf="@+id/et_question1"/>
 
@@ -569,7 +569,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_quiz9"
                 app:layout_constraintStart_toStartOf="@+id/tv_quiz1"/>
             <androidx.appcompat.widget.AppCompatEditText
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/et_question9"
                 android:background="@drawable/question_rec"
@@ -580,7 +580,7 @@
                 android:minHeight="100dp"
                 android:textSize="@dimen/text_caption"
                 android:padding="@dimen/padding_smaller"
-                android:layout_marginTop="@dimen/margin_extra_small"
+                android:layout_margin="@dimen/margin_extra_small"
                 app:layout_constraintTop_toBottomOf="@+id/tv_question9"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"/>
@@ -595,7 +595,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/et_question9"
                 app:layout_constraintStart_toStartOf="@id/et_question1"/>
             <androidx.appcompat.widget.AppCompatEditText
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/iv_answer9"
                 android:maxLength="35"
@@ -603,7 +603,7 @@
                 android:textSize="@dimen/text_caption"
                 android:background="@drawable/answer_rec"
                 android:padding="@dimen/padding_extra_small"
-                android:layout_marginTop="@dimen/margin_extra_small"
+                android:layout_margin="@dimen/margin_extra_small"
                 app:layout_constraintTop_toBottomOf="@+id/tv_answer9"
                 app:layout_constraintStart_toStartOf="@+id/et_question1"/>
 
@@ -629,7 +629,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_quiz10"
                 app:layout_constraintStart_toStartOf="@+id/tv_quiz1"/>
             <androidx.appcompat.widget.AppCompatEditText
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/et_question10"
                 android:background="@drawable/question_rec"
@@ -640,7 +640,7 @@
                 android:minHeight="100dp"
                 android:textSize="@dimen/text_caption"
                 android:padding="@dimen/padding_smaller"
-                android:layout_marginTop="@dimen/margin_extra_small"
+                android:layout_margin="@dimen/margin_extra_small"
                 app:layout_constraintTop_toBottomOf="@+id/tv_question10"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"/>
@@ -655,7 +655,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/et_question10"
                 app:layout_constraintStart_toStartOf="@id/et_question1"/>
             <androidx.appcompat.widget.AppCompatEditText
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/iv_answer10"
                 android:maxLength="35"
@@ -663,10 +663,23 @@
                 android:textSize="@dimen/text_caption"
                 android:background="@drawable/answer_rec"
                 android:padding="@dimen/padding_extra_small"
-                android:layout_marginTop="@dimen/margin_extra_small"
-                android:layout_marginBottom="@dimen/margin_extra_smaller"
+                android:layout_margin="@dimen/margin_extra_small"
                 app:layout_constraintTop_toBottomOf="@+id/tv_answer10"
                 app:layout_constraintStart_toStartOf="@+id/et_question1"/>
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_background"
+                android:text="@string/make_quiz_share"
+                app:layout_constraintTop_toBottomOf="@+id/iv_answer10"
+                android:textColor="@color/green"
+                android:textSize="@dimen/text_smaller"
+                android:elevation="15dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginBottom="50dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

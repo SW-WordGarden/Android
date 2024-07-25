@@ -35,6 +35,7 @@
     <string name="quiz_friend">친구랑 풀기</string>
     <string name="quiz_custom"><u>퀴즈 만들러 가기</u></string>
 
+    <string name="make_quiz_share">친구에게 공유하러 가기</string>
     <string name="make_quiz_title">퀴즈 만들기</string>
     <string name="make_quiz_input_name">퀴즈 이름을 작성해 주세요.</string>
     <string name="make_quiz_question">문제</string>
