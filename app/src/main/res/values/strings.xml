@@ -41,6 +41,18 @@
     <string name="make_quiz_question">문제</string>
     <string name="make_quiz_answer">답</string>
 
+    <!-- word -->
+    <string name="word_title">단어 학습</string>
+    <string name="category_science">과학</string>
+    <string name="category_basic">기본어휘</string>
+    <string name="category_idiom">사자성어</string>
+    <string name="category_society">사회</string>
+    <string name="word_learning">단어 학습 시작하기</string>
+
+    <string name="detail_save">저장하기</string>
+    <string name="detail_back">돌아가기</string>
+    <string name="detail_next">넘어가기</string>
+
     <!-- keys -->
     <string name="naver_client_id">fYtp0C5dQV4enao8hy1Q</string>
     <string name="naver_client_secret">EFmMabs3BG</string>
