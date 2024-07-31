@@ -15,6 +15,8 @@ import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentMakeQuizBinding
 import com.sw.wordgarden.presentation.model.DefaultEvent
 import com.sw.wordgarden.presentation.model.SelfQuizModel
+import com.sw.wordgarden.presentation.ui.quiz.sharequiz.ShareQuizFragment
+import com.sw.wordgarden.presentation.ui.quiz.sharequiz.ShareQuizFragment.Companion.MAKE_TO_SHARE_BUNDLE_KEY
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -42,11 +44,15 @@ class MakeQuizFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        shareQuiz("testQuiz4")
-
         setupUi()
         setUpListener()
         setupObserver()
+
+        /**
+         * 테스트용 코드
+         * TODO: 퀴즈 공유 구현 후 테스트 코드 삭제
+         */
+        goShare("test title")
     }
 
     private fun setupUi() = with(binding) {
@@ -125,11 +131,24 @@ class MakeQuizFragment : Fragment() {
         Log.i(TAG, "서버에 퀴즈 추가 요청 : $title || $onlyQuizList")
         viewmodel.insertQuiz(title, onlyQuizList)
 
-        goShare()
+        goShare(title)
     }
 
-    private fun goShare() {
+    private fun goShare(title: String) {
         //findNavController().navigate(해당 화면)
+
+        /**
+         * nav 적용 전 임시 이동 코드
+         */
+        val bundle = Bundle()
+        bundle.putString(MAKE_TO_SHARE_BUNDLE_KEY, title)
+
+        val shareQuizFragment = ShareQuizFragment()
+        shareQuizFragment.arguments = bundle
+
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.cl_main, shareQuizFragment)
+            .commit()
     }
 
     override fun onDestroyView() {

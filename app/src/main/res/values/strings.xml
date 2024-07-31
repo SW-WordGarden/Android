@@ -4,7 +4,6 @@
     <!-- uid -->
     <string name="uid_msg_fail_check">내부 데이터 읽기에 실패했습니다.</string>
 
-
     <!-- login -->
     <string name="login_google">구글로 계속하기</string>
     <string name="login_naver">네이버로 계속하기</string>
@@ -49,6 +48,15 @@
 
     <string name="share_quiz_title">퀴즈 공유하기</string>
     <string name="share_quiz_description">친구랑 같이 퀴즈를 풀어보세요!</string>
+    <string name="share_quiz_no_friends">아직 친구가 없어요!</string>
+    <string name="share_quiz_msg_fail_load_friends">친구 목록 불러오기에 실패했습니다.</string>
+    <string name="share_quiz_msg_share">친구에게 방금 만든 퀴즈를 공유할게요!</string>
+    <string name="share_quiz_msg_fail_to_share">퀴즈 공유에 실패했어요.</string>
+    <string name="share_quiz_msg_success_sharing">친구에게 퀴즈를 공유했어요!</string>
+
+    <!-- common -->
+    <string name="common_positive">네</string>
+    <string name="common_negative">아니오</string>
 
     <!-- keys -->
     <string name="naver_client_id">fYtp0C5dQV4enao8hy1Q</string>
