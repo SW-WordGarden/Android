@@ -83,6 +83,20 @@ class ServerDataSourceImpl @Inject constructor(
         }
     }
 
+    override suspend fun shareQuiz(quizTitle: String, friendUid: String) {
+        try {
+            val uid = getUid()
+
+            val response = service.shareQuiz(uid!!, quizTitle, friendUid)
+            if (!response.isSuccessful) {
+                throw HttpException(response)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            throw e
+        }
+    }
+
     //words
     override suspend fun insertLikedWord(word: WordDto) {
         TODO("Not yet implemented")

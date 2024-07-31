@@ -36,8 +36,11 @@ interface Service {
     //    @POST("login/login")
     suspend fun reportFriend(@Body friendId: String, contents: String): Response<Unit>
 
-    @GET("/user/friendlist/{uid}")
+    @GET("user/friendlist/{uid}")
     suspend fun getFriendList(@Path("uid") uid: String): Response<List<UserDto>>
+
+    @POST("sq/share") //TODO: 서버 구현 시 수정
+    suspend fun shareQuiz(@Body uid: String, quizTitle: String, friendId: String): Response<Unit>
 
     //word
     //    @POST("login/login")
