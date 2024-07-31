@@ -19,6 +19,7 @@ interface ServerDataSource {
     suspend fun deleteFriend(friendId: String)
     suspend fun reportFriend(friendId: String, contents: String)
     suspend fun getFriendList(): List<UserDto>?
+    suspend fun shareQuiz(quizTitle: String, friendUid: String)
 
     //words
     suspend fun insertLikedWord(word: WordDto)

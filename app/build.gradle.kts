@@ -82,6 +82,10 @@ dependencies {
     //Splash
     implementation(libs.androidx.core.splashscreen)
 
+    // Glide
+    implementation (libs.glide)
+    annotationProcessor(libs.glide.compiler)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

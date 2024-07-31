@@ -15,6 +15,8 @@ import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentMakeQuizBinding
 import com.sw.wordgarden.presentation.model.DefaultEvent
 import com.sw.wordgarden.presentation.model.SelfQuizModel
+import com.sw.wordgarden.presentation.ui.quiz.sharequiz.ShareQuizFragment
+import com.sw.wordgarden.presentation.ui.quiz.sharequiz.ShareQuizFragment.Companion.MAKE_TO_SHARE_BUNDLE_KEY
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -29,7 +31,8 @@ class MakeQuizFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewmodel: MakeQuizViewModel by viewModels()
-    private val onlyQuizList: List<SelfQuizModel> = List(10) { SelfQuizModel("test", "test") }
+
+    private val onlyQuizList: List<SelfQuizModel> = List(10) { SelfQuizModel("", "") }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,8 +44,6 @@ class MakeQuizFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        shareQuiz("testQuiz4")
 
         setupUi()
         setUpListener()
@@ -125,11 +126,28 @@ class MakeQuizFragment : Fragment() {
         Log.i(TAG, "서버에 퀴즈 추가 요청 : $title || $onlyQuizList")
         viewmodel.insertQuiz(title, onlyQuizList)
 
-        goShare()
+        goShare(title)
     }
 
-    private fun goShare() {
+    private fun goShare(title: String) {
         //findNavController().navigate(해당 화면)
+
+        /**
+         * test code
+         * TODO: nav 개발 후 테스트 코드 삭제
+         */
+        val bundle = Bundle()
+        bundle.putString(MAKE_TO_SHARE_BUNDLE_KEY, title)
+
+        val shareQuizFragment = ShareQuizFragment()
+        shareQuizFragment.arguments = bundle
+
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.cl_main, shareQuizFragment)
+            .commit()
+        /**
+         * test code end
+         */
     }
 
     override fun onDestroyView() {

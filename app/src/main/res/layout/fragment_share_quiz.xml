@@ -44,19 +44,17 @@
         android:id="@+id/cl_share_quiz_inner"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:paddingTop="@dimen/padding_extra_larger"
-        android:paddingStart="24dp"
-        android:paddingEnd="24dp"
         android:background="@drawable/bg_rec_background_50"
+        android:paddingStart="@dimen/padding_medium"
+        android:paddingTop="@dimen/padding_extra_larger"
+        android:paddingEnd="@dimen/padding_medium"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cl_share_quiz_top_bar"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@+id/cl_share_quiz_top_bar">
 
         <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/linearLayout"
+            android:id="@+id/ll_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_small"
@@ -77,7 +75,7 @@
                 android:src="@drawable/ic_finder" />
 
             <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/tv_share_quiz_input_title"
+                android:id="@+id/et_share_quiz_input_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/light_gray"
@@ -93,11 +91,23 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:paddingTop="@dimen/padding_large"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-            tools:itemCount="10"
+            app:layout_constraintTop_toBottomOf="@+id/ll_search"
             tools:listitem="@layout/item_friends_share" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_share_quiz_no_friends"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_extra_larger"
+            android:text="@string/share_quiz_no_friends"
+            android:textColor="@color/gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ll_search" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
