@@ -35,15 +35,26 @@
     <string name="quiz_friend">친구랑 풀기</string>
     <string name="quiz_custom"><u>퀴즈 만들러 가기</u></string>
 
-    <string name="make_quiz_share">친구에게 공유하러 가기</string>
+    <string name="make_quiz_share">친구에게 공유하기</string>
     <string name="make_quiz_title">퀴즈 만들기</string>
     <string name="make_quiz_input_name">퀴즈 이름을 작성해 주세요.</string>
-    <string name="make_quiz_question">문제</string>
+    <string name="make_quiz_question_title">문제</string>
     <string name="make_quiz_answer">답</string>
+    <string name="make_quiz_next">다음</string>
+    <string name="make_quiz_msg_fail_make_quiz">퀴즈 만들기를 실패했어요.</string>
+    <string name="make_quiz_msg_need_question_answer">문제와 정답을 모두 입력해주세요.</string>
+    <string name="make_quiz_msg_need_title">퀴즈 이름을 입력해주세요.</string>
+    <string name="make_quiz_msg_need_all_check">모든 문제와 정답을 입력하였는지 확인해주세요.</string>
+    <string name="make_quiz_msg_duplication_quiz_title">동일한 이름의 퀴즈가 존재합니다. 퀴즈 이름을 변경해주세요!</string>
+
+    <string name="share_quiz_title">퀴즈 공유하기</string>
+    <string name="share_quiz_description">친구랑 같이 퀴즈를 풀어보세요!</string>
 
     <!-- keys -->
     <string name="naver_client_id">fYtp0C5dQV4enao8hy1Q</string>
     <string name="naver_client_secret">EFmMabs3BG</string>
     <string name="kakao_native_key">9132f18301634afbec5f2618e16f5f09</string>
     <string name="kakao_native_key_kakao">kakao9132f18301634afbec5f2618e16f5f09</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

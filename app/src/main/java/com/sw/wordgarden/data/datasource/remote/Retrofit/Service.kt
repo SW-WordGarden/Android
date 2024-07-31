@@ -53,7 +53,7 @@ interface Service {
     suspend fun getWeeklyWordList(@Body uid: String): Response<List<WordDto>>
 
     //quiz
-    //    @POST("login/login")
+    @POST("sq/create")
     suspend fun insertQuizList(@Body quizList: QuizListDto): Response<Unit>
 
     //    @POST("login/login")

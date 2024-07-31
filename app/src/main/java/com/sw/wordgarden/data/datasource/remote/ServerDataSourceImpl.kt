@@ -1,5 +1,7 @@
 package com.sw.wordgarden.data.datasource.remote
 
+import android.util.Log
+import com.sw.wordgarden.data.datasource.local.LocalDataAuth
 import com.sw.wordgarden.data.datasource.remote.Retrofit.Service
 import com.sw.wordgarden.data.dto.QuizListDto
 import com.sw.wordgarden.data.dto.SignUpDto
@@ -11,8 +13,12 @@ import java.util.Date
 import javax.inject.Inject
 
 class ServerDataSourceImpl @Inject constructor(
-    private val service: Service
+    private val service: Service,
+    private val localDataAuth: LocalDataAuth
 ) : ServerDataSource {
+
+    private val TAG = "ServerDataSourceImpl"
+
     override suspend fun insertUser(signUpDto: SignUpDto) {
         try {
             val response = service.insertUser(signUpDto)
@@ -80,7 +86,22 @@ class ServerDataSourceImpl @Inject constructor(
     }
 
     override suspend fun insertQuizList(quizList: QuizListDto) {
-        TODO("Not yet implemented")
+        try {
+            val uid = getUid()
+            val quizListData = quizList.copy(
+                uid = uid
+            )
+
+            Log.i(TAG, "서버에 전달한 퀴즈 데이터 : $quizListData")
+
+            val response = service.insertQuizList(quizListData)
+            if (!response.isSuccessful) {
+                throw HttpException(response)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            throw e
+        }
     }
 
     override suspend fun deleteQuizList(quizListId: String) {
@@ -114,4 +135,7 @@ class ServerDataSourceImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
+    private suspend fun getUid(): String? {
+        return localDataAuth.getUid()
+    }
 }
