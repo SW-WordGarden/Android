@@ -30,14 +30,17 @@ class MainActivity : AppCompatActivity() {
 
         setupSplash()
         setupUi()
-//        goLogin()
+//        goLogin() //test를 위해 주석처리
 
         /**
-         * 테스트용 화면 이동 코드
+         * test code
          * TODO: nav 개발 후 테스트 코드 삭제
          */
         goQuiz()
 //        goMy()
+        /**
+         * test code end
+         */
     }
 
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {

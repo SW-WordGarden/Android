@@ -31,7 +31,8 @@ class MakeQuizFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewmodel: MakeQuizViewModel by viewModels()
-    private val onlyQuizList: List<SelfQuizModel> = List(10) { SelfQuizModel("test", "test") }
+
+    private val onlyQuizList: List<SelfQuizModel> = List(10) { SelfQuizModel("", "") }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,12 +48,6 @@ class MakeQuizFragment : Fragment() {
         setupUi()
         setUpListener()
         setupObserver()
-
-        /**
-         * 테스트용 코드
-         * TODO: 퀴즈 공유 구현 후 테스트 코드 삭제
-         */
-        goShare("test title")
     }
 
     private fun setupUi() = with(binding) {
@@ -138,7 +133,8 @@ class MakeQuizFragment : Fragment() {
         //findNavController().navigate(해당 화면)
 
         /**
-         * nav 적용 전 임시 이동 코드
+         * test code
+         * TODO: nav 개발 후 테스트 코드 삭제
          */
         val bundle = Bundle()
         bundle.putString(MAKE_TO_SHARE_BUNDLE_KEY, title)
@@ -149,6 +145,9 @@ class MakeQuizFragment : Fragment() {
         parentFragmentManager.beginTransaction()
             .replace(R.id.cl_main, shareQuizFragment)
             .commit()
+        /**
+         * test code end
+         */
     }
 
     override fun onDestroyView() {
