@@ -1,12 +1,9 @@
 package com.sw.wordgarden.data.dto
 
-import java.util.Date
+import com.google.gson.annotations.SerializedName
 
 data class QuizDto(
-    val id: String?,
-    val question: String?,
-    val answer: String?,
-    val answerNumber: Int?,
-    val check: Boolean?,
-    val checkTime: Date?,
+    @SerializedName("question") val question: String?,
+    @SerializedName("answer") val answer: String?,
+    @SerializedName("sqQnum") val answerNumber: Int?,
 )

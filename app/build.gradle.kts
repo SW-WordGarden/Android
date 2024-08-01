@@ -66,8 +66,11 @@ dependencies {
 
     implementation(libs.androidx.datastore.preferences)
 
-    // CircleImageView
+    //CircleImageView
     implementation(libs.circleimageview)
+
+    //ViewPager2
+    implementation(libs.androidx.viewpager2)
 
     //네이버 로그인
     implementation(libs.oauth)
@@ -78,6 +81,10 @@ dependencies {
 
     //Splash
     implementation(libs.androidx.core.splashscreen)
+
+    // Glide
+    implementation (libs.glide)
+    annotationProcessor(libs.glide.compiler)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

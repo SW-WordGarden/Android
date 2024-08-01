@@ -36,8 +36,11 @@ interface Service {
     //    @POST("login/login")
     suspend fun reportFriend(@Body friendId: String, contents: String): Response<Unit>
 
-    //    @POST("login/login")
-    suspend fun getFriendList(@Body uid: String): Response<List<UserDto>>
+    @GET("user/friendlist/{uid}")
+    suspend fun getFriendList(@Path("uid") uid: String): Response<List<UserDto>>
+
+    @POST("sq/share") //TODO: 서버 구현 시 수정
+    suspend fun shareQuiz(@Body uid: String, quizTitle: String, friendId: String): Response<Unit>
 
     //word
     //    @POST("login/login")
@@ -53,7 +56,7 @@ interface Service {
     suspend fun getWeeklyWordList(@Body uid: String): Response<List<WordDto>>
 
     //quiz
-    //    @POST("login/login")
+    @POST("sq/create")
     suspend fun insertQuizList(@Body quizList: QuizListDto): Response<Unit>
 
     //    @POST("login/login")

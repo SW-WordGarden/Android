@@ -1,6 +1,7 @@
 package com.sw.wordgarden.data.repository
 
 import com.sw.wordgarden.data.datasource.remote.ServerDataSource
+import com.sw.wordgarden.data.mapper.ServerMapper.toDto
 import com.sw.wordgarden.domain.entity.QuizListEntity
 import com.sw.wordgarden.domain.repository.QuizRepository
 import java.util.Date
@@ -10,7 +11,7 @@ class QuizRepositoryImpl @Inject constructor(
     private val serverDataSource: ServerDataSource
 ) : QuizRepository {
     override suspend fun insertQuizList(quizList: QuizListEntity) {
-        TODO("Not yet implemented")
+        serverDataSource.insertQuizList(quizList.toDto())
     }
 
     override suspend fun deleteQuizList(quizListId: String) {
