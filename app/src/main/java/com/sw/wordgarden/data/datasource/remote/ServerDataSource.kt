@@ -34,6 +34,8 @@ interface ServerDataSource {
     suspend fun getQuizListAllType(): QuizListDto? //각 타입별 5개씩
     suspend fun getQuizListMadeByUser(): List<QuizListDto>?
     suspend fun getQuizListDoneByUserAndPeriod(startDate: Date, endDate: Date): List<QuizListDto>?
+    suspend fun getTodayQuiz(): QuizListDto?
+    suspend fun sendQuizAnswer(quizResult: QuizListDto)
 
     //garden
     suspend fun updateTree(treeId: String)

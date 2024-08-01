@@ -18,6 +18,8 @@ import com.sw.wordgarden.domain.usecase.GetQuizListMadeByUserUseCase
 import com.sw.wordgarden.domain.usecase.GetQuizListMadeByUserUseCaseImpl
 import com.sw.wordgarden.domain.usecase.GetQuizeListDoneByUserAndPeriodUseCase
 import com.sw.wordgarden.domain.usecase.GetQuizeListDoneByUserAndPeriodUseCaseImpl
+import com.sw.wordgarden.domain.usecase.GetTodayQuizUseCase
+import com.sw.wordgarden.domain.usecase.GetTodayQuizUseCaseImpl
 import com.sw.wordgarden.domain.usecase.GetTreeListUseCase
 import com.sw.wordgarden.domain.usecase.GetTreeListUseCaseImpl
 import com.sw.wordgarden.domain.usecase.GetUidUseCase
@@ -36,6 +38,8 @@ import com.sw.wordgarden.domain.usecase.ReportFriendUseCase
 import com.sw.wordgarden.domain.usecase.ReportFriendUseCaseImpl
 import com.sw.wordgarden.domain.usecase.SaveUidUseCase
 import com.sw.wordgarden.domain.usecase.SaveUidUseCaseImpl
+import com.sw.wordgarden.domain.usecase.SendQuizAnswerUseCase
+import com.sw.wordgarden.domain.usecase.SendQuizAnswerUseCaseImpl
 import com.sw.wordgarden.domain.usecase.ShareQuizUseCase
 import com.sw.wordgarden.domain.usecase.ShareQuizUseCaseImpl
 import com.sw.wordgarden.domain.usecase.UpdateTreeUseCase
@@ -107,6 +111,12 @@ abstract class UseCaseModule {
 
     @Binds
     @ViewModelScoped
+    abstract fun bindGetTodayQuizUseCase(
+        getTodayQuizUseCaseImpl: GetTodayQuizUseCaseImpl
+    ): GetTodayQuizUseCase
+
+    @Binds
+    @ViewModelScoped
     abstract fun bindGetTreeListUseCase(
         getTreeListUseCaseImpl: GetTreeListUseCaseImpl
     ): GetTreeListUseCase
@@ -158,6 +168,12 @@ abstract class UseCaseModule {
     abstract fun bindSaveUidUseCase(
         saveUidUseCaseImpl: SaveUidUseCaseImpl
     ): SaveUidUseCase
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindSendQuizAnswerUseCase(
+        sendQuizAnswerUseCaseImpl: SendQuizAnswerUseCaseImpl
+    ): SendQuizAnswerUseCase
 
     @Binds
     @ViewModelScoped
