@@ -88,7 +88,7 @@
                 android:id="@+id/tv_quiz_support_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_extra_smaller"
+                android:layout_marginEnd="@dimen/margin_extra_smaller"
                 android:text="@string/quiz_support_name"
                 android:textSize="@dimen/text_smaller"
                 app:layout_constraintLeft_toRightOf="@+id/tv_quiz_user_name"
