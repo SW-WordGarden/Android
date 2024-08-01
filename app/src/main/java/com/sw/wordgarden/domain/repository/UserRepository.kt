@@ -8,4 +8,5 @@ interface UserRepository {
     suspend fun deleteUser()
     suspend fun updateUser(userDto: UserEntity)
     suspend fun getUserInfo(uid: String): UserEntity?
+    suspend fun sendFirebaseToken(token: String)
 }

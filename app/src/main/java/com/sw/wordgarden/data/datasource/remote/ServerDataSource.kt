@@ -13,6 +13,7 @@ interface ServerDataSource {
     suspend fun deleteUser()
     suspend fun updateUser(userDto: UserDto)
     suspend fun getUserInfo(uid: String): UserDto?
+    suspend fun sendFirebaseToken(token: String)
 
     //friends
     suspend fun insertFriend(friendId: String)

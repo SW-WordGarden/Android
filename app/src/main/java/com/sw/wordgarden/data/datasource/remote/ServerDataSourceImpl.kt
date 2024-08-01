@@ -54,6 +54,19 @@ class ServerDataSourceImpl @Inject constructor(
         }
     }
 
+    override suspend fun sendFirebaseToken(token: String) {
+        try {
+            val uid = getUid()
+
+            val response = service.sendFirebaseToken(uid!!, token)
+            if (!response.isSuccessful) {
+                throw HttpException(response)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
     //friends
     override suspend fun insertFriend(friendId: String) {
         TODO("Not yet implemented")
