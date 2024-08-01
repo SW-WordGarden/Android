@@ -30,7 +30,7 @@
             android:id="@+id/bt_quiz_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/back_arrow_white"
+            android:src="@drawable/ic_back"
             app:layout_constraintBottom_toBottomOf="@+id/tv_quiz_title"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tv_quiz_title" />
@@ -62,7 +62,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/total_count"
-                android:text=" / 10"
+                android:text=" / 40"
                 android:textSize="@dimen/text_content"
                 android:textColor="@color/green"
                 app:layout_constraintTop_toTopOf="@+id/count"

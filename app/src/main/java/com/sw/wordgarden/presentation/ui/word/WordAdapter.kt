@@ -12,11 +12,11 @@ import com.sw.wordgarden.presentation.model.WordModel
 class WordAdapter( private val onItemClick : (WordModel) -> Unit) : ListAdapter<WordModel, WordAdapter.ItemViewHolder>(
     object : DiffUtil.ItemCallback<WordModel>(){
         override fun areItemsTheSame(oldItem: WordModel, newItem: WordModel): Boolean {
-            return oldItem.id == newItem.id
+            return oldItem == newItem
         }
 
         override fun areContentsTheSame(oldItem: WordModel, newItem: WordModel): Boolean {
-            return oldItem.id == newItem.id
+            return oldItem == newItem
         }
     }
 ) {
