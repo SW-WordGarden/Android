@@ -30,13 +30,13 @@ class MainActivity : AppCompatActivity() {
 
         setupSplash()
         setupUi()
-//        goLogin() //test를 위해 주석처리
+        goLogin()
 
         /**
          * test code
          * TODO: nav 개발 후 테스트 코드 삭제
          */
-        goQuiz()
+//        goQuiz()
 //        goMy()
         /**
          * test code end

@@ -1,5 +1,7 @@
 package com.sw.wordgarden.app.di
 
+import com.sw.wordgarden.domain.usecase.CheckQuizResultUseCase
+import com.sw.wordgarden.domain.usecase.CheckQuizResultUseCaseImpl
 import com.sw.wordgarden.domain.usecase.DeleteFriendUseCase
 import com.sw.wordgarden.domain.usecase.DeleteFriendUseCaseImpl
 import com.sw.wordgarden.domain.usecase.DeleteQuizListUseCase
@@ -55,6 +57,13 @@ import dagger.hilt.android.scopes.ViewModelScoped
 @Module
 @InstallIn(ViewModelComponent::class)
 abstract class UseCaseModule {
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindCheckQuizResultUseCase(
+        checkQuizResultUseCaseImpe: CheckQuizResultUseCaseImpl
+    ): CheckQuizResultUseCase
+
     @Binds
     @ViewModelScoped
     abstract fun bindDeleteFriendUseCase(
