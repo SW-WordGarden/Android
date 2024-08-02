@@ -1,6 +1,5 @@
 package com.sw.wordgarden.presentation.ui.login.onboarding
 
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -17,7 +16,6 @@ import com.sw.wordgarden.databinding.FragmentOnboardingBinding
 import com.sw.wordgarden.domain.entity.SignUpEntity
 import com.sw.wordgarden.presentation.model.DefaultEvent
 import com.sw.wordgarden.presentation.ui.home.HomeFragment
-import com.sw.wordgarden.presentation.ui.main.MainActivity
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest

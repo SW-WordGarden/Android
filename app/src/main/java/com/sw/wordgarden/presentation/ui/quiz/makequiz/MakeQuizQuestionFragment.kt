@@ -6,12 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.sw.wordgarden.R
-import com.sw.wordgarden.databinding.FragmentQuizQuestionBinding
+import com.sw.wordgarden.databinding.FragmentMakeQuizQuestionBinding
 import com.sw.wordgarden.presentation.util.ToastMaker
 
-class QuizQuestionFragment : Fragment() {
+class MakeQuizQuestionFragment : Fragment() {
 
-    private var _binding: FragmentQuizQuestionBinding? = null
+    private var _binding: FragmentMakeQuizQuestionBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var question: String
@@ -33,7 +33,7 @@ class QuizQuestionFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentQuizQuestionBinding.inflate(inflater, container, false)
+        _binding = FragmentMakeQuizQuestionBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -83,7 +83,7 @@ class QuizQuestionFragment : Fragment() {
         const val QUIZ_SIZE = 10
 
         fun newInstance(question: String, answer: String, position: Int) =
-            QuizQuestionFragment().apply {
+            MakeQuizQuestionFragment().apply {
                 arguments = Bundle().apply {
                     putString(QUESTION_KEY, question)
                     putString(ANSWER_KEY, answer)
