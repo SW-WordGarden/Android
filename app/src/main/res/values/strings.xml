@@ -4,6 +4,9 @@
     <!-- uid -->
     <string name="uid_msg_fail_check">내부 데이터 읽기에 실패했습니다.</string>
 
+    <!-- token -->
+    <string name="token_fail_to_send">알람을 위한 토큰이 정상처리되지 않았습니다.</string>
+
     <!-- login -->
     <string name="login_google">구글로 계속하기</string>
     <string name="login_naver">네이버로 계속하기</string>
@@ -63,6 +66,12 @@
     <string name="naver_client_secret">EFmMabs3BG</string>
     <string name="kakao_native_key">9132f18301634afbec5f2618e16f5f09</string>
     <string name="kakao_native_key_kakao">kakao9132f18301634afbec5f2618e16f5f09</string>
+
+    <!-- push message -->
+    <string name="default_notification_channel_id">channel_id_wordgarden</string>
+    <string name="push_share_quiz_title">친구에게 퀴즈를 공유 받았어요!</string>
+
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

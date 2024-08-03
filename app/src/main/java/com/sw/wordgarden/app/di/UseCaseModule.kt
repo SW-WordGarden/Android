@@ -36,6 +36,8 @@ import com.sw.wordgarden.domain.usecase.ReportFriendUseCase
 import com.sw.wordgarden.domain.usecase.ReportFriendUseCaseImpl
 import com.sw.wordgarden.domain.usecase.SaveUidUseCase
 import com.sw.wordgarden.domain.usecase.SaveUidUseCaseImpl
+import com.sw.wordgarden.domain.usecase.SendFirebaseTokenUseCase
+import com.sw.wordgarden.domain.usecase.SendFirebaseTokenUseCaseImpl
 import com.sw.wordgarden.domain.usecase.ShareQuizUseCase
 import com.sw.wordgarden.domain.usecase.ShareQuizUseCaseImpl
 import com.sw.wordgarden.domain.usecase.UpdateTreeUseCase
