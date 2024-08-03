@@ -26,6 +26,9 @@ interface Service {
     @GET("login/user/{uid}")
     suspend fun getUserInfo(@Path("uid") uid: String): Response<UserDto>
 
+    @POST("user/token") //TODO: 서버 구현 시 수정
+    suspend fun sendFirebaseToken(@Body uid: String, token: String): Response<UserDto>
+
     //friend
     //    @POST("login/login")
     suspend fun insertFriend(@Body friendId: String): Response<Unit>

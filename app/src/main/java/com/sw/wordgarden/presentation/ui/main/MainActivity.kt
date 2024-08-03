@@ -1,23 +1,32 @@
 package com.sw.wordgarden.presentation.ui.main
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.sw.wordgarden.R
+import com.sw.wordgarden.presentation.ui.main.fcm.FirebaseMessagingService
 import com.sw.wordgarden.databinding.ActivityMainBinding
 import com.sw.wordgarden.presentation.ui.login.login.LoginFragment
 import com.sw.wordgarden.presentation.ui.mypage.MypageFragment
 import com.sw.wordgarden.presentation.ui.quiz.quiz.QuizFragment
+import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
+    private val TAG = "MainActivity"
 
     private val binding: ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
@@ -28,6 +37,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        permissionCheck()
+        setupMessaging()
         setupSplash()
         setupUi()
         goLogin()
@@ -48,6 +59,43 @@ class MainActivity : AppCompatActivity() {
             getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
         return super.dispatchTouchEvent(ev)
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            5000 -> {
+                if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                    ToastMaker.make(this, "Permission is denied")
+                } else {
+                    ToastMaker.make(this, "Permission is granted")
+                }
+            }
+        }
+    }
+
+    private fun permissionCheck() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            val permissionCheck = ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.POST_NOTIFICATIONS
+            )
+            if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                    5000
+                )
+            }
+        }
+    }
+
+    private fun setupMessaging() {
+        FirebaseMessagingService().getFirebaseToken()
     }
 
     private fun setupSplash() {

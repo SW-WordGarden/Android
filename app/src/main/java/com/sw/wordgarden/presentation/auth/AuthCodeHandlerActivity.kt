@@ -1,4 +1,4 @@
-package com.sw.wordgarden.app
+package com.sw.wordgarden.presentation.auth
 
 import android.os.Bundle
 import android.util.Log
