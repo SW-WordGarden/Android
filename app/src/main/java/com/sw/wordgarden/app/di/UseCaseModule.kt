@@ -182,6 +182,12 @@ abstract class UseCaseModule {
 
     @Binds
     @ViewModelScoped
+    abstract fun bindSendFirebaseTokenUseCase(
+        sendFirebaseTokenUseCaseImpl: SendFirebaseTokenUseCaseImpl
+    ): SendFirebaseTokenUseCase
+
+    @Binds
+    @ViewModelScoped
     abstract fun bindSendQuizAnswerUseCase(
         sendQuizAnswerUseCaseImpl: SendQuizAnswerUseCaseImpl
     ): SendQuizAnswerUseCase
