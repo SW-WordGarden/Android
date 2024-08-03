@@ -54,6 +54,12 @@
     <string name="share_quiz_msg_fail_to_share">퀴즈 공유에 실패했어요.</string>
     <string name="share_quiz_msg_success_sharing">친구에게 퀴즈를 공유했어요!</string>
 
+    <!-- garden -->
+    <string name="garden_user_name">님의 정원</string>
+
+    <string name="shop_title">상점</string>
+    <string name="shop_use_water_pot">물뿌리개를 사용해보세요!</string>
+
     <!-- common -->
     <string name="common_positive">네</string>
     <string name="common_negative">아니오</string>
