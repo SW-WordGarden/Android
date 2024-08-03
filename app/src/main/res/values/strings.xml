@@ -30,12 +30,14 @@
 
     <!-- quiz -->
     <string name="quiz_title">퀴즈 게임</string>
-    <string name="quiz_support_name">님을 위한</string>
-    <string name="quiz_support_name2">맞춤 퀴즈가 준비되어있어요.</string>
+    <string name="quiz_welcome">님을 위한\n맞춤 퀴즈가 준비되어있어요.</string>
     <string name="quiz_support_btn">친구가 만든 퀴즈를 맞혀보세요!</string>
+    <string name="quiz_all_clear">축하합니다!\n모든 퀴즈를 다 풀었어요!</string>
     <string name="quiz_alone">혼자서 풀기</string>
     <string name="quiz_friend">친구랑 풀기</string>
     <string name="quiz_custom"><u>퀴즈 만들러 가기</u></string>
+    <string name="quiz_msg_fail_get_daily_limit">일일 퀴즈 횟수 받아오기에 실패했어요.</string>
+    <string name="quiz_msg_use_count">일일 퀴즈 횟수가 차감됩니다.\n퀴즈를 받아올까요?</string>
 
     <string name="make_quiz_share">친구에게 공유하기</string>
     <string name="make_quiz_title">퀴즈 만들기</string>
@@ -61,6 +63,7 @@
     <string name="start_quiz_made_by">님이 만든 퀴즈</string>
     <string name="start_quiz_start">퀴즈 시작하기</string>
     <string name="start_quiz_msg_fail_get_quiz">퀴즈 받아오기에 실패했어요.</string>
+    <string name="start_quiz_msg_fail_save_daily_limit">일일 퀴즈 횟수 저장에 실패했어요.</string>
 
     <string name="solve_quiz_next">다음</string>
     <string name="solve_quiz_submit">제출하기</string>
