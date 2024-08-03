@@ -1,12 +1,12 @@
 package com.sw.wordgarden.domain.usecase
 
-import com.sw.wordgarden.domain.repository.UidRepository
+import com.sw.wordgarden.domain.repository.DataStoreRepository
 import javax.inject.Inject
 
 class GetUidUseCaseImpl @Inject constructor(
-    private val uidRepository: UidRepository
+    private val dataStoreRepository: DataStoreRepository
 ) : GetUidUseCase {
     override suspend fun invoke(): String? {
-        return uidRepository.getUid()
+        return dataStoreRepository.getUid()
     }
 }
