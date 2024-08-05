@@ -1,4 +1,4 @@
-package com.sw.wordgarden.data.datasource.remote.Retrofit
+package com.sw.wordgarden.data.datasource.remote.retrofit
 
 import com.sw.wordgarden.data.dto.QuizListDto
 import com.sw.wordgarden.data.dto.SignUpDto
@@ -79,6 +79,12 @@ interface Service {
         @Body startDate: Date,
         endDate: Date
     ): Response<List<QuizListDto>>
+
+    @GET("wq/wq") //TODO: 서버 구현 시 수정
+    suspend fun getTodayQuiz(@Path("uid") uid: String): Response<QuizListDto> //TODO: 서버 구현 시 수정
+
+    @POST("wq/{wqid}/answer") //TODO: 서버 구현 시 수정
+    suspend fun sendQuizAnswer(@Body uid: String, quizResult: QuizListDto): Response<Unit> //TODO: 서버 구현 시 수정
 
     //garden
     //    @POST("login/login")

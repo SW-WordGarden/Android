@@ -2,7 +2,7 @@ package com.sw.wordgarden.data.datasource.remote
 
 import android.util.Log
 import com.sw.wordgarden.data.datasource.local.LocalDataAuth
-import com.sw.wordgarden.data.datasource.remote.Retrofit.Service
+import com.sw.wordgarden.data.datasource.remote.retrofit.Service
 import com.sw.wordgarden.data.dto.QuizListDto
 import com.sw.wordgarden.data.dto.SignUpDto
 import com.sw.wordgarden.data.dto.TreeDto
@@ -168,6 +168,35 @@ class ServerDataSourceImpl @Inject constructor(
         endDate: Date
     ): List<QuizListDto>? {
         TODO("Not yet implemented")
+    }
+
+    override suspend fun getTodayQuiz(): QuizListDto? {
+        return try {
+            val uid = getUid()
+
+            val response = service.getTodayQuiz(uid!!)
+            if (!response.isSuccessful) {
+                throw HttpException(response)
+            } else {
+                response.body()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+    override suspend fun sendQuizAnswer(quizResult: QuizListDto) {
+        try {
+            val uid = getUid()
+
+            val response = service.sendQuizAnswer(uid!!, quizResult)
+            if (!response.isSuccessful) {
+                throw HttpException(response)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     //garden

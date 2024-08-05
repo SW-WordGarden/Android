@@ -8,6 +8,9 @@ import android.view.ViewGroup
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentQuizBinding
 import com.sw.wordgarden.presentation.ui.quiz.makequiz.MakeQuizFragment
+import com.sw.wordgarden.presentation.ui.quiz.sharequiz.ShareQuizFragment
+import com.sw.wordgarden.presentation.ui.quiz.solvequiz.SolveQuizFragment
+import com.sw.wordgarden.presentation.ui.quiz.startquiz.StartQuizFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -42,9 +45,25 @@ class QuizFragment : Fragment() {
         }
         btnQuizAlone.setOnClickListener {
             //findNavController().navigate(해당 화면)
+
+            /**
+             * test용 이동 코드
+             */
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.cl_quiz_main, StartQuizFragment())
+                .addToBackStack(null)
+                .commit()
         }
         btnQuizFriend.setOnClickListener {
             //findNavController().navigate(해당 화면)
+
+            /**
+             * test용 이동 코드
+             */
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.cl_quiz_main, ShareQuizFragment())
+                .addToBackStack(null)
+                .commit()
         }
         btnMakeQuiz.setOnClickListener {
             //findNavController().navigate(해당 화면)

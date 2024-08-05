@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".presentation.ui.quiz.makequiz.QuizQuestionFragment">
+    tools:context=".presentation.ui.quiz.makequiz.MakeQuizQuestionFragment">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_make_quiz_item_question_title"
@@ -15,7 +15,7 @@
         android:text="@string/make_quiz_question_title"
         android:textColor="@color/green"
         android:textSize="@dimen/text_caption"
-        app:layout_constraintStart_toStartOf="@+id/tv_make_quiz_item_quiz"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatEditText
@@ -39,6 +39,7 @@
         android:id="@+id/tv_make_quiz_item_answer_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_small"
         android:layout_marginTop="@dimen/margin_smaller"
         android:text="@string/make_quiz_answer"
         android:textColor="@color/green"

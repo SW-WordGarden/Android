@@ -14,7 +14,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentMakeQuizBinding
 import com.sw.wordgarden.presentation.model.DefaultEvent
-import com.sw.wordgarden.presentation.model.SelfQuizModel
+import com.sw.wordgarden.presentation.model.QuestionAnswerModel
 import com.sw.wordgarden.presentation.ui.quiz.sharequiz.ShareQuizFragment
 import com.sw.wordgarden.presentation.ui.quiz.sharequiz.ShareQuizFragment.Companion.MAKE_TO_SHARE_BUNDLE_KEY
 import com.sw.wordgarden.presentation.util.ToastMaker
@@ -32,7 +32,7 @@ class MakeQuizFragment : Fragment() {
 
     private val viewmodel: MakeQuizViewModel by viewModels()
 
-    private val onlyQuizList: List<SelfQuizModel> = List(10) { SelfQuizModel("", "") }
+    private val onlyQuizList: List<QuestionAnswerModel> = List(10) { QuestionAnswerModel("", "") }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

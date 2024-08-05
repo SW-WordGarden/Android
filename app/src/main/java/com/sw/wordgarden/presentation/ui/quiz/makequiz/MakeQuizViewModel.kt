@@ -9,7 +9,7 @@ import com.sw.wordgarden.domain.entity.QuizResultEntity
 import com.sw.wordgarden.domain.usecase.InsertQuizListUseCase
 import com.sw.wordgarden.presentation.model.DefaultEvent
 import com.sw.wordgarden.presentation.model.ErrorMessage
-import com.sw.wordgarden.presentation.model.SelfQuizModel
+import com.sw.wordgarden.presentation.model.QuestionAnswerModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -26,9 +26,9 @@ class MakeQuizViewModel @Inject constructor(
     private val _insertQuizEvent = MutableSharedFlow<DefaultEvent>()
     val insertQuizEvent: SharedFlow<DefaultEvent> = _insertQuizEvent.asSharedFlow()
 
-    fun insertQuiz(title: String, selfQuizModelList: List<SelfQuizModel>) {
+    fun insertQuiz(title: String, questionAnswerModelList: List<QuestionAnswerModel>) {
         val quizListEntity =
-            QuizListEntity(title, convertQuizModel(selfQuizModelList), createEmptyResult())
+            QuizListEntity(title, convertQuizModel(questionAnswerModelList), createEmptyResult())
 
         viewModelScope.launch {
             runCatching {
@@ -50,10 +50,10 @@ class MakeQuizViewModel @Inject constructor(
         }
     }
 
-    private fun convertQuizModel(selfQuizModelList: List<SelfQuizModel>): List<QuizEntity> {
+    private fun convertQuizModel(questionAnswerModelList: List<QuestionAnswerModel>): List<QuizEntity> {
         val quizEntityList: MutableList<QuizEntity> = mutableListOf()
 
-        selfQuizModelList.forEach { selfQuizModel ->
+        questionAnswerModelList.forEach { selfQuizModel ->
             val quizEntity = QuizEntity(
                 question = selfQuizModel.question,
                 answer = selfQuizModel.answer,

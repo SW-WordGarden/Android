@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.enableEdgeToEdge
@@ -20,7 +21,6 @@ import com.sw.wordgarden.databinding.ActivityMainBinding
 import com.sw.wordgarden.presentation.ui.login.login.LoginFragment
 import com.sw.wordgarden.presentation.ui.mypage.MypageFragment
 import com.sw.wordgarden.presentation.ui.quiz.quiz.QuizFragment
-import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -70,9 +70,9 @@ class MainActivity : AppCompatActivity() {
         when (requestCode) {
             5000 -> {
                 if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                    ToastMaker.make(this, "Permission is denied")
+                    Log.i(TAG, "Notification permission is denied")
                 } else {
-                    ToastMaker.make(this, "Permission is granted")
+                    Log.i(TAG, "Notification permission is granted")
                 }
             }
         }

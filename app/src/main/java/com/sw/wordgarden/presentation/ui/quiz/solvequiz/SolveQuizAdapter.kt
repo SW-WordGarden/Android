@@ -1,12 +1,12 @@
-package com.sw.wordgarden.presentation.ui.quiz.makequiz
+package com.sw.wordgarden.presentation.ui.quiz.solvequiz
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.sw.wordgarden.presentation.model.QuestionAnswerModel
+import com.sw.wordgarden.domain.entity.QuizEntity
 
-class MakeQuizAdapter(
+class SolveQuizAdapter(
     fragment: Fragment,
-    private val quizList: List<QuestionAnswerModel>,
+    private val quizList: List<QuizEntity>,
     private val onNextClicked: (position: Int, question: String, answer: String, isFull: Boolean) -> Unit
 ) : FragmentStateAdapter(fragment) {
 
@@ -15,7 +15,7 @@ class MakeQuizAdapter(
     override fun createFragment(position: Int): Fragment {
         val quizItem = quizList[position]
 
-        return MakeQuizQuestionFragment.newInstance(quizItem.question, quizItem.answer, position).apply {
+        return SolveQuizQuestionFragment.newInstance(quizItem.question ?: "", quizItem.answer ?: "", position).apply {
             setOnNextClickedListener { position, question, answer, isFull ->
                 onNextClicked(position, question, answer, isFull)
             }

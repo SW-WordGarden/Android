@@ -1,17 +1,19 @@
-package com.sw.wordgarden.presentation.ui.quiz.makequiz
+package com.sw.wordgarden.presentation.ui.quiz.solvequiz
 
 import android.os.Bundle
+import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import com.sw.wordgarden.R
-import com.sw.wordgarden.databinding.FragmentQuizQuestionBinding
+import com.sw.wordgarden.databinding.FragmentSolveQuizQuestionBinding
 import com.sw.wordgarden.presentation.util.ToastMaker
 
-class QuizQuestionFragment : Fragment() {
+class SolveQuizQuestionFragment : Fragment() {
 
-    private var _binding: FragmentQuizQuestionBinding? = null
+    private var _binding: FragmentSolveQuizQuestionBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var question: String
@@ -33,7 +35,7 @@ class QuizQuestionFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentQuizQuestionBinding.inflate(inflater, container, false)
+        _binding = FragmentSolveQuizQuestionBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -45,24 +47,35 @@ class QuizQuestionFragment : Fragment() {
     }
 
     private fun setupUi() = with(binding) {
+        tvSolveQuizItemQuestion.text = question
+
         if (position < QUIZ_SIZE - 1) {
-            btnMakeQuizNext.text = getString(R.string.make_quiz_next)
+            btnSolveQuizSubmit.text = getString(R.string.solve_quiz_next)
         } else {
-            btnMakeQuizNext.text = getString(R.string.make_quiz_share)
+            btnSolveQuizSubmit.text = getString(R.string.solve_quiz_submit)
         }
     }
 
     private fun setupListener() = with(binding) {
-        btnMakeQuizNext.setOnClickListener {
-            val newQuestion = etMakeQuizItemQuestion.text.toString()
-            val newAnswer = etMakeQuizItemAnswer.text.toString()
-
-            if (newQuestion.isEmpty() || newAnswer.isEmpty()) {
-                onNextClicked?.invoke(position, newQuestion, newAnswer, false)
-
-                ToastMaker.make(requireContext(), R.string.make_quiz_msg_need_question_answer)
+        etSolveQuizItemFillAnswer.setOnEditorActionListener { _, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE || event.keyCode == KeyEvent.KEYCODE_ENTER) {
+                val userAnswer = etSolveQuizItemFillAnswer.text.toString()
+                onNextClicked?.invoke(position, question, userAnswer, true)
+                true
             } else {
-                onNextClicked?.invoke(position, newQuestion, newAnswer, true)
+                false
+            }
+        }
+
+        btnSolveQuizSubmit.setOnClickListener {
+            val answer = etSolveQuizItemFillAnswer.text.toString()
+
+            if (answer.isEmpty()) {
+                onNextClicked?.invoke(position, "", answer, false)
+
+                ToastMaker.make(requireContext(), R.string.solve_quiz_msg_need_answer)
+            } else {
+                onNextClicked?.invoke(position, "", answer, true)
             }
         }
     }
@@ -83,7 +96,7 @@ class QuizQuestionFragment : Fragment() {
         const val QUIZ_SIZE = 10
 
         fun newInstance(question: String, answer: String, position: Int) =
-            QuizQuestionFragment().apply {
+            SolveQuizQuestionFragment().apply {
                 arguments = Bundle().apply {
                     putString(QUESTION_KEY, question)
                     putString(ANSWER_KEY, answer)
