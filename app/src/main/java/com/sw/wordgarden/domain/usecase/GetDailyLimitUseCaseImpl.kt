@@ -3,10 +3,10 @@ package com.sw.wordgarden.domain.usecase
 import com.sw.wordgarden.domain.repository.DataStoreRepository
 import javax.inject.Inject
 
-class SaveUidUseCaseImpl @Inject constructor(
+class GetDailyLimitUseCaseImpl @Inject constructor(
     private val dataStoreRepository: DataStoreRepository
-) : SaveUidUseCase {
-    override suspend fun invoke(uid: String) {
-        dataStoreRepository.saveUid(uid)
+) : GetDailyLimitUseCase {
+    override suspend fun invoke(): Int? {
+        return dataStoreRepository.getDailyLimit()
     }
 }

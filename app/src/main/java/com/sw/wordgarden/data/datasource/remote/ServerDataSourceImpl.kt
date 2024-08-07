@@ -1,7 +1,7 @@
 package com.sw.wordgarden.data.datasource.remote
 
 import android.util.Log
-import com.sw.wordgarden.data.datasource.local.LocalDataAuth
+import com.sw.wordgarden.data.datasource.local.LocalDataSource
 import com.sw.wordgarden.data.datasource.remote.retrofit.Service
 import com.sw.wordgarden.data.dto.QuizListDto
 import com.sw.wordgarden.data.dto.SignUpDto
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 class ServerDataSourceImpl @Inject constructor(
     private val service: Service,
-    private val localDataAuth: LocalDataAuth
+    private val localDataSource: LocalDataSource
 ) : ServerDataSource {
 
     private val TAG = "ServerDataSourceImpl"
@@ -209,6 +209,6 @@ class ServerDataSourceImpl @Inject constructor(
     }
 
     private suspend fun getUid(): String? {
-        return localDataAuth.getUid()
+        return localDataSource.getUid()
     }
 }

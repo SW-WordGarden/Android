@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -31,6 +32,7 @@ class StartQuizFragment : Fragment() {
 
     private val viewmodel: StartQuizViewModel by viewModels()
     private lateinit var quiz: QuizListEntity
+    private var limitCount = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,9 +45,17 @@ class StartQuizFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        getDataFromQuiz()
         setupListener()
 //        setupObserver() //TODO:api 개발 완료 시 주석 해제
         setupObserverTest() //api 개발 전까지 test용으로 실행되는 함수
+    }
+
+    private fun getDataFromQuiz() {
+        setFragmentResultListener(QUIZ_TO_START_BUNDLE_KEY) { _, bundle ->
+            limitCount = bundle.getInt(QUIZ_TO_START_BUNDLE_KEY)
+            viewmodel.saveDailyLimit(limitCount)
+        }
     }
 
     private fun setupObserverTest() {
@@ -60,6 +70,17 @@ class StartQuizFragment : Fragment() {
         )
 
         setupUi()
+
+        lifecycleScope.launch {
+            viewmodel.saveDailyLimitEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
+                when (event) {
+                    is DefaultEvent.Failure -> {
+                        ToastMaker.make(requireContext(), event.msg)
+                    }
+                    DefaultEvent.Success -> { }
+                }
+            }
+        }
     }
 
     private fun setupListener() = with(binding) {
@@ -109,6 +130,17 @@ class StartQuizFragment : Fragment() {
                 }
             }
         }
+
+        lifecycleScope.launch {
+            viewmodel.saveDailyLimitEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
+                when (event) {
+                    is DefaultEvent.Failure -> {
+                        ToastMaker.make(requireContext(), event.msg)
+                    }
+                    DefaultEvent.Success -> { }
+                }
+            }
+        }
     }
 
     private fun setupUi() = with(binding) {
@@ -118,5 +150,9 @@ class StartQuizFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        const val QUIZ_TO_START_BUNDLE_KEY = "QUIZ_TO_START_BUNDLE_KEY"
     }
 }

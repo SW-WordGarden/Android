@@ -1,12 +1,12 @@
 package com.sw.wordgarden.domain.usecase
 
-import com.sw.wordgarden.domain.repository.UidRepository
+import com.sw.wordgarden.domain.repository.DataStoreRepository
 import javax.inject.Inject
 
 class DeleteUidUseCaseImpl @Inject constructor(
-    private val uidRepository: UidRepository
+    private val dataStoreRepository: DataStoreRepository
 ) : DeleteUidUseCase {
     override suspend fun invoke() {
-        uidRepository.deleteUid()
+        dataStoreRepository.deleteUid()
     }
 }
