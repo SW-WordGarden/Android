@@ -6,6 +6,7 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -62,6 +63,12 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.findNavController()
         binding.bottomNavigation.setupWithNavController(navController)
+
+        navController.addOnDestinationChangedListener{ _ , destination, _ ->
+            if(destination.id == R.id.homeFragment)
+                binding.bottomNavigation.visibility = View.VISIBLE
+            else binding.bottomNavigation.visibility = View.GONE
+        }
     }
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
         val imm: InputMethodManager =
