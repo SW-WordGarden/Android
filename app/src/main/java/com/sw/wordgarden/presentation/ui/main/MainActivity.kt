@@ -15,6 +15,9 @@ import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.sw.wordgarden.R
 import com.sw.wordgarden.presentation.ui.main.fcm.FirebaseMessagingService
 import com.sw.wordgarden.databinding.ActivityMainBinding
@@ -42,6 +45,7 @@ class MainActivity : AppCompatActivity() {
         setupSplash()
         setupUi()
         goLogin()
+        setNavigation()
 
         /**
          * test code
@@ -54,6 +58,11 @@ class MainActivity : AppCompatActivity() {
          */
     }
 
+    private fun setNavigation(){
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.findNavController()
+        binding.bottomNavigation.setupWithNavController(navController)
+    }
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
         val imm: InputMethodManager =
             getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager

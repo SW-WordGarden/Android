@@ -7,6 +7,13 @@
     <!-- token -->
     <string name="token_fail_to_send">알람을 위한 토큰이 정상처리되지 않았습니다.</string>
 
+    <!-- navigation -->
+    <string name="bottom_word">단어</string>
+    <string name="bottom_quiz">퀴즈</string>
+    <string name="bottom_mypage">마이페이지</string>
+    <string name="bottom_home">홈</string>
+    <string name="bottom_garden">정원</string>
+
     <!-- login -->
     <string name="login_google">구글로 계속하기</string>
     <string name="login_naver">네이버로 계속하기</string>
