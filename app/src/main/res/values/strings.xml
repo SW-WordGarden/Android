@@ -60,6 +60,8 @@
     <string name="shop_title">상점</string>
     <string name="shop_use_water_pot">물뿌리개를 사용해보세요!</string>
 
+    <string name="book_user_book">님의 도감</string>
+
     <!-- common -->
     <string name="common_positive">네</string>
     <string name="common_negative">아니오</string>

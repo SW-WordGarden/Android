@@ -91,17 +91,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/bg_top_category"
         app:layout_constraintLeft_toLeftOf="@+id/bg_top_category"
         app:layout_constraintRight_toRightOf="@+id/bg_top_category"/>
-    
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:id="@+id/bt_coin"
-        android:background="@null"
-        android:src="@drawable/ic_bot_coin"
-        android:scaleType="centerCrop"
-        android:layout_margin="@dimen/margin_medium"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+
     <androidx.appcompat.widget.AppCompatImageButton
         android:layout_width="60dp"
         android:layout_height="60dp"
@@ -110,8 +100,8 @@
         android:src="@drawable/ic_bot_water"
         android:scaleType="centerCrop"
         android:layout_marginBottom="@dimen/margin_small"
-        app:layout_constraintRight_toRightOf="@id/bt_coin"
-        app:layout_constraintBottom_toTopOf="@+id/bt_coin"/>
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
     <androidx.appcompat.widget.AppCompatImageButton
         android:layout_width="45dp"
         android:layout_height="45dp"
@@ -122,6 +112,24 @@
         android:layout_margin="@dimen/margin_medium"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="220dp"
+        android:layout_height="300dp"
+        android:id="@+id/iv_flower"
+        app:layout_constraintTop_toBottomOf="@+id/iv_top_water"
+        app:layout_constraintBottom_toTopOf="@+id/tv_user_name"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_flower_name"
+        android:text="name"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_text"
+        app:layout_constraintTop_toBottomOf="@+id/iv_flower"
+        app:layout_constraintLeft_toLeftOf="@+id/iv_flower"
+        app:layout_constraintRight_toRightOf="@+id/iv_flower"/>
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -132,8 +140,7 @@
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/tv_user_garden"
-        app:layout_constraintBottom_toBottomOf="@+id/bt_coin"
-        app:layout_constraintTop_toTopOf="@+id/bt_coin"/>
+        app:layout_constraintTop_toTopOf="@+id/bt_cancel"/>
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -143,6 +150,5 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/tv_user_name"
         app:layout_constraintBottom_toBottomOf="@+id/tv_user_name"/>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
