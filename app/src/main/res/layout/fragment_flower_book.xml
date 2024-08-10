@@ -17,7 +17,19 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0/12"
+        android:id="@+id/flower_chapter"
+        android:text="0"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_caption"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="@+id/total_chapter"
+        app:layout_constraintRight_toLeftOf="@+id/total_chapter"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/total_chapter"
+        android:text="/12"
         android:textColor="@color/white"
         android:textSize="@dimen/text_caption"
         android:textStyle="bold"
@@ -221,10 +233,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/page_count"
-        android:text="1/12"
+        android:text="1"
+        android:textSize="@dimen/text_text"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/page"
+        app:layout_constraintLeft_toRightOf="@+id/page"
+        app:layout_constraintRight_toLeftOf="@+id/page_total"/>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/page_total"
+        android:text="/12"
         android:textSize="@dimen/text_text"
         android:textColor="@color/white"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/page"
+        app:layout_constraintLeft_toRightOf="@+id/page_count"
         app:layout_constraintBottom_toBottomOf="@+id/page"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

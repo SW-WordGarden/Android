@@ -116,6 +116,7 @@
         android:layout_width="220dp"
         android:layout_height="300dp"
         android:id="@+id/iv_flower"
+        android:src="@drawable/testtree"
         app:layout_constraintTop_toBottomOf="@+id/iv_top_water"
         app:layout_constraintBottom_toTopOf="@+id/tv_user_name"
         app:layout_constraintLeft_toLeftOf="parent"
