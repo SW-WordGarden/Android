@@ -44,7 +44,7 @@ class MypageFragment : Fragment() {
                 .addToBackStack(null)
                 .commit()
         }
-        ivMyQuizzesMore.setOnClickListener {
+        ivMyMadeQuizMore.setOnClickListener {
             parentFragmentManager.beginTransaction()
                 .replace(R.id.cl_my_main, MyQuizFragment())
                 .addToBackStack(null)

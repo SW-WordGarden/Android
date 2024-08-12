@@ -27,6 +27,13 @@
     <string name="mypage_point_title">포인트</string>
     <string name="mypage_rank_title">등수</string>
     <string name="mypage_weekly_score_title">이번 주 퀴즈 성적</string>
+    <string name="mypage_friend">친구 관리</string>
+    <string name="mypage_my_made_quiz">내가 낸 퀴즈 확인</string>
+    <string name="mypage_my_made_quiz_title">내가 낸 퀴즈</string>
+    <string name="mypage_my_solved_quiz">내가 푼 퀴즈 확인</string>
+    <string name="mypage_my_solved_quiz_title">풀었던 퀴즈</string>
+    <string name="mypage_my_taken_quiz">내가 받은 퀴즈 확인</string>
+    <string name="mypage_my_taken_quiz_title">받은 퀴즈</string>
 
     <!-- quiz -->
     <string name="quiz_title">퀴즈 게임</string>
