@@ -1,24 +1,24 @@
-package com.sw.wordgarden.presentation.ui.mypage
+package com.sw.wordgarden.presentation.ui.mypage.mymadequiz
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.sw.wordgarden.databinding.FragmentWeeklyBinding
+import com.sw.wordgarden.databinding.FragmentMyMadeQuizBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class WeeklyFragment : Fragment() {
+class MyMadeQuizFragment : Fragment() {
 
-    private var _binding: FragmentWeeklyBinding? = null
+    private var _binding: FragmentMyMadeQuizBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentWeeklyBinding.inflate(inflater, container, false)
+        _binding = FragmentMyMadeQuizBinding.inflate(inflater, container, false)
         return binding.root
     }
 

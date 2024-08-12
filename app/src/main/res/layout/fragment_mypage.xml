@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_gradient_my"
-    tools:context=".presentation.ui.mypage.MypageFragment">
+    tools:context=".presentation.ui.mypage.mypage.MypageFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_my_bar"
@@ -34,12 +34,12 @@
             android:textColor="@color/green"
             android:textSize="@dimen/text_caption"
             app:layout_constraintBottom_toBottomOf="@+id/iv_my_back"
-            app:layout_constraintEnd_toStartOf="@+id/iv_my_menu"
+            app:layout_constraintEnd_toStartOf="@+id/iv_my_setting"
             app:layout_constraintStart_toEndOf="@+id/iv_my_back"
             app:layout_constraintTop_toTopOf="@+id/iv_my_back" />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_my_menu"
+            android:id="@+id/iv_my_setting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_small"
@@ -163,7 +163,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_extra_large"
-                android:background="@drawable/bg_rectangle_15"
+                android:background="@drawable/bg_rec_radius_15"
                 android:padding="@dimen/padding_medium"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -234,7 +234,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_extra_small"
-                android:background="@drawable/bg_rectangle_15"
+                android:background="@drawable/bg_rec_radius_15"
                 android:padding="@dimen/padding_medium"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -276,7 +276,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_extra_small"
-                android:background="@drawable/bg_rectangle_15"
+                android:background="@drawable/bg_rec_radius_15"
                 android:padding="@dimen/padding_medium"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -318,7 +318,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_extra_small"
-                android:background="@drawable/bg_rectangle_15"
+                android:background="@drawable/bg_rec_radius_15"
                 android:padding="@dimen/padding_medium"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -341,8 +341,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_small"
                 android:layout_marginTop="@dimen/margin_small"
-                android:textSize="@dimen/text_mini"
                 android:text="@string/mypage_friend"
+                android:textSize="@dimen/text_mini"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ll_my_taken_quiz" />
 

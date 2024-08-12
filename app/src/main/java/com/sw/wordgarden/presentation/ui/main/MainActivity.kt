@@ -19,7 +19,7 @@ import com.sw.wordgarden.R
 import com.sw.wordgarden.presentation.ui.main.fcm.FirebaseMessagingService
 import com.sw.wordgarden.databinding.ActivityMainBinding
 import com.sw.wordgarden.presentation.ui.login.login.LoginFragment
-import com.sw.wordgarden.presentation.ui.mypage.MypageFragment
+import com.sw.wordgarden.presentation.ui.mypage.mypage.MypageFragment
 import com.sw.wordgarden.presentation.ui.quiz.quiz.QuizFragment
 import dagger.hilt.android.AndroidEntryPoint
 

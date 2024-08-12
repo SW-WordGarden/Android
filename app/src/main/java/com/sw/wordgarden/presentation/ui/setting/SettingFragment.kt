@@ -1,4 +1,4 @@
-package com.sw.wordgarden.presentation.ui.mypage
+package com.sw.wordgarden.presentation.ui.setting
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

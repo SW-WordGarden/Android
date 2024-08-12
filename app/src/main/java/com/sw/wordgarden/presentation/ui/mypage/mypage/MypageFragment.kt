@@ -1,4 +1,4 @@
-package com.sw.wordgarden.presentation.ui.mypage
+package com.sw.wordgarden.presentation.ui.mypage.mypage
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,6 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentMypageBinding
+import com.sw.wordgarden.presentation.ui.mypage.friends.FriendsFragment
+import com.sw.wordgarden.presentation.ui.mypage.mymadequiz.MyMadeQuizFragment
+import com.sw.wordgarden.presentation.ui.mypage.mysolvedquiz.MySolvedQuizFragment
+import com.sw.wordgarden.presentation.ui.mypage.mytakenquiz.MyTakenQuizFragment
+import com.sw.wordgarden.presentation.ui.mypage.weeklyquizcheck.WeeklyQuizCheckFragment
+import com.sw.wordgarden.presentation.ui.setting.SettingFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,21 +38,36 @@ class MypageFragment : Fragment() {
         ivMyBack.setOnClickListener {
 
         }
-        ivMyMenu.setOnClickListener {
-
+        ivMySetting.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.cl_my_main, SettingFragment())
+                .addToBackStack(null)
+                .commit()
         }
         ivMyEdit.setOnClickListener {
 
         }
         ivMyWeeklyScoreMore.setOnClickListener {
             parentFragmentManager.beginTransaction()
-                .replace(R.id.cl_my_main, WeeklyFragment())
+                .replace(R.id.cl_my_main, WeeklyQuizCheckFragment())
                 .addToBackStack(null)
                 .commit()
         }
         ivMyMadeQuizMore.setOnClickListener {
             parentFragmentManager.beginTransaction()
-                .replace(R.id.cl_my_main, MyQuizFragment())
+                .replace(R.id.cl_my_main, MyMadeQuizFragment())
+                .addToBackStack(null)
+                .commit()
+        }
+        ivMySolvedQuizMore.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.cl_my_main, MySolvedQuizFragment())
+                .addToBackStack(null)
+                .commit()
+        }
+        ivMyTakenQuizMore.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.cl_my_main, MyTakenQuizFragment())
                 .addToBackStack(null)
                 .commit()
         }

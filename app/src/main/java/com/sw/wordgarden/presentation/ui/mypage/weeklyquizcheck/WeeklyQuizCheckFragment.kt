@@ -1,24 +1,24 @@
-package com.sw.wordgarden.presentation.ui.mypage
+package com.sw.wordgarden.presentation.ui.mypage.weeklyquizcheck
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.sw.wordgarden.databinding.FragmentFriendsBinding
+import com.sw.wordgarden.databinding.FragmentWeeklyBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FriendsFragment : Fragment() {
+class WeeklyQuizCheckFragment : Fragment() {
 
-    private var _binding: FragmentFriendsBinding? = null
+    private var _binding: FragmentWeeklyBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentFriendsBinding.inflate(inflater, container, false)
+        _binding = FragmentWeeklyBinding.inflate(inflater, container, false)
         return binding.root
     }
 
