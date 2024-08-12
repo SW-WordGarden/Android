@@ -35,8 +35,6 @@
     <string name="mypage_rank_title">등수</string>
     <string name="mypage_weekly_score">이번 주 퀴즈 성적</string>
     <string name="mypage_weekly_score_title">이번주 틀린 단어</string>
-    <string name="mypage_my_made_quiz">내가 낸 퀴즈 확인</string>
-    <string name="mypage_my_made_quiz_title">내가 낸 퀴즈</string>
     <string name="mypage_my_solved_quiz">내가 푼 퀴즈 확인</string>
     <string name="mypage_my_solved_quiz_title">풀었던 퀴즈</string>
     <string name="mypage_my_taken_quiz">내가 받은 퀴즈 확인</string>
@@ -54,6 +52,13 @@
     <string name="mypage_friend_report_reason4">욕설/인신공격</string>
     <string name="mypage_friend_report_reason5">개인정보노출</string>
     <string name="mypage_friend_report_reason6">기타</string>
+
+    <string name="mypage_my_made_quiz">내가 낸 퀴즈 확인</string>
+    <string name="mypage_my_made_quiz_title">내가 낸 퀴즈</string>
+    <string name="mypage_my_made_quiz_no_quiz_list">아직 내가 만든 퀴즈가 없어요!</string>
+    <string name="mypage_my_made_quiz_msg_fail_load_quiz_title_list">내가 만든 퀴즈 목록 불러오기에 실패했습니다.</string>
+    <string name="mypage_my_made_quiz_msg_fail_load_quiz_list">내가 만든 퀴즈 불러오기에 실패했습니다.</string>
+
 
     <!-- setting -->
     <string name="setting_title">설정</string>
@@ -91,6 +96,7 @@
     <string name="make_quiz_msg_need_title">퀴즈 이름을 입력해주세요.</string>
     <string name="make_quiz_msg_need_all_check">모든 문제와 정답을 입력하였는지 확인해주세요.</string>
     <string name="make_quiz_msg_duplication_quiz_title">동일한 이름의 퀴즈가 존재합니다. 퀴즈 이름을 변경해주세요!</string>
+    <string name="make_quiz_msg_can_not_edit">내가 만든 커스텀 퀴즈는 확인만 가능해요!\n(수정 불가)</string>
 
     <string name="share_quiz_title">퀴즈 공유하기</string>
     <string name="share_quiz_description">친구랑 같이 퀴즈를 풀어보세요!</string>
@@ -124,6 +130,7 @@
     <!-- common -->
     <string name="common_positive">네</string>
     <string name="common_negative">아니오</string>
+    <string name="common_got_it">이해했어요.</string>
 
     <!-- keys -->
     <string name="naver_client_id">fYtp0C5dQV4enao8hy1Q</string>

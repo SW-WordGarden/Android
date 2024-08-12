@@ -17,6 +17,7 @@ class MakeQuizQuestionFragment : Fragment() {
     private lateinit var question: String
     private lateinit var answer: String
     private var position: Int = 0
+    private var enableMode = true
 
     private var onNextClicked: ((position: Int, question: String, answer: String, isFull: Boolean) -> Unit)? = null
 
@@ -53,6 +54,13 @@ class MakeQuizQuestionFragment : Fragment() {
     }
 
     private fun setupListener() = with(binding) {
+        if (!enableMode) {
+            etMakeQuizItemQuestion.isEnabled = false
+            etMakeQuizItemAnswer.isEnabled = false
+        }
+        etMakeQuizItemQuestion.setText(question)
+        etMakeQuizItemAnswer.setText(answer)
+
         btnMakeQuizNext.setOnClickListener {
             val newQuestion = etMakeQuizItemQuestion.text.toString()
             val newAnswer = etMakeQuizItemAnswer.text.toString()
@@ -82,8 +90,9 @@ class MakeQuizQuestionFragment : Fragment() {
         const val POSITION_KEY = "POSITION_KEY"
         const val QUIZ_SIZE = 10
 
-        fun newInstance(question: String, answer: String, position: Int) =
+        fun newInstance(isEnableMode: Boolean, question: String?, answer: String?, position: Int) =
             MakeQuizQuestionFragment().apply {
+                enableMode = isEnableMode
                 arguments = Bundle().apply {
                     putString(QUESTION_KEY, question)
                     putString(ANSWER_KEY, answer)

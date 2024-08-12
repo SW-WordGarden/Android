@@ -20,7 +20,9 @@
             app:destination="@id/onBoardingFragment">
             <argument
                 android:name="argsSignUpEntity"
-                app:argType="com.sw.wordgarden.domain.entity.SignUpEntity" />
+                android:defaultValue="@null"
+                app:argType="com.sw.wordgarden.domain.entity.SignUpEntity"
+                app:nullable="true" />
         </action>
         <argument
             android:name="argsSignUpEntity"
@@ -77,10 +79,17 @@
         tools:layout="@layout/fragment_make_quiz">
         <action
             android:id="@+id/action_makeQuizFragment_to_shareQuizFragment"
-            app:destination="@id/shareQuizFragment" />
+            app:destination="@id/shareQuizFragment">
+            <argument
+                android:name="argsTitle"
+                app:argType="string"
+                app:nullable="true" />
+        </action>
+
         <argument
-            android:name="argsTitle"
-            app:argType="string"
+            android:name="argsMyMadeQuiz"
+            android:defaultValue="@null"
+            app:argType="com.sw.wordgarden.presentation.model.QuizListModel"
             app:nullable="true" />
     </fragment>
     <fragment
@@ -182,7 +191,13 @@
         tools:layout="@layout/fragment_my_made_quiz">
         <action
             android:id="@+id/action_myMadeQuizFragment_to_makeQuizFragment"
-            app:destination="@id/makeQuizFragment" />
+            app:destination="@id/makeQuizFragment">
+            <argument
+                android:name="argsMyMadeQuiz"
+                android:defaultValue="@null"
+                app:argType="com.sw.wordgarden.presentation.model.QuizListModel"
+                app:nullable="true" />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/mySolvedQuizFragment"

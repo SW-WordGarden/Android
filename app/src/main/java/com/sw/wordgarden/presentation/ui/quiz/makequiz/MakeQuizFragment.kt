@@ -6,16 +6,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentMakeQuizBinding
 import com.sw.wordgarden.presentation.model.DefaultEvent
-import com.sw.wordgarden.presentation.model.QuestionAnswerModel
+import com.sw.wordgarden.presentation.model.QuizListModel
+import com.sw.wordgarden.presentation.model.QuizModel
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -30,8 +33,8 @@ class MakeQuizFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewmodel: MakeQuizViewModel by viewModels()
-
-    private val onlyQuizList: List<QuestionAnswerModel> = List(10) { QuestionAnswerModel("", "") }
+    private var quizListModelForCheck: List<QuizModel> = List(10) { QuizModel("", "", 0)}
+    private var enableMode = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,26 +47,53 @@ class MakeQuizFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupUi()
+        getData()
         setUpListener()
         setupObserver()
     }
 
-    private fun setupUi() = with(binding) {
-        val indicatorAdapter = IndicatorAdapter(onlyQuizList.size) { position ->
+    private fun getData() {
+        val args: MakeQuizFragmentArgs by navArgs()
+        val quizList = if (args.argsMyMadeQuiz == null) {
+            enableMode = true
+            QuizListModel("", List(10) { QuizModel("", "", 0)}, emptyList())
+        } else {
+            setConfirmDialog()
+            enableMode = false
+            args.argsMyMadeQuiz!!
+        }
+
+        setupUi(quizList)
+    }
+
+    private fun setConfirmDialog() {
+        val builder = AlertDialog.Builder(requireActivity())
+        builder.setMessage(R.string.make_quiz_msg_can_not_edit)
+        builder.setPositiveButton(R.string.common_got_it) { _, _ -> }
+        builder.show()
+    }
+
+    private fun setupUi(quizList: QuizListModel) = with(binding) {
+        if (!enableMode) { etMakeQuizInputTitle.isEnabled = false }
+        etMakeQuizInputTitle.setText(quizList.title)
+
+        val quizListModel = quizList.quiz!!
+        val indicatorAdapter = IndicatorAdapter(enableMode, quizListModel.size) { position ->
             vpMakeQuiz.setCurrentItem(position, true)
         }
-        val pagerAdapter = MakeQuizAdapter(this@MakeQuizFragment, onlyQuizList) { position, question, answer, isFull ->
-            onlyQuizList[position].question = question
-            onlyQuizList[position].answer = answer
+        val pagerAdapter = MakeQuizAdapter(this@MakeQuizFragment, enableMode, quizListModel) { position, question, answer, isFull ->
+            quizListModel[position].question = question
+            quizListModel[position].answer = answer
+            quizListModelForCheck[position].question = question
+            quizListModelForCheck[position].answer = answer
 
             if (isFull) {
                 indicatorAdapter.markAsFilled(position)
 
-                if (position < onlyQuizList.size - 1) {
+                if (position < quizListModel.size - 1) {
                     vpMakeQuiz.setCurrentItem(position + 1, true)
                 } else {
-                    checkQuiz()
+                    checkQuiz(quizListModelForCheck)
                 }
 
             } else {
@@ -106,14 +136,14 @@ class MakeQuizFragment : Fragment() {
         }
     }
 
-    private fun checkQuiz() {
+    private fun checkQuiz(quizListModelForCheck: List<QuizModel>) {
         val title = binding.etMakeQuizInputTitle.text.toString()
         if (title.isEmpty()) {
             ToastMaker.make(requireContext(), R.string.make_quiz_msg_need_title)
             return
         }
 
-        val hasEmptyValue = onlyQuizList.any { it.question.isEmpty() || it.answer.isEmpty() }
+        val hasEmptyValue = quizListModelForCheck.any { it.question.isNullOrEmpty() || it.answer.isNullOrEmpty() }
         if (hasEmptyValue) {
             ToastMaker.make(requireContext(), R.string.make_quiz_msg_need_all_check)
         } else {
@@ -122,8 +152,8 @@ class MakeQuizFragment : Fragment() {
     }
 
     private fun shareQuiz(title: String) {
-        Log.i(TAG, "서버에 퀴즈 추가 요청 : $title || $onlyQuizList")
-        viewmodel.insertQuiz(title, onlyQuizList)
+        Log.i(TAG, "서버에 퀴즈 추가 요청 : $title || $quizListModelForCheck")
+        viewmodel.insertQuiz(title, quizListModelForCheck)
 
         goShare(title)
     }
