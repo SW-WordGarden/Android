@@ -159,8 +159,36 @@ class ServerDataSourceImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun getQuizListMadeByUser(): List<QuizListDto>? {
-        TODO("Not yet implemented")
+    override suspend fun getQuizListMadeByUser(): List<String>? {
+        return try {
+            val uid = getUid()
+
+            val response = service.getQuizListMadeByUser(uid!!)
+            if (!response.isSuccessful) {
+                throw HttpException(response)
+            } else {
+                response.body()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+    override suspend fun getQuizListMadeByUserByTitle(title: String): QuizListDto? {
+        return try {
+            val uid = getUid()
+
+            val response = service.getQuizListMadeByUserByTitle(uid!!, title)
+            if (!response.isSuccessful) {
+                throw HttpException(response)
+            } else {
+                response.body()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
     }
 
     override suspend fun getQuizListDoneByUserAndPeriod(

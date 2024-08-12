@@ -8,7 +8,8 @@ interface QuizRepository {
     suspend fun deleteQuizList(quizListId: String)
     suspend fun getQuizListByType(type: Boolean): QuizListEntity?
     suspend fun getQuizListAllType(): QuizListEntity?
-    suspend fun getQuizListMadeByUser(): List<QuizListEntity>?
+    suspend fun getQuizListMadeByUser(): List<String>?
+    suspend fun getQuizListMadeByUserByTitle(title: String): QuizListEntity?
     suspend fun getQuizListDoneByUserAndPeriod(startDate: Date, endDate: Date): List<QuizListEntity>?
     suspend fun getTodayQuiz(): QuizListEntity?
     suspend fun sendQuizAnswer(quizResult: QuizListEntity)

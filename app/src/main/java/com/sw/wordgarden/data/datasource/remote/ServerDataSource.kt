@@ -5,6 +5,7 @@ import com.sw.wordgarden.data.dto.SignUpDto
 import com.sw.wordgarden.data.dto.TreeDto
 import com.sw.wordgarden.data.dto.UserDto
 import com.sw.wordgarden.data.dto.WordDto
+import com.sw.wordgarden.domain.entity.QuizListEntity
 import java.util.Date
 
 interface ServerDataSource {
@@ -33,7 +34,8 @@ interface ServerDataSource {
     suspend fun deleteQuizList(quizListId: String)
     suspend fun getQuizListByType(type: Boolean): QuizListDto? //0: 4지선다, 1: OX 퀴즈 (default: 0)
     suspend fun getQuizListAllType(): QuizListDto? //각 타입별 5개씩
-    suspend fun getQuizListMadeByUser(): List<QuizListDto>?
+    suspend fun getQuizListMadeByUser(): List<String>?
+    suspend fun getQuizListMadeByUserByTitle(title: String): QuizListDto?
     suspend fun getQuizListDoneByUserAndPeriod(startDate: Date, endDate: Date): List<QuizListDto>?
     suspend fun getTodayQuiz(): QuizListDto?
     suspend fun sendQuizAnswer(quizResult: QuizListDto)

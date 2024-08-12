@@ -20,6 +20,8 @@ import com.sw.wordgarden.domain.usecase.GetQuizListAllTypeUseCase
 import com.sw.wordgarden.domain.usecase.GetQuizListAllTypeUseCaseImpl
 import com.sw.wordgarden.domain.usecase.GetQuizListByTypeUseCase
 import com.sw.wordgarden.domain.usecase.GetQuizListByTypeUseCaseImpl
+import com.sw.wordgarden.domain.usecase.GetQuizListMadeByUserByTitleUseCase
+import com.sw.wordgarden.domain.usecase.GetQuizListMadeByUserByTitleUseCaseImpl
 import com.sw.wordgarden.domain.usecase.GetQuizListMadeByUserUseCase
 import com.sw.wordgarden.domain.usecase.GetQuizListMadeByUserUseCaseImpl
 import com.sw.wordgarden.domain.usecase.GetQuizeListDoneByUserAndPeriodUseCase
@@ -137,6 +139,12 @@ abstract class UseCaseModule {
     abstract fun bindGetQuizListMadeByUserUseCase(
         getQuizListMadeByUserUseCaseImpl: GetQuizListMadeByUserUseCaseImpl
     ): GetQuizListMadeByUserUseCase
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindGetQuizListMadeByUserByTitleUseCase(
+        getQuizListMadeByUserByTitleUseCaseImpl: GetQuizListMadeByUserByTitleUseCaseImpl
+    ): GetQuizListMadeByUserByTitleUseCase
 
     @Binds
     @ViewModelScoped

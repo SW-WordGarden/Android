@@ -27,8 +27,12 @@ class QuizRepositoryImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun getQuizListMadeByUser(): List<QuizListEntity>? {
-        TODO("Not yet implemented")
+    override suspend fun getQuizListMadeByUser(): List<String>? {
+        return serverDataSource.getQuizListMadeByUser()
+    }
+
+    override suspend fun getQuizListMadeByUserByTitle(title: String): QuizListEntity? {
+        return serverDataSource.getQuizListMadeByUserByTitle(title)?.toEntity()
     }
 
     override suspend fun getQuizListDoneByUserAndPeriod(startDate: Date, endDate: Date): List<QuizListEntity>? {

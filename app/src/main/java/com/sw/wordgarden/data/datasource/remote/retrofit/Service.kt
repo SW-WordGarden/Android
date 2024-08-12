@@ -71,8 +71,11 @@ interface Service {
     //    @POST("login/login")
     suspend fun getQuizListAllType(@Body uid: String): Response<QuizListDto>
 
-    //    @POST("login/login")
-    suspend fun getQuizListMadeByUser(@Body uid: String): Response<List<QuizListDto>>
+    @GET("sq/created/{uid}")
+    suspend fun getQuizListMadeByUser(@Path("uid") uid: String): Response<List<String>>
+
+    @GET("sq/created/{uid}/{title}")
+    suspend fun getQuizListMadeByUserByTitle(@Path("uid") uid: String, @Path("title") title: String): Response<QuizListDto>
 
     //    @POST("login/login")
     suspend fun getQuizListDoneByUserAndPeriod(
@@ -84,7 +87,10 @@ interface Service {
     suspend fun getTodayQuiz(@Path("uid") uid: String): Response<QuizListDto> //TODO: 서버 구현 시 수정
 
     @POST("wq/{wqid}/answer") //TODO: 서버 구현 시 수정
-    suspend fun sendQuizAnswer(@Body uid: String, quizResult: QuizListDto): Response<Unit> //TODO: 서버 구현 시 수정
+    suspend fun sendQuizAnswer(
+        @Body uid: String,
+        quizResult: QuizListDto
+    ): Response<Unit> //TODO: 서버 구현 시 수정
 
     //garden
     //    @POST("login/login")
