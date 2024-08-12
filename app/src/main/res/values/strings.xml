@@ -37,7 +37,6 @@
     <string name="mypage_friend">친구 관리</string>
     <string name="mypage_quick_start">바로가기</string>
 
-    <!-- friends -->
     <string name="mypage_friend_title">친구 관리</string>
     <string name="mypage_friend_url">친구 추가 링크</string>
     <string name="mypage_friend_msg_delete">정말 친구를 삭제하시겠습니까?</string>
@@ -48,6 +47,20 @@
     <string name="mypage_friend_report_reason4">욕설/인신공격</string>
     <string name="mypage_friend_report_reason5">개인정보노출</string>
     <string name="mypage_friend_report_reason6">기타</string>
+
+    <!-- setting -->
+    <string name="setting_title">설정</string>
+    <string name="setting_quiz">퀴즈 설정</string>
+    <string name="setting_hold_quiz">잠금화면 문제</string>
+    <string name="setting_agreement">이용 약관</string>
+    <string name="setting_logout">로그아웃</string>
+    <string name="setting_msg_logout">로그아웃 하시겠습니까?</string>
+    <string name="setting_msg_logout_yes">로그아웃</string>
+    <string name="setting_msg_logout_no">취소</string>
+    <string name="setting_withdrawal">회원탈퇴</string>
+    <string name="setting_msg_withdrawal">정말로 탈퇴하시겠습니까?</string>
+    <string name="setting_msg_withdrawal_yes">떠날래요</string>
+    <string name="setting_msg_withdrawal_no">더 써볼래요</string>
 
     <!-- quiz -->
     <string name="quiz_title">퀴즈 게임</string>

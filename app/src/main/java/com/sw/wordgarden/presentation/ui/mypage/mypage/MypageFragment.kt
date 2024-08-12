@@ -12,7 +12,7 @@ import com.sw.wordgarden.presentation.ui.mypage.mymadequiz.MyMadeQuizFragment
 import com.sw.wordgarden.presentation.ui.mypage.mysolvedquiz.MySolvedQuizFragment
 import com.sw.wordgarden.presentation.ui.mypage.mytakenquiz.MyTakenQuizFragment
 import com.sw.wordgarden.presentation.ui.mypage.weeklyquizcheck.WeeklyQuizCheckFragment
-import com.sw.wordgarden.presentation.ui.setting.SettingFragment
+import com.sw.wordgarden.presentation.ui.setting.setting.SettingFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
