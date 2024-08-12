@@ -6,11 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
@@ -25,10 +24,6 @@ import com.sw.wordgarden.databinding.FragmentLoginBinding
 import com.sw.wordgarden.domain.entity.SignUpEntity
 import com.sw.wordgarden.presentation.model.DefaultEvent
 import com.sw.wordgarden.presentation.model.UserCheckEvent
-import com.sw.wordgarden.presentation.ui.home.HomeFragment
-import com.sw.wordgarden.presentation.ui.login.onboarding.OnBoardingFragment
-import com.sw.wordgarden.presentation.ui.login.onboarding.OnBoardingFragment.Companion.LOGIN_TO_ONBOARDING_BUNDLE_KEY
-import com.sw.wordgarden.presentation.ui.login.onboarding.OnBoardingFragment.Companion.LOGIN_TO_ONBOARDING_REQUEST_KEY
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -36,7 +31,6 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
-
     private val TAG = "LoginFragment"
 
     private var _binding: FragmentLoginBinding? = null
@@ -223,10 +217,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun goHome() {
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.cl_login_main, HomeFragment())
-            .addToBackStack(null)
-            .commit()
+        findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
     }
 
     private fun goOnboarding() {
@@ -236,14 +227,8 @@ class LoginFragment : Fragment() {
             provider = provider
         )
 
-        setFragmentResult(
-            LOGIN_TO_ONBOARDING_REQUEST_KEY,
-            bundleOf(LOGIN_TO_ONBOARDING_BUNDLE_KEY to signUpEntity)
-        )
-
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.cl_login_main, OnBoardingFragment())
-            .commit()
+        val action = LoginFragmentDirections.actionLoginFragmentToOnBoardingFragment(signUpEntity)
+        findNavController().navigate(action)
     }
 
     override fun onDestroyView() {

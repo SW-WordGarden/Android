@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.sw.wordgarden.databinding.FragmentFriendsBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -20,6 +21,18 @@ class FriendsFragment : Fragment() {
     ): View {
         _binding = FragmentFriendsBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setupListener()
+    }
+
+    private fun setupListener() = with(binding) {
+        ivMyFriendsBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
     override fun onDestroyView() {

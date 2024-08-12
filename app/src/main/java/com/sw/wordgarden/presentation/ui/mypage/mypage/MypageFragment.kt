@@ -5,14 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentMypageBinding
-import com.sw.wordgarden.presentation.ui.mypage.friends.FriendsFragment
-import com.sw.wordgarden.presentation.ui.mypage.mymadequiz.MyMadeQuizFragment
-import com.sw.wordgarden.presentation.ui.mypage.mysolvedquiz.MySolvedQuizFragment
-import com.sw.wordgarden.presentation.ui.mypage.mytakenquiz.MyTakenQuizFragment
-import com.sw.wordgarden.presentation.ui.mypage.weeklyquizcheck.WeeklyQuizCheckFragment
-import com.sw.wordgarden.presentation.ui.setting.setting.SettingFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -36,46 +31,28 @@ class MypageFragment : Fragment() {
 
     private fun setupListener() = with(binding) {
         ivMyBack.setOnClickListener {
-
+            findNavController().popBackStack()
         }
         ivMySetting.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.cl_my_main, SettingFragment())
-                .addToBackStack(null)
-                .commit()
+            findNavController().navigate(R.id.action_mypageFragment_to_settingFragment)
         }
         ivMyEdit.setOnClickListener {
 
         }
         ivMyWeeklyScoreMore.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.cl_my_main, WeeklyQuizCheckFragment())
-                .addToBackStack(null)
-                .commit()
+            findNavController().navigate(R.id.action_mypageFragment_to_weeklyQuizCheckFragment)
         }
         ivMyMadeQuizMore.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.cl_my_main, MyMadeQuizFragment())
-                .addToBackStack(null)
-                .commit()
+            findNavController().navigate(R.id.action_mypageFragment_to_myMadeQuizFragment)
         }
         ivMySolvedQuizMore.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.cl_my_main, MySolvedQuizFragment())
-                .addToBackStack(null)
-                .commit()
+            findNavController().navigate(R.id.action_mypageFragment_to_mySolvedQuizFragment)
         }
         ivMyTakenQuizMore.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.cl_my_main, MyTakenQuizFragment())
-                .addToBackStack(null)
-                .commit()
+            findNavController().navigate(R.id.action_mypageFragment_to_myTakenQuizFragment)
         }
         ivMyFriendsMore.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.cl_my_main, FriendsFragment())
-                .addToBackStack(null)
-                .commit()
+            findNavController().navigate(R.id.action_mypageFragment_to_friendsFragment)
         }
     }
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/word"
+        android:id="@+id/wordFragment"
         android:enabled="true"
         android:icon="@drawable/bottom_word"
         android:title="@string/bottom_word"/>
@@ -21,7 +21,7 @@
         android:icon="@drawable/bottom_mypage"
         android:title="@string/bottom_mypage"/>
     <item
-        android:id="@+id/garden"
+        android:id="@+id/gardenFragment"
         android:enabled="true"
         android:icon="@drawable/bottom_garden"
         android:title="@string/bottom_garden"/>
