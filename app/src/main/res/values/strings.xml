@@ -26,14 +26,27 @@
     <string name="mypage_title">마이페이지</string>
     <string name="mypage_point_title">포인트</string>
     <string name="mypage_rank_title">등수</string>
-    <string name="mypage_weekly_score_title">이번 주 퀴즈 성적</string>
-    <string name="mypage_friend">친구 관리</string>
+    <string name="mypage_weekly_score">이번 주 퀴즈 성적</string>
+    <string name="mypage_weekly_score_title">이번주 틀린 단어</string>
     <string name="mypage_my_made_quiz">내가 낸 퀴즈 확인</string>
     <string name="mypage_my_made_quiz_title">내가 낸 퀴즈</string>
     <string name="mypage_my_solved_quiz">내가 푼 퀴즈 확인</string>
     <string name="mypage_my_solved_quiz_title">풀었던 퀴즈</string>
     <string name="mypage_my_taken_quiz">내가 받은 퀴즈 확인</string>
     <string name="mypage_my_taken_quiz_title">받은 퀴즈</string>
+    <string name="mypage_friend">친구 관리</string>
+
+    <!-- friends -->
+    <string name="mypage_friend_title">친구 관리</string>
+    <string name="mypage_friend_url">친구 추가 링크</string>
+    <string name="mypage_friend_msg_delete">정말 친구를 삭제하시겠습니까?</string>
+    <string name="mypage_friend_report_title">신고하기</string>
+    <string name="mypage_friend_report_reason1">영리 목적/홍보성</string>
+    <string name="mypage_friend_report_reason2">저작권 침해</string>
+    <string name="mypage_friend_report_reason3">음란성/선정성</string>
+    <string name="mypage_friend_report_reason4">욕설/인신공격</string>
+    <string name="mypage_friend_report_reason5">개인정보노출</string>
+    <string name="mypage_friend_report_reason6">기타</string>
 
     <!-- quiz -->
     <string name="quiz_title">퀴즈 게임</string>
