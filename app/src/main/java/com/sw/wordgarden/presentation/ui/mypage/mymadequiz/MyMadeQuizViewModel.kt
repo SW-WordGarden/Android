@@ -77,4 +77,8 @@ class MyMadeQuizViewModel @Inject constructor(
             }
         }
     }
+
+    fun clearQuizByTitle() {
+        _getMyMadeQuizByTitle.value = null
+    }
 }

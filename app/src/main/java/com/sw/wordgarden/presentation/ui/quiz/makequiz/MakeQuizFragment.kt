@@ -119,7 +119,10 @@ class MakeQuizFragment : Fragment() {
 
     private fun setUpListener() = with(binding) {
         btnMakeQuizBack.setOnClickListener {
-            findNavController().popBackStack()
+            findNavController().apply {
+//                previousBackStackEntry?.savedStateHandle?.remove<QuizListModel>("argsMyMadeQuiz")
+                popBackStack()
+            }
         }
     }
 

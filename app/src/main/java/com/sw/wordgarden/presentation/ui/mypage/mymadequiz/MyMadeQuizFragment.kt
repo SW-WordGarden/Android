@@ -1,7 +1,6 @@
 package com.sw.wordgarden.presentation.ui.mypage.mymadequiz
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -116,6 +115,7 @@ class MyMadeQuizFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        viewmodel.clearQuizByTitle()
         _binding = null
     }
 }
