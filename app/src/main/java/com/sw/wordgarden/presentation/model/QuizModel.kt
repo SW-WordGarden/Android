@@ -7,5 +7,5 @@ import kotlinx.parcelize.Parcelize
 data class QuizModel(
     var question: String?,
     var answer: String?,
-    val answerNumber: Int?,
+    val questionNumber: Int?,
 ) : Parcelable

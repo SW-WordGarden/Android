@@ -48,13 +48,13 @@ object ServerMapper {
     fun QuizDto.toEntity() = QuizEntity(
         question = question,
         answer = answer,
-        answerNumber = answerNumber,
+        questionNumber = questionNumber,
     )
 
     fun QuizEntity.toDto() = QuizDto(
         question = question,
         answer = answer,
-        answerNumber = answerNumber,
+        questionNumber = questionNumber,
     )
 
     fun QuizListDto.toEntity() = QuizListEntity(

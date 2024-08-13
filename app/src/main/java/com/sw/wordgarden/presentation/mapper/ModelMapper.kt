@@ -12,13 +12,13 @@ object ModelMapper {
     fun QuizModel.toEntity() = QuizEntity(
         question = question,
         answer = answer,
-        answerNumber = answerNumber,
+        questionNumber = questionNumber,
     )
 
     fun QuizEntity.toModel() = QuizModel(
         question = question,
         answer = answer,
-        answerNumber = answerNumber,
+        questionNumber = questionNumber,
     )
 
     fun QuizListModel.toEntity() = QuizListEntity(
