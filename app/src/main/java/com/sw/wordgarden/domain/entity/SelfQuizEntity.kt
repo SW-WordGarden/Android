@@ -4,8 +4,9 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class QuizListEntity(
+data class SelfQuizEntity(
+    val quizId: String?,
     val title: String?,
-    val quiz: List<QuizEntity>?,
-    val quizResult: List<QuizResultEntity>?,
+    val quiz: List<QuestionEntity>?,
+    val quizResult: List<QuestionResultEntity>?,
 ) : Parcelable

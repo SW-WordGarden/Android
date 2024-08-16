@@ -46,7 +46,7 @@ class QuizFragment : Fragment() {
 
     private fun setupListener() = with(binding) {
         btnQuizBack.setOnClickListener {
-            findNavController().popBackStack()
+            findNavController().navigateUp()
         }
 
         btnQuizAlone.setOnClickListener {

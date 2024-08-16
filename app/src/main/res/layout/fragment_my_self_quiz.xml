@@ -2,14 +2,14 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/cl_my_made_quiz"
+    android:id="@+id/cl_my_self_quiz"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_gradient_my"
-    tools:context=".presentation.ui.mypage.mymadequiz.MyMadeQuizFragment">
+    tools:context=".presentation.ui.mypage.myselfquiz.MySelfQuizFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_my_made_quiz_bar"
+        android:id="@+id/cl_my_self_quiz_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="@dimen/padding_medium"
@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_my_made_quiz_back"
+            android:id="@+id/iv_my_self_quiz_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_small"
@@ -27,20 +27,20 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tv_my_made_quiz_title"
+            android:id="@+id/tv_my_self_quiz_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/mypage_my_made_quiz_title"
             android:textColor="@color/green"
             android:textSize="@dimen/text_caption"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_my_made_quiz_back"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_my_self_quiz_back"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/iv_my_made_quiz_back" />
+            app:layout_constraintTop_toTopOf="@+id/iv_my_self_quiz_back" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_my_made_quiz"
+        android:id="@+id/rv_my_self_quiz"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/margin_larger"
@@ -48,11 +48,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cl_my_made_quiz_bar"
-        tools:listitem="@layout/item_made_solved_quiz" />
+        app:layout_constraintTop_toBottomOf="@+id/cl_my_self_quiz_bar"
+        tools:listitem="@layout/item_self_solved_quiz" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_my_made_quiz_no_quizzes"
+        android:id="@+id/tv_my_self_quiz_no_quizzes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_extra_larger"
@@ -60,6 +60,6 @@
         android:textColor="@color/gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cl_my_made_quiz_bar" />
+        app:layout_constraintTop_toBottomOf="@+id/cl_my_self_quiz_bar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

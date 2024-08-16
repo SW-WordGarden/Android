@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sw.wordgarden.R
 import com.sw.wordgarden.domain.entity.QuestionAnswerEntity
-import com.sw.wordgarden.domain.entity.QuizListEntity
+import com.sw.wordgarden.domain.entity.SelfQuizEntity
 import com.sw.wordgarden.domain.usecase.CheckQuizResultUseCase
 import com.sw.wordgarden.domain.usecase.SendQuizAnswerUseCase
 import com.sw.wordgarden.presentation.model.DefaultEvent
@@ -26,13 +26,13 @@ class SolveQuizViewModel @Inject constructor(
     private val checkQuizResultUseCase: CheckQuizResultUseCase
 ) : ViewModel() {
 
-    private val _checkQuizResult = MutableStateFlow<QuizListEntity?>(null)
-    val checkQuizResult: StateFlow<QuizListEntity?> = _checkQuizResult.asStateFlow()
+    private val _checkQuizResult = MutableStateFlow<SelfQuizEntity?>(null)
+    val checkQuizResult: StateFlow<SelfQuizEntity?> = _checkQuizResult.asStateFlow()
 
     private val _sendQuizEvent = MutableSharedFlow<DefaultEvent>()
     val sendQuizEvent: SharedFlow<DefaultEvent> = _sendQuizEvent.asSharedFlow()
 
-    fun checkQuizAnswer(quiz: QuizListEntity, enteredAnswers: List<QuestionAnswerModel>) {
+    fun checkQuizAnswer(quiz: SelfQuizEntity, enteredAnswers: List<QuestionAnswerModel>) {
         val enteredAnswersEntity = questionAnswerModelToEntity(enteredAnswers)
         val result = checkQuizResultUseCase.invoke(quiz, enteredAnswersEntity)
 
@@ -42,7 +42,7 @@ class SolveQuizViewModel @Inject constructor(
         }
     }
 
-    private fun sendQuizAnswer(quiz: QuizListEntity) {
+    private fun sendQuizAnswer(quiz: SelfQuizEntity) {
         viewModelScope.launch {
             runCatching {
                 sendQuizAnswerUseCase.invoke(quiz)

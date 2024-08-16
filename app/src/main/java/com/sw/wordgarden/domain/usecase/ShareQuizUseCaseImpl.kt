@@ -6,7 +6,7 @@ import javax.inject.Inject
 class ShareQuizUseCaseImpl @Inject constructor(
     private val friendRepository: FriendRepository
 ) : ShareQuizUseCase {
-    override suspend fun invoke(quizTitle: String, friendUid: String) {
-        friendRepository.shareQuiz(quizTitle, friendUid)
+    override suspend fun invoke(quizId: String, friendUid: String) {
+        friendRepository.shareQuiz(quizId, friendUid)
     }
 }

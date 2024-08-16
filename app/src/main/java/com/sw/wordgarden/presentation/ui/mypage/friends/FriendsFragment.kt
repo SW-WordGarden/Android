@@ -31,7 +31,7 @@ class FriendsFragment : Fragment() {
 
     private fun setupListener() = with(binding) {
         ivMyFriendsBack.setOnClickListener {
-            findNavController().popBackStack()
+            findNavController().navigateUp()
         }
     }
 

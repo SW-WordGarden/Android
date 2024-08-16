@@ -2,11 +2,11 @@ package com.sw.wordgarden.presentation.ui.quiz.solvequiz
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.sw.wordgarden.domain.entity.QuizEntity
+import com.sw.wordgarden.domain.entity.QuestionEntity
 
 class SolveQuizAdapter(
     fragment: Fragment,
-    private val quizList: List<QuizEntity>,
+    private val quizList: List<QuestionEntity>,
     private val onNextClicked: (position: Int, question: String, answer: String, isFull: Boolean) -> Unit
 ) : FragmentStateAdapter(fragment) {
 

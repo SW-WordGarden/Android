@@ -35,14 +35,14 @@ class ShareQuizFragment : Fragment() {
                 val builder = AlertDialog.Builder(requireActivity())
                 builder.setMessage(R.string.share_quiz_msg_share)
                 builder.setPositiveButton(R.string.common_positive) { _, _ ->
-                    viewmodel.shareQuiz(quizTitle, item.uid)
+                    viewmodel.shareQuiz(quizId, item.uid)
                 }
                 builder.setNegativeButton(R.string.common_negative) { _, _ -> }
                 builder.show()
             }
         })
     }
-    private lateinit var quizTitle: String
+    private lateinit var quizId: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,7 +56,7 @@ class ShareQuizFragment : Fragment() {
 
     private fun setupData() {
         val args: ShareQuizFragmentArgs by navArgs()
-        quizTitle = args.argsTitle ?: ""
+        quizId = args.argsQuizId ?: ""
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

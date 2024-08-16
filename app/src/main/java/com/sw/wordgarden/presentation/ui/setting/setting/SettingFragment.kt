@@ -32,7 +32,7 @@ class SettingFragment : Fragment() {
 
     private fun setupListener() = with(binding) {
         ivSettingBack.setOnClickListener {
-            findNavController().popBackStack()
+            findNavController().navigateUp()
         }
         ivSettingAgreement.setOnClickListener {
             findNavController().navigate(R.id.action_settingFragment_to_agreementFragment)

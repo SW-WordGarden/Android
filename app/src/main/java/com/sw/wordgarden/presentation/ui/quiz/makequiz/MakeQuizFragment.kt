@@ -17,8 +17,8 @@ import androidx.viewpager2.widget.ViewPager2
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentMakeQuizBinding
 import com.sw.wordgarden.presentation.model.DefaultEvent
-import com.sw.wordgarden.presentation.model.QuizListModel
-import com.sw.wordgarden.presentation.model.QuizModel
+import com.sw.wordgarden.presentation.model.SelfQuizModel
+import com.sw.wordgarden.presentation.model.QuestionModel
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -33,7 +33,7 @@ class MakeQuizFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewmodel: MakeQuizViewModel by viewModels()
-    private var quizListModelForCheck: List<QuizModel> = List(10) { QuizModel("", "", 0)}
+    private var quizListModelForCheck: List<QuestionModel> = List(10) { QuestionModel("", "", 0)}
     private var enableMode = true
 
     override fun onCreateView(
@@ -54,13 +54,13 @@ class MakeQuizFragment : Fragment() {
 
     private fun getData() {
         val args: MakeQuizFragmentArgs by navArgs()
-        val quizList = if (args.argsMyMadeQuiz == null) {
+        val quizList = if (args.argsMySelfQuiz == null) {
             enableMode = true
-            QuizListModel("", List(10) { QuizModel("", "", 0)}, emptyList())
+            SelfQuizModel("", "", List(10) { QuestionModel("", "", 0)}, emptyList())
         } else {
             setConfirmDialog()
             enableMode = false
-            args.argsMyMadeQuiz!!
+            args.argsMySelfQuiz!!
         }
 
         setupUi(quizList)
@@ -73,7 +73,7 @@ class MakeQuizFragment : Fragment() {
         builder.show()
     }
 
-    private fun setupUi(quizList: QuizListModel) = with(binding) {
+    private fun setupUi(quizList: SelfQuizModel) = with(binding) {
         if (!enableMode) { etMakeQuizInputTitle.isEnabled = false }
         etMakeQuizInputTitle.setText(quizList.title)
 
@@ -119,10 +119,7 @@ class MakeQuizFragment : Fragment() {
 
     private fun setUpListener() = with(binding) {
         btnMakeQuizBack.setOnClickListener {
-            findNavController().apply {
-//                previousBackStackEntry?.savedStateHandle?.remove<QuizListModel>("argsMyMadeQuiz")
-                popBackStack()
-            }
+            findNavController().navigateUp()
         }
     }
 
@@ -139,7 +136,7 @@ class MakeQuizFragment : Fragment() {
         }
     }
 
-    private fun checkQuiz(quizListModelForCheck: List<QuizModel>) {
+    private fun checkQuiz(quizListModelForCheck: List<QuestionModel>) {
         val title = binding.etMakeQuizInputTitle.text.toString()
         if (title.isEmpty()) {
             ToastMaker.make(requireContext(), R.string.make_quiz_msg_need_title)
@@ -156,13 +153,13 @@ class MakeQuizFragment : Fragment() {
 
     private fun shareQuiz(title: String) {
         Log.i(TAG, "서버에 퀴즈 추가 요청 : $title || $quizListModelForCheck")
-        viewmodel.insertQuiz(title, quizListModelForCheck)
+        viewmodel.insertQuiz(quizListModelForCheck)
 
         goShare(title)
     }
 
-    private fun goShare(title: String) {
-        val action = MakeQuizFragmentDirections.actionMakeQuizFragmentToShareQuizFragment(title)
+    private fun goShare(quizId: String) {
+        val action = MakeQuizFragmentDirections.actionMakeQuizFragmentToShareQuizFragment(quizId)
         findNavController().navigate(action)
     }
 

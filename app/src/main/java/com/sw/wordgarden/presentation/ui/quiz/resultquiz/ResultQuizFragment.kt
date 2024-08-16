@@ -1,20 +1,18 @@
 package com.sw.wordgarden.presentation.ui.quiz.resultquiz
 
 import android.annotation.SuppressLint
-import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentResultQuizBinding
-import com.sw.wordgarden.domain.entity.QuizListEntity
+import com.sw.wordgarden.domain.entity.SelfQuizEntity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -40,12 +38,12 @@ class ResultQuizFragment : Fragment() {
 
     private fun getDataFromSolve() {
         val args: ResultQuizFragmentArgs by navArgs()
-        val result = args.argsQuizEntity ?: QuizListEntity("", emptyList(), emptyList())
+        val result = args.argsQuizEntity ?: SelfQuizEntity("", "", emptyList(), emptyList())
         setupUi(result)
     }
 
     @SuppressLint("SetTextI18n")
-    private fun setupUi(result: QuizListEntity) = with(binding) {
+    private fun setupUi(result: SelfQuizEntity) = with(binding) {
         val quizList = result.quiz
         val resultList = result.quizResult
 

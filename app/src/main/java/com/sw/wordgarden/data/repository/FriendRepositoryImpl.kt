@@ -21,10 +21,10 @@ class FriendRepositoryImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun getFriendList(): List<UserEntity> =
-        serverDataSource.getFriendList()?.map { it.toEntity() } ?: emptyList()
+    override suspend fun getFriendList(): List<UserEntity>? =
+        serverDataSource.getFriendList()?.map { it.toEntity() }
 
-    override suspend fun shareQuiz(quizTitle: String, friendUid: String) {
-        serverDataSource.shareQuiz(quizTitle, friendUid)
+    override suspend fun shareQuiz(quizId: String, friendUid: String) {
+        serverDataSource.shareQuiz(quizId, friendUid)
     }
 }

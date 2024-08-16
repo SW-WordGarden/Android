@@ -1,13 +1,13 @@
 package com.sw.wordgarden.domain.usecase
 
 import com.sw.wordgarden.domain.entity.QuestionAnswerEntity
-import com.sw.wordgarden.domain.entity.QuizListEntity
-import com.sw.wordgarden.domain.entity.QuizResultEntity
+import com.sw.wordgarden.domain.entity.SelfQuizEntity
+import com.sw.wordgarden.domain.entity.QuestionResultEntity
 import java.sql.Timestamp
 import javax.inject.Inject
 
 class CheckQuizResultUseCaseImpl @Inject constructor() : CheckQuizResultUseCase {
-    override fun invoke(quiz: QuizListEntity, enteredAnswers: List<QuestionAnswerEntity>): QuizListEntity {
+    override fun invoke(quiz: SelfQuizEntity, enteredAnswers: List<QuestionAnswerEntity>): SelfQuizEntity {
 
         val checkResult = mutableListOf<Result>()
         val quizList = quiz.quiz
@@ -35,7 +35,7 @@ class CheckQuizResultUseCaseImpl @Inject constructor() : CheckQuizResultUseCase 
         )
     }
 
-    private fun Result.toQuizResultEntity() = QuizResultEntity(
+    private fun Result.toQuizResultEntity() = QuestionResultEntity(
         userAnswer = userAnswer,
         correct = correct,
         time = time,

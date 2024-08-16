@@ -14,7 +14,7 @@
     android:padding="@dimen/padding_large">
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_made_solved_item"
+        android:id="@+id/tv_self_solved_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/mypage_quick_start"
@@ -23,12 +23,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iv_made_solved_detail_item"
+        android:id="@+id/iv_self_solved_detail_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_plus"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_made_solved_item"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_self_solved_item"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tv_made_solved_item" />
+        app:layout_constraintTop_toTopOf="@+id/tv_self_solved_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

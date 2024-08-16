@@ -1,61 +1,70 @@
 package com.sw.wordgarden.presentation.mapper
 
-import com.sw.wordgarden.domain.entity.QuizEntity
-import com.sw.wordgarden.domain.entity.QuizListEntity
-import com.sw.wordgarden.domain.entity.QuizResultEntity
-import com.sw.wordgarden.presentation.model.QuizListModel
-import com.sw.wordgarden.presentation.model.QuizModel
-import com.sw.wordgarden.presentation.model.QuizResultModel
+import com.sw.wordgarden.domain.entity.QuestionEntity
+import com.sw.wordgarden.domain.entity.SelfQuizEntity
+import com.sw.wordgarden.domain.entity.QuestionResultEntity
+import com.sw.wordgarden.domain.entity.QuizSummaryEntity
+import com.sw.wordgarden.presentation.model.SelfQuizModel
+import com.sw.wordgarden.presentation.model.QuestionModel
+import com.sw.wordgarden.presentation.model.QuestionResultModel
+import com.sw.wordgarden.presentation.model.QuizSummaryModel
 
 object ModelMapper {
     //quizzes
-    fun QuizModel.toEntity() = QuizEntity(
+    fun QuestionModel.toEntity() = QuestionEntity(
         question = question,
         answer = answer,
         questionNumber = questionNumber,
     )
 
-    fun QuizEntity.toModel() = QuizModel(
+    fun QuestionEntity.toModel() = QuestionModel(
         question = question,
         answer = answer,
         questionNumber = questionNumber,
     )
 
-    fun QuizListModel.toEntity() = QuizListEntity(
+    fun SelfQuizModel.toEntity() = SelfQuizEntity(
+        quizId = quizId,
         title = title,
         quiz = quizModelToEntity(quiz),
         quizResult = quizResultModelToEntity(quizResult),
     )
 
-    fun QuizListEntity.toModel() = QuizListModel(
+    fun SelfQuizEntity.toModel() = SelfQuizModel(
+        quizId = quizId,
         title = title,
         quiz = quizEntityToModel(quiz),
         quizResult = quizResultEntityToModel(quizResult)
     )
 
-    fun QuizResultModel.toEntity() = QuizResultEntity(
+    fun QuestionResultModel.toEntity() = QuestionResultEntity(
         userAnswer = userAnswer,
         correct = correct,
         time = time,
         questionNumber = questionNumber,
     )
 
-    fun QuizResultEntity.toModel() = QuizResultModel(
+    fun QuestionResultEntity.toModel() = QuestionResultModel(
         userAnswer = userAnswer,
         correct = correct,
         time = time,
         questionNumber = questionNumber,
     )
 
-    private fun quizModelToEntity(quiz: List<QuizModel>?): List<QuizEntity> =
+    fun QuizSummaryEntity.toModel() = QuizSummaryModel(
+        quizId = quizId,
+        title = title
+    )
+
+    private fun quizModelToEntity(quiz: List<QuestionModel>?): List<QuestionEntity> =
         quiz?.map { it.toEntity() } ?: emptyList()
 
-    private fun quizEntityToModel(quiz: List<QuizEntity>?): List<QuizModel> =
+    private fun quizEntityToModel(quiz: List<QuestionEntity>?): List<QuestionModel> =
         quiz?.map { it.toModel() } ?: emptyList()
 
-    private fun quizResultModelToEntity(quiz: List<QuizResultModel>?): List<QuizResultEntity> =
+    private fun quizResultModelToEntity(quiz: List<QuestionResultModel>?): List<QuestionResultEntity> =
         quiz?.map { it.toEntity() } ?: emptyList()
 
-    private fun quizResultEntityToModel(quiz: List<QuizResultEntity>?): List<QuizResultModel> =
+    private fun quizResultEntityToModel(quiz: List<QuestionResultEntity>?): List<QuestionResultModel> =
         quiz?.map { it.toModel() } ?: emptyList()
 }

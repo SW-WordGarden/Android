@@ -3,7 +3,7 @@ package com.sw.wordgarden.presentation.ui.quiz.startquiz
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sw.wordgarden.R
-import com.sw.wordgarden.domain.entity.QuizListEntity
+import com.sw.wordgarden.domain.entity.SelfQuizEntity
 import com.sw.wordgarden.domain.usecase.GetTodayQuizUseCase
 import com.sw.wordgarden.domain.usecase.SaveDailyLimitUseCase
 import com.sw.wordgarden.presentation.model.DefaultEvent
@@ -27,8 +27,8 @@ class StartQuizViewModel @Inject constructor(
     private val _getQuizEvent = MutableSharedFlow<DefaultEvent>()
     val getQuizEvent: SharedFlow<DefaultEvent> = _getQuizEvent.asSharedFlow()
 
-    private val _getQuiz = MutableStateFlow<QuizListEntity?>(null)
-    val getQuiz: StateFlow<QuizListEntity?> = _getQuiz.asStateFlow()
+    private val _getQuiz = MutableStateFlow<SelfQuizEntity?>(null)
+    val getQuiz: StateFlow<SelfQuizEntity?> = _getQuiz.asStateFlow()
 
     private val _saveDailyLimitEvent = MutableSharedFlow<DefaultEvent>()
     val saveDailyLimitEvent: SharedFlow<DefaultEvent> = _saveDailyLimitEvent.asSharedFlow()

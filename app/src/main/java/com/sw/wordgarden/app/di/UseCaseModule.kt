@@ -20,8 +20,8 @@ import com.sw.wordgarden.domain.usecase.GetQuizListAllTypeUseCase
 import com.sw.wordgarden.domain.usecase.GetQuizListAllTypeUseCaseImpl
 import com.sw.wordgarden.domain.usecase.GetQuizListByTypeUseCase
 import com.sw.wordgarden.domain.usecase.GetQuizListByTypeUseCaseImpl
-import com.sw.wordgarden.domain.usecase.GetQuizListMadeByUserByTitleUseCase
-import com.sw.wordgarden.domain.usecase.GetQuizListMadeByUserByTitleUseCaseImpl
+import com.sw.wordgarden.domain.usecase.GetQuizListMadeByUserByQuizIdUseCase
+import com.sw.wordgarden.domain.usecase.GetQuizListMadeByUserByQuizIdUseCaseImpl
 import com.sw.wordgarden.domain.usecase.GetQuizListMadeByUserUseCase
 import com.sw.wordgarden.domain.usecase.GetQuizListMadeByUserUseCaseImpl
 import com.sw.wordgarden.domain.usecase.GetQuizeListDoneByUserAndPeriodUseCase
@@ -142,9 +142,9 @@ abstract class UseCaseModule {
 
     @Binds
     @ViewModelScoped
-    abstract fun bindGetQuizListMadeByUserByTitleUseCase(
-        getQuizListMadeByUserByTitleUseCaseImpl: GetQuizListMadeByUserByTitleUseCaseImpl
-    ): GetQuizListMadeByUserByTitleUseCase
+    abstract fun bindGetQuizListMadeByUserByQuizIdUseCase(
+        getQuizListMadeByUserByTitleUseCaseImpl: GetQuizListMadeByUserByQuizIdUseCaseImpl
+    ): GetQuizListMadeByUserByQuizIdUseCase
 
     @Binds
     @ViewModelScoped

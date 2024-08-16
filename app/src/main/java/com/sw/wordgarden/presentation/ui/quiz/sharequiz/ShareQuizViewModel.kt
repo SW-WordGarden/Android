@@ -61,10 +61,10 @@ class ShareQuizViewModel @Inject constructor(
             }
         }
 
-    fun shareQuiz(quizTitle: String, friendUid: String) {
+    fun shareQuiz(quizId: String, friendUid: String) {
         viewModelScope.launch {
             runCatching {
-                shareQuizUseCase.invoke(quizTitle, friendUid)
+                shareQuizUseCase.invoke(quizId, friendUid)
             }.onFailure {
                 _shareEvent.emit(DefaultEvent.Failure(R.string.share_quiz_msg_fail_to_share))
             }.onSuccess {

@@ -1,15 +1,17 @@
 package com.sw.wordgarden.data.mapper
 
-import com.sw.wordgarden.data.dto.QuizDto
-import com.sw.wordgarden.data.dto.QuizListDto
-import com.sw.wordgarden.data.dto.QuizResultDto
+import com.sw.wordgarden.data.dto.QuestionDto
+import com.sw.wordgarden.data.dto.SelfQuizDto
+import com.sw.wordgarden.data.dto.QuestionResultDto
+import com.sw.wordgarden.data.dto.QuizSummaryDto
 import com.sw.wordgarden.data.dto.SignUpDto
 import com.sw.wordgarden.data.dto.TreeDto
 import com.sw.wordgarden.data.dto.UserDto
 import com.sw.wordgarden.data.dto.WordDto
-import com.sw.wordgarden.domain.entity.QuizEntity
-import com.sw.wordgarden.domain.entity.QuizListEntity
-import com.sw.wordgarden.domain.entity.QuizResultEntity
+import com.sw.wordgarden.domain.entity.QuestionEntity
+import com.sw.wordgarden.domain.entity.SelfQuizEntity
+import com.sw.wordgarden.domain.entity.QuestionResultEntity
+import com.sw.wordgarden.domain.entity.QuizSummaryEntity
 import com.sw.wordgarden.domain.entity.SignUpEntity
 import com.sw.wordgarden.domain.entity.TreeEntity
 import com.sw.wordgarden.domain.entity.UserEntity
@@ -45,55 +47,62 @@ object ServerMapper {
     )
 
     //quizzes
-    fun QuizDto.toEntity() = QuizEntity(
+    fun QuestionDto.toEntity() = QuestionEntity(
         question = question,
         answer = answer,
         questionNumber = questionNumber,
     )
 
-    fun QuizEntity.toDto() = QuizDto(
+    fun QuestionEntity.toDto() = QuestionDto(
         question = question,
         answer = answer,
         questionNumber = questionNumber,
     )
 
-    fun QuizListDto.toEntity() = QuizListEntity(
+    fun SelfQuizDto.toEntity() = SelfQuizEntity(
+        quizId = quizId,
         title = title,
         quiz = quizDtoToEntity(quiz),
         quizResult = quizResultDtoToEntity(quizResult),
     )
 
-    fun QuizListEntity.toDto() = QuizListDto(
+    fun SelfQuizEntity.toDto() = SelfQuizDto(
+        quizId = quizId,
         uid = "",
         title = title,
         quiz = quizEntityToDto(quiz),
         quizResult = quizResultEntityToDto(quizResult)
     )
 
-    fun QuizResultDto.toEntity() = QuizResultEntity(
+    fun QuestionResultDto.toEntity() = QuestionResultEntity(
         userAnswer = userAnswer,
         correct = correct,
         time = time,
         questionNumber = answerNumber,
     )
 
-    fun QuizResultEntity.toDto() = QuizResultDto(
+    fun QuestionResultEntity.toDto() = QuestionResultDto(
         userAnswer = userAnswer,
         correct = correct,
         time = time,
         answerNumber = questionNumber,
     )
 
-    private fun quizDtoToEntity(quiz: List<QuizDto>?): List<QuizEntity> =
+    fun QuizSummaryDto.toEntity() = QuizSummaryEntity(
+        quizId = quizId,
+        title = title
+    )
+
+    private fun quizDtoToEntity(quiz: List<QuestionDto>?): List<QuestionEntity> =
         quiz?.map { it.toEntity() } ?: emptyList()
 
-    private fun quizEntityToDto(quiz: List<QuizEntity>?): List<QuizDto> =
+    private fun quizEntityToDto(quiz: List<QuestionEntity>?): List<QuestionDto> =
         quiz?.map { it.toDto() } ?: emptyList()
 
-    private fun quizResultDtoToEntity(quiz: List<QuizResultDto>?): List<QuizResultEntity> =
+    private fun quizResultDtoToEntity(quiz: List<QuestionResultDto>?): List<QuestionResultEntity> =
         quiz?.map { it.toEntity() } ?: emptyList()
 
-    private fun quizResultEntityToDto(quiz: List<QuizResultEntity>?): List<QuizResultDto> =
+    private fun quizResultEntityToDto(quiz: List<QuestionResultEntity>?): List<QuestionResultDto> =
         quiz?.map { it.toDto() } ?: emptyList()
 
     //garden

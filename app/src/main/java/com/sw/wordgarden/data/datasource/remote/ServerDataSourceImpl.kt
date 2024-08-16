@@ -3,7 +3,8 @@ package com.sw.wordgarden.data.datasource.remote
 import android.util.Log
 import com.sw.wordgarden.data.datasource.local.LocalDataSource
 import com.sw.wordgarden.data.datasource.remote.retrofit.Service
-import com.sw.wordgarden.data.dto.QuizListDto
+import com.sw.wordgarden.data.dto.QuizSummaryDto
+import com.sw.wordgarden.data.dto.SelfQuizDto
 import com.sw.wordgarden.data.dto.SignUpDto
 import com.sw.wordgarden.data.dto.TreeDto
 import com.sw.wordgarden.data.dto.UserDto
@@ -96,11 +97,11 @@ class ServerDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun shareQuiz(quizTitle: String, friendUid: String) {
+    override suspend fun shareQuiz(quizId: String, friendUid: String) {
         try {
             val uid = getUid()
 
-            val response = service.shareQuiz(uid!!, quizTitle, friendUid)
+            val response = service.shareQuiz(uid!!, quizId, friendUid)
             if (!response.isSuccessful) {
                 throw HttpException(response)
             }
@@ -128,7 +129,7 @@ class ServerDataSourceImpl @Inject constructor(
     }
 
     //quizzes
-    override suspend fun insertQuizList(quizList: QuizListDto) {
+    override suspend fun insertQuizList(quizList: SelfQuizDto) {
         try {
             val uid = getUid()
             val quizListData = quizList.copy(
@@ -151,15 +152,15 @@ class ServerDataSourceImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun getQuizListByType(type: Boolean): QuizListDto? {
+    override suspend fun getQuizListByType(type: Boolean): SelfQuizDto? {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getQuizListAllType(): QuizListDto? {
+    override suspend fun getQuizListAllType(): SelfQuizDto? {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getQuizListMadeByUser(): List<String>? {
+    override suspend fun getQuizListMadeByUser(): List<QuizSummaryDto>? {
         return try {
             val uid = getUid()
 
@@ -175,11 +176,11 @@ class ServerDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun getQuizListMadeByUserByTitle(title: String): QuizListDto? {
+    override suspend fun getQuizListMadeByUserByQuizId(quizId: String): SelfQuizDto? {
         return try {
             val uid = getUid()
 
-            val response = service.getQuizListMadeByUserByTitle(uid!!, title)
+            val response = service.getQuizListMadeByUserByTitle(uid!!, quizId)
             if (!response.isSuccessful) {
                 throw HttpException(response)
             } else {
@@ -194,11 +195,11 @@ class ServerDataSourceImpl @Inject constructor(
     override suspend fun getQuizListDoneByUserAndPeriod(
         startDate: Date,
         endDate: Date
-    ): List<QuizListDto>? {
+    ): List<SelfQuizDto>? {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getTodayQuiz(): QuizListDto? {
+    override suspend fun getTodayQuiz(): SelfQuizDto? {
         return try {
             val uid = getUid()
 
@@ -214,7 +215,7 @@ class ServerDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun sendQuizAnswer(quizResult: QuizListDto) {
+    override suspend fun sendQuizAnswer(quizResult: SelfQuizDto) {
         try {
             val uid = getUid()
 

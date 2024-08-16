@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class QuizEntity(
+data class QuestionEntity(
     val question: String?,
     val answer: String?,
     val questionNumber: Int?,

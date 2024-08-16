@@ -81,15 +81,15 @@
             android:id="@+id/action_makeQuizFragment_to_shareQuizFragment"
             app:destination="@id/shareQuizFragment">
             <argument
-                android:name="argsTitle"
+                android:name="argsQuizId"
                 app:argType="string"
                 app:nullable="true" />
         </action>
 
         <argument
-            android:name="argsMyMadeQuiz"
+            android:name="argsMySelfQuiz"
             android:defaultValue="@null"
-            app:argType="com.sw.wordgarden.presentation.model.QuizListModel"
+            app:argType="com.sw.wordgarden.presentation.model.SelfQuizModel"
             app:nullable="true" />
     </fragment>
     <fragment
@@ -100,7 +100,7 @@
         <argument
             android:name="argsQuizEntity"
             android:defaultValue="@null"
-            app:argType="com.sw.wordgarden.domain.entity.QuizListEntity"
+            app:argType="com.sw.wordgarden.domain.entity.SelfQuizEntity"
             app:nullable="true" />
         <action
             android:id="@+id/action_resultQuizFragment_to_quizFragment"
@@ -112,7 +112,7 @@
         android:label="fragment_share_quiz"
         tools:layout="@layout/fragment_share_quiz">
         <argument
-            android:name="argsTitle"
+            android:name="argsQuizId"
             app:argType="string"
             app:nullable="true" />
         <action
@@ -130,7 +130,7 @@
         <argument
             android:name="argsQuizEntity"
             android:defaultValue="@null"
-            app:argType="com.sw.wordgarden.domain.entity.QuizListEntity"
+            app:argType="com.sw.wordgarden.domain.entity.SelfQuizEntity"
             app:nullable="true" />
         <action
             android:id="@+id/action_solveQuizFragment_to_quizFragment"
@@ -150,7 +150,7 @@
         <argument
             android:name="argsQuizEntity"
             android:defaultValue="@null"
-            app:argType="com.sw.wordgarden.domain.entity.QuizListEntity"
+            app:argType="com.sw.wordgarden.domain.entity.SelfQuizEntity"
             app:nullable="true" />
     </fragment>
 
@@ -164,8 +164,8 @@
             android:id="@+id/action_mypageFragment_to_friendsFragment"
             app:destination="@id/friendsFragment" />
         <action
-            android:id="@+id/action_mypageFragment_to_myMadeQuizFragment"
-            app:destination="@id/myMadeQuizFragment" />
+            android:id="@+id/action_mypageFragment_to_mySelfQuizFragment"
+            app:destination="@id/myselfQuizFragment" />
         <action
             android:id="@+id/action_mypageFragment_to_mySolvedQuizFragment"
             app:destination="@id/mySolvedQuizFragment" />
@@ -184,21 +184,23 @@
         android:name="com.sw.wordgarden.presentation.ui.mypage.friends.FriendsFragment"
         android:label="fragment_friends"
         tools:layout="@layout/fragment_friends" />
+
     <fragment
-        android:id="@+id/myMadeQuizFragment"
-        android:name="com.sw.wordgarden.presentation.ui.mypage.mymadequiz.MyMadeQuizFragment"
-        android:label="fragment_my_made_quiz"
-        tools:layout="@layout/fragment_my_made_quiz">
+        android:id="@+id/myselfQuizFragment"
+        android:name="com.sw.wordgarden.presentation.ui.mypage.myselfquiz.MySelfQuizFragment"
+        android:label="fragment_my_self_quiz"
+        tools:layout="@layout/fragment_my_self_quiz">
         <action
-            android:id="@+id/action_myMadeQuizFragment_to_makeQuizFragment"
+            android:id="@+id/action_mySelfQuizFragment_to_makeQuizFragment"
             app:destination="@id/makeQuizFragment">
             <argument
-                android:name="argsMyMadeQuiz"
+                android:name="argsMySelfQuiz"
                 android:defaultValue="@null"
-                app:argType="com.sw.wordgarden.presentation.model.QuizListModel"
+                app:argType="com.sw.wordgarden.presentation.model.SelfQuizModel"
                 app:nullable="true" />
         </action>
     </fragment>
+
     <fragment
         android:id="@+id/mySolvedQuizFragment"
         android:name="com.sw.wordgarden.presentation.ui.mypage.mysolvedquiz.MySolvedQuizFragment"

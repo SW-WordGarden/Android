@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentSolveQuizBinding
-import com.sw.wordgarden.domain.entity.QuizListEntity
+import com.sw.wordgarden.domain.entity.SelfQuizEntity
 import com.sw.wordgarden.presentation.model.DefaultEvent
 import com.sw.wordgarden.presentation.model.QuestionAnswerModel
 import com.sw.wordgarden.presentation.util.ToastMaker
@@ -48,11 +48,11 @@ class SolveQuizFragment : Fragment() {
 
     private fun getDataFromStart() {
         val args: SolveQuizFragmentArgs by navArgs()
-        val quiz = args.argsQuizEntity ?: QuizListEntity("", emptyList(), emptyList())
+        val quiz = args.argsQuizEntity ?: SelfQuizEntity("", "", emptyList(), emptyList())
         setupUi(quiz)
     }
 
-    private fun setupUi(quiz: QuizListEntity) = with(binding) {
+    private fun setupUi(quiz: SelfQuizEntity) = with(binding) {
         val quizList = quiz.quiz
 
         if (quizList != null) {
@@ -94,7 +94,7 @@ class SolveQuizFragment : Fragment() {
         }
     }
 
-    private fun checkQuiz(quiz: QuizListEntity) {
+    private fun checkQuiz(quiz: SelfQuizEntity) {
         val hasEmptyValue = this.enteredAnswers.any { it.answer.isEmpty() }
         if (hasEmptyValue) {
             ToastMaker.make(requireContext(), R.string.solve_quiz_msg_need_all_check)
@@ -125,7 +125,7 @@ class SolveQuizFragment : Fragment() {
         }
     }
 
-    private fun goResult(result: QuizListEntity?) {
+    private fun goResult(result: SelfQuizEntity?) {
         val action = SolveQuizFragmentDirections.actionSolveQuizFragmentToResultQuizFragment(result)
         findNavController().navigate(action)
     }

@@ -2,12 +2,10 @@ package com.sw.wordgarden.presentation.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import java.sql.Timestamp
 
 @Parcelize
-data class QuizResultModel(
-    val userAnswer: String?,
-    val correct: Boolean?,
-    val time: Timestamp?,
+data class QuestionModel(
+    var question: String?,
+    var answer: String?,
     val questionNumber: Int?,
 ) : Parcelable

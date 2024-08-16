@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 import java.sql.Timestamp
 
 @Parcelize
-data class QuizResultEntity(
+data class QuestionResultEntity(
     val userAnswer: String?,
     val correct: Boolean?,
     val time: Timestamp?,

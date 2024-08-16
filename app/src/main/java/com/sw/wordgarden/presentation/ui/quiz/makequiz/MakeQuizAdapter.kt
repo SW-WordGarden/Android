@@ -2,12 +2,12 @@ package com.sw.wordgarden.presentation.ui.quiz.makequiz
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.sw.wordgarden.presentation.model.QuizModel
+import com.sw.wordgarden.presentation.model.QuestionModel
 
 class MakeQuizAdapter(
     fragment: Fragment,
     private val isEnableMode: Boolean,
-    private val quizList: List<QuizModel>,
+    private val quizList: List<QuestionModel>,
     private val onNextClicked: (position: Int, question: String, answer: String, isFull: Boolean) -> Unit
 ) : FragmentStateAdapter(fragment) {
 

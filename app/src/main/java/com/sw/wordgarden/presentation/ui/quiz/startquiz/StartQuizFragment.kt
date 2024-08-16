@@ -10,10 +10,11 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.NavigationUI.navigateUp
 import com.sw.wordgarden.databinding.FragmentStartQuizBinding
-import com.sw.wordgarden.domain.entity.QuizEntity
-import com.sw.wordgarden.domain.entity.QuizListEntity
-import com.sw.wordgarden.domain.entity.QuizResultEntity
+import com.sw.wordgarden.domain.entity.QuestionEntity
+import com.sw.wordgarden.domain.entity.SelfQuizEntity
+import com.sw.wordgarden.domain.entity.QuestionResultEntity
 import com.sw.wordgarden.presentation.model.DefaultEvent
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,7 +28,7 @@ class StartQuizFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewmodel: StartQuizViewModel by viewModels()
-    private lateinit var quiz: QuizListEntity
+    private lateinit var quiz: SelfQuizEntity
     private var limitCount = 0
 
     override fun onCreateView(
@@ -54,12 +55,15 @@ class StartQuizFragment : Fragment() {
 
     private fun setupObserverTest() {
         val time = Timestamp(2024, 8, 1, 10, 11, 12, 1)
-        val quizList: List<QuizEntity> = List(10) { QuizEntity("question", "answer", 0) }
-        val quizResult: List<QuizResultEntity> =
-            List(10) { QuizResultEntity("userAnswer", true, time, 0) }
+        val quizList: List<QuestionEntity> = List(10) { QuestionEntity("question", "answer", 0) }
+        val quizResult: List<QuestionResultEntity> =
+            List(10) { QuestionResultEntity("userAnswer", true, time, 0) }
 
-        quiz = QuizListEntity(
-            title = "test title", quiz = quizList, quizResult = quizResult
+        quiz = SelfQuizEntity(
+            quizId = "quizIdTest1",
+            title = "test title",
+            quiz = quizList,
+            quizResult = quizResult
         )
 
         setupUi()
@@ -79,7 +83,7 @@ class StartQuizFragment : Fragment() {
 
     private fun setupListener() = with(binding) {
         btnStartQuizBack.setOnClickListener {
-            findNavController().popBackStack()
+            findNavController().navigateUp()
         }
 
         btnStartQuizStart.setOnClickListener {

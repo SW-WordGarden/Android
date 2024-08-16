@@ -1,6 +1,7 @@
 package com.sw.wordgarden.data.datasource.remote.retrofit
 
-import com.sw.wordgarden.data.dto.QuizListDto
+import com.sw.wordgarden.data.dto.QuizSummaryDto
+import com.sw.wordgarden.data.dto.SelfQuizDto
 import com.sw.wordgarden.data.dto.SignUpDto
 import com.sw.wordgarden.data.dto.TreeDto
 import com.sw.wordgarden.data.dto.UserDto
@@ -60,36 +61,36 @@ interface Service {
 
     //quiz
     @POST("sq/create")
-    suspend fun insertQuizList(@Body quizList: QuizListDto): Response<Unit>
+    suspend fun insertQuizList(@Body quizList: SelfQuizDto): Response<Unit>
 
     //    @POST("login/login")
     suspend fun deleteQuizList(@Body quizListId: String): Response<Unit>
 
     //    @POST("login/login")
-    suspend fun getQuizListByType(@Body type: Boolean): Response<QuizListDto>
+    suspend fun getQuizListByType(@Body type: Boolean): Response<SelfQuizDto>
 
     //    @POST("login/login")
-    suspend fun getQuizListAllType(@Body uid: String): Response<QuizListDto>
+    suspend fun getQuizListAllType(@Body uid: String): Response<SelfQuizDto>
 
     @GET("sq/created/{uid}")
-    suspend fun getQuizListMadeByUser(@Path("uid") uid: String): Response<List<String>>
+    suspend fun getQuizListMadeByUser(@Path("uid") uid: String): Response<List<QuizSummaryDto>>
 
-    @GET("sq/created/{uid}/{title}")
-    suspend fun getQuizListMadeByUserByTitle(@Path("uid") uid: String, @Path("title") title: String): Response<QuizListDto>
+    @GET("sq/created/{uid}/{sqid}")
+    suspend fun getQuizListMadeByUserByTitle(@Path("uid") uid: String, @Path("sqid") quizId: String): Response<SelfQuizDto>
 
     //    @POST("login/login")
     suspend fun getQuizListDoneByUserAndPeriod(
         @Body startDate: Date,
         endDate: Date
-    ): Response<List<QuizListDto>>
+    ): Response<List<SelfQuizDto>>
 
     @GET("wq/wq") //TODO: 서버 구현 시 수정
-    suspend fun getTodayQuiz(@Path("uid") uid: String): Response<QuizListDto> //TODO: 서버 구현 시 수정
+    suspend fun getTodayQuiz(@Path("uid") uid: String): Response<SelfQuizDto> //TODO: 서버 구현 시 수정
 
     @POST("wq/{wqid}/answer") //TODO: 서버 구현 시 수정
     suspend fun sendQuizAnswer(
         @Body uid: String,
-        quizResult: QuizListDto
+        quizResult: SelfQuizDto
     ): Response<Unit> //TODO: 서버 구현 시 수정
 
     //garden
