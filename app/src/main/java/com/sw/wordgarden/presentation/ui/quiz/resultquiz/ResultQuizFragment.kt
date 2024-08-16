@@ -8,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.setFragmentResultListener
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.sw.wordgarden.R
@@ -37,17 +39,9 @@ class ResultQuizFragment : Fragment() {
     }
 
     private fun getDataFromSolve() {
-        setFragmentResultListener(SOLVE_TO_RESULT_BUNDLE_KEY) { _, bundle ->
-            val result = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                bundle.getParcelable(SOLVE_TO_RESULT_BUNDLE_KEY, QuizListEntity::class.java)
-                    ?: QuizListEntity("", emptyList(), emptyList())
-            } else {
-                bundle.getParcelable(SOLVE_TO_RESULT_BUNDLE_KEY)
-                    ?: QuizListEntity("", emptyList(), emptyList())
-            }
-
-            setupUi(result)
-        }
+        val args: ResultQuizFragmentArgs by navArgs()
+        val result = args.argsQuizEntity ?: QuizListEntity("", emptyList(), emptyList())
+        setupUi(result)
     }
 
     @SuppressLint("SetTextI18n")
@@ -93,16 +87,12 @@ class ResultQuizFragment : Fragment() {
 
     private fun setupListener() = with(binding) {
         btnResultQuizExit.setOnClickListener {
-            //findNavController().popBackStack()
+            findNavController().navigate(R.id.action_resultQuizFragment_to_quizFragment)
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object {
-        const val SOLVE_TO_RESULT_BUNDLE_KEY = "SOLVE_TO_RESULT_BUNDLE_KEY"
     }
 }

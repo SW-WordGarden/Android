@@ -9,14 +9,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentMakeQuizBinding
 import com.sw.wordgarden.presentation.model.DefaultEvent
 import com.sw.wordgarden.presentation.model.QuestionAnswerModel
-import com.sw.wordgarden.presentation.ui.quiz.sharequiz.ShareQuizFragment
-import com.sw.wordgarden.presentation.ui.quiz.sharequiz.ShareQuizFragment.Companion.MAKE_TO_SHARE_BUNDLE_KEY
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -90,7 +89,7 @@ class MakeQuizFragment : Fragment() {
 
     private fun setUpListener() = with(binding) {
         btnMakeQuizBack.setOnClickListener {
-            //findNavController().popBackStack()
+            findNavController().popBackStack()
         }
     }
 
@@ -130,24 +129,8 @@ class MakeQuizFragment : Fragment() {
     }
 
     private fun goShare(title: String) {
-        //findNavController().navigate(해당 화면)
-
-        /**
-         * test code
-         * TODO: nav 개발 후 테스트 코드 삭제
-         */
-        val bundle = Bundle()
-        bundle.putString(MAKE_TO_SHARE_BUNDLE_KEY, title)
-
-        val shareQuizFragment = ShareQuizFragment()
-        shareQuizFragment.arguments = bundle
-
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.cl_main, shareQuizFragment)
-            .commit()
-        /**
-         * test code end
-         */
+        val action = MakeQuizFragmentDirections.actionMakeQuizFragmentToShareQuizFragment(title)
+        findNavController().navigate(action)
     }
 
     override fun onDestroyView() {

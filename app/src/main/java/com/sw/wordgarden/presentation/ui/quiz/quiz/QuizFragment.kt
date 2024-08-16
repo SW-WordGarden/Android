@@ -7,18 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
-import androidx.core.os.bundleOf
-import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentQuizBinding
 import com.sw.wordgarden.presentation.model.DefaultEvent
-import com.sw.wordgarden.presentation.ui.quiz.makequiz.MakeQuizFragment
-import com.sw.wordgarden.presentation.ui.quiz.sharequiz.ShareQuizFragment
-import com.sw.wordgarden.presentation.ui.quiz.startquiz.StartQuizFragment
-import com.sw.wordgarden.presentation.ui.quiz.startquiz.StartQuizFragment.Companion.QUIZ_TO_START_BUNDLE_KEY
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -51,54 +46,26 @@ class QuizFragment : Fragment() {
 
     private fun setupListener() = with(binding) {
         btnQuizBack.setOnClickListener {
-            //findNavController().popBackStack()
+            findNavController().popBackStack()
         }
 
         btnQuizAlone.setOnClickListener {
             val builder = AlertDialog.Builder(requireActivity())
             builder.setMessage(R.string.quiz_msg_use_count)
             builder.setPositiveButton(R.string.common_positive) { _, _ ->
-                //findNavController().navigate(해당 화면)
-
-                /**
-                 * test용 이동 코드
-                 */
-                setFragmentResult(
-                    QUIZ_TO_START_BUNDLE_KEY,
-                    bundleOf(QUIZ_TO_START_BUNDLE_KEY to limitCount)
-                )
-
-                parentFragmentManager.beginTransaction()
-                    .replace(R.id.cl_quiz_main, StartQuizFragment())
-                    .addToBackStack(null)
-                    .commit()
+                val action = QuizFragmentDirections.actionQuizFragmentToStartQuizFragment(limitCount)
+                findNavController().navigate(action)
             }
             builder.setNegativeButton(R.string.common_negative) { _, _ -> }
             builder.show()
         }
 
         btnQuizFriend.setOnClickListener {
-            //findNavController().navigate(해당 화면)
-
-            /**
-             * test용 이동 코드
-             */
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.cl_quiz_main, ShareQuizFragment())
-                .addToBackStack(null)
-                .commit()
+            findNavController().navigate(R.id.action_quizFragment_to_shareQuizFragment)
         }
 
         btnMakeQuiz.setOnClickListener {
-            //findNavController().navigate(해당 화면)
-
-            /**
-             * test용 이동 코드
-             */
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.cl_quiz_main, MakeQuizFragment())
-                .addToBackStack(null)
-                .commit()
+            findNavController().navigate(R.id.action_quizFragment_to_makeQuizFragment)
         }
     }
 

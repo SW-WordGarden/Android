@@ -16,15 +16,15 @@ import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.sw.wordgarden.R
 import com.sw.wordgarden.presentation.ui.main.fcm.FirebaseMessagingService
 import com.sw.wordgarden.databinding.ActivityMainBinding
-import com.sw.wordgarden.presentation.ui.login.login.LoginFragment
-import com.sw.wordgarden.presentation.ui.mypage.MypageFragment
-import com.sw.wordgarden.presentation.ui.quiz.quiz.QuizFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -36,6 +36,9 @@ class MainActivity : AppCompatActivity() {
         ActivityMainBinding.inflate(layoutInflater)
     }
 
+    private lateinit var navController: NavController
+    private lateinit var appBarConfiguration: AppBarConfiguration
+
     private val viewmodel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,31 +48,9 @@ class MainActivity : AppCompatActivity() {
         setupMessaging()
         setupSplash()
         setupUi()
-        goLogin()
         setNavigation()
-
-        /**
-         * test code
-         * TODO: nav 개발 후 테스트 코드 삭제
-         */
-//        goQuiz()
-//        goMy()
-        /**
-         * test code end
-         */
     }
 
-    private fun setNavigation(){
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val navController = navHostFragment.findNavController()
-        binding.bottomNavigation.setupWithNavController(navController)
-
-        navController.addOnDestinationChangedListener{ _ , destination, _ ->
-            if(destination.id == R.id.homeFragment)
-                binding.bottomNavigation.visibility = View.VISIBLE
-            else binding.bottomNavigation.visibility = View.GONE
-        }
-    }
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
         val imm: InputMethodManager =
             getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
@@ -130,30 +111,26 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    /**
-     * login fragment 확인을 위한 테스트 코드입니다.
-     */
-    private fun goLogin() {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.cl_main, LoginFragment())
-            .commit()
+    private fun setNavigation(){
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fcv_nav_host_fragment) as NavHostFragment
+        navController = navHostFragment.navController
+
+        val bottomNav = findViewById<BottomNavigationView>(R.id.bn_bottom_menu)
+        bottomNav.setupWithNavController(navController)
+
+        appBarConfiguration = AppBarConfiguration(
+            setOf(R.id.homeFragment, R.id.wordFragment, R.id.quizFragment, R.id.gardenFragment, R.id.mypageFragment)
+        )
+
+        navController.addOnDestinationChangedListener{ _ , destination, _ ->
+            when (destination.id) {
+                R.id.homeFragment -> binding.bnBottomMenu.visibility = View.VISIBLE
+                else -> binding.bnBottomMenu.visibility = View.GONE
+            }
+        }
     }
 
-    /**
-     * quiz fragment 확인을 위한 테스트 코드입니다.
-     */
-    private fun goQuiz() {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.cl_main, QuizFragment())
-            .commit()
-    }
-
-    /**
-     * mypage fragment 확인을 위한 테스트 코드입니다.
-     */
-    private fun goMy() {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.cl_main, MypageFragment())
-            .commit()
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 }

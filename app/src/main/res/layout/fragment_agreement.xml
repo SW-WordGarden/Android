@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_gradient_my"
-    tools:context=".presentation.ui.mypage.weeklyquizcheck.WeeklyQuizCheckFragment">
+    android:background="@color/white"
+    tools:context=".presentation.ui.setting.agreement.AgreementFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_my_weekly_score_bar"
+        android:id="@+id/cl_setting_agreement_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="@dimen/padding_medium"
@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_my_weekly_score_back"
+            android:id="@+id/iv_setting_agreement_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_small"
@@ -25,28 +25,27 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_my_weekly_score_title"
+        <TextView
+            android:id="@+id/tv_setting_agreement_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/mypage_weekly_score_title"
+            android:text="@string/setting_agreement"
             android:textColor="@color/green"
             android:textSize="@dimen/text_caption"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_my_weekly_score_back"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_setting_agreement_back"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/iv_my_weekly_score_back" />
+            app:layout_constraintTop_toTopOf="@+id/iv_setting_agreement_back" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_my_weekly_fail_word"
+    <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/margin_larger"
+        android:layout_margin="@dimen/margin_medium"
+        android:text="@string/setting_agreement"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cl_my_weekly_score_bar"
-        tools:listitem="@layout/item_weekly_quiz_check" />
+        app:layout_constraintTop_toBottomOf="@+id/cl_setting_agreement_bar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
