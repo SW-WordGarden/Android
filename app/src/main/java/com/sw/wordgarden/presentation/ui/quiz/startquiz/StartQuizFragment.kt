@@ -5,20 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
-import androidx.fragment.app.setFragmentResult
-import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import com.sw.wordgarden.R
+import androidx.navigation.fragment.navArgs
+import androidx.navigation.fragment.findNavController
 import com.sw.wordgarden.databinding.FragmentStartQuizBinding
 import com.sw.wordgarden.domain.entity.QuizEntity
 import com.sw.wordgarden.domain.entity.QuizListEntity
 import com.sw.wordgarden.domain.entity.QuizResultEntity
 import com.sw.wordgarden.presentation.model.DefaultEvent
-import com.sw.wordgarden.presentation.ui.quiz.solvequiz.SolveQuizFragment
-import com.sw.wordgarden.presentation.ui.quiz.solvequiz.SolveQuizFragment.Companion.START_TO_SOLVE_BUNDLE_KEY
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -35,8 +31,7 @@ class StartQuizFragment : Fragment() {
     private var limitCount = 0
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentStartQuizBinding.inflate(inflater, container, false)
         return binding.root
@@ -52,21 +47,19 @@ class StartQuizFragment : Fragment() {
     }
 
     private fun getDataFromQuiz() {
-        setFragmentResultListener(QUIZ_TO_START_BUNDLE_KEY) { _, bundle ->
-            limitCount = bundle.getInt(QUIZ_TO_START_BUNDLE_KEY)
-            viewmodel.saveDailyLimit(limitCount)
-        }
+        val args: StartQuizFragmentArgs by navArgs()
+        limitCount = args.argsLimit
+        viewmodel.saveDailyLimit(limitCount)
     }
 
     private fun setupObserverTest() {
         val time = Timestamp(2024, 8, 1, 10, 11, 12, 1)
         val quizList: List<QuizEntity> = List(10) { QuizEntity("question", "answer", 0) }
-        val quizResult: List<QuizResultEntity> = List(10) { QuizResultEntity("userAnswer", true, time, 0)}
+        val quizResult: List<QuizResultEntity> =
+            List(10) { QuizResultEntity("userAnswer", true, time, 0) }
 
         quiz = QuizListEntity(
-            title = "test title",
-            quiz = quizList,
-            quizResult = quizResult
+            title = "test title", quiz = quizList, quizResult = quizResult
         )
 
         setupUi()
@@ -77,7 +70,8 @@ class StartQuizFragment : Fragment() {
                     is DefaultEvent.Failure -> {
                         ToastMaker.make(requireContext(), event.msg)
                     }
-                    DefaultEvent.Success -> { }
+
+                    DefaultEvent.Success -> {}
                 }
             }
         }
@@ -85,27 +79,12 @@ class StartQuizFragment : Fragment() {
 
     private fun setupListener() = with(binding) {
         btnStartQuizBack.setOnClickListener {
-            //findNavController().popBackStack()
+            findNavController().popBackStack()
         }
 
         btnStartQuizStart.setOnClickListener {
-            //findNavController().navigate(해당 화면)
-
-            /**
-             * test code
-             * TODO: nav 개발 후 테스트 코드 삭제
-             */
-            setFragmentResult(
-                START_TO_SOLVE_BUNDLE_KEY,
-                bundleOf(START_TO_SOLVE_BUNDLE_KEY to quiz)
-            )
-
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.cl_main, SolveQuizFragment())
-                .commit()
-            /**
-             * test code end
-             */
+            val action = StartQuizFragmentDirections.actionStartQuizFragmentToSolveQuizFragment(quiz)
+            findNavController().navigate(action)
         }
     }
 
@@ -116,7 +95,8 @@ class StartQuizFragment : Fragment() {
                     is DefaultEvent.Failure -> {
                         ToastMaker.make(requireContext(), event.msg)
                     }
-                    DefaultEvent.Success -> { }
+
+                    DefaultEvent.Success -> {}
                 }
             }
         }
@@ -137,7 +117,8 @@ class StartQuizFragment : Fragment() {
                     is DefaultEvent.Failure -> {
                         ToastMaker.make(requireContext(), event.msg)
                     }
-                    DefaultEvent.Success -> { }
+
+                    DefaultEvent.Success -> {}
                 }
             }
         }
@@ -150,9 +131,5 @@ class StartQuizFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object {
-        const val QUIZ_TO_START_BUNDLE_KEY = "QUIZ_TO_START_BUNDLE_KEY"
     }
 }

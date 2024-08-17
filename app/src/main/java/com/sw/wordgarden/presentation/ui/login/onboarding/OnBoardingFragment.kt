@@ -8,14 +8,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentOnboardingBinding
 import com.sw.wordgarden.domain.entity.SignUpEntity
 import com.sw.wordgarden.presentation.model.DefaultEvent
-import com.sw.wordgarden.presentation.ui.home.HomeFragment
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -23,7 +23,6 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class OnBoardingFragment : Fragment() {
-
     private val TAG = "OnBoardingFragment"
 
     private var _binding: FragmentOnboardingBinding? = null
@@ -50,15 +49,8 @@ class OnBoardingFragment : Fragment() {
     }
 
     private fun getDataFromLogin() {
-        setFragmentResultListener(LOGIN_TO_ONBOARDING_REQUEST_KEY) { _, bundle ->
-            signUpEntity = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                bundle.getParcelable(LOGIN_TO_ONBOARDING_BUNDLE_KEY, SignUpEntity::class.java)
-                    ?: SignUpEntity("", "", "")
-            } else {
-                bundle.getParcelable(LOGIN_TO_ONBOARDING_BUNDLE_KEY)
-                    ?: SignUpEntity("", "", "")
-            }
-        }
+        val args: OnBoardingFragmentArgs by navArgs()
+        signUpEntity = args.argsSignUpEntity ?: SignUpEntity("", "", "")
     }
 
     private fun setupListener() {
@@ -97,19 +89,11 @@ class OnBoardingFragment : Fragment() {
     }
 
     private fun goHome() {
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.cl_login_main, HomeFragment())
-            .addToBackStack(null)
-            .commit()
+        findNavController().navigate(R.id.action_onBoardingFragment_to_homeFragment)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object {
-        const val LOGIN_TO_ONBOARDING_REQUEST_KEY = "LOGIN_TO_ONBOARDING_REQUEST_KEY"
-        const val LOGIN_TO_ONBOARDING_BUNDLE_KEY = "LOGIN_TO_ONBOARDING_BUNDLE_KEY"
     }
 }

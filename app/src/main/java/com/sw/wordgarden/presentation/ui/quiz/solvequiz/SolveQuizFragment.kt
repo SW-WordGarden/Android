@@ -1,6 +1,5 @@
 package com.sw.wordgarden.presentation.ui.quiz.solvequiz
 
-import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,10 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
-import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.sw.wordgarden.R
@@ -19,8 +19,6 @@ import com.sw.wordgarden.databinding.FragmentSolveQuizBinding
 import com.sw.wordgarden.domain.entity.QuizListEntity
 import com.sw.wordgarden.presentation.model.DefaultEvent
 import com.sw.wordgarden.presentation.model.QuestionAnswerModel
-import com.sw.wordgarden.presentation.ui.quiz.resultquiz.ResultQuizFragment
-import com.sw.wordgarden.presentation.ui.quiz.resultquiz.ResultQuizFragment.Companion.SOLVE_TO_RESULT_BUNDLE_KEY
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -51,17 +49,9 @@ class SolveQuizFragment : Fragment() {
     }
 
     private fun getDataFromStart() {
-        setFragmentResultListener(START_TO_SOLVE_BUNDLE_KEY) { _, bundle ->
-            val quiz = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                bundle.getParcelable(START_TO_SOLVE_BUNDLE_KEY, QuizListEntity::class.java)
-                    ?: QuizListEntity("", emptyList(), emptyList())
-            } else {
-                bundle.getParcelable(START_TO_SOLVE_BUNDLE_KEY)
-                    ?: QuizListEntity("", emptyList(), emptyList())
-            }
-
-            setupUi(quiz)
-        }
+        val args: SolveQuizFragmentArgs by navArgs()
+        val quiz = args.argsQuizEntity ?: QuizListEntity("", emptyList(), emptyList())
+        setupUi(quiz)
     }
 
     private fun setupUi(quiz: QuizListEntity) = with(binding) {
@@ -117,7 +107,7 @@ class SolveQuizFragment : Fragment() {
 
     private fun setupListener() = with(binding) {
         btnSolveQuizBack.setOnClickListener {
-            //findNavController().popBackStack()
+            findNavController().navigate(R.id.action_solveQuizFragment_to_quizFragment)
         }
     }
 
@@ -138,31 +128,12 @@ class SolveQuizFragment : Fragment() {
     }
 
     private fun goResult(result: QuizListEntity?) {
-        //findNavController().navigate(해당 화면)
-
-        /**
-         * test code
-         * TODO: nav 개발 후 테스트 코드 삭제
-         */
-        setFragmentResult(
-            SOLVE_TO_RESULT_BUNDLE_KEY,
-            bundleOf(SOLVE_TO_RESULT_BUNDLE_KEY to result)
-        )
-
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.cl_main, ResultQuizFragment())
-            .commit()
-        /**
-         * test code end
-         */
+        val action = SolveQuizFragmentDirections.actionSolveQuizFragmentToResultQuizFragment(result)
+        findNavController().navigate(action)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object {
-        const val START_TO_SOLVE_BUNDLE_KEY = "START_TO_SOLVE_BUNDLE_KEY"
     }
 }

@@ -8,5 +8,6 @@
     <color name="light_green">#A0DEC8</color>
     <color name="khaki">#AAC5B2</color>
     <color name="light_khaki">#CFE2DB</color>
-    <color name="light_red">#E789A0</color>
+    <color name="light_pink">#E789A0</color>
+    <color name="light_red">#FF8484</color>
 </resources>

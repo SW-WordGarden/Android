@@ -1,10 +1,11 @@
-package com.sw.wordgarden.presentation.ui.mypage
+package com.sw.wordgarden.presentation.ui.mypage.mypage
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentMypageBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,31 +31,28 @@ class MypageFragment : Fragment() {
 
     private fun setupListener() = with(binding) {
         ivMyBack.setOnClickListener {
-
+            findNavController().popBackStack()
         }
-        ivMyMenu.setOnClickListener {
-
+        ivMySetting.setOnClickListener {
+            findNavController().navigate(R.id.action_mypageFragment_to_settingFragment)
         }
         ivMyEdit.setOnClickListener {
 
         }
         ivMyWeeklyScoreMore.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.cl_my_main, WeeklyFragment())
-                .addToBackStack(null)
-                .commit()
+            findNavController().navigate(R.id.action_mypageFragment_to_weeklyQuizCheckFragment)
         }
-        ivMyQuizzesMore.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.cl_my_main, MyQuizFragment())
-                .addToBackStack(null)
-                .commit()
+        ivMyMadeQuizMore.setOnClickListener {
+            findNavController().navigate(R.id.action_mypageFragment_to_myMadeQuizFragment)
+        }
+        ivMySolvedQuizMore.setOnClickListener {
+            findNavController().navigate(R.id.action_mypageFragment_to_mySolvedQuizFragment)
+        }
+        ivMyTakenQuizMore.setOnClickListener {
+            findNavController().navigate(R.id.action_mypageFragment_to_myTakenQuizFragment)
         }
         ivMyFriendsMore.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.cl_my_main, FriendsFragment())
-                .addToBackStack(null)
-                .commit()
+            findNavController().navigate(R.id.action_mypageFragment_to_friendsFragment)
         }
     }
 

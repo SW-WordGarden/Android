@@ -11,6 +11,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentShareQuizBinding
 import com.sw.wordgarden.presentation.model.DefaultEvent
@@ -53,7 +55,8 @@ class ShareQuizFragment : Fragment() {
     }
 
     private fun setupData() {
-        quizTitle = arguments?.getString(MAKE_TO_SHARE_BUNDLE_KEY) ?: ""
+        val args: ShareQuizFragmentArgs by navArgs()
+        quizTitle = args.argsTitle ?: ""
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -92,8 +95,8 @@ class ShareQuizFragment : Fragment() {
     }
 
     private fun setupListener() = with(binding) {
-        btnShareQuizBack.setOnClickListener {
-            //findNavController().popBackStack()
+        ivShareQuizBack.setOnClickListener {
+            findNavController().navigate(R.id.action_shareQuizFragment_to_quizFragment)
         }
 
         etShareQuizInputTitle.addTextChangedListener(object : TextWatcher {
@@ -150,9 +153,5 @@ class ShareQuizFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object {
-        const val MAKE_TO_SHARE_BUNDLE_KEY = "MAKE_TO_SHARE_BUNDLE_KEY"
     }
 }
