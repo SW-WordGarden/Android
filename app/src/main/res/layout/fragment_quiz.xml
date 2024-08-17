@@ -5,8 +5,8 @@
     android:id="@+id/cl_quiz_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.ui.quiz.quiz.QuizFragment"
-    android:background="@color/light_green">
+    android:background="@color/light_green"
+    tools:context=".presentation.ui.quiz.quiz.QuizFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_quiz_top_bar"
@@ -38,15 +38,15 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tv_quiz_title" />
 
-<!--        <androidx.appcompat.widget.AppCompatImageView-->
-<!--            android:id="@+id/btn_quiz_menu"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:src="@drawable/ic_menu"-->
-<!--            app:layout_constraintBottom_toBottomOf="@+id/tv_quiz_title"-->
-<!--            app:layout_constraintRight_toRightOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="@+id/tv_quiz_title" />-->
-<!--        -->
+        <!--        <androidx.appcompat.widget.AppCompatImageView-->
+        <!--            android:id="@+id/btn_quiz_menu"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:src="@drawable/ic_menu"-->
+        <!--            app:layout_constraintBottom_toBottomOf="@+id/tv_quiz_title"-->
+        <!--            app:layout_constraintRight_toRightOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="@+id/tv_quiz_title" />-->
+        <!--        -->
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ScrollView
@@ -72,50 +72,30 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_quiz_user_name"
+                android:id="@+id/tv_quiz_welcome_user"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_medium"
-                android:text="user"
+                android:gravity="center"
+                android:text="사용자님을 위한\n맞춤 퀴즈가 준비되어 있어요.\n(0/3)"
                 android:textSize="@dimen/text_smaller"
                 android:textStyle="bold"
-                app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@+id/tv_quiz_support_name"
+                app:layout_constraintEnd_toEndOf="@+id/iv_quiz_user_thumbnail"
+                app:layout_constraintStart_toStartOf="@+id/iv_quiz_user_thumbnail"
                 app:layout_constraintTop_toBottomOf="@+id/iv_quiz_user_thumbnail" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_quiz_support_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_extra_smaller"
-                android:text="@string/quiz_support_name"
-                android:textSize="@dimen/text_smaller"
-                app:layout_constraintLeft_toRightOf="@+id/tv_quiz_user_name"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tv_quiz_user_name" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_quiz_support_name2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/quiz_support_name2"
-                android:textSize="@dimen/text_smaller"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_quiz_user_name" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_quiz_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="90dp"
+                android:gravity="center"
                 android:text="@string/quiz_support_btn"
                 android:textColor="@color/green"
                 android:textSize="@dimen/text_caption"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_quiz_support_name2" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_quiz_welcome_user" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_quiz_alone"

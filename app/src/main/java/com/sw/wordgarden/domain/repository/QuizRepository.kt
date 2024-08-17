@@ -10,4 +10,6 @@ interface QuizRepository {
     suspend fun getQuizListAllType(): QuizListEntity?
     suspend fun getQuizListMadeByUser(): List<QuizListEntity>?
     suspend fun getQuizListDoneByUserAndPeriod(startDate: Date, endDate: Date): List<QuizListEntity>?
+    suspend fun getTodayQuiz(): QuizListEntity?
+    suspend fun sendQuizAnswer(quizResult: QuizListEntity)
 }

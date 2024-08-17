@@ -1,8 +1,8 @@
 package com.sw.wordgarden.data.datasource.remote
 
 import android.util.Log
-import com.sw.wordgarden.data.datasource.local.LocalDataAuth
-import com.sw.wordgarden.data.datasource.remote.Retrofit.Service
+import com.sw.wordgarden.data.datasource.local.LocalDataSource
+import com.sw.wordgarden.data.datasource.remote.retrofit.Service
 import com.sw.wordgarden.data.dto.QuizListDto
 import com.sw.wordgarden.data.dto.SignUpDto
 import com.sw.wordgarden.data.dto.TreeDto
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 class ServerDataSourceImpl @Inject constructor(
     private val service: Service,
-    private val localDataAuth: LocalDataAuth
+    private val localDataSource: LocalDataSource
 ) : ServerDataSource {
 
     private val TAG = "ServerDataSourceImpl"
@@ -51,6 +51,19 @@ class ServerDataSourceImpl @Inject constructor(
         } catch (e: Exception) {
             e.printStackTrace()
             null
+        }
+    }
+
+    override suspend fun sendFirebaseToken(token: String) {
+        try {
+            val uid = getUid()
+
+            val response = service.sendFirebaseToken(uid!!, token)
+            if (!response.isSuccessful) {
+                throw HttpException(response)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
@@ -157,6 +170,35 @@ class ServerDataSourceImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
+    override suspend fun getTodayQuiz(): QuizListDto? {
+        return try {
+            val uid = getUid()
+
+            val response = service.getTodayQuiz(uid!!)
+            if (!response.isSuccessful) {
+                throw HttpException(response)
+            } else {
+                response.body()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+    override suspend fun sendQuizAnswer(quizResult: QuizListDto) {
+        try {
+            val uid = getUid()
+
+            val response = service.sendQuizAnswer(uid!!, quizResult)
+            if (!response.isSuccessful) {
+                throw HttpException(response)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
     //garden
     override suspend fun updateTree(treeId: String) {
         TODO("Not yet implemented")
@@ -167,6 +209,6 @@ class ServerDataSourceImpl @Inject constructor(
     }
 
     private suspend fun getUid(): String? {
-        return localDataAuth.getUid()
+        return localDataSource.getUid()
     }
 }

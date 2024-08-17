@@ -1,5 +1,9 @@
 package com.sw.wordgarden.app.di
 
+import com.sw.wordgarden.domain.usecase.CheckQuizResultUseCase
+import com.sw.wordgarden.domain.usecase.CheckQuizResultUseCaseImpl
+import com.sw.wordgarden.domain.usecase.DeleteDailyLimitUseCase
+import com.sw.wordgarden.domain.usecase.DeleteDailyLimitUseCaseImpl
 import com.sw.wordgarden.domain.usecase.DeleteFriendUseCase
 import com.sw.wordgarden.domain.usecase.DeleteFriendUseCaseImpl
 import com.sw.wordgarden.domain.usecase.DeleteQuizListUseCase
@@ -8,6 +12,8 @@ import com.sw.wordgarden.domain.usecase.DeleteUidUseCase
 import com.sw.wordgarden.domain.usecase.DeleteUidUseCaseImpl
 import com.sw.wordgarden.domain.usecase.DeleteUserUseCase
 import com.sw.wordgarden.domain.usecase.DeleteUserUseCaseImpl
+import com.sw.wordgarden.domain.usecase.GetDailyLimitUseCase
+import com.sw.wordgarden.domain.usecase.GetDailyLimitUseCaseImpl
 import com.sw.wordgarden.domain.usecase.GetFriendListUseCase
 import com.sw.wordgarden.domain.usecase.GetFriendListUseCaseImpl
 import com.sw.wordgarden.domain.usecase.GetQuizListAllTypeUseCase
@@ -18,6 +24,8 @@ import com.sw.wordgarden.domain.usecase.GetQuizListMadeByUserUseCase
 import com.sw.wordgarden.domain.usecase.GetQuizListMadeByUserUseCaseImpl
 import com.sw.wordgarden.domain.usecase.GetQuizeListDoneByUserAndPeriodUseCase
 import com.sw.wordgarden.domain.usecase.GetQuizeListDoneByUserAndPeriodUseCaseImpl
+import com.sw.wordgarden.domain.usecase.GetTodayQuizUseCase
+import com.sw.wordgarden.domain.usecase.GetTodayQuizUseCaseImpl
 import com.sw.wordgarden.domain.usecase.GetTreeListUseCase
 import com.sw.wordgarden.domain.usecase.GetTreeListUseCaseImpl
 import com.sw.wordgarden.domain.usecase.GetUidUseCase
@@ -34,8 +42,14 @@ import com.sw.wordgarden.domain.usecase.InsertUserUseCase
 import com.sw.wordgarden.domain.usecase.InsertUserUseCaseImpl
 import com.sw.wordgarden.domain.usecase.ReportFriendUseCase
 import com.sw.wordgarden.domain.usecase.ReportFriendUseCaseImpl
+import com.sw.wordgarden.domain.usecase.SaveDailyLimitUseCase
+import com.sw.wordgarden.domain.usecase.SaveDailyLimitUseCaseImpl
 import com.sw.wordgarden.domain.usecase.SaveUidUseCase
 import com.sw.wordgarden.domain.usecase.SaveUidUseCaseImpl
+import com.sw.wordgarden.domain.usecase.SendQuizAnswerUseCase
+import com.sw.wordgarden.domain.usecase.SendQuizAnswerUseCaseImpl
+import com.sw.wordgarden.domain.usecase.SendFirebaseTokenUseCase
+import com.sw.wordgarden.domain.usecase.SendFirebaseTokenUseCaseImpl
 import com.sw.wordgarden.domain.usecase.ShareQuizUseCase
 import com.sw.wordgarden.domain.usecase.ShareQuizUseCaseImpl
 import com.sw.wordgarden.domain.usecase.UpdateTreeUseCase
@@ -51,6 +65,19 @@ import dagger.hilt.android.scopes.ViewModelScoped
 @Module
 @InstallIn(ViewModelComponent::class)
 abstract class UseCaseModule {
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindCheckQuizResultUseCase(
+        checkQuizResultUseCaseImpe: CheckQuizResultUseCaseImpl
+    ): CheckQuizResultUseCase
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindDeleteDailyLimitUseCase(
+        deleteDailyLimitUseCaseImpl: DeleteDailyLimitUseCaseImpl
+    ): DeleteDailyLimitUseCase
+
     @Binds
     @ViewModelScoped
     abstract fun bindDeleteFriendUseCase(
@@ -74,6 +101,12 @@ abstract class UseCaseModule {
     abstract fun bindDeleteUserUseCase(
         deleteUserUseCaseImpl: DeleteUserUseCaseImpl
     ): DeleteUserUseCase
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindGetDailyLimitUseCase(
+        getDailyLimitUseCaseImpl: GetDailyLimitUseCaseImpl
+    ): GetDailyLimitUseCase
 
     @Binds
     @ViewModelScoped
@@ -104,6 +137,12 @@ abstract class UseCaseModule {
     abstract fun bindGetQuizListMadeByUserUseCase(
         getQuizListMadeByUserUseCaseImpl: GetQuizListMadeByUserUseCaseImpl
     ): GetQuizListMadeByUserUseCase
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindGetTodayQuizUseCase(
+        getTodayQuizUseCaseImpl: GetTodayQuizUseCaseImpl
+    ): GetTodayQuizUseCase
 
     @Binds
     @ViewModelScoped
@@ -155,9 +194,27 @@ abstract class UseCaseModule {
 
     @Binds
     @ViewModelScoped
+    abstract fun bindSaveDailyLimitUseCase(
+        saveDailyLimitUseCaseImpl: SaveDailyLimitUseCaseImpl
+    ): SaveDailyLimitUseCase
+
+    @Binds
+    @ViewModelScoped
     abstract fun bindSaveUidUseCase(
         saveUidUseCaseImpl: SaveUidUseCaseImpl
     ): SaveUidUseCase
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindSendFirebaseTokenUseCase(
+        sendFirebaseTokenUseCaseImpl: SendFirebaseTokenUseCaseImpl
+    ): SendFirebaseTokenUseCase
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindSendQuizAnswerUseCase(
+        sendQuizAnswerUseCaseImpl: SendQuizAnswerUseCaseImpl
+    ): SendQuizAnswerUseCase
 
     @Binds
     @ViewModelScoped

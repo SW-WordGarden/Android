@@ -74,14 +74,14 @@ object ServerMapper {
         userAnswer = userAnswer,
         correct = correct,
         time = time,
-        answerNumber = answerNumber,
+        questionNumber = answerNumber,
     )
 
     fun QuizResultEntity.toDto() = QuizResultDto(
         userAnswer = userAnswer,
         correct = correct,
         time = time,
-        answerNumber = answerNumber,
+        answerNumber = questionNumber,
     )
 
     private fun quizDtoToEntity(quiz: List<QuizDto>?): List<QuizEntity> =

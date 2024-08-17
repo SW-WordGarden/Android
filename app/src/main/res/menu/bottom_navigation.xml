@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/wordFragment"
+        android:enabled="true"
+        android:icon="@drawable/bottom_word"
+        android:title="@string/bottom_word"/>
+    <item
+        android:id="@+id/quizFragment"
+        android:enabled="true"
+        android:icon="@drawable/bottom_quiz"
+        android:title="@string/bottom_quiz"/>
+    <item
+        android:id="@+id/homeFragment"
+        android:enabled="true"
+        android:icon="@drawable/bottom_home"
+        android:title="@string/bottom_home"/>
+    <item
+        android:id="@+id/mypageFragment"
+        android:enabled="true"
+        android:icon="@drawable/bottom_mypage"
+        android:title="@string/bottom_mypage"/>
+    <item
+        android:id="@+id/gardenFragment"
+        android:enabled="true"
+        android:icon="@drawable/bottom_garden"
+        android:title="@string/bottom_garden"/>
+</menu>

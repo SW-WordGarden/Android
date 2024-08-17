@@ -7,21 +7,23 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/circleImageView"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@color/white"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@color/gray"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:layout_width="50dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_extra_small"
         android:ellipsize="end"
+        android:maxWidth="50dp"
         android:maxLines="1"
         android:singleLine="true"
         android:text="username"
-        android:textSize="@dimen/text_smaller"
+        android:textSize="@dimen/text_mini"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="@+id/circleImageView"
         app:layout_constraintStart_toStartOf="@+id/circleImageView"
         app:layout_constraintTop_toBottomOf="@+id/circleImageView" />

@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/loginFragment">
+
+    <!--login-->
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.sw.wordgarden.presentation.ui.login.login.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/nav_graph" />
+        <action
+            android:id="@+id/action_loginFragment_to_onBoardingFragment"
+            app:destination="@id/onBoardingFragment">
+            <argument
+                android:name="argsSignUpEntity"
+                app:argType="com.sw.wordgarden.domain.entity.SignUpEntity" />
+        </action>
+        <argument
+            android:name="argsSignUpEntity"
+            android:defaultValue="@null"
+            app:argType="com.sw.wordgarden.domain.entity.SignUpEntity"
+            app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/onBoardingFragment"
+        android:name="com.sw.wordgarden.presentation.ui.login.onboarding.OnBoardingFragment"
+        android:label="fragment_onboarding"
+        tools:layout="@layout/fragment_onboarding">
+        <action
+            android:id="@+id/action_onBoardingFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/nav_graph" />
+        <argument
+            android:name="argsSignUpEntity"
+            android:defaultValue="@null"
+            app:argType="com.sw.wordgarden.domain.entity.SignUpEntity"
+            app:nullable="true" />
+    </fragment>
+
+    <!--home-->
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.sw.wordgarden.presentation.ui.home.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
+
+    <!--quiz-->
+    <fragment
+        android:id="@+id/quizFragment"
+        android:name="com.sw.wordgarden.presentation.ui.quiz.quiz.QuizFragment"
+        android:label="fragment_quiz"
+        tools:layout="@layout/fragment_quiz">
+        <action
+            android:id="@+id/action_quizFragment_to_makeQuizFragment"
+            app:destination="@id/makeQuizFragment" />
+        <action
+            android:id="@+id/action_quizFragment_to_startQuizFragment"
+            app:destination="@id/startQuizFragment" />
+        <action
+            android:id="@+id/action_quizFragment_to_shareQuizFragment"
+            app:destination="@id/shareQuizFragment" />
+        <argument
+            android:name="argsLimit"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/makeQuizFragment"
+        android:name="com.sw.wordgarden.presentation.ui.quiz.makequiz.MakeQuizFragment"
+        android:label="fragment_make_quiz"
+        tools:layout="@layout/fragment_make_quiz">
+        <action
+            android:id="@+id/action_makeQuizFragment_to_shareQuizFragment"
+            app:destination="@id/shareQuizFragment" />
+        <argument
+            android:name="argsTitle"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/resultQuizFragment"
+        android:name="com.sw.wordgarden.presentation.ui.quiz.resultquiz.ResultQuizFragment"
+        android:label="fragment_result_quiz"
+        tools:layout="@layout/fragment_result_quiz">
+        <argument
+            android:name="argsQuizEntity"
+            android:defaultValue="@null"
+            app:argType="com.sw.wordgarden.domain.entity.QuizListEntity"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_resultQuizFragment_to_quizFragment"
+            app:destination="@id/quizFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/shareQuizFragment"
+        android:name="com.sw.wordgarden.presentation.ui.quiz.sharequiz.ShareQuizFragment"
+        android:label="fragment_share_quiz"
+        tools:layout="@layout/fragment_share_quiz">
+        <argument
+            android:name="argsTitle"
+            app:argType="string"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_shareQuizFragment_to_quizFragment"
+            app:destination="@id/quizFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/solveQuizFragment"
+        android:name="com.sw.wordgarden.presentation.ui.quiz.solvequiz.SolveQuizFragment"
+        android:label="fragment_solve_quiz"
+        tools:layout="@layout/fragment_solve_quiz">
+        <action
+            android:id="@+id/action_solveQuizFragment_to_resultQuizFragment"
+            app:destination="@id/resultQuizFragment" />
+        <argument
+            android:name="argsQuizEntity"
+            android:defaultValue="@null"
+            app:argType="com.sw.wordgarden.domain.entity.QuizListEntity"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_solveQuizFragment_to_quizFragment"
+            app:destination="@id/quizFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/startQuizFragment"
+        android:name="com.sw.wordgarden.presentation.ui.quiz.startquiz.StartQuizFragment"
+        android:label="fragment_start_quiz"
+        tools:layout="@layout/fragment_start_quiz">
+        <action
+            android:id="@+id/action_startQuizFragment_to_solveQuizFragment"
+            app:destination="@id/solveQuizFragment" />
+        <argument
+            android:name="argsLimit"
+            app:argType="integer" />
+        <argument
+            android:name="argsQuizEntity"
+            android:defaultValue="@null"
+            app:argType="com.sw.wordgarden.domain.entity.QuizListEntity"
+            app:nullable="true" />
+    </fragment>
+
+    <!--mypage-->
+    <fragment
+        android:id="@+id/mypageFragment"
+        android:name="com.sw.wordgarden.presentation.ui.mypage.mypage.MypageFragment"
+        android:label="fragment_mypage"
+        tools:layout="@layout/fragment_mypage">
+        <action
+            android:id="@+id/action_mypageFragment_to_friendsFragment"
+            app:destination="@id/friendsFragment" />
+        <action
+            android:id="@+id/action_mypageFragment_to_myMadeQuizFragment"
+            app:destination="@id/myMadeQuizFragment" />
+        <action
+            android:id="@+id/action_mypageFragment_to_mySolvedQuizFragment"
+            app:destination="@id/mySolvedQuizFragment" />
+        <action
+            android:id="@+id/action_mypageFragment_to_myTakenQuizFragment"
+            app:destination="@id/myTakenQuizFragment" />
+        <action
+            android:id="@+id/action_mypageFragment_to_weeklyQuizCheckFragment"
+            app:destination="@id/weeklyQuizCheckFragment" />
+        <action
+            android:id="@+id/action_mypageFragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/friendsFragment"
+        android:name="com.sw.wordgarden.presentation.ui.mypage.friends.FriendsFragment"
+        android:label="fragment_friends"
+        tools:layout="@layout/fragment_friends" />
+    <fragment
+        android:id="@+id/myMadeQuizFragment"
+        android:name="com.sw.wordgarden.presentation.ui.mypage.mymadequiz.MyMadeQuizFragment"
+        android:label="fragment_my_made_quiz"
+        tools:layout="@layout/fragment_my_made_quiz">
+        <action
+            android:id="@+id/action_myMadeQuizFragment_to_makeQuizFragment"
+            app:destination="@id/makeQuizFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mySolvedQuizFragment"
+        android:name="com.sw.wordgarden.presentation.ui.mypage.mysolvedquiz.MySolvedQuizFragment"
+        android:label="fragment_my_solved_quiz"
+        tools:layout="@layout/fragment_my_solved_quiz">
+        <action
+            android:id="@+id/action_mySolvedQuizFragment_to_resultQuizFragment"
+            app:destination="@id/resultQuizFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/myTakenQuizFragment"
+        android:name="com.sw.wordgarden.presentation.ui.mypage.mytakenquiz.MyTakenQuizFragment"
+        android:label="fragment_my_taken_quiz"
+        tools:layout="@layout/fragment_my_taken_quiz">
+        <action
+            android:id="@+id/action_myTakenQuizFragment_to_startQuizFragment"
+            app:destination="@id/startQuizFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/weeklyQuizCheckFragment"
+        android:name="com.sw.wordgarden.presentation.ui.mypage.weeklyquizcheck.WeeklyQuizCheckFragment"
+        android:label="fragment_weekly"
+        tools:layout="@layout/fragment_weekly" />
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.sw.wordgarden.presentation.ui.setting.setting.SettingFragment"
+        android:label="fragment_setting"
+        tools:layout="@layout/fragment_setting">
+        <action
+            android:id="@+id/action_settingFragment_to_agreementFragment"
+            app:destination="@id/agreementFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/agreementFragment"
+        android:name="com.sw.wordgarden.presentation.ui.setting.agreement.AgreementFragment"
+        android:label="fragment_agreement"
+        tools:layout="@layout/fragment_agreement" />
+</navigation>
