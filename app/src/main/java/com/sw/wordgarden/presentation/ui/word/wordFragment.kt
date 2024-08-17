@@ -1,7 +1,6 @@
 package com.sw.wordgarden.presentation.ui.word
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,17 +8,18 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sw.wordgarden.R
-import com.sw.wordgarden.databinding.FragmentLearningWordBinding
+import com.sw.wordgarden.databinding.FragmentWordBinding
 import com.sw.wordgarden.presentation.model.WordModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class LearningWordFragment : Fragment() {
-    private var _binding : FragmentLearningWordBinding? = null
+class wordFragment : Fragment() {
+    private var _binding : FragmentWordBinding? = null
     private val binding get() = _binding!!
 
     private val viewModel:WordViewModel by activityViewModels()
@@ -36,7 +36,7 @@ class LearningWordFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentLearningWordBinding.inflate(inflater, container, false)
+        _binding = FragmentWordBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -48,14 +48,11 @@ class LearningWordFragment : Fragment() {
     }
     private fun setAdapter() = with(binding){
         wordAdapter = WordAdapter{ item ->
-            parentFragmentManager.beginTransaction()
-                .add(R.id.frame_layout, DetailWordFragment())
-                .addToBackStack(null)
-                .commit()
+            findNavController().navigate(R.id.action_wordFragment_to_detailWordFragment)
             viewModel.selectWord(item)
         }
         rvWord.adapter = wordAdapter
-        rvWord.layoutManager = LinearLayoutManager(this@LearningWordFragment.activity)
+        rvWord.layoutManager = LinearLayoutManager(this@wordFragment.activity)
     }
     private fun initViewModel(){
         viewLifecycleOwner.lifecycleScope.launch {

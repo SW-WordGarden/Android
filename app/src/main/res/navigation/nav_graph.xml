@@ -221,4 +221,24 @@
         android:name="com.sw.wordgarden.presentation.ui.setting.agreement.AgreementFragment"
         android:label="fragment_agreement"
         tools:layout="@layout/fragment_agreement" />
+
+    <!--word-->
+    <fragment
+        android:id="@+id/detailWordFragment"
+        android:name="com.sw.wordgarden.presentation.ui.word.DetailWordFragment"
+        android:label="DetailWordFragment"
+        tools:layout="@layout/fragment_detail_word">
+        <action
+            android:id="@+id/action_detailWordFragment_to_wordFragment"
+            app:destination="@+id/wordFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/wordFragment"
+        android:name="com.sw.wordgarden.presentation.ui.word.wordFragment"
+        android:label="LearningWordFragment"
+        tools:layout="@layout/fragment_word">
+        <action
+            android:id="@+id/action_wordFragment_to_detailWordFragment"
+            app:destination="@+id/detailWordFragment"/>
+    </fragment>
 </navigation>

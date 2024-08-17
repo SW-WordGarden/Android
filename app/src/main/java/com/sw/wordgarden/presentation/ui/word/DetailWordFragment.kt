@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentDetailWordBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -63,7 +65,7 @@ class DetailWordFragment : Fragment() {
     }
     private fun setButton() = with(binding){
         btQuizBack.setOnClickListener {
-            parentFragmentManager.popBackStack()
+            findNavController().navigate(R.id.action_detailWordFragment_to_wordFragment)
         }
 
         btTextBack.setOnClickListener {
