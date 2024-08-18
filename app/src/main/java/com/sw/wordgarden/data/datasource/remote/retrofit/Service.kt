@@ -1,8 +1,10 @@
 package com.sw.wordgarden.data.datasource.remote.retrofit
 
 import com.sw.wordgarden.data.dto.QuizSummaryDto
+import com.sw.wordgarden.data.dto.SelfQuizCreatorInfoDto
 import com.sw.wordgarden.data.dto.SelfQuizDto
 import com.sw.wordgarden.data.dto.SignUpDto
+import com.sw.wordgarden.data.dto.SolveQuizDto
 import com.sw.wordgarden.data.dto.TreeDto
 import com.sw.wordgarden.data.dto.UserDto
 import com.sw.wordgarden.data.dto.WordDto
@@ -76,7 +78,19 @@ interface Service {
     suspend fun getQuizListMadeByUser(@Path("uid") uid: String): Response<List<QuizSummaryDto>>
 
     @GET("sq/created/{uid}/{sqid}")
-    suspend fun getQuizListMadeByUserByTitle(@Path("uid") uid: String, @Path("sqid") quizId: String): Response<SelfQuizDto>
+    suspend fun getQuizListMadeByUserBySelfQuizId(@Path("uid") uid: String, @Path("sqid") quizId: String): Response<SelfQuizDto>
+
+    @GET("sq/quiz/{sqid}")
+    suspend fun getQuizBySelfQuizId(@Path("sqid") quizId: String): Response<SelfQuizDto>
+
+    @POST("sq/solve")
+    suspend fun submitSelfQuiz(@Body solvedQuiz: SolveQuizDto): Response<Unit>
+
+    @GET("sq/solved/{uid}")
+    suspend fun getSolvedSelfQuizTitleList(@Path("uid") uid: String): Response<List<String>>
+
+    @GET("sq/solved/{uid}/{title}")
+    suspend fun getSolvedSelfQuizResult(@Path("uid") uid: String, @Path("title") title: String): Response<SelfQuizDto>
 
     //    @POST("login/login")
     suspend fun getQuizListDoneByUserAndPeriod(
@@ -86,6 +100,9 @@ interface Service {
 
     @GET("wq/wq") //TODO: 서버 구현 시 수정
     suspend fun getTodayQuiz(@Path("uid") uid: String): Response<SelfQuizDto> //TODO: 서버 구현 시 수정
+
+    @GET("sq/creator/{sqid}")
+    suspend fun getSelfQuizCreatorInfo(@Path("sqid") quizId: String): Response<SelfQuizCreatorInfoDto>
 
     @POST("wq/{wqid}/answer") //TODO: 서버 구현 시 수정
     suspend fun sendQuizAnswer(

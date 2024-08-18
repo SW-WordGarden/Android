@@ -5,9 +5,9 @@ import com.sw.wordgarden.domain.repository.QuizRepository
 import java.util.Date
 import javax.inject.Inject
 
-class GetQuizeListDoneByUserAndPeriodUseCaseImpl @Inject constructor(
+class GetQuizListDoneByUserAndPeriodUseCaseImpl @Inject constructor(
     private val quizRepository: QuizRepository
-) : GetQuizeListDoneByUserAndPeriodUseCase {
+) : GetQuizListDoneByUserAndPeriodUseCase {
     override suspend fun invoke(startDate: Date, endDate: Date): List<SelfQuizEntity>? {
         TODO("Not yet implemented")
     }

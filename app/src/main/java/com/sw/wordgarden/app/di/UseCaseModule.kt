@@ -16,6 +16,8 @@ import com.sw.wordgarden.domain.usecase.GetDailyLimitUseCase
 import com.sw.wordgarden.domain.usecase.GetDailyLimitUseCaseImpl
 import com.sw.wordgarden.domain.usecase.GetFriendListUseCase
 import com.sw.wordgarden.domain.usecase.GetFriendListUseCaseImpl
+import com.sw.wordgarden.domain.usecase.GetQuizBySelfQuizIdUseCase
+import com.sw.wordgarden.domain.usecase.GetQuizBySelfQuizIdUseCaseImpl
 import com.sw.wordgarden.domain.usecase.GetQuizListAllTypeUseCase
 import com.sw.wordgarden.domain.usecase.GetQuizListAllTypeUseCaseImpl
 import com.sw.wordgarden.domain.usecase.GetQuizListByTypeUseCase
@@ -24,8 +26,14 @@ import com.sw.wordgarden.domain.usecase.GetQuizListMadeByUserByQuizIdUseCase
 import com.sw.wordgarden.domain.usecase.GetQuizListMadeByUserByQuizIdUseCaseImpl
 import com.sw.wordgarden.domain.usecase.GetQuizListMadeByUserUseCase
 import com.sw.wordgarden.domain.usecase.GetQuizListMadeByUserUseCaseImpl
-import com.sw.wordgarden.domain.usecase.GetQuizeListDoneByUserAndPeriodUseCase
-import com.sw.wordgarden.domain.usecase.GetQuizeListDoneByUserAndPeriodUseCaseImpl
+import com.sw.wordgarden.domain.usecase.GetQuizListDoneByUserAndPeriodUseCase
+import com.sw.wordgarden.domain.usecase.GetQuizListDoneByUserAndPeriodUseCaseImpl
+import com.sw.wordgarden.domain.usecase.GetSelfQuizCreatorInfoByQuizIdUseCase
+import com.sw.wordgarden.domain.usecase.GetSelfQuizCreatorInfoByQuizIdUseCaseImpl
+import com.sw.wordgarden.domain.usecase.GetSolvedSelfQuizResultByUserByTitleUseCase
+import com.sw.wordgarden.domain.usecase.GetSolvedSelfQuizResultByUserByTitleUseCaseImpl
+import com.sw.wordgarden.domain.usecase.GetSolvedSelfQuizTitleListByUserUseCase
+import com.sw.wordgarden.domain.usecase.GetSolvedSelfQuizTitleListByUserUseCaseImpl
 import com.sw.wordgarden.domain.usecase.GetTodayQuizUseCase
 import com.sw.wordgarden.domain.usecase.GetTodayQuizUseCaseImpl
 import com.sw.wordgarden.domain.usecase.GetTreeListUseCase
@@ -54,6 +62,8 @@ import com.sw.wordgarden.domain.usecase.SendFirebaseTokenUseCase
 import com.sw.wordgarden.domain.usecase.SendFirebaseTokenUseCaseImpl
 import com.sw.wordgarden.domain.usecase.ShareQuizUseCase
 import com.sw.wordgarden.domain.usecase.ShareQuizUseCaseImpl
+import com.sw.wordgarden.domain.usecase.SubmitSelfQuizUseCase
+import com.sw.wordgarden.domain.usecase.SubmitSelfQuizUseCaseImpl
 import com.sw.wordgarden.domain.usecase.UpdateTreeUseCase
 import com.sw.wordgarden.domain.usecase.UpdateTreeUseCaseImpl
 import com.sw.wordgarden.domain.usecase.UpdateUserUseCase
@@ -118,9 +128,15 @@ abstract class UseCaseModule {
 
     @Binds
     @ViewModelScoped
-    abstract fun bindGetQuizeListDoneByUserAndPeriodUseCase(
-        getQuizeListDoneByUserAndPeriodUseCaseImpl: GetQuizeListDoneByUserAndPeriodUseCaseImpl
-    ): GetQuizeListDoneByUserAndPeriodUseCase
+    abstract fun bindGetQuizBySelfQuizIdUseCase(
+        getGetQuizBySelfQuizIdUseCaseImpl: GetQuizBySelfQuizIdUseCaseImpl
+    ): GetQuizBySelfQuizIdUseCase
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindGetQuizListDoneByUserAndPeriodUseCase(
+        getQuizListDoneByUserAndPeriodUseCaseImpl: GetQuizListDoneByUserAndPeriodUseCaseImpl
+    ): GetQuizListDoneByUserAndPeriodUseCase
 
     @Binds
     @ViewModelScoped
@@ -145,6 +161,24 @@ abstract class UseCaseModule {
     abstract fun bindGetQuizListMadeByUserByQuizIdUseCase(
         getQuizListMadeByUserByTitleUseCaseImpl: GetQuizListMadeByUserByQuizIdUseCaseImpl
     ): GetQuizListMadeByUserByQuizIdUseCase
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindGetSelfQuizCreatorInfoByQuizIdUseCase(
+        getSelfQuizCreatorInfoByQuizIdUseCaseImpl: GetSelfQuizCreatorInfoByQuizIdUseCaseImpl
+    ): GetSelfQuizCreatorInfoByQuizIdUseCase
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindGetSolvedSelfQuizResultByUserByTitleUseCase(
+        getSolvedSelfQuizResultByUserByTitleUseCaseImpl: GetSolvedSelfQuizResultByUserByTitleUseCaseImpl
+    ): GetSolvedSelfQuizResultByUserByTitleUseCase
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindGetSolvedSelfQuizTitleListByUserUseCase(
+        getSolvedSelfQuizTitleListByUserUseCaseImpl: GetSolvedSelfQuizTitleListByUserUseCaseImpl
+    ): GetSolvedSelfQuizTitleListByUserUseCase
 
     @Binds
     @ViewModelScoped
@@ -227,8 +261,14 @@ abstract class UseCaseModule {
     @Binds
     @ViewModelScoped
     abstract fun bindShareQuizUseCase(
-        shareQuizUseCase: ShareQuizUseCaseImpl
+        shareQuizUseCaseImpl: ShareQuizUseCaseImpl
     ): ShareQuizUseCase
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindSubmitSelfQuizUseCase(
+        submitSelfQuizUseCaseImpl: SubmitSelfQuizUseCaseImpl
+    ): SubmitSelfQuizUseCase
 
     @Binds
     @ViewModelScoped
