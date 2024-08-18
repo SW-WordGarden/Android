@@ -61,17 +61,15 @@ class MySelfQuizViewModel @Inject constructor(
             }
         }
 
-    fun getQuizList(quizId: String) {
+    fun getQuiz(quizId: String) {
         viewModelScope.launch {
             runCatching {
-                val quizList = getQuizListMadeByUserByQuizIdUseCase(quizId)
+                val quiz = getQuizListMadeByUserByQuizIdUseCase(quizId)
 
-                if (quizList != null) {
-                    val quizListModel = quizList.toModel()
-
-                    _getMySelfQuizByQuizId.update { quizListModel }
+                if (quiz != null) {
+                    val quizModel = quiz.toModel()
+                    _getMySelfQuizByQuizId.update { quizModel }
                 }
-
             }.onFailure {
                 _getMySelfQuizByQuizIdEvent.emit(DefaultEvent.Failure(R.string.mypage_my_made_quiz_msg_fail_load_quiz_list))
             }.onSuccess {

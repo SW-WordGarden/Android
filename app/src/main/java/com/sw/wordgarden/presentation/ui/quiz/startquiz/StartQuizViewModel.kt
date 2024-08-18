@@ -3,10 +3,11 @@ package com.sw.wordgarden.presentation.ui.quiz.startquiz
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sw.wordgarden.R
-import com.sw.wordgarden.domain.entity.SelfQuizEntity
 import com.sw.wordgarden.domain.usecase.GetTodayQuizUseCase
 import com.sw.wordgarden.domain.usecase.SaveDailyLimitUseCase
+import com.sw.wordgarden.presentation.mapper.ModelMapper.toModel
 import com.sw.wordgarden.presentation.model.DefaultEvent
+import com.sw.wordgarden.presentation.model.SelfQuizModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,8 +28,8 @@ class StartQuizViewModel @Inject constructor(
     private val _getQuizEvent = MutableSharedFlow<DefaultEvent>()
     val getQuizEvent: SharedFlow<DefaultEvent> = _getQuizEvent.asSharedFlow()
 
-    private val _getQuiz = MutableStateFlow<SelfQuizEntity?>(null)
-    val getQuiz: StateFlow<SelfQuizEntity?> = _getQuiz.asStateFlow()
+    private val _getQuiz = MutableStateFlow<SelfQuizModel?>(null)
+    val getQuiz: StateFlow<SelfQuizModel?> = _getQuiz.asStateFlow()
 
     private val _saveDailyLimitEvent = MutableSharedFlow<DefaultEvent>()
     val saveDailyLimitEvent: SharedFlow<DefaultEvent> = _saveDailyLimitEvent.asSharedFlow()
@@ -40,7 +41,7 @@ class StartQuizViewModel @Inject constructor(
     private fun getQuiz() {
         viewModelScope.launch {
             runCatching {
-                _getQuiz.update { getTodayQuizUseCase.invoke() }
+                _getQuiz.update { getTodayQuizUseCase.invoke()?.toModel() }
             }.onFailure {
                 _getQuizEvent.emit(DefaultEvent.Failure(R.string.start_quiz_msg_fail_get_quiz))
             }.onSuccess {

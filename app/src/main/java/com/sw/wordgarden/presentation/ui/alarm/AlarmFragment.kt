@@ -1,4 +1,4 @@
-package com.sw.wordgarden.presentation.ui.mypage.myselfquiz
+package com.sw.wordgarden.presentation.ui.alarm
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,7 +10,7 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.sw.wordgarden.R
-import com.sw.wordgarden.databinding.FragmentMySelfQuizBinding
+import com.sw.wordgarden.databinding.FragmentAlarmBinding
 import com.sw.wordgarden.presentation.model.DefaultEvent
 import com.sw.wordgarden.presentation.model.SelfQuizModel
 import com.sw.wordgarden.presentation.util.ToastMaker
@@ -19,16 +19,13 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MySelfQuizFragment : Fragment() {
-
-    private val TAG = "MySelfQuizFragment"
-
-    private var _binding: FragmentMySelfQuizBinding? = null
+class AlarmFragment : Fragment() {
+    private var _binding: FragmentAlarmBinding? = null
     private val binding get() = _binding!!
 
-    private val viewmodel: MySelfQuizViewModel by viewModels()
-    private val adapter: MySelfQuizAdapter by lazy {
-        MySelfQuizAdapter(object : MySelfQuizAdapter.QuizItemListener {
+    private val viewmodel: AlarmViewModel by viewModels()
+    private val adapter: AlarmAdapter by lazy {
+        AlarmAdapter(object : AlarmAdapter.AlarmItemListener {
             override fun onItemClicked(quizId: String) {
                 viewmodel.getQuiz(quizId)
             }
@@ -39,7 +36,7 @@ class MySelfQuizFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentMySelfQuizBinding.inflate(inflater, container, false)
+        _binding = FragmentAlarmBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -48,22 +45,22 @@ class MySelfQuizFragment : Fragment() {
 
         setupUi()
         setupListener()
-        setupObserve()
+        setupObserver()
     }
 
     private fun setupUi() = with(binding) {
-        rvMySelfQuiz.adapter = adapter
+        rvAlarmList.adapter = adapter
     }
 
     private fun setupListener() = with(binding) {
-        ivMySelfQuizBack.setOnClickListener {
+        ivAlarmBack.setOnClickListener {
             findNavController().navigateUp()
         }
     }
 
-    private fun setupObserve() {
+    private fun setupObserver() {
         lifecycleScope.launch {
-            viewmodel.getMySelfQuizTitleListEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
+            viewmodel.getAlarmListEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
                 when (event) {
                     is DefaultEvent.Failure -> {
                         ToastMaker.make(requireContext(), event.msg)
@@ -75,21 +72,21 @@ class MySelfQuizFragment : Fragment() {
         }
 
         lifecycleScope.launch {
-            viewmodel.getMySelfQuizTitleList.flowWithLifecycle(lifecycle).collectLatest { quizzes ->
-                adapter.submitList(quizzes)
+            viewmodel.getAlarmList.flowWithLifecycle(lifecycle).collectLatest { alarms ->
+                adapter.submitList(alarms)
 
-                if (quizzes.isEmpty()) {
-                    binding.rvMySelfQuiz.visibility = View.INVISIBLE
-                    binding.tvMySelfQuizNoQuizzes.visibility = View.VISIBLE
+                if (alarms.isNullOrEmpty()) {
+                    binding.rvAlarmList.visibility = View.INVISIBLE
+                    binding.tvAlarmNoAlarms.visibility = View.VISIBLE
                 } else {
-                    binding.rvMySelfQuiz.visibility = View.VISIBLE
-                    binding.tvMySelfQuizNoQuizzes.visibility = View.INVISIBLE
+                    binding.rvAlarmList.visibility = View.VISIBLE
+                    binding.tvAlarmNoAlarms.visibility = View.INVISIBLE
                 }
             }
         }
 
         lifecycleScope.launch {
-            viewmodel.getMySelfQuizByQuizIdEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
+            viewmodel.getQuizByQuizIdEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
                 when (event) {
                     is DefaultEvent.Failure -> {
                         ToastMaker.make(requireContext(), event.msg)
@@ -101,25 +98,25 @@ class MySelfQuizFragment : Fragment() {
         }
 
         lifecycleScope.launch {
-            viewmodel.getMySelfQuizByQuizId.flowWithLifecycle(lifecycle).collectLatest { quiz ->
+            viewmodel.getQuizByQuizId.flowWithLifecycle(lifecycle).collectLatest { quiz ->
                 quiz?.let {
-                    goMakeQuiz(quiz)
+                    goStartQuiz(quiz)
                 }
             }
         }
     }
 
-    private fun goMakeQuiz(quiz: SelfQuizModel?) {
+    private fun goStartQuiz(quiz: SelfQuizModel?) {
         val navController = findNavController()
-        if (navController.currentDestination?.id == R.id.myselfQuizFragment) {
-            val action = MySelfQuizFragmentDirections.actionMySelfQuizFragmentToMakeQuizFragment(quiz)
+        if (navController.currentDestination?.id == R.id.alarmFragment) {
+            val action = AlarmFragmentDirections.actionAlarmFragmentToStartQuizFragment(quiz)
             navController.navigate(action)
         }
     }
 
+
     override fun onDestroyView() {
         super.onDestroyView()
-        viewmodel.clearQuizByQuizId()
         _binding = null
     }
 }

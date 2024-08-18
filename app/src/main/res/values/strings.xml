@@ -78,6 +78,13 @@
     <string name="home_sir">님</string>
     <string name="home_today_word">오늘의 단어를 알아보아요!</string>
 
+    <!-- alarm -->
+    <string name="alarm_title">알람</string>
+    <string name="alarm_check_quiz">님이 보낸 퀴즈를 확인하세요!</string>
+    <string name="alarm_msg_fail_load_alarm">알람 데이터 불러오기에 실패했어요.</string>
+    <string name="alarm_msg_fail_get_quiz">퀴즈 불러오기에 실패했어요.</string>
+    <string name="alarm_no_alarm_list">아직 받은 알람이 없어요!</string>
+
     <!-- quiz -->
     <string name="quiz_title">퀴즈 게임</string>
     <string name="quiz_welcome">님을 위한\n맞춤 퀴즈가 준비되어있어요.</string>

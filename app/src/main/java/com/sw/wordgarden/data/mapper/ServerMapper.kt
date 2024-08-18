@@ -1,5 +1,6 @@
 package com.sw.wordgarden.data.mapper
 
+import com.sw.wordgarden.data.dto.AlarmDto
 import com.sw.wordgarden.data.dto.AnswerDto
 import com.sw.wordgarden.data.dto.QuestionDto
 import com.sw.wordgarden.data.dto.SelfQuizDto
@@ -11,6 +12,7 @@ import com.sw.wordgarden.data.dto.SolveQuizDto
 import com.sw.wordgarden.data.dto.TreeDto
 import com.sw.wordgarden.data.dto.UserDto
 import com.sw.wordgarden.data.dto.WordDto
+import com.sw.wordgarden.domain.entity.AlarmEntity
 import com.sw.wordgarden.domain.entity.AnswerEntity
 import com.sw.wordgarden.domain.entity.QuestionEntity
 import com.sw.wordgarden.domain.entity.SelfQuizEntity
@@ -157,5 +159,18 @@ object ServerMapper {
         name = name,
         image = image,
         growth = growth
+    )
+
+    //alarm
+    fun AlarmEntity.toDto() = AlarmDto(
+        quizId = quizId,
+        creator = creator,
+        date = date
+    )
+
+    fun AlarmDto.toEntity() = AlarmEntity(
+        quizId = quizId,
+        creator = creator,
+        date = date
     )
 }
