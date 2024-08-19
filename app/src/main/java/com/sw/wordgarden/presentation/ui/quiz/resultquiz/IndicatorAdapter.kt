@@ -6,11 +6,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.ItemMakingQuizIndicatorBinding
-import com.sw.wordgarden.domain.entity.QuestionResultEntity
+import com.sw.wordgarden.presentation.model.QAModel
 
 class IndicatorAdapter(
     private val itemCount: Int,
-    private val result: List<QuestionResultEntity>,
+    private val result: List<QAModel>,
     private val onClick: (position: Int) -> Unit
 ) : RecyclerView.Adapter<IndicatorAdapter.IndicatorViewHolder>() {
 

@@ -14,9 +14,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentSolveQuizBinding
-import com.sw.wordgarden.domain.entity.SelfQuizEntity
-import com.sw.wordgarden.presentation.model.DefaultEvent
-import com.sw.wordgarden.presentation.model.QuestionAnswerModel
+import com.sw.wordgarden.presentation.event.DefaultEvent
+import com.sw.wordgarden.presentation.model.QAModel
+import com.sw.wordgarden.presentation.model.QuizKey
+import com.sw.wordgarden.presentation.model.QuizModel
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -28,9 +29,11 @@ class SolveQuizFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewmodel: SolveQuizViewModel by viewModels()
-    private val enteredAnswers: List<QuestionAnswerModel> = List(10) { QuestionAnswerModel("", "") }
+    private val enteredAnswers: List<QAModel> = List(10) { QAModel("", "", "", "", null) }
+    private var qTitle = ""
+    private var sqId = ""
 
-        override fun onCreateView(
+    override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
@@ -41,92 +44,106 @@ class SolveQuizFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        getDataFromStart()
+        getData()
         setupListener()
         setupObserver()
     }
 
-    private fun getDataFromStart() {
+    private fun getData() {
         val args: SolveQuizFragmentArgs by navArgs()
-        val quiz = args.argsQuizEntity ?: SelfQuizEntity("", "", emptyList(), emptyList())
-        setupUi(quiz)
+        val quizModel = args.argsQuizModel
+        val questionList = quizModel?.qaList ?: emptyList()
+        qTitle = quizModel?.qTitle ?: ""
+        sqId = quizModel?.sqId ?: ""
+
+        setupUi(questionList)
     }
 
-    private fun setupUi(quiz: SelfQuizEntity) = with(binding) {
-        val quizList = quiz.quiz
+    private fun setupUi(questionList: List<QAModel>) = with(binding) {
+        val indicatorAdapter = IndicatorAdapter(questionList.size) { position ->
+            vpSolveQuiz.setCurrentItem(position, true)
+        }
 
-        if (quizList != null) {
-            val indicatorAdapter = IndicatorAdapter(quizList.size) { position ->
-                vpSolveQuiz.setCurrentItem(position, true)
-            }
+        val pagerAdapter = SolveQuizAdapter(
+            this@SolveQuizFragment,
+            questionList
+        ) { position, question, answer, isFull ->
+            enteredAnswers[position].question = question
+            enteredAnswers[position].userAnswer = answer
 
-            val pagerAdapter = SolveQuizAdapter(this@SolveQuizFragment, quiz.quiz) { position, question, answer, isFull ->
-                enteredAnswers[position].question = question
-                enteredAnswers[position].answer = answer
-
-                if (isFull) {
-                    indicatorAdapter.markAsFilled(position)
-
-                    if (position < quiz.quiz.size - 1) {
-                        vpSolveQuiz.setCurrentItem(position + 1, true)
-                    } else {
-                        checkQuiz(quiz)
-                    }
+            if (isFull) {
+                indicatorAdapter.markAsFilled(position)
+                if (position < questionList.size - 1) {
+                    vpSolveQuiz.setCurrentItem(position + 1, true)
                 } else {
-                    indicatorAdapter.markAsEmpty(position)
+                    checkQuiz()
                 }
+            } else {
+                indicatorAdapter.markAsEmpty(position)
             }
+        }
 
-            rvSolveQuizIndicator.apply {
-                adapter = indicatorAdapter
-                layoutManager = GridLayoutManager(context, 5)
-            }
+        rvSolveQuizIndicator.apply {
+            adapter = indicatorAdapter
+            layoutManager = GridLayoutManager(context, 5)
+        }
 
-            vpSolveQuiz.apply {
-                adapter = pagerAdapter
-                registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
-                    override fun onPageSelected(position: Int) {
-                        super.onPageSelected(position)
-                        indicatorAdapter.updateSelectedPosition(position)
-                    }
-                })
-            }
+        vpSolveQuiz.apply {
+            adapter = pagerAdapter
+            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    indicatorAdapter.updateSelectedPosition(position)
+                }
+            })
         }
     }
 
-    private fun checkQuiz(quiz: SelfQuizEntity) {
-        val hasEmptyValue = this.enteredAnswers.any { it.answer.isEmpty() }
+    private fun checkQuiz() {
+        val hasEmptyValue = this.enteredAnswers.any { it.userAnswer.isNullOrEmpty() }
         if (hasEmptyValue) {
             ToastMaker.make(requireContext(), R.string.solve_quiz_msg_need_all_check)
         } else {
-            viewmodel.checkQuizAnswer(quiz, enteredAnswers)
+            val quizModelForCheck = QuizModel(
+                sqId = sqId,
+                qTitle = qTitle,
+                qaList = enteredAnswers
+            )
+
+            viewmodel.submitAnswer(quizModelForCheck)
         }
     }
 
     private fun setupListener() = with(binding) {
         btnSolveQuizBack.setOnClickListener {
-            findNavController().navigate(R.id.action_solveQuizFragment_to_quizFragment)
+            findNavController().navigateUp()
         }
     }
 
     private fun setupObserver() {
         lifecycleScope.launch {
-            viewmodel.sendQuizEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
+            viewmodel.submitEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
                 when (event) {
                     is DefaultEvent.Failure -> {
                         ToastMaker.make(requireContext(), event.msg)
                     }
 
                     DefaultEvent.Success -> {
-                        goResult(viewmodel.checkQuizResult.value)
+                        val quizKey = QuizKey(
+                            qTitle = qTitle,
+                            sqId = sqId,
+                            sqId.isEmpty() || sqId.isBlank()
+                        )
+                        goResult(quizKey)
                     }
                 }
             }
         }
     }
 
-    private fun goResult(result: SelfQuizEntity?) {
-        val action = SolveQuizFragmentDirections.actionSolveQuizFragmentToResultQuizFragment(result)
+    private fun goResult(quizKey: QuizKey) {
+        val action =
+            SolveQuizFragmentDirections.actionSolveQuizFragmentToResultQuizFragment(quizKey)
         findNavController().navigate(action)
     }
 

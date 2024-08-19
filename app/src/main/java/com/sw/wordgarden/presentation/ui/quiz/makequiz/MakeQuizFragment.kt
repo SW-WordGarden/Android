@@ -16,9 +16,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentMakeQuizBinding
-import com.sw.wordgarden.presentation.model.DefaultEvent
-import com.sw.wordgarden.presentation.model.SelfQuizModel
-import com.sw.wordgarden.presentation.model.QuestionModel
+import com.sw.wordgarden.presentation.event.DefaultEvent
+import com.sw.wordgarden.presentation.model.QAModel
+import com.sw.wordgarden.presentation.model.QuizModel
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -33,7 +33,8 @@ class MakeQuizFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewmodel: MakeQuizViewModel by viewModels()
-    private var quizListModelForCheck: List<QuestionModel> = List(10) { QuestionModel("", "", 0)}
+    private var qaModelListForInsert: List<QAModel> =
+        List(10) { QAModel("", "", "", "", null) }
     private var enableMode = true
 
     override fun onCreateView(
@@ -54,16 +55,19 @@ class MakeQuizFragment : Fragment() {
 
     private fun getData() {
         val args: MakeQuizFragmentArgs by navArgs()
-        val quizList = if (args.argsMySelfQuiz == null) {
+        if (args.argsSqId == null) { // 새로운 퀴즈 생성 모드
             enableMode = true
-            SelfQuizModel("", "", List(10) { QuestionModel("", "", 0)}, emptyList())
-        } else {
+            val quizModel = QuizModel(
+                "",
+                "",
+                List(10) { QAModel("", "", "", "", null) })
+
+            setupUi(quizModel)
+        } else { // 기존 퀴즈 확인 모드
             setConfirmDialog()
             enableMode = false
-            args.argsMySelfQuiz!!
+            viewmodel.getQuiz(args.argsSqId ?: "")
         }
-
-        setupUi(quizList)
     }
 
     private fun setConfirmDialog() {
@@ -73,29 +77,33 @@ class MakeQuizFragment : Fragment() {
         builder.show()
     }
 
-    private fun setupUi(quizList: SelfQuizModel) = with(binding) {
-        if (!enableMode) { etMakeQuizInputTitle.isEnabled = false }
-        etMakeQuizInputTitle.setText(quizList.title)
+    private fun setupUi(quizModel: QuizModel) = with(binding) {
+        if (!enableMode) {
+            etMakeQuizInputTitle.isEnabled = false
+        }
+        etMakeQuizInputTitle.setText(quizModel.qTitle)
 
-        val quizListModel = quizList.quiz!!
+        val quizListModel = quizModel.qaList ?: emptyList()
         val indicatorAdapter = IndicatorAdapter(enableMode, quizListModel.size) { position ->
             vpMakeQuiz.setCurrentItem(position, true)
         }
-        val pagerAdapter = MakeQuizAdapter(this@MakeQuizFragment, enableMode, quizListModel) { position, question, answer, isFull ->
+        val pagerAdapter = MakeQuizAdapter(
+            this@MakeQuizFragment,
+            enableMode,
+            quizListModel
+        ) { position, question, answer, isFull ->
             quizListModel[position].question = question
-            quizListModel[position].answer = answer
-            quizListModelForCheck[position].question = question
-            quizListModelForCheck[position].answer = answer
+            quizListModel[position].correctAnswer = answer
+            qaModelListForInsert[position].question = question
+            qaModelListForInsert[position].correctAnswer = answer
 
             if (isFull) {
                 indicatorAdapter.markAsFilled(position)
-
                 if (position < quizListModel.size - 1) {
                     vpMakeQuiz.setCurrentItem(position + 1, true)
                 } else {
-                    checkQuiz(quizListModelForCheck)
+                    checkQuiz(qaModelListForInsert)
                 }
-
             } else {
                 indicatorAdapter.markAsEmpty(position)
             }
@@ -125,25 +133,47 @@ class MakeQuizFragment : Fragment() {
 
     private fun setupObserver() {
         lifecycleScope.launch {
+            viewmodel.getSqEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
+                when (event) {
+                    is DefaultEvent.Failure -> {
+                        ToastMaker.make(requireContext(), event.msg)
+                    }
+
+                    DefaultEvent.Success -> {}
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            viewmodel.getSq.flowWithLifecycle(lifecycle).collectLatest { quizModel ->
+                if (quizModel != null) {
+                    setupUi(quizModel)
+                }
+            }
+        }
+
+        lifecycleScope.launch {
             viewmodel.insertQuizEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
                 when (event) {
                     is DefaultEvent.Failure -> {
                         ToastMaker.make(requireContext(), event.msg)
                     }
-                    DefaultEvent.Success -> { }
+
+                    DefaultEvent.Success -> {}
                 }
             }
         }
     }
 
-    private fun checkQuiz(quizListModelForCheck: List<QuestionModel>) {
+    private fun checkQuiz(quizListModelForCheck: List<QAModel>) {
         val title = binding.etMakeQuizInputTitle.text.toString()
         if (title.isEmpty()) {
             ToastMaker.make(requireContext(), R.string.make_quiz_msg_need_title)
             return
         }
 
-        val hasEmptyValue = quizListModelForCheck.any { it.question.isNullOrEmpty() || it.answer.isNullOrEmpty() }
+        val hasEmptyValue =
+            quizListModelForCheck.any { it.question.isNullOrEmpty() || it.correctAnswer.isNullOrEmpty() }
         if (hasEmptyValue) {
             ToastMaker.make(requireContext(), R.string.make_quiz_msg_need_all_check)
         } else {
@@ -152,8 +182,8 @@ class MakeQuizFragment : Fragment() {
     }
 
     private fun shareQuiz(title: String) {
-        Log.i(TAG, "서버에 퀴즈 추가 요청 : $title || $quizListModelForCheck")
-        viewmodel.insertQuiz(quizListModelForCheck)
+        Log.i(TAG, "서버에 퀴즈 추가 요청 : $title || $qaModelListForInsert")
+        viewmodel.insertQuiz(qaModelListForInsert, title)
 
         goShare(title)
     }

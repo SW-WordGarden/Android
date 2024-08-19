@@ -3,13 +3,13 @@ package com.sw.wordgarden.presentation.ui.login.login
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sw.wordgarden.R
-import com.sw.wordgarden.domain.usecase.DeleteUidUseCase
+import com.sw.wordgarden.domain.usecase.datastore.DeleteUidUseCase
 import kotlinx.coroutines.launch
-import com.sw.wordgarden.domain.usecase.GetUserInfoUseCase
-import com.sw.wordgarden.domain.usecase.SaveUidUseCase
-import com.sw.wordgarden.presentation.model.DefaultEvent
-import com.sw.wordgarden.presentation.model.UserCheckEvent
-import com.sw.wordgarden.presentation.model.ErrorMessage
+import com.sw.wordgarden.domain.usecase.user.GetUserInfoForLogin
+import com.sw.wordgarden.domain.usecase.datastore.SaveUidUseCase
+import com.sw.wordgarden.presentation.event.DefaultEvent
+import com.sw.wordgarden.presentation.event.UserCheckEvent
+import com.sw.wordgarden.presentation.event.ErrorMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val getUserInfoUseCase: GetUserInfoUseCase,
+    private val getUserInfoForLogin: GetUserInfoForLogin,
     private val deleteUidUseCase: DeleteUidUseCase,
     private val saveUidUserCase: SaveUidUseCase,
 ) : ViewModel() {
@@ -38,7 +38,7 @@ class LoginViewModel @Inject constructor(
             runCatching {
                 deleteUid()
 
-                val result = getUserInfoUseCase.invoke(uid)
+                val result = getUserInfoForLogin.invoke(uid)
                 if (result != null) { //앱 유저 확인 성공
                     _checkUserEvent.emit(UserCheckEvent.Success)
                 } else {

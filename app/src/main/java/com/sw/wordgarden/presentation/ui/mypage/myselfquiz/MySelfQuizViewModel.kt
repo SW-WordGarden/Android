@@ -3,12 +3,9 @@ package com.sw.wordgarden.presentation.ui.mypage.myselfquiz
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sw.wordgarden.R
-import com.sw.wordgarden.domain.usecase.GetQuizListMadeByUserByQuizIdUseCase
-import com.sw.wordgarden.domain.usecase.GetQuizListMadeByUserUseCase
-import com.sw.wordgarden.presentation.mapper.ModelMapper.toModel
-import com.sw.wordgarden.presentation.model.DefaultEvent
-import com.sw.wordgarden.presentation.model.QuizSummaryModel
-import com.sw.wordgarden.presentation.model.SelfQuizModel
+import com.sw.wordgarden.domain.entity.quiz.SqQuizSummaryEntity
+import com.sw.wordgarden.domain.usecase.quiz.sq.GetUserSqTitlesUseCase
+import com.sw.wordgarden.presentation.event.DefaultEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,21 +19,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MySelfQuizViewModel @Inject constructor(
-    private val getQuizListMadeByUserUseCase: GetQuizListMadeByUserUseCase,
-    private val getQuizListMadeByUserByQuizIdUseCase: GetQuizListMadeByUserByQuizIdUseCase,
+    private val getUserSqTitlesUseCase: GetUserSqTitlesUseCase,
 ) : ViewModel() {
 
     private val _getMySelfQuizTitleListEvent = MutableSharedFlow<DefaultEvent>()
     val getMySelfQuizTitleListEvent: SharedFlow<DefaultEvent> = _getMySelfQuizTitleListEvent.asSharedFlow()
 
-    private val _getSelfQuizTitleList = MutableStateFlow<List<QuizSummaryModel>>(emptyList())
-    val getMySelfQuizTitleList: StateFlow<List<QuizSummaryModel>> = _getSelfQuizTitleList.asStateFlow()
-
-    private val _getMySelfQuizByQuizIdEvent = MutableSharedFlow<DefaultEvent>()
-    val getMySelfQuizByQuizIdEvent: SharedFlow<DefaultEvent> = _getMySelfQuizByQuizIdEvent.asSharedFlow()
-
-    private val _getMySelfQuizByQuizId = MutableStateFlow<SelfQuizModel?>(null)
-    val getMySelfQuizByQuizId: StateFlow<SelfQuizModel?> = _getMySelfQuizByQuizId.asStateFlow()
+    private val _getSelfQuizTitleList = MutableStateFlow<List<SqQuizSummaryEntity>>(emptyList())
+    val getMySelfQuizTitleList: StateFlow<List<SqQuizSummaryEntity>> = _getSelfQuizTitleList.asStateFlow()
 
     init {
         getQuizTitleList()
@@ -45,11 +35,10 @@ class MySelfQuizViewModel @Inject constructor(
     private fun getQuizTitleList() =
         viewModelScope.launch {
             runCatching {
-                val response = getQuizListMadeByUserUseCase()
+                val response = getUserSqTitlesUseCase()
 
                 if (response != null) {
-                    val quizSummaryList = response.map { it.toModel() }
-                    _getSelfQuizTitleList.update { quizSummaryList }
+                    _getSelfQuizTitleList.update { response }
                 } else {
                     _getSelfQuizTitleList.update { emptyList() }
                 }
@@ -60,25 +49,4 @@ class MySelfQuizViewModel @Inject constructor(
                 _getMySelfQuizTitleListEvent.emit(DefaultEvent.Success)
             }
         }
-
-    fun getQuiz(quizId: String) {
-        viewModelScope.launch {
-            runCatching {
-                val quiz = getQuizListMadeByUserByQuizIdUseCase(quizId)
-
-                if (quiz != null) {
-                    val quizModel = quiz.toModel()
-                    _getMySelfQuizByQuizId.update { quizModel }
-                }
-            }.onFailure {
-                _getMySelfQuizByQuizIdEvent.emit(DefaultEvent.Failure(R.string.mypage_my_made_quiz_msg_fail_load_quiz_list))
-            }.onSuccess {
-                _getMySelfQuizByQuizIdEvent.emit(DefaultEvent.Success)
-            }
-        }
-    }
-
-    fun clearQuizByQuizId() {
-        _getMySelfQuizByQuizId.value = null
-    }
 }

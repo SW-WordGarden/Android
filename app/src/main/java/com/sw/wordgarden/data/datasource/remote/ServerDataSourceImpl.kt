@@ -3,16 +3,22 @@ package com.sw.wordgarden.data.datasource.remote
 import android.util.Log
 import com.sw.wordgarden.data.datasource.local.LocalDataSource
 import com.sw.wordgarden.data.datasource.remote.retrofit.Service
-import com.sw.wordgarden.data.dto.QuizSummaryDto
-import com.sw.wordgarden.data.dto.SelfQuizCreatorInfoDto
-import com.sw.wordgarden.data.dto.SelfQuizDto
-import com.sw.wordgarden.data.dto.SignUpDto
-import com.sw.wordgarden.data.dto.SolveQuizDto
+import com.sw.wordgarden.data.dto.quiz.SqQuestionAnswerDto
+import com.sw.wordgarden.data.dto.quiz.SqQuizSummaryDto
+import com.sw.wordgarden.data.dto.quiz.SqCreatorInfoDto
+import com.sw.wordgarden.data.dto.quiz.SqDto
+import com.sw.wordgarden.data.dto.user.LoginRequestDto
+import com.sw.wordgarden.data.dto.quiz.SqSolveQuizDto
 import com.sw.wordgarden.data.dto.TreeDto
-import com.sw.wordgarden.data.dto.UserDto
+import com.sw.wordgarden.data.dto.user.UserDto
 import com.sw.wordgarden.data.dto.WordDto
+import com.sw.wordgarden.data.dto.quiz.WqResponseDto
+import com.sw.wordgarden.data.dto.quiz.WqStateDto
+import com.sw.wordgarden.data.dto.quiz.WqSubmissionDto
+import com.sw.wordgarden.data.dto.quiz.WqWrongAnswerDto
+import com.sw.wordgarden.data.dto.user.ReportInfoDto
+import com.sw.wordgarden.data.dto.user.UserInfoDto
 import retrofit2.HttpException
-import java.util.Date
 import javax.inject.Inject
 
 class ServerDataSourceImpl @Inject constructor(
@@ -22,10 +28,10 @@ class ServerDataSourceImpl @Inject constructor(
 
     private val TAG = "ServerDataSourceImpl"
 
-    //user
-    override suspend fun insertUser(signUpDto: SignUpDto) {
+    //user - login
+    override suspend fun insertUser(loginRequestDto: LoginRequestDto) {
         try {
-            val response = service.insertUser(signUpDto)
+            val response = service.insertUser(loginRequestDto)
             if (!response.isSuccessful) {
                 throw HttpException(response)
             }
@@ -35,17 +41,9 @@ class ServerDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun deleteUser() {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun updateUser(userDto: UserDto) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun getUserInfo(uid: String): UserDto? {
+    override suspend fun getUserInfoForLogin(uid: String): UserDto? {
         return try {
-            val response = service.getUserInfo(uid)
+            val response = service.getUserInfoForLogin(uid)
             if (!response.isSuccessful) {
                 throw HttpException(response)
             } else {
@@ -70,24 +68,12 @@ class ServerDataSourceImpl @Inject constructor(
         }
     }
 
-    //friends
-    override suspend fun insertFriend(friendId: String) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun deleteFriend(friendId: String) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun reportFriend(friendId: String, contents: String) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun getFriendList(): List<UserDto>? {
+    //user - mypage
+    override suspend fun getUserInfoForMypage(): UserInfoDto? {
         return try {
             val uid = getUid()
 
-            val response = service.getFriendList(uid!!)
+            val response = service.getUserInfoForMypage(uid!!)
             if (!response.isSuccessful) {
                 throw HttpException(response)
             } else {
@@ -99,19 +85,51 @@ class ServerDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun shareQuiz(quizId: String, friendUid: String) {
+    override suspend fun updateUserNickname(nickname: String) {
         try {
             val uid = getUid()
 
-            val response = service.shareQuiz(uid!!, quizId, friendUid)
+            val response = service.updateUserNickname(uid!!, nickname)
             if (!response.isSuccessful) {
                 throw HttpException(response)
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            throw e
         }
     }
+
+    override suspend fun getFriends(): List<UserDto>? {
+        return try {
+            val uid = getUid()
+
+            val response = service.getFriends(uid!!)
+            if (!response.isSuccessful) {
+                throw HttpException(response)
+            } else {
+                response.body()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+    override suspend fun reportUser(reportInfo: ReportInfoDto) {
+        try {
+            val uid = getUid()
+            val contents = reportInfo.copy(
+                reporterId = uid
+            )
+
+            val response = service.reportUser(contents)
+            if (!response.isSuccessful) {
+                throw HttpException(response)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
 
     //words
     override suspend fun insertLikedWord(word: WordDto) {
@@ -130,17 +148,112 @@ class ServerDataSourceImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    //quizzes
-    override suspend fun insertQuizList(selfQuiz: SelfQuizDto) {
+
+    //quiz - wq
+    override suspend fun getGeneratedWq(): List<WqResponseDto>? {
+        return try {
+            val uid = getUid()
+
+            val response = service.getGeneratedWq(uid!!)
+            if (!response.isSuccessful) {
+                throw HttpException(response)
+            } else {
+                response.body()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+    override suspend fun submitWq(wqSubmission: WqSubmissionDto) {
         try {
             val uid = getUid()
-            val quizListData = selfQuiz.copy(
+
+            val response = service.submitWq(wqSubmission)
+            if (!response.isSuccessful) {
+                throw HttpException(response)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    override suspend fun getWqState(): WqStateDto? {
+        return try {
+            val uid = getUid()
+
+            val response = service.getWqState(uid!!)
+            if (!response.isSuccessful) {
+                throw HttpException(response)
+            } else {
+                response.body()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+    override suspend fun getWrongWqs(): List<WqWrongAnswerDto>? {
+        return try {
+            val uid = getUid()
+
+            val response = service.getWrongWqs(uid!!)
+            if (!response.isSuccessful) {
+                throw HttpException(response)
+            } else {
+                response.body()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+    override suspend fun getSolvedWqTitles(): Set<String>? {
+        return try {
+            val uid = getUid()
+
+            val response = service.getSolvedWqTitles(uid!!)
+            if (!response.isSuccessful) {
+                throw HttpException(response)
+            } else {
+                response.body()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+    override suspend fun getSolvedWq(title: String): List<WqResponseDto>? {
+        return try {
+            val uid = getUid()
+
+            val response = service.getSolvedWq(title, uid!!)
+            if (!response.isSuccessful) {
+                throw HttpException(response)
+            } else {
+                response.body()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+    //quiz - sq
+    override suspend fun createNewSq(sqDto: SqDto) {
+        try {
+            val uid = getUid()
+            val quizListData = sqDto.copy(
                 uid = uid
             )
 
             Log.i(TAG, "서버에 전달한 퀴즈 데이터 : $quizListData")
 
-            val response = service.insertQuizList(quizListData)
+            val response = service.createNewSq(quizListData)
             if (!response.isSuccessful) {
                 throw HttpException(response)
             }
@@ -150,23 +263,11 @@ class ServerDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun deleteQuizList(quizId: String) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun getQuizListByType(type: Boolean): SelfQuizDto? {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun getQuizListAllType(): SelfQuizDto? {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun getQuizListMadeByUser(): List<QuizSummaryDto>? {
+    override suspend fun getUserSqTitles(): List<SqQuizSummaryDto>? {
         return try {
             val uid = getUid()
 
-            val response = service.getQuizListMadeByUser(uid!!)
+            val response = service.getUserSqTitles(uid!!)
             if (!response.isSuccessful) {
                 throw HttpException(response)
             } else {
@@ -178,11 +279,56 @@ class ServerDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun getQuizListMadeByUserByQuizId(quizId: String): SelfQuizDto? {
+    override suspend fun getUserSq(creatorUid: String, quizId: String): SqDto? {
+        return try {
+            val uid = if (creatorUid == "") {
+                getUid()
+            } else {
+                creatorUid
+            }
+
+            val response = service.getUserSq(uid!!, quizId)
+            if (!response.isSuccessful) {
+                throw HttpException(response)
+            } else {
+                response.body()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+    override suspend fun getSq(quizId: String): List<SqQuestionAnswerDto>? {
+        return try {
+            val response = service.getSq(quizId)
+            if (!response.isSuccessful) {
+                throw HttpException(response)
+            } else {
+                response.body()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+    override suspend fun submitSq(solvedQuiz: SqSolveQuizDto) {
+        try {
+            val response = service.submitSq(solvedQuiz)
+            if (!response.isSuccessful) {
+                throw HttpException(response)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    override suspend fun getSolvedSqTitles(): List<String>? {
         return try {
             val uid = getUid()
 
-            val response = service.getQuizListMadeByUserBySelfQuizId(uid!!, quizId)
+            val response = service.getSolvedSqTitles(uid!!)
             if (!response.isSuccessful) {
                 throw HttpException(response)
             } else {
@@ -194,32 +340,11 @@ class ServerDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun getQuizListDoneByUserAndPeriod(
-        startDate: Date,
-        endDate: Date
-    ): List<SelfQuizDto>? {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun getQuizBySelfQuizId(quizId: String): SelfQuizDto? {
-        return try {
-            val response = service.getQuizBySelfQuizId(quizId)
-            if (!response.isSuccessful) {
-                throw HttpException(response)
-            } else {
-                response.body()
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-            null
-        }
-    }
-
-    override suspend fun getSolvedSelfQuizTitleList(): List<String>? {
+    override suspend fun getSolvedSq(title: String): SqDto? {
         return try {
             val uid = getUid()
 
-            val response = service.getSolvedSelfQuizTitleList(uid!!)
+            val response = service.getSolvedSq(uid!!, title)
             if (!response.isSuccessful) {
                 throw HttpException(response)
             } else {
@@ -231,11 +356,9 @@ class ServerDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun getSolvedSelfQuizResult(title: String): SelfQuizDto? {
+    override suspend fun getSqCreatorInfo(quizId: String): SqCreatorInfoDto? {
         return try {
-            val uid = getUid()
-
-            val response = service.getSolvedSelfQuizResult(uid!!, title)
+            val response = service.getSqCreatorInfo(quizId)
             if (!response.isSuccessful) {
                 throw HttpException(response)
             } else {
@@ -247,59 +370,21 @@ class ServerDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun getTodayQuiz(): SelfQuizDto? {
-        return try {
-            val uid = getUid()
 
-            val response = service.getTodayQuiz(uid!!)
-            if (!response.isSuccessful) {
-                throw HttpException(response)
-            } else {
-                response.body()
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-            null
-        }
-    }
-
-    override suspend fun getSelfQuizCreatorInfo(quizId: String): SelfQuizCreatorInfoDto? {
-        return try {
-            val response = service.getSelfQuizCreatorInfo(quizId)
-            if (!response.isSuccessful) {
-                throw HttpException(response)
-            } else {
-                response.body()
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-            null
-        }
-    }
-
-    override suspend fun sendQuizAnswer(quizResult: SelfQuizDto) {
+    override suspend fun shareQuiz(quizId: String, friendUid: String) {
         try {
             val uid = getUid()
 
-            val response = service.sendQuizAnswer(uid!!, quizResult)
+            val response = service.shareQuiz(uid!!, quizId, friendUid)
             if (!response.isSuccessful) {
                 throw HttpException(response)
             }
         } catch (e: Exception) {
             e.printStackTrace()
+            throw e
         }
     }
 
-    override suspend fun submitSelfQuiz(solvedQuiz: SolveQuizDto) {
-        try {
-            val response = service.submitSelfQuiz(solvedQuiz)
-            if (!response.isSuccessful) {
-                throw HttpException(response)
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
 
     //garden
     override suspend fun updateTree(treeId: String) {
@@ -310,6 +395,8 @@ class ServerDataSourceImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
+
+    //not require server connection
     private suspend fun getUid(): String? {
         return localDataSource.getUid()
     }

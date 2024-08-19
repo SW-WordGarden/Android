@@ -1,6 +1,5 @@
 package com.sw.wordgarden.presentation.ui.login.onboarding
 
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -14,8 +13,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentOnboardingBinding
-import com.sw.wordgarden.domain.entity.SignUpEntity
-import com.sw.wordgarden.presentation.model.DefaultEvent
+import com.sw.wordgarden.domain.entity.user.LoginRequestEntity
+import com.sw.wordgarden.presentation.event.DefaultEvent
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -29,7 +28,7 @@ class OnBoardingFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewmodel: OnBoardingViewModel by activityViewModels()
-    private lateinit var signUpEntity: SignUpEntity
+    private lateinit var loginRequestEntity: LoginRequestEntity
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,7 +49,7 @@ class OnBoardingFragment : Fragment() {
 
     private fun getDataFromLogin() {
         val args: OnBoardingFragmentArgs by navArgs()
-        signUpEntity = args.argsSignUpEntity ?: SignUpEntity("", "", "")
+        loginRequestEntity = args.argsSignUpEntity ?: LoginRequestEntity("", "", "")
     }
 
     private fun setupListener() {
@@ -60,10 +59,10 @@ class OnBoardingFragment : Fragment() {
             if (nickname == "") {
                 ToastMaker.make(requireContext(), getString(R.string.onboarding_msg_fill))
             } else {
-                val signUpData = signUpEntity.copy(
-                    uid = signUpEntity.uid,
+                val signUpData = loginRequestEntity.copy(
+                    uid = loginRequestEntity.uid,
                     nickname = nickname,
-                    provider = signUpEntity.provider
+                    provider = loginRequestEntity.provider
                 )
 
                 viewmodel.signUp(signUpData)

@@ -9,10 +9,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentMySelfQuizBinding
-import com.sw.wordgarden.presentation.model.DefaultEvent
-import com.sw.wordgarden.presentation.model.SelfQuizModel
+import com.sw.wordgarden.presentation.event.DefaultEvent
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -30,7 +28,7 @@ class MySelfQuizFragment : Fragment() {
     private val adapter: MySelfQuizAdapter by lazy {
         MySelfQuizAdapter(object : MySelfQuizAdapter.QuizItemListener {
             override fun onItemClicked(quizId: String) {
-                viewmodel.getQuiz(quizId)
+                goMakeQuiz(quizId)
             }
         })
     }
@@ -87,39 +85,36 @@ class MySelfQuizFragment : Fragment() {
                 }
             }
         }
-
-        lifecycleScope.launch {
-            viewmodel.getMySelfQuizByQuizIdEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
-                when (event) {
-                    is DefaultEvent.Failure -> {
-                        ToastMaker.make(requireContext(), event.msg)
-                    }
-
-                    DefaultEvent.Success -> {}
-                }
-            }
-        }
-
-        lifecycleScope.launch {
-            viewmodel.getMySelfQuizByQuizId.flowWithLifecycle(lifecycle).collectLatest { quiz ->
-                quiz?.let {
-                    goMakeQuiz(quiz)
-                }
-            }
-        }
+//        lifecycleScope.launch {
+//            viewmodel.getMySelfQuizByQuizIdEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
+//                when (event) {
+//                    is DefaultEvent.Failure -> {
+//                        ToastMaker.make(requireContext(), event.msg)
+//                    }
+//
+//                    DefaultEvent.Success -> {}
+//                }
+//            }
+//        }
+//
+//        lifecycleScope.launch {
+//            viewmodel.getMySelfQuizByQuizId.flowWithLifecycle(lifecycle).collectLatest { quiz ->
+//                quiz?.let {
+//                    goMakeQuiz(quiz)
+//                }
+//            }
+//        }
     }
 
-    private fun goMakeQuiz(quiz: SelfQuizModel?) {
+    private fun goMakeQuiz(sqId: String) {
         val navController = findNavController()
-        if (navController.currentDestination?.id == R.id.myselfQuizFragment) {
-            val action = MySelfQuizFragmentDirections.actionMySelfQuizFragmentToMakeQuizFragment(quiz)
-            navController.navigate(action)
-        }
+        val action = MySelfQuizFragmentDirections.actionMySelfQuizFragmentToMakeQuizFragment(sqId)
+        navController.navigate(action)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        viewmodel.clearQuizByQuizId()
+//        viewmodel.clearQuizByQuizId()
         _binding = null
     }
 }

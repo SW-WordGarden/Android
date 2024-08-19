@@ -1,12 +1,10 @@
 package com.sw.wordgarden.app.di
 
-import com.sw.wordgarden.data.repository.FriendRepositoryImpl
 import com.sw.wordgarden.data.repository.GardenRepositoryImpl
 import com.sw.wordgarden.data.repository.QuizRepositoryImpl
 import com.sw.wordgarden.data.repository.DataStoreRepositoryImpl
 import com.sw.wordgarden.data.repository.UserRepositoryImpl
 import com.sw.wordgarden.data.repository.WordRepositoryImpl
-import com.sw.wordgarden.domain.repository.FriendRepository
 import com.sw.wordgarden.domain.repository.GardenRepository
 import com.sw.wordgarden.domain.repository.QuizRepository
 import com.sw.wordgarden.domain.repository.UserRepository
@@ -21,12 +19,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class RepositoryModule {
-    @Binds
-    @Singleton
-    abstract fun bindFriendRepopsitory(
-        friendRepositoryImpl: FriendRepositoryImpl
-    ): FriendRepository
-
     @Binds
     @Singleton
     abstract fun bindGardenRepopsitory(

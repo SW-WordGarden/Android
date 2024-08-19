@@ -1,24 +1,32 @@
 package com.sw.wordgarden.domain.repository
 
-import com.sw.wordgarden.domain.entity.QuizSummaryEntity
-import com.sw.wordgarden.domain.entity.SelfQuizCreatorInfoEntity
-import com.sw.wordgarden.domain.entity.SelfQuizEntity
-import com.sw.wordgarden.domain.entity.SolveQuizEntity
-import java.util.Date
+import com.sw.wordgarden.domain.entity.quiz.SqQuestionAnswerEntity
+import com.sw.wordgarden.domain.entity.quiz.SqQuizSummaryEntity
+import com.sw.wordgarden.domain.entity.quiz.SqCreatorInfoEntity
+import com.sw.wordgarden.domain.entity.quiz.SqEntity
+import com.sw.wordgarden.domain.entity.quiz.SqSolveQuizEntity
+import com.sw.wordgarden.domain.entity.quiz.WqResponseEntity
+import com.sw.wordgarden.domain.entity.quiz.WqStateEntity
+import com.sw.wordgarden.domain.entity.quiz.WqSubmissionEntity
+import com.sw.wordgarden.domain.entity.quiz.WqWrongAnswerEntity
 
 interface QuizRepository {
-    suspend fun insertQuizList(selfQuiz: SelfQuizEntity)
-    suspend fun deleteQuizList(quizId: String)
-    suspend fun getQuizListByType(type: Boolean): SelfQuizEntity?
-    suspend fun getQuizListAllType(): SelfQuizEntity?
-    suspend fun getQuizListMadeByUser(): List<QuizSummaryEntity>?
-    suspend fun getQuizListMadeByUserByQuizId(quizId: String): SelfQuizEntity?
-    suspend fun getQuizListDoneByUserAndPeriod(startDate: Date, endDate: Date): List<SelfQuizEntity>?
-    suspend fun getQuizBySelfQuizId(quizId: String): SelfQuizEntity?
-    suspend fun getSolvedSelfQuizTitleList(): List<String>?
-    suspend fun getSolvedSelfQuizResult(title: String): SelfQuizEntity?
-    suspend fun getTodayQuiz(): SelfQuizEntity?
-    suspend fun getSelfQuizCreatorInfo(quizId: String): SelfQuizCreatorInfoEntity?
-    suspend fun sendQuizAnswer(quizResult: SelfQuizEntity)
-    suspend fun submitSelfQuiz(solvedQuiz: SolveQuizEntity)
+    //wq
+    suspend fun getGeneratedWq(): List<WqResponseEntity>?
+    suspend fun submitWq(wqSubmission: WqSubmissionEntity)
+    suspend fun getWqState(): WqStateEntity?
+    suspend fun getWrongWqs(): List<WqWrongAnswerEntity>?
+    suspend fun getSolvedWqTitles(): Set<String>?
+    suspend fun getSolvedWq(title: String): List<WqResponseEntity>?
+
+    //sq
+    suspend fun createNewSq(selfQuiz: SqEntity)
+    suspend fun getUserSqTitles(): List<SqQuizSummaryEntity>?
+    suspend fun getUserSq(creatorUid: String, quizId: String): SqEntity?
+    suspend fun getSq(quizId: String): List<SqQuestionAnswerEntity>?
+    suspend fun submitSq(solvedQuiz: SqSolveQuizEntity)
+    suspend fun getSolvedSqTitles(): List<String>?
+    suspend fun getSolvedSq(title: String): SqEntity?
+    suspend fun getSqCreatorInfo(quizId: String): SqCreatorInfoEntity?
+    suspend fun shareQuiz(quizTitle: String, friendId: String)
 }

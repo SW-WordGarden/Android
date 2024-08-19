@@ -1,6 +1,6 @@
 package com.sw.wordgarden.data.datasource.local
 
-import com.sw.wordgarden.data.dto.AlarmDto
+import com.sw.wordgarden.data.dto.alarm.AlarmDto
 
 interface LocalDataSource {
 

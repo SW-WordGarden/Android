@@ -9,10 +9,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentAlarmBinding
-import com.sw.wordgarden.presentation.model.DefaultEvent
-import com.sw.wordgarden.presentation.model.SelfQuizModel
+import com.sw.wordgarden.domain.entity.alarm.AlarmEntity
+import com.sw.wordgarden.presentation.event.DefaultEvent
+import com.sw.wordgarden.presentation.model.QuizKey
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -26,10 +26,21 @@ class AlarmFragment : Fragment() {
     private val viewmodel: AlarmViewModel by viewModels()
     private val adapter: AlarmAdapter by lazy {
         AlarmAdapter(object : AlarmAdapter.AlarmItemListener {
-            override fun onItemClicked(quizId: String) {
-                viewmodel.getQuiz(quizId)
+            override fun onItemClicked(alarmEntity: AlarmEntity) {
+                goStartQuiz(alarmEntity)
             }
         })
+    }
+
+    private fun goStartQuiz(alarmEntity: AlarmEntity) {
+        val quizKey = QuizKey(
+            qTitle = alarmEntity.qTitle,
+            sqId = alarmEntity.sqId,
+            isWq = alarmEntity.sqId?.isBlank() == true || alarmEntity.sqId.isNullOrEmpty()
+        )
+        val navController = findNavController()
+        val action = AlarmFragmentDirections.actionAlarmFragmentToStartQuizFragment(quizKey)
+        navController.navigate(action)
     }
 
     override fun onCreateView(
@@ -84,36 +95,7 @@ class AlarmFragment : Fragment() {
                 }
             }
         }
-
-        lifecycleScope.launch {
-            viewmodel.getQuizByQuizIdEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
-                when (event) {
-                    is DefaultEvent.Failure -> {
-                        ToastMaker.make(requireContext(), event.msg)
-                    }
-
-                    DefaultEvent.Success -> {}
-                }
-            }
-        }
-
-        lifecycleScope.launch {
-            viewmodel.getQuizByQuizId.flowWithLifecycle(lifecycle).collectLatest { quiz ->
-                quiz?.let {
-                    goStartQuiz(quiz)
-                }
-            }
-        }
     }
-
-    private fun goStartQuiz(quiz: SelfQuizModel?) {
-        val navController = findNavController()
-        if (navController.currentDestination?.id == R.id.alarmFragment) {
-            val action = AlarmFragmentDirections.actionAlarmFragmentToStartQuizFragment(quiz)
-            navController.navigate(action)
-        }
-    }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

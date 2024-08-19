@@ -102,7 +102,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin_extra_larger"
-                android:layout_marginTop="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/margin_extra_larger"
                 android:layout_marginRight="@dimen/margin_extra_larger"
                 android:background="@drawable/bg_rec_button_long"
                 android:text="@string/quiz_alone"
@@ -111,19 +111,6 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_quiz_description" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_quiz_friend"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_extra_larger"
-                android:layout_marginTop="@dimen/margin_smaller"
-                android:layout_marginRight="@dimen/margin_extra_larger"
-                android:background="@drawable/bg_rec_button_long"
-                android:text="@string/quiz_friend"
-                android:textSize="@dimen/text_smaller"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btn_quiz_alone" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/btn_make_quiz"
@@ -138,7 +125,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btn_quiz_friend" />
+                app:layout_constraintTop_toBottomOf="@+id/btn_quiz_alone" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

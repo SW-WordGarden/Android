@@ -11,15 +11,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.fragment.findNavController
 import com.sw.wordgarden.databinding.FragmentStartQuizBinding
-import com.sw.wordgarden.presentation.model.DefaultEvent
-import com.sw.wordgarden.presentation.model.QuestionModel
-import com.sw.wordgarden.presentation.model.QuestionResultModel
-import com.sw.wordgarden.presentation.model.SelfQuizModel
+import com.sw.wordgarden.presentation.event.DefaultEvent
+import com.sw.wordgarden.presentation.model.QuizModel
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import java.sql.Timestamp
 
 @AndroidEntryPoint
 class StartQuizFragment : Fragment() {
@@ -27,8 +24,7 @@ class StartQuizFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewmodel: StartQuizViewModel by viewModels()
-    private lateinit var quiz: SelfQuizModel
-    private var limitCount = 0
+    private lateinit var quiz: QuizModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -42,19 +38,21 @@ class StartQuizFragment : Fragment() {
 
         getData()
         setupListener()
+        setupObserver()
     }
 
     private fun getData() {
         val args: StartQuizFragmentArgs by navArgs()
-        limitCount = args.argsLimit
-        viewmodel.saveDailyLimit(limitCount)
+        val quizKey = args.argsQuizKey
 
-        val quizFromAlarm = args.argsQuizModel
-        if (quizFromAlarm == null) { //신규 퀴즈 받아오는 상황
-//        setupObserver() //TODO:api 개발 완료 시 주석 해제
-            setupObserverTest() //api 개발 전까지 test용으로 실행되는 함수
-        } else { //공유 받은 퀴즈 받아오는 상황
-            quiz = quizFromAlarm
+        if (quizKey != null) { //공유 받은 퀴즈
+            if (quizKey.isWq == true) { //wq 퀴즈
+                viewmodel.getQuizFromWq()
+            } else { //sq 퀴즈
+                viewmodel.getQuizFromSq("", quizKey.sqId ?: "")
+            }
+        } else { //wq 퀴즈
+            viewmodel.getQuizFromWq()
         }
     }
 
@@ -65,36 +63,8 @@ class StartQuizFragment : Fragment() {
 
         btnStartQuizStart.setOnClickListener {
             val action =
-                StartQuizFragmentDirections.actionStartQuizFragmentToSolveQuizFragment(quiz)
+                StartQuizFragmentDirections.actionStartQuizFragmentToSolveQuizFragmentForWq(quiz)
             findNavController().navigate(action)
-        }
-    }
-
-    private fun setupObserverTest() {
-        val time = Timestamp(2024, 8, 1, 10, 11, 12, 1)
-        val quizList: List<QuestionModel> = List(10) { QuestionModel("question", "answer", 0) }
-        val quizResult: List<QuestionResultModel> =
-            List(10) { QuestionResultModel("userAnswer", true, time, 0) }
-
-        quiz = SelfQuizModel(
-            quizId = "quizIdTest1",
-            title = "test title",
-            quiz = quizList,
-            quizResult = quizResult
-        )
-
-        setupUi()
-
-        lifecycleScope.launch {
-            viewmodel.saveDailyLimitEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
-                when (event) {
-                    is DefaultEvent.Failure -> {
-                        ToastMaker.make(requireContext(), event.msg)
-                    }
-
-                    DefaultEvent.Success -> {}
-                }
-            }
         }
     }
 
@@ -120,22 +90,10 @@ class StartQuizFragment : Fragment() {
                 }
             }
         }
-
-        lifecycleScope.launch {
-            viewmodel.saveDailyLimitEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
-                when (event) {
-                    is DefaultEvent.Failure -> {
-                        ToastMaker.make(requireContext(), event.msg)
-                    }
-
-                    DefaultEvent.Success -> {}
-                }
-            }
-        }
     }
 
     private fun setupUi() = with(binding) {
-        tvStartQuizIntroduce.text = quiz.title
+        tvStartQuizIntroduce.text = quiz.qTitle
     }
 
     override fun onDestroyView() {

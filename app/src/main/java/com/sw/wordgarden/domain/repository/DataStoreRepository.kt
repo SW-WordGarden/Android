@@ -1,6 +1,6 @@
 package com.sw.wordgarden.domain.repository
 
-import com.sw.wordgarden.domain.entity.AlarmEntity
+import com.sw.wordgarden.domain.entity.alarm.AlarmEntity
 
 interface DataStoreRepository {
 
