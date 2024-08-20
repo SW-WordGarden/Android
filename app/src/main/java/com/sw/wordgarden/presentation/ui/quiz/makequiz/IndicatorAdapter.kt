@@ -75,7 +75,7 @@ class IndicatorAdapter(
                         tvItemMakingQuizIndicator.setTextColor(Color.WHITE)
 
                     }
-                    isFilled || isEnableMode ->  {
+                    isFilled || !isEnableMode ->  {
                         tvItemMakingQuizIndicator.setBackgroundResource(R.drawable.bg_filled_indicator)
                         tvItemMakingQuizIndicator.setTextColor(Color.BLACK)
                     }
