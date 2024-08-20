@@ -4,13 +4,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sw.wordgarden.R
 import com.sw.wordgarden.domain.entity.quiz.SqEntity
-import com.sw.wordgarden.domain.usecase.quiz.sq.GetUserSqUseCase
 import com.sw.wordgarden.domain.usecase.quiz.sq.CreateNewSqUseCase
+import com.sw.wordgarden.domain.usecase.quiz.sq.GetSqUseCase
 import com.sw.wordgarden.presentation.event.DefaultEvent
 import com.sw.wordgarden.presentation.event.ErrorMessage
 import com.sw.wordgarden.presentation.mapper.ModelMapper.createEmptySqresultEntity
+import com.sw.wordgarden.presentation.mapper.ModelMapper.toListQAModel
 import com.sw.wordgarden.presentation.mapper.ModelMapper.toSqQuestionAnswerEntity
-import com.sw.wordgarden.presentation.mapper.ModelMapper.toModel
 import com.sw.wordgarden.presentation.model.QAModel
 import com.sw.wordgarden.presentation.model.QuizModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,7 +27,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MakeQuizViewModel @Inject constructor(
-    private val getSqUseCase: GetUserSqUseCase,
+    private val getSqUseCase: GetSqUseCase,
     private val createNewSqUseCase: CreateNewSqUseCase
 ) : ViewModel() {
 
@@ -40,12 +40,17 @@ class MakeQuizViewModel @Inject constructor(
     private val _insertQuizEvent = MutableSharedFlow<DefaultEvent>()
     val insertQuizEvent: SharedFlow<DefaultEvent> = _insertQuizEvent.asSharedFlow()
 
-    fun getQuiz(sqId: String) {
+    fun getQuiz(sqId: String, title: String) {
         viewModelScope.launch {
             runCatching {
-                val quiz = getSqUseCase("", sqId)
-                if (quiz != null) {
-                    val quizModel = quiz.toModel()
+                val response = getSqUseCase(sqId)
+                if (response != null) {
+                    val qaModel = response.toListQAModel()
+                    val quizModel = QuizModel(
+                        sqId = sqId,
+                        qTitle = title,
+                        qaList = qaModel
+                    )
                     _getSq.update { quizModel }
                 }
             }.onFailure {

@@ -8,5 +8,5 @@ data class QuizKey(
     //var creatorUid: String?,
     var qTitle: String?,
     var sqId: String?,
-    var isWq: Boolean?
+    var isWq: Boolean?,
 ) : Parcelable

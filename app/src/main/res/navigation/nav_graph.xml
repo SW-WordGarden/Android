@@ -83,6 +83,10 @@
                 android:name="argsSqId"
                 app:argType="string"
                 app:nullable="true" />
+        <argument
+                android:name="argsQTitle"
+                app:argType="string"
+                app:nullable="true" />
     </fragment>
 
     <fragment
@@ -210,6 +214,10 @@
                 app:destination="@id/makeQuizFragment">
             <argument
                     android:name="argsSqId"
+                    app:argType="string"
+                    app:nullable="true" />
+            <argument
+                    android:name="argsQTitle"
                     app:argType="string"
                     app:nullable="true" />
         </action>

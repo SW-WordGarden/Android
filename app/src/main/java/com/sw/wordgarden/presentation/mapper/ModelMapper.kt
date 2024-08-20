@@ -123,6 +123,22 @@ object ModelMapper {
         return list
     }
 
+    fun List<SqQuestionAnswerEntity>.toListQAModel(): List<QAModel> {
+        val list: MutableList<QAModel> = mutableListOf()
+
+        this.forEach { model ->
+            val entity = QAModel(
+                questionId = null,
+                question = model.question,
+                userAnswer = null,
+                correctAnswer = model.answer,
+                correct = null
+            )
+            list.add(entity)
+        }
+
+        return list
+    }
 
     fun createEmptySqresultEntity(): List<SqresultEntity> {
         val emptyQuizList: List<SqresultEntity> =

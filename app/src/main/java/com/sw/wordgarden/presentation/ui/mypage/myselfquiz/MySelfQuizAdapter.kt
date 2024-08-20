@@ -29,7 +29,7 @@ class MySelfQuizAdapter(
             tvSelfSolvedItem.text = quizSummaryModel.title
 
             ivSelfSolvedDetailItem.setOnClickListener {
-                quizListItemListener.onItemClicked(quizSummaryModel.quizId ?: "")
+                quizListItemListener.onItemClicked(quizSummaryModel.quizId ?: "", quizSummaryModel.title ?: "")
             }
         }
     }
@@ -47,7 +47,7 @@ class MySelfQuizAdapter(
     }
 
     interface QuizItemListener {
-        fun onItemClicked(quizId: String)
+        fun onItemClicked(sqId: String, qTitle: String)
     }
 }
 

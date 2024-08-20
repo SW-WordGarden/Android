@@ -27,8 +27,8 @@ class MySelfQuizFragment : Fragment() {
     private val viewmodel: MySelfQuizViewModel by viewModels()
     private val adapter: MySelfQuizAdapter by lazy {
         MySelfQuizAdapter(object : MySelfQuizAdapter.QuizItemListener {
-            override fun onItemClicked(quizId: String) {
-                goMakeQuiz(quizId)
+            override fun onItemClicked(sqId: String, qTitle: String) {
+                goMakeQuiz(sqId, qTitle)
             }
         })
     }
@@ -85,36 +85,16 @@ class MySelfQuizFragment : Fragment() {
                 }
             }
         }
-//        lifecycleScope.launch {
-//            viewmodel.getMySelfQuizByQuizIdEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
-//                when (event) {
-//                    is DefaultEvent.Failure -> {
-//                        ToastMaker.make(requireContext(), event.msg)
-//                    }
-//
-//                    DefaultEvent.Success -> {}
-//                }
-//            }
-//        }
-//
-//        lifecycleScope.launch {
-//            viewmodel.getMySelfQuizByQuizId.flowWithLifecycle(lifecycle).collectLatest { quiz ->
-//                quiz?.let {
-//                    goMakeQuiz(quiz)
-//                }
-//            }
-//        }
     }
 
-    private fun goMakeQuiz(sqId: String) {
+    private fun goMakeQuiz(sqId: String, qTitle: String) {
         val navController = findNavController()
-        val action = MySelfQuizFragmentDirections.actionMySelfQuizFragmentToMakeQuizFragment(sqId)
+        val action = MySelfQuizFragmentDirections.actionMySelfQuizFragmentToMakeQuizFragment(sqId, qTitle)
         navController.navigate(action)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-//        viewmodel.clearQuizByQuizId()
         _binding = null
     }
 }

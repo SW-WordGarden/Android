@@ -60,7 +60,7 @@ class QuizFragment : Fragment() {
         }
 
         btnMakeQuiz.setOnClickListener {
-            findNavController().navigate(R.id.action_quizFragment_to_makeQuizFragment)
+            goMakeQuiz()
         }
     }
 
@@ -121,6 +121,11 @@ class QuizFragment : Fragment() {
 
     private fun goStartQuiz() {
         findNavController().navigate(R.id.action_quizFragment_to_startQuizFragment)
+    }
+
+    private fun goMakeQuiz() {
+        val action = QuizFragmentDirections.actionQuizFragmentToMakeQuizFragment(null, null)
+        findNavController().navigate(action)
     }
 
     override fun onDestroyView() {

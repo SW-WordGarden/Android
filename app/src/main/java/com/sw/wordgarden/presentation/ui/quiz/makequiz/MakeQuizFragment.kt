@@ -66,7 +66,7 @@ class MakeQuizFragment : Fragment() {
         } else { // 기존 퀴즈 확인 모드
             setConfirmDialog()
             enableMode = false
-            viewmodel.getQuiz(args.argsSqId ?: "")
+            viewmodel.getQuiz(args.argsSqId ?: "", args.argsQTitle ?: "")
         }
     }
 
