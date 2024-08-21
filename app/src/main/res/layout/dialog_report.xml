@@ -1,105 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/cl_report"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/margin_medium"
-    android:background="@drawable/bg_rec_radius_20"
-    android:backgroundTint="@color/white"
-    android:padding="@dimen/padding_medium">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/cl_report"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_medium"
+        android:background="@drawable/bg_rec_radius_20"
+        android:backgroundTint="@color/white"
+        android:padding="@dimen/padding_medium">
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_report_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/mypage_friend_report_title"
-        android:textSize="@dimen/text_caption"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_report_exit" />
+            android:id="@+id/tv_report_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mypage_friend_report_title"
+            android:textSize="@dimen/text_caption"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_report_exit" />
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iv_report_exit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_exit_green"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            android:id="@+id/iv_report_exit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_exit_green"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     <RadioGroup
-        android:id="@+id/rg_report"
-        android:layout_width="match_parent"
-        android:checkedButton="@id/rb_report_reason1"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_extra_large"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_report_title">
+            android:id="@+id/rg_report"
+            android:layout_width="match_parent"
+            android:checkedButton="@id/rb_report_reason1"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_extra_large"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_report_title">
 
         <RadioButton
-            android:id="@+id/rb_report_reason1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/mypage_friend_report_reason1" />
+                android:id="@+id/rb_report_reason1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mypage_friend_report_reason1" />
 
         <RadioButton
-            android:id="@+id/rb_report_reason2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/mypage_friend_report_reason2" />
+                android:id="@+id/rb_report_reason2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mypage_friend_report_reason2" />
 
         <RadioButton
-            android:id="@+id/rb_report_reason3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/mypage_friend_report_reason3" />
+                android:id="@+id/rb_report_reason3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mypage_friend_report_reason3" />
 
         <RadioButton
-            android:id="@+id/rb_report_reason4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/mypage_friend_report_reason4" />
+                android:id="@+id/rb_report_reason4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mypage_friend_report_reason4" />
 
         <RadioButton
-            android:id="@+id/rb_report_reason5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/mypage_friend_report_reason5"
-            app:layout_constraintStart_toStartOf="parent" />
+                android:id="@+id/rb_report_reason5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mypage_friend_report_reason5"
+                app:layout_constraintStart_toStartOf="parent" />
 
         <RadioButton
-            android:id="@+id/rb_report_reason6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/mypage_friend_report_reason6" />
+                android:id="@+id/rb_report_reason6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mypage_friend_report_reason6" />
     </RadioGroup>
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/et_report_reason6"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_extra_small"
-        android:background="@drawable/bg_rec_stroke_radius_10"
-        android:padding="@dimen/padding_extra_smaller"
-        app:layout_constraintTop_toBottomOf="@+id/rg_report"
-        tools:layout_editor_absoluteX="20dp" />
+            android:id="@+id/et_report_reason6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_extra_small"
+            android:background="@drawable/bg_rec_stroke_radius_10"
+            android:padding="@dimen/padding_extra_smaller"
+            app:layout_constraintTop_toBottomOf="@+id/rg_report"
+            tools:layout_editor_absoluteX="20dp" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_medium"
-        android:layout_marginTop="@dimen/margin_large"
-        android:layout_marginEnd="@dimen/margin_medium"
-        android:backgroundTint="@color/light_red"
-        android:padding="@dimen/padding_medium"
-        android:text="@string/mypage_friend_report_title"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_smaller"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_report_reason6" />
+            android:id="@+id/btn_report"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_large"
+            android:layout_marginEnd="@dimen/margin_medium"
+            android:backgroundTint="@color/light_red"
+            android:padding="@dimen/padding_medium"
+            android:text="@string/mypage_friend_report_title"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_smaller"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_report_reason6" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

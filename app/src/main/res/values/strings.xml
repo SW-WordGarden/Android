@@ -44,10 +44,13 @@
     <string name="mypage_friend">친구 관리</string>
     <string name="mypage_quick_start">바로가기</string>
     <string name="mypage_msg_fail_load_my_info">내 정보 불러오기에 실패했습니다.</string>
+    <string name="mypage_msg_fail_update_image">프로필 사진 업데이트를 실패했습니다.</string>
 
     <string name="mypage_friend_title">친구 관리</string>
-    <string name="mypage_friend_url">친구 추가 링크</string>
-    <string name="mypage_friend_msg_delete">정말 친구를 삭제하시겠습니까?</string>
+    <string name="mypage_friend_my_code">내 친구 코드 복사하기</string>
+    <string name="mypage_friend_enter_code">친구 코드를 입력하세요.</string>
+    <string name="mypage_friend_add">친구 추가</string>
+    <string name="mypage_friends_no_friends">아직 친구가 없어요.</string>
     <string name="mypage_friend_report_title">신고하기</string>
     <string name="mypage_friend_report_reason1">영리 목적/홍보성</string>
     <string name="mypage_friend_report_reason2">저작권 침해</string>
@@ -55,6 +58,14 @@
     <string name="mypage_friend_report_reason4">욕설/인신공격</string>
     <string name="mypage_friend_report_reason5">개인정보노출</string>
     <string name="mypage_friend_report_reason6">기타</string>
+    <string name="mypage_friends_msg_fail_load_friends">친구 목록 불러오기에 실패했습니다.</string>
+    <string name="mypage_friends_msg_fail_add_friend">친구 추가에 실패했습니다.</string>
+    <string name="mypage_friends_msg_fail_delete_friend">친구 삭제에 실패했습니다.</string>
+    <string name="mypage_friends_msg_fail_report_friend">친구 신고에 실패했습니다.</string>
+    <string name="mypage_friends_msg_delete_friend">친구를 삭제하시겠습니까?</string>
+    <string name="mypage_friends_msg_report_friend">친구를 신고하시겠습니까?</string>
+    <string name="mypage_friends_msg_report_fill">신고 사유를 입력해주세요.</string>
+
 
     <string name="mypage_my_self_quiz">내가 낸 퀴즈 확인</string>
     <string name="mypage_my_self_quiz_title">내가 낸 퀴즈</string>
@@ -63,6 +74,8 @@
 
     <string name="mypage_my_solved_quiz_no_quiz_list">아직 내가 푼 퀴즈가 없어요!</string>
     <string name="mypage_my_solved_quiz_msg_fail_load_quiz_title_list">내가 푼 퀴즈 목록 불러오기에 실패했습니다.</string>
+
+
 
     <!-- setting -->
     <string name="setting_title">설정</string>

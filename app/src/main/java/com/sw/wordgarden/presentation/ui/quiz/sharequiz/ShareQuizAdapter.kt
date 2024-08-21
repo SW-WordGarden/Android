@@ -12,16 +12,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.ItemFriendsShareBinding
-import com.sw.wordgarden.domain.entity.user.UserEntity
+import com.sw.wordgarden.domain.entity.user.FriendEntity
 import java.util.Locale
 
 @SuppressLint("NotifyDataSetChanged")
 class ShareQuizAdapter(
     private val friendItemListener: FriendItemListener
-) : ListAdapter<UserEntity, ShareQuizAdapter.ShareQuizViewHolder>(DIFF_UTIL), Filterable {
+) : ListAdapter<FriendEntity, ShareQuizAdapter.ShareQuizViewHolder>(DIFF_UTIL), Filterable {
 
-    private var friendList: List<UserEntity> = emptyList()
-    private var filteredFriendList: List<UserEntity> = emptyList()
+    private var friendList: List<FriendEntity> = emptyList()
+    private var filteredFriendList: List<FriendEntity> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShareQuizViewHolder {
         return ShareQuizViewHolder(
@@ -38,7 +38,7 @@ class ShareQuizAdapter(
         return filteredFriendList.size
     }
 
-    override fun submitList(list: List<UserEntity>?) {
+    override fun submitList(list: List<FriendEntity>?) {
         friendList = list ?: emptyList()
         filteredFriendList = friendList
         notifyDataSetChanged()
@@ -52,14 +52,14 @@ class ShareQuizAdapter(
                     friendList
                 } else {
                     friendList.filter {
-                        it.uName?.lowercase(Locale.getDefault())?.contains(query) ?: false
+                        it.nickname?.lowercase(Locale.getDefault())?.contains(query) ?: false
                     }
                 }
                 return FilterResults().apply { values = filteredFriendList }
             }
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                filteredFriendList = (results?.values as List<*>).filterIsInstance<UserEntity>()
+                filteredFriendList = (results?.values as List<*>).filterIsInstance<FriendEntity>()
                 notifyDataSetChanged()
             }
         }
@@ -69,14 +69,14 @@ class ShareQuizAdapter(
         private val binding: ItemFriendsShareBinding,
         private val context: Context
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: UserEntity) = with(binding) {
+        fun bind(item: FriendEntity) = with(binding) {
             Glide.with(context)
-                .load(item.uImage)
-                .error(R.drawable.bg_filled_indicator)
-                .fallback(R.drawable.bg_filled_indicator)
+                .load(item.profileImg)
+                .error(R.drawable.img_default_thumbnail)
+                .fallback(R.drawable.img_default_thumbnail)
                 .into(ivFriendShareThumbnail)
 
-            tvFriendShareNickname.text = item.uName
+            tvFriendShareNickname.text = item.nickname
 
             root.setOnClickListener {
                 friendItemListener.onItemClicked(item)
@@ -85,19 +85,19 @@ class ShareQuizAdapter(
     }
 
     companion object {
-        private val DIFF_UTIL = object : DiffUtil.ItemCallback<UserEntity>() {
-            override fun areItemsTheSame(oldItem: UserEntity, newItem: UserEntity): Boolean {
+        private val DIFF_UTIL = object : DiffUtil.ItemCallback<FriendEntity>() {
+            override fun areItemsTheSame(oldItem: FriendEntity, newItem: FriendEntity): Boolean {
                 return oldItem.uid == newItem.uid
             }
 
-            override fun areContentsTheSame(oldItem: UserEntity, newItem: UserEntity): Boolean {
+            override fun areContentsTheSame(oldItem: FriendEntity, newItem: FriendEntity): Boolean {
                 return oldItem == newItem
             }
         }
     }
 
     interface FriendItemListener {
-        fun onItemClicked(item: UserEntity)
+        fun onItemClicked(item: FriendEntity)
     }
 }
 

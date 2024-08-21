@@ -3,12 +3,12 @@ package com.sw.wordgarden.presentation.ui.quiz.sharequiz
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -17,7 +17,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentShareQuizBinding
-import com.sw.wordgarden.domain.entity.user.UserEntity
+import com.sw.wordgarden.domain.entity.user.FriendEntity
 import com.sw.wordgarden.presentation.event.DefaultEvent
 import com.sw.wordgarden.presentation.model.QuizKey
 import com.sw.wordgarden.presentation.util.ToastMaker
@@ -34,7 +34,7 @@ class ShareQuizFragment : Fragment() {
     private val viewmodel: ShareQuizViewModel by viewModels()
     private val adapter: ShareQuizAdapter by lazy {
         ShareQuizAdapter(object : ShareQuizAdapter.FriendItemListener {
-            override fun onItemClicked(item: UserEntity) {
+            override fun onItemClicked(item: FriendEntity) {
                 val builder = AlertDialog.Builder(requireActivity())
                 builder.setMessage(R.string.share_quiz_msg_share)
                 builder.setPositiveButton(R.string.common_positive) { _, _ ->
@@ -90,8 +90,8 @@ class ShareQuizFragment : Fragment() {
         }
 
         etShareQuizInputTitle.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
-            override fun afterTextChanged(s: Editable?) { }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun afterTextChanged(s: Editable?) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 adapter.filter.filter(s)
             }
@@ -100,7 +100,7 @@ class ShareQuizFragment : Fragment() {
 
     private fun setupObserver() {
         lifecycleScope.launch {
-            viewmodel.getFriendEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
+            viewmodel.getFriendsEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
                 when (event) {
                     is DefaultEvent.Failure -> {
                         ToastMaker.make(requireContext(), event.msg)
@@ -112,10 +112,11 @@ class ShareQuizFragment : Fragment() {
         }
 
         lifecycleScope.launch {
-            viewmodel.getFriendList.flowWithLifecycle(lifecycle).collectLatest { friends ->
-                adapter.submitList(friends)
+            viewmodel.getFriends.flowWithLifecycle(lifecycle).collectLatest { friends ->
+                val list = friends?.friends ?: emptyList()
+                adapter.submitList(list)
 
-                if (friends.isEmpty()) {
+                if (list.isEmpty()) {
                     binding.rvShareQuiz.visibility = View.INVISIBLE
                     binding.tvShareQuizNoFriends.visibility = View.VISIBLE
                 } else {
@@ -143,13 +144,18 @@ class ShareQuizFragment : Fragment() {
     private fun goQuizOrBack() {
         val navController = findNavController()
         if (navController.previousBackStackEntry?.destination?.id == R.id.makeQuizFragment) {
-            val fromQuiz = navController.previousBackStackEntry?.arguments?.getBoolean("argsFromQuiz") ?: false
+            val fromQuiz =
+                navController.previousBackStackEntry?.arguments?.getBoolean("argsFromQuiz") ?: false
             if (fromQuiz) {
                 val navOptions = NavOptions.Builder()
                     .setPopUpTo(R.id.quizFragment, true)
                     .setLaunchSingleTop(true)
                     .build()
-                navController.navigate(R.id.action_shareQuizFragment_to_quizFragment, null, navOptions)
+                navController.navigate(
+                    R.id.action_shareQuizFragment_to_quizFragment,
+                    null,
+                    navOptions
+                )
             } else {
                 navController.navigateUp()
             }

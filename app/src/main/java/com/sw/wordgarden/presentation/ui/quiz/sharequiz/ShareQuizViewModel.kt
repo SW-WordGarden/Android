@@ -3,7 +3,7 @@ package com.sw.wordgarden.presentation.ui.quiz.sharequiz
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sw.wordgarden.R
-import com.sw.wordgarden.domain.entity.user.UserEntity
+import com.sw.wordgarden.domain.entity.user.FriendListEntity
 import com.sw.wordgarden.domain.usecase.user.GetFriendsUseCase
 import com.sw.wordgarden.domain.usecase.quiz.common.ShareQuizUseCase
 import com.sw.wordgarden.presentation.event.DefaultEvent
@@ -25,11 +25,11 @@ class ShareQuizViewModel @Inject constructor(
     private val shareQuizUseCase: ShareQuizUseCase
 ) : ViewModel() {
 
-    private val _getFriendEvent = MutableSharedFlow<DefaultEvent>()
-    val getFriendEvent: SharedFlow<DefaultEvent> = _getFriendEvent.asSharedFlow()
+    private val _getFriendsEvent = MutableSharedFlow<DefaultEvent>()
+    val getFriendsEvent: SharedFlow<DefaultEvent> = _getFriendsEvent.asSharedFlow()
 
-    private val _getFriendList = MutableStateFlow<List<UserEntity>>(emptyList())
-    val getFriendList: StateFlow<List<UserEntity>> = _getFriendList.asStateFlow()
+    private val _getFriends = MutableStateFlow<FriendListEntity?>(null)
+    val getFriends: StateFlow<FriendListEntity?> = _getFriends.asStateFlow()
 
     private val _shareEvent = MutableSharedFlow<DefaultEvent>()
     val shareEvent: SharedFlow<DefaultEvent> = _shareEvent.asSharedFlow()
@@ -43,15 +43,15 @@ class ShareQuizViewModel @Inject constructor(
             runCatching {
                 val friendList = getFriendsUseCase()
                 if (friendList != null) {
-                    _getFriendList.update { friendList }
+                    _getFriends.update { friendList }
                 } else {
-                    _getFriendList.update { emptyList() }
+                    _getFriends.update { null }
                 }
 
             }.onFailure {
-                _getFriendEvent.emit(DefaultEvent.Failure(R.string.share_quiz_msg_fail_load_friends))
+                _getFriendsEvent.emit(DefaultEvent.Failure(R.string.share_quiz_msg_fail_load_friends))
             }.onSuccess {
-                _getFriendEvent.emit(DefaultEvent.Success)
+                _getFriendsEvent.emit(DefaultEvent.Success)
             }
         }
 
