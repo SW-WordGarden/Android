@@ -18,6 +18,6 @@ data class CustomQuizEntity(
 )
 
 data class SolvedQuizEntity(
-    val quizId: String?,
-    val quizTitle: String?
+    val type: String?,
+    val title: String?
 )

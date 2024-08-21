@@ -92,8 +92,9 @@ class ServerDataSourceImpl @Inject constructor(
     override suspend fun updateUserNickname(nickname: String) {
         try {
             val uid = getUid()
+            val payload = mapOf("nickname" to nickname)
 
-            val response = service.updateUserNickname(uid!!, nickname)
+            val response = service.updateUserNickname(uid!!, payload)
             if (!response.isSuccessful) {
                 throw HttpException(response)
             }
@@ -105,8 +106,9 @@ class ServerDataSourceImpl @Inject constructor(
     override suspend fun updateUserImage(image: String) {
         try {
             val uid = getUid()
+            val payload = mapOf("image" to image)
 
-            val response = service.updateUserImage(uid!!, image)
+            val response = service.updateUserImage(uid!!, payload)
             if (!response.isSuccessful) {
                 throw HttpException(response)
             }

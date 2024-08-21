@@ -20,6 +20,6 @@ data class CustomQuizDto(
 )
 
 data class SolvedQuizDto(
-    @SerializedName("quizId") val quizId: String?,
-    @SerializedName("quizTitle") val quizTitle: String?
+    @SerializedName("type") val type: String?,
+    @SerializedName("title") val title: String?
 )

@@ -90,8 +90,8 @@ object ServerMapper {
     )
 
     fun SolvedQuizDto.toEntity() = SolvedQuizEntity(
-        quizId = quizId,
-        quizTitle = quizTitle,
+        type = type,
+        title = title,
     )
 
     fun FriendListDto.toEntity() = FriendListEntity(

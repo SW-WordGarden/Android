@@ -24,6 +24,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
@@ -44,11 +45,11 @@ interface Service {
     @GET("user/info/{uid}")
     suspend fun getUserInfoForMypage(@Path("uid") uid: String): Response<UserInfoDto>
 
-    @PUT("user/nickname/{uid}")
-    suspend fun updateUserNickname(@Path("uid") uid: String, @Body nickname: String): Response<Unit>
+    @PATCH("user/nickname/{uid}")
+    suspend fun updateUserNickname(@Path("uid") uid: String, @Body payload: Map<String, String>): Response<Unit>
 
-    @PUT("user/image/{uid}")
-    suspend fun updateUserImage(@Path("uid") uid: String, @Body image: String): Response<Unit>
+    @PATCH("user/image/{uid}")
+    suspend fun updateUserImage(@Path("uid") uid: String, @Body payload: Map<String, String>): Response<Unit>
 
     @GET("user/friends/{uid}")
     suspend fun getFriends(@Path("uid") uid: String): Response<FriendListDto>

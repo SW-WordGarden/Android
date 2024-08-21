@@ -35,12 +35,15 @@
     <string name="mypage_rank_title">등수</string>
     <string name="mypage_weekly_score">이번 주 퀴즈 성적</string>
     <string name="mypage_weekly_score_title">이번주 틀린 단어</string>
+    <string name="mypage_weekly_score_text1">문제 중</string>
+    <string name="mypage_weekly_score_text2">문제 정답</string>
     <string name="mypage_my_solved_quiz">내가 푼 퀴즈 확인</string>
     <string name="mypage_my_solved_quiz_title">풀었던 퀴즈</string>
     <string name="mypage_my_taken_quiz">내가 받은 퀴즈 확인</string>
     <string name="mypage_my_taken_quiz_title">받은 퀴즈</string>
     <string name="mypage_friend">친구 관리</string>
     <string name="mypage_quick_start">바로가기</string>
+    <string name="mypage_msg_fail_load_my_info">내 정보 불러오기에 실패했습니다.</string>
 
     <string name="mypage_friend_title">친구 관리</string>
     <string name="mypage_friend_url">친구 추가 링크</string>
