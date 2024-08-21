@@ -6,15 +6,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.sw.wordgarden.databinding.FragmentWeeklyBinding
+import com.sw.wordgarden.presentation.event.DefaultEvent
+import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class WeeklyQuizCheckFragment : Fragment() {
 
     private var _binding: FragmentWeeklyBinding? = null
     private val binding get() = _binding!!
+
+    private val viewmodel: WeeklyQuizCheckViewModel by viewModels()
+    private val adapter: WeeklyQuizCheckAdapter by lazy {
+        WeeklyQuizCheckAdapter()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,12 +50,46 @@ class WeeklyQuizCheckFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupUi()
         setupListener()
+        setupObserver()
+    }
+
+    private fun setupUi() = with(binding) {
+        rvMyWeeklyFailWord.adapter = adapter
     }
 
     private fun setupListener() = with(binding) {
         ivMyWeeklyScoreBack.setOnClickListener {
             goBack()
+        }
+    }
+
+    private fun setupObserver() {
+        lifecycleScope.launch {
+            viewmodel.getWrongWqsEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
+                when (event) {
+                    is DefaultEvent.Failure -> {
+                        ToastMaker.make(requireContext(), event.msg)
+                    }
+
+                    DefaultEvent.Success -> {}
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            viewmodel.getWrongWqs.flowWithLifecycle(lifecycle).collectLatest { wrongWqs ->
+                adapter.submitList(wrongWqs)
+
+                if (wrongWqs.isEmpty()) {
+                    binding.rvMyWeeklyFailWord.visibility = View.INVISIBLE
+                    binding.tvWeeklyNoWrong.visibility = View.VISIBLE
+                } else {
+                    binding.rvMyWeeklyFailWord.visibility = View.VISIBLE
+                    binding.tvWeeklyNoWrong.visibility = View.INVISIBLE
+                }
+            }
         }
     }
 

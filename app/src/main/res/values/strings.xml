@@ -66,7 +66,6 @@
     <string name="mypage_friends_msg_report_friend">친구를 신고하시겠습니까?</string>
     <string name="mypage_friends_msg_report_fill">신고 사유를 입력해주세요.</string>
 
-
     <string name="mypage_my_self_quiz">내가 낸 퀴즈 확인</string>
     <string name="mypage_my_self_quiz_title">내가 낸 퀴즈</string>
     <string name="mypage_my_self_quiz_no_quiz_list">아직 내가 만든 퀴즈가 없어요!</string>
@@ -75,7 +74,8 @@
     <string name="mypage_my_solved_quiz_no_quiz_list">아직 내가 푼 퀴즈가 없어요!</string>
     <string name="mypage_my_solved_quiz_msg_fail_load_quiz_title_list">내가 푼 퀴즈 목록 불러오기에 실패했습니다.</string>
 
-
+    <string name="mypage_my_solved_quiz_no_wrong_quiz_list">틀린 문제가 없어요!</string>
+    <string name="mypage_my_solved_quiz_msg_fail_load_wrong_quiz">틀린 퀴즈 목록 불러오기에 실패했습니다.</string>
 
     <!-- setting -->
     <string name="setting_title">설정</string>
