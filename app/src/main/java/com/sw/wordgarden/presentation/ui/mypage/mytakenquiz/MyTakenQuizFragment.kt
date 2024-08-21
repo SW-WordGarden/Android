@@ -31,7 +31,7 @@ class MyTakenQuizFragment : Fragment() {
 
     private fun setupListener() = with(binding) {
         ivMyTakenQuizBack.setOnClickListener {
-            findNavController().popBackStack()
+            findNavController().navigateUp()
         }
     }
 

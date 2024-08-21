@@ -31,7 +31,7 @@ class WeeklyQuizCheckFragment : Fragment() {
 
     private fun setupListener() = with(binding) {
         ivMyWeeklyScoreBack.setOnClickListener {
-            findNavController().popBackStack()
+            findNavController().navigateUp()
         }
     }
 

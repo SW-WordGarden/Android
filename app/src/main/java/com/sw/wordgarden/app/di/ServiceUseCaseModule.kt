@@ -1,7 +1,7 @@
 package com.sw.wordgarden.app.di
 
-import com.sw.wordgarden.domain.usecase.SendFirebaseTokenUseCase
-import com.sw.wordgarden.domain.usecase.SendFirebaseTokenUseCaseImpl
+import com.sw.wordgarden.domain.usecase.user.SendFirebaseTokenUseCase
+import com.sw.wordgarden.domain.usecase.user.SendFirebaseTokenUseCaseImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

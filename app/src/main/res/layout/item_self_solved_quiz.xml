@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cl_list_weekly_quiz_check"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/margin_medium"
+    android:layout_marginTop="@dimen/margin_extra_small"
+    android:layout_marginEnd="@dimen/margin_medium"
+    android:layout_marginBottom="@dimen/margin_extra_small"
+    android:background="@drawable/bg_rec_radius_20"
+    android:backgroundTint="@color/white"
+    android:padding="@dimen/padding_large">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_self_solved_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/mypage_quick_start"
+        android:textSize="@dimen/text_smaller"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_self_solved_detail_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_plus"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_self_solved_item"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_self_solved_item" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

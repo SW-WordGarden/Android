@@ -3,10 +3,11 @@ package com.sw.wordgarden.presentation.ui.quiz.sharequiz
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sw.wordgarden.R
-import com.sw.wordgarden.domain.usecase.GetFriendListUseCase
-import com.sw.wordgarden.domain.usecase.ShareQuizUseCase
-import com.sw.wordgarden.presentation.model.DefaultEvent
-import com.sw.wordgarden.presentation.model.FriendModel
+import com.sw.wordgarden.domain.entity.user.UserEntity
+import com.sw.wordgarden.domain.usecase.user.GetFriendsUseCase
+import com.sw.wordgarden.domain.usecase.quiz.common.ShareQuizUseCase
+import com.sw.wordgarden.presentation.event.DefaultEvent
+import com.sw.wordgarden.presentation.model.QuizKey
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,15 +21,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ShareQuizViewModel @Inject constructor(
-    private val getFriendListUseCase: GetFriendListUseCase,
+    private val getFriendsUseCase: GetFriendsUseCase,
     private val shareQuizUseCase: ShareQuizUseCase
 ) : ViewModel() {
 
     private val _getFriendEvent = MutableSharedFlow<DefaultEvent>()
     val getFriendEvent: SharedFlow<DefaultEvent> = _getFriendEvent.asSharedFlow()
 
-    private val _getFriendList = MutableStateFlow<List<FriendModel>>(emptyList())
-    val getFriendList: StateFlow<List<FriendModel>> = _getFriendList.asStateFlow()
+    private val _getFriendList = MutableStateFlow<List<UserEntity>>(emptyList())
+    val getFriendList: StateFlow<List<UserEntity>> = _getFriendList.asStateFlow()
 
     private val _shareEvent = MutableSharedFlow<DefaultEvent>()
     val shareEvent: SharedFlow<DefaultEvent> = _shareEvent.asSharedFlow()
@@ -40,14 +41,7 @@ class ShareQuizViewModel @Inject constructor(
     private fun getFriends() =
         viewModelScope.launch {
             runCatching {
-                val friendList = getFriendListUseCase()?.map {
-                    FriendModel(
-                        uid = it.uid ?: "",
-                        nickname = it.nickname ?: "",
-                        thumbnail = it.thumbnail ?: ""
-                    )
-                }
-
+                val friendList = getFriendsUseCase()
                 if (friendList != null) {
                     _getFriendList.update { friendList }
                 } else {
@@ -61,10 +55,14 @@ class ShareQuizViewModel @Inject constructor(
             }
         }
 
-    fun shareQuiz(quizTitle: String, friendUid: String) {
+    fun shareQuiz(quizKey: QuizKey, friendUid: String) {
         viewModelScope.launch {
             runCatching {
-                shareQuizUseCase.invoke(quizTitle, friendUid)
+                if (quizKey.isWq == true) {
+                    shareQuizUseCase.invoke(quizKey.sqId ?: "", friendUid)
+                } else {
+                    shareQuizUseCase.invoke(quizKey.sqId ?: "", friendUid)
+                }
             }.onFailure {
                 _shareEvent.emit(DefaultEvent.Failure(R.string.share_quiz_msg_fail_to_share))
             }.onSuccess {

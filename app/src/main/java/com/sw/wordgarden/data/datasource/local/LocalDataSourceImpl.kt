@@ -7,7 +7,10 @@ import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.sw.wordgarden.data.datasource.local.CalendarUtility.isSameDay
+import com.sw.wordgarden.data.dto.alarm.AlarmDto
 import kotlinx.coroutines.flow.first
+import java.sql.Date
+import java.util.Calendar
 import javax.inject.Inject
 
 class LocalDataSourceImpl @Inject constructor(
@@ -62,5 +65,17 @@ class LocalDataSourceImpl @Inject constructor(
             preferences.remove(DAILY_LIMIT_KEY)
             preferences.remove(DAILY_LIMIT_TIMESTAMP_KEY)
         }
+    }
+
+    override suspend fun getAlarmList(): List<AlarmDto> { //TODO: test code 삭제
+        val testAlarmData = listOf(
+            AlarmDto(
+                qTitle = "test title 1_1",
+                sqId = "test title 1_1",
+                creator = "neonaver",
+                date = Date(Calendar.getInstance().apply { set(2024, 8, 15) }.timeInMillis)
+            )
+        )
+        return testAlarmData
     }
 }

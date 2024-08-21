@@ -35,8 +35,6 @@
     <string name="mypage_rank_title">등수</string>
     <string name="mypage_weekly_score">이번 주 퀴즈 성적</string>
     <string name="mypage_weekly_score_title">이번주 틀린 단어</string>
-    <string name="mypage_my_made_quiz">내가 낸 퀴즈 확인</string>
-    <string name="mypage_my_made_quiz_title">내가 낸 퀴즈</string>
     <string name="mypage_my_solved_quiz">내가 푼 퀴즈 확인</string>
     <string name="mypage_my_solved_quiz_title">풀었던 퀴즈</string>
     <string name="mypage_my_taken_quiz">내가 받은 퀴즈 확인</string>
@@ -54,6 +52,11 @@
     <string name="mypage_friend_report_reason4">욕설/인신공격</string>
     <string name="mypage_friend_report_reason5">개인정보노출</string>
     <string name="mypage_friend_report_reason6">기타</string>
+
+    <string name="mypage_my_made_quiz">내가 낸 퀴즈 확인</string>
+    <string name="mypage_my_made_quiz_title">내가 낸 퀴즈</string>
+    <string name="mypage_my_made_quiz_no_quiz_list">아직 내가 만든 퀴즈가 없어요!</string>
+    <string name="mypage_my_made_quiz_msg_fail_load_quiz_title_list">내가 만든 퀴즈 목록 불러오기에 실패했습니다.</string>
 
     <!-- setting -->
     <string name="setting_title">설정</string>
@@ -73,13 +76,19 @@
     <string name="home_sir">님</string>
     <string name="home_today_word">오늘의 단어를 알아보아요!</string>
 
+    <!-- alarm -->
+    <string name="alarm_title">알람</string>
+    <string name="alarm_check_quiz">님이 보낸 퀴즈를 확인하세요!</string>
+    <string name="alarm_msg_fail_load_alarm">알람 데이터 불러오기에 실패했어요.</string>
+    <string name="alarm_msg_fail_get_quiz">퀴즈 불러오기에 실패했어요.</string>
+    <string name="alarm_no_alarm_list">아직 받은 알람이 없어요!</string>
+
     <!-- quiz -->
     <string name="quiz_title">퀴즈 게임</string>
-    <string name="quiz_welcome">님을 위한\n맞춤 퀴즈가 준비되어있어요.</string>
+    <string name="quiz_welcome">오늘의 퀴즈가 준비되어 있어요!</string>
     <string name="quiz_support_btn">친구가 만든 퀴즈를 맞혀보세요!</string>
     <string name="quiz_all_clear">축하합니다!\n모든 퀴즈를 다 풀었어요!</string>
-    <string name="quiz_alone">혼자서 풀기</string>
-    <string name="quiz_friend">친구랑 풀기</string>
+    <string name="quiz_alone">퀴즈 풀기</string>
     <string name="quiz_custom"><u>퀴즈 만들러 가기</u></string>
     <string name="quiz_msg_fail_get_daily_limit">일일 퀴즈 횟수 받아오기에 실패했어요.</string>
     <string name="quiz_msg_use_count">일일 퀴즈 횟수가 차감됩니다.\n퀴즈를 받아올까요?</string>
@@ -94,7 +103,10 @@
     <string name="make_quiz_msg_need_question_answer">문제와 정답을 모두 입력해주세요.</string>
     <string name="make_quiz_msg_need_title">퀴즈 이름을 입력해주세요.</string>
     <string name="make_quiz_msg_need_all_check">모든 문제와 정답을 입력하였는지 확인해주세요.</string>
-    <string name="make_quiz_msg_duplication_quiz_title">동일한 이름의 퀴즈가 존재합니다. 퀴즈 이름을 변경해주세요!</string>
+    <string name="make_quiz_msg_unknown_error">알 수 없는 이유로 퀴즈 만들기에 실패했어요.</string>
+    <string name="make_quiz_msg_can_not_edit">내가 만든 커스텀 퀴즈는 확인만 가능해요!\n(수정 불가)</string>
+    <string name="make_quiz_msg_fail_load_quiz_list">내가 만든 퀴즈 불러오기에 실패했습니다.</string>
+
 
     <string name="share_quiz_title">퀴즈 공유하기</string>
     <string name="share_quiz_description">친구랑 같이 퀴즈를 풀어보세요!</string>
@@ -124,10 +136,13 @@
     <string name="result_quiz_title_correct">문제를 맞혔어요!</string>
     <string name="result_quiz_title_all_incorrect">모두 틀렸어요..</string>
     <string name="result_quiz_title_all_correct">모두 맞혔어요!</string>
+    <string name="result_quiz_share">친구에게 이 퀴즈를 공유할래요!</string>
+    <string name="result_quiz_msg_fail_get_result">결과 불러오기에 실패했어요.</string>
 
     <!-- common -->
     <string name="common_positive">네</string>
     <string name="common_negative">아니오</string>
+    <string name="common_got_it">이해했어요.</string>
 
     <!-- word -->
     <string name="word_title">단어 학습</string>

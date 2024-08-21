@@ -47,6 +47,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cl_my_solved_quiz_bar"
-        tools:listitem="@layout/item_made_solved_quiz" />
+        tools:listitem="@layout/item_self_solved_quiz" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

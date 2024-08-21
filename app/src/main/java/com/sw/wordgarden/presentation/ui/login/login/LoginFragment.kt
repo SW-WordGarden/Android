@@ -21,9 +21,9 @@ import com.navercorp.nid.profile.NidProfileCallback
 import com.navercorp.nid.profile.data.NidProfileResponse
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentLoginBinding
-import com.sw.wordgarden.domain.entity.SignUpEntity
-import com.sw.wordgarden.presentation.model.DefaultEvent
-import com.sw.wordgarden.presentation.model.UserCheckEvent
+import com.sw.wordgarden.domain.entity.user.LoginRequestEntity
+import com.sw.wordgarden.presentation.event.DefaultEvent
+import com.sw.wordgarden.presentation.event.UserCheckEvent
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -221,13 +221,13 @@ class LoginFragment : Fragment() {
     }
 
     private fun goOnboarding() {
-        val signUpEntity = SignUpEntity(
+        val loginRequestEntity = LoginRequestEntity(
             uid = uid,
             nickname = "",
             provider = provider
         )
 
-        val action = LoginFragmentDirections.actionLoginFragmentToOnBoardingFragment(signUpEntity)
+        val action = LoginFragmentDirections.actionLoginFragmentToOnBoardingFragment(loginRequestEntity)
         findNavController().navigate(action)
     }
 

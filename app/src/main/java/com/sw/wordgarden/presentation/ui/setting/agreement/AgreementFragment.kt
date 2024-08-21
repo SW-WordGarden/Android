@@ -31,7 +31,7 @@ class AgreementFragment : Fragment() {
 
     private fun setupListener() = with(binding) {
         ivSettingAgreementBack.setOnClickListener {
-            findNavController().popBackStack()
+            findNavController().navigateUp()
         }
     }
 

@@ -13,7 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentQuizBinding
-import com.sw.wordgarden.presentation.model.DefaultEvent
+import com.sw.wordgarden.presentation.event.DefaultEvent
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -46,26 +46,21 @@ class QuizFragment : Fragment() {
 
     private fun setupListener() = with(binding) {
         btnQuizBack.setOnClickListener {
-            findNavController().popBackStack()
+            findNavController().navigateUp()
         }
 
         btnQuizAlone.setOnClickListener {
             val builder = AlertDialog.Builder(requireActivity())
             builder.setMessage(R.string.quiz_msg_use_count)
             builder.setPositiveButton(R.string.common_positive) { _, _ ->
-                val action = QuizFragmentDirections.actionQuizFragmentToStartQuizFragment(limitCount)
-                findNavController().navigate(action)
+                viewmodel.saveDailyLimit(limitCount)
             }
             builder.setNegativeButton(R.string.common_negative) { _, _ -> }
             builder.show()
         }
 
-        btnQuizFriend.setOnClickListener {
-            findNavController().navigate(R.id.action_quizFragment_to_shareQuizFragment)
-        }
-
         btnMakeQuiz.setOnClickListener {
-            findNavController().navigate(R.id.action_quizFragment_to_makeQuizFragment)
+            goMakeQuiz()
         }
     }
 
@@ -76,6 +71,7 @@ class QuizFragment : Fragment() {
                     is DefaultEvent.Failure -> {
                         ToastMaker.make(requireContext(), event.msg)
                     }
+
                     DefaultEvent.Success -> {
                         setupUi()
                     }
@@ -90,32 +86,46 @@ class QuizFragment : Fragment() {
                 }
             }
         }
+
+        lifecycleScope.launch {
+            viewmodel.saveDailyLimitEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
+                when (event) {
+                    is DefaultEvent.Failure -> {
+                        ToastMaker.make(requireContext(), event.msg)
+                    }
+
+                    DefaultEvent.Success -> {
+                        goStartQuiz()
+                    }
+                }
+            }
+        }
     }
 
     @SuppressLint("SetTextI18n")
     private fun setupUi() = with(binding) {
 //        ivQuizUserThumbnail.setImageResource()
-
-        val userName = "사용자" //TODO: 사용자 닉네임 home에서 받아오도록 함
-
         if (limitCount >= MAX) {
-            tvQuizWelcomeUser.text =
-                        "${userName}${getString(R.string.quiz_welcome)}\n"
             tvQuizDescription.text =
-                        "${getString(R.string.quiz_all_clear)}\n" +
+                "${getString(R.string.quiz_all_clear)}\n" +
                         "(${MAX}/${MAX})"
-
             btnQuizAlone.visibility = View.INVISIBLE
-            btnQuizFriend.visibility = View.INVISIBLE
         } else {
             tvQuizWelcomeUser.text =
-                        "${userName}${getString(R.string.quiz_welcome)}\n" +
+                "${getString(R.string.quiz_welcome)}\n" +
                         "(${limitCount}/${MAX})"
             tvQuizDescription.text = getString(R.string.quiz_support_btn)
-
             btnQuizAlone.visibility = View.VISIBLE
-            btnQuizFriend.visibility = View.VISIBLE
         }
+    }
+
+    private fun goStartQuiz() {
+        findNavController().navigate(R.id.action_quizFragment_to_startQuizFragment)
+    }
+
+    private fun goMakeQuiz() {
+        val action = QuizFragmentDirections.actionQuizFragmentToMakeQuizFragment(null, null)
+        findNavController().navigate(action)
     }
 
     override fun onDestroyView() {

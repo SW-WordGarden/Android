@@ -15,8 +15,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentShareQuizBinding
-import com.sw.wordgarden.presentation.model.DefaultEvent
-import com.sw.wordgarden.presentation.model.FriendModel
+import com.sw.wordgarden.domain.entity.user.UserEntity
+import com.sw.wordgarden.presentation.event.DefaultEvent
+import com.sw.wordgarden.presentation.model.QuizKey
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -31,63 +32,39 @@ class ShareQuizFragment : Fragment() {
     private val viewmodel: ShareQuizViewModel by viewModels()
     private val adapter: ShareQuizAdapter by lazy {
         ShareQuizAdapter(object : ShareQuizAdapter.FriendItemListener {
-            override fun onItemClicked(item: FriendModel) {
+            override fun onItemClicked(item: UserEntity) {
                 val builder = AlertDialog.Builder(requireActivity())
                 builder.setMessage(R.string.share_quiz_msg_share)
                 builder.setPositiveButton(R.string.common_positive) { _, _ ->
-                    viewmodel.shareQuiz(quizTitle, item.uid)
+                    viewmodel.shareQuiz(quizKey, item.uid ?: "")
                 }
                 builder.setNegativeButton(R.string.common_negative) { _, _ -> }
                 builder.show()
             }
         })
     }
-    private lateinit var quizTitle: String
+    private lateinit var quizKey: QuizKey
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        setupData()
-
         _binding = FragmentShareQuizBinding.inflate(inflater, container, false)
         return binding.root
-    }
-
-    private fun setupData() {
-        val args: ShareQuizFragmentArgs by navArgs()
-        quizTitle = args.argsTitle ?: ""
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        getData()
         setupUi()
         setupListener()
+        setupObserver()
+    }
 
-        /**
-         * test code
-         * TODO: 서버 연동 후 더미 test code 삭제
-         */
-        val dummyFriends = listOf(
-            FriendModel(uid = "test_friend_uid_1", nickname = "test_friend_1", thumbnail = ""),
-            FriendModel(uid = "test_friend_uid_2", nickname = "test_friend_2", thumbnail = ""),
-            FriendModel(uid = "test_friend_uid_3", nickname = "test_friend_23", thumbnail = ""),
-        )
-        adapter.submitList(dummyFriends)
-
-        if (dummyFriends.isEmpty()) {
-            binding.rvShareQuiz.visibility = View.INVISIBLE
-            binding.tvShareQuizNoFriends.visibility = View.VISIBLE
-        } else {
-            binding.rvShareQuiz.visibility = View.VISIBLE
-            binding.tvShareQuizNoFriends.visibility = View.INVISIBLE
-        }
-        /**
-         * test code end
-         */
-
-//        setupObserver()
+    private fun getData() {
+        val args: ShareQuizFragmentArgs by navArgs()
+        quizKey = args.argsQuizKey ?: QuizKey("", "", null)
     }
 
     private fun setupUi() = with(binding) {

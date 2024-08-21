@@ -31,7 +31,7 @@ class MypageFragment : Fragment() {
 
     private fun setupListener() = with(binding) {
         ivMyBack.setOnClickListener {
-            findNavController().popBackStack()
+            findNavController().navigateUp()
         }
         ivMySetting.setOnClickListener {
             findNavController().navigate(R.id.action_mypageFragment_to_settingFragment)
@@ -42,8 +42,8 @@ class MypageFragment : Fragment() {
         ivMyWeeklyScoreMore.setOnClickListener {
             findNavController().navigate(R.id.action_mypageFragment_to_weeklyQuizCheckFragment)
         }
-        ivMyMadeQuizMore.setOnClickListener {
-            findNavController().navigate(R.id.action_mypageFragment_to_myMadeQuizFragment)
+        ivMySelfQuizMore.setOnClickListener {
+            findNavController().navigate(R.id.action_mypageFragment_to_mySelfQuizFragment)
         }
         ivMySolvedQuizMore.setOnClickListener {
             findNavController().navigate(R.id.action_mypageFragment_to_mySolvedQuizFragment)

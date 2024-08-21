@@ -3,10 +3,11 @@ package com.sw.wordgarden.presentation.ui.quiz.startquiz
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sw.wordgarden.R
-import com.sw.wordgarden.domain.entity.QuizListEntity
-import com.sw.wordgarden.domain.usecase.GetTodayQuizUseCase
-import com.sw.wordgarden.domain.usecase.SaveDailyLimitUseCase
-import com.sw.wordgarden.presentation.model.DefaultEvent
+import com.sw.wordgarden.domain.usecase.quiz.sq.GetUserSqUseCase
+import com.sw.wordgarden.domain.usecase.quiz.wq.GetGeneratedWqUseCase
+import com.sw.wordgarden.presentation.mapper.ModelMapper.toModel
+import com.sw.wordgarden.presentation.event.DefaultEvent
+import com.sw.wordgarden.presentation.model.QuizModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,27 +21,22 @@ import javax.inject.Inject
 
 @HiltViewModel
 class StartQuizViewModel @Inject constructor(
-    private val getTodayQuizUseCase: GetTodayQuizUseCase,
-    private val saveDailyLimitUseCase: SaveDailyLimitUseCase
+    private val getUserSqUseCase: GetUserSqUseCase,
+    private val getGeneratedWqUseCase: GetGeneratedWqUseCase,
 ) : ViewModel() {
 
     private val _getQuizEvent = MutableSharedFlow<DefaultEvent>()
     val getQuizEvent: SharedFlow<DefaultEvent> = _getQuizEvent.asSharedFlow()
 
-    private val _getQuiz = MutableStateFlow<QuizListEntity?>(null)
-    val getQuiz: StateFlow<QuizListEntity?> = _getQuiz.asStateFlow()
+    private val _getQuiz = MutableStateFlow<QuizModel?>(null)
+    val getQuiz: StateFlow<QuizModel?> = _getQuiz.asStateFlow()
 
-    private val _saveDailyLimitEvent = MutableSharedFlow<DefaultEvent>()
-    val saveDailyLimitEvent: SharedFlow<DefaultEvent> = _saveDailyLimitEvent.asSharedFlow()
-
-    init {
-        getQuiz()
-    }
-
-    private fun getQuiz() {
+    fun getQuizFromSq(creatorUid: String, sqId: String) {
         viewModelScope.launch {
             runCatching {
-                _getQuiz.update { getTodayQuizUseCase.invoke() }
+                val response = getUserSqUseCase.invoke(creatorUid, sqId)
+                val quizModel = response?.toModel()
+                _getQuiz.update { quizModel }
             }.onFailure {
                 _getQuizEvent.emit(DefaultEvent.Failure(R.string.start_quiz_msg_fail_get_quiz))
             }.onSuccess {
@@ -49,14 +45,16 @@ class StartQuizViewModel @Inject constructor(
         }
     }
 
-    fun saveDailyLimit(count: Int) {
+    fun getQuizFromWq() {
         viewModelScope.launch {
             runCatching {
-                saveDailyLimitUseCase.invoke(count)
+                val response = getGeneratedWqUseCase.invoke()
+                val quizModel = response?.toModel()
+                _getQuiz.update { quizModel }
             }.onFailure {
-                _saveDailyLimitEvent.emit(DefaultEvent.Failure(R.string.start_quiz_msg_fail_save_daily_limit))
+                _getQuizEvent.emit(DefaultEvent.Failure(R.string.start_quiz_msg_fail_get_quiz))
             }.onSuccess {
-                _saveDailyLimitEvent.emit(DefaultEvent.Success)
+                _getQuizEvent.emit(DefaultEvent.Success)
             }
         }
     }

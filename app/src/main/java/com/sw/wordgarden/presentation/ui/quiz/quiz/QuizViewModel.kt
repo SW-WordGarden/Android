@@ -3,8 +3,9 @@ package com.sw.wordgarden.presentation.ui.quiz.quiz
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sw.wordgarden.R
-import com.sw.wordgarden.domain.usecase.GetDailyLimitUseCase
-import com.sw.wordgarden.presentation.model.DefaultEvent
+import com.sw.wordgarden.domain.usecase.datastore.GetDailyLimitUseCase
+import com.sw.wordgarden.domain.usecase.datastore.SaveDailyLimitUseCase
+import com.sw.wordgarden.presentation.event.DefaultEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,7 +19,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class QuizViewModel @Inject constructor(
-    private val getDailyLimitUseCase: GetDailyLimitUseCase
+    private val getDailyLimitUseCase: GetDailyLimitUseCase,
+    private val saveDailyLimitUseCase: SaveDailyLimitUseCase
 ) : ViewModel() {
 
     private val _getDailyLimitEvent = MutableSharedFlow<DefaultEvent>()
@@ -26,6 +28,9 @@ class QuizViewModel @Inject constructor(
 
     private val _getDailyLimit = MutableStateFlow<Int?>(null)
     val getDailyLimit: StateFlow<Int?> = _getDailyLimit.asStateFlow()
+
+    private val _saveDailyLimitEvent = MutableSharedFlow<DefaultEvent>()
+    val saveDailyLimitEvent: SharedFlow<DefaultEvent> = _saveDailyLimitEvent.asSharedFlow()
 
     init {
         getDailyLimit()
@@ -40,6 +45,18 @@ class QuizViewModel @Inject constructor(
             }.onSuccess { limit ->
                 _getDailyLimit.update { limit }
                 _getDailyLimitEvent.emit(DefaultEvent.Success)
+            }
+        }
+    }
+
+    fun saveDailyLimit(count: Int) {
+        viewModelScope.launch {
+            runCatching {
+                saveDailyLimitUseCase.invoke(count)
+            }.onFailure {
+                _saveDailyLimitEvent.emit(DefaultEvent.Failure(R.string.start_quiz_msg_fail_save_daily_limit))
+            }.onSuccess {
+                _saveDailyLimitEvent.emit(DefaultEvent.Success)
             }
         }
     }

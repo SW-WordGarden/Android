@@ -18,7 +18,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.sw.wordgarden.R
-import com.sw.wordgarden.domain.usecase.SendFirebaseTokenUseCase
+import com.sw.wordgarden.domain.usecase.user.SendFirebaseTokenUseCase
 import com.sw.wordgarden.presentation.ui.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope

@@ -11,15 +11,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.fragment.findNavController
 import com.sw.wordgarden.databinding.FragmentStartQuizBinding
-import com.sw.wordgarden.domain.entity.QuizEntity
-import com.sw.wordgarden.domain.entity.QuizListEntity
-import com.sw.wordgarden.domain.entity.QuizResultEntity
-import com.sw.wordgarden.presentation.model.DefaultEvent
+import com.sw.wordgarden.presentation.event.DefaultEvent
+import com.sw.wordgarden.presentation.model.QuizModel
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import java.sql.Timestamp
 
 @AndroidEntryPoint
 class StartQuizFragment : Fragment() {
@@ -27,8 +24,7 @@ class StartQuizFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewmodel: StartQuizViewModel by viewModels()
-    private lateinit var quiz: QuizListEntity
-    private var limitCount = 0
+    private lateinit var quiz: QuizModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -40,51 +36,33 @@ class StartQuizFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        getDataFromQuiz()
+        getData()
         setupListener()
-//        setupObserver() //TODO:api 개발 완료 시 주석 해제
-        setupObserverTest() //api 개발 전까지 test용으로 실행되는 함수
+        setupObserver()
     }
 
-    private fun getDataFromQuiz() {
+    private fun getData() {
         val args: StartQuizFragmentArgs by navArgs()
-        limitCount = args.argsLimit
-        viewmodel.saveDailyLimit(limitCount)
-    }
+        val quizKey = args.argsQuizKey
 
-    private fun setupObserverTest() {
-        val time = Timestamp(2024, 8, 1, 10, 11, 12, 1)
-        val quizList: List<QuizEntity> = List(10) { QuizEntity("question", "answer", 0) }
-        val quizResult: List<QuizResultEntity> =
-            List(10) { QuizResultEntity("userAnswer", true, time, 0) }
-
-        quiz = QuizListEntity(
-            title = "test title", quiz = quizList, quizResult = quizResult
-        )
-
-        setupUi()
-
-        lifecycleScope.launch {
-            viewmodel.saveDailyLimitEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
-                when (event) {
-                    is DefaultEvent.Failure -> {
-                        ToastMaker.make(requireContext(), event.msg)
-                    }
-
-                    DefaultEvent.Success -> {}
-                }
+        if (quizKey != null) { //공유 받은 퀴즈
+            if (quizKey.isWq == true) { //wq 퀴즈
+                viewmodel.getQuizFromWq()
+            } else { //sq 퀴즈
+                viewmodel.getQuizFromSq("", quizKey.sqId ?: "")
             }
+        } else { //wq 퀴즈
+            viewmodel.getQuizFromWq()
         }
     }
 
     private fun setupListener() = with(binding) {
         btnStartQuizBack.setOnClickListener {
-            findNavController().popBackStack()
+            findNavController().navigateUp()
         }
 
         btnStartQuizStart.setOnClickListener {
-            val action = StartQuizFragmentDirections.actionStartQuizFragmentToSolveQuizFragment(quiz)
-            findNavController().navigate(action)
+            goSolveQuiz()
         }
     }
 
@@ -110,22 +88,15 @@ class StartQuizFragment : Fragment() {
                 }
             }
         }
-
-        lifecycleScope.launch {
-            viewmodel.saveDailyLimitEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
-                when (event) {
-                    is DefaultEvent.Failure -> {
-                        ToastMaker.make(requireContext(), event.msg)
-                    }
-
-                    DefaultEvent.Success -> {}
-                }
-            }
-        }
     }
 
     private fun setupUi() = with(binding) {
-        tvStartQuizIntroduce.text = quiz.title
+        tvStartQuizIntroduce.text = quiz.qTitle
+    }
+
+    private fun goSolveQuiz() {
+        val action = StartQuizFragmentDirections.actionStartQuizFragmentToSolveQuizFragmentForWq(quiz)
+        findNavController().navigate(action)
     }
 
     override fun onDestroyView() {
