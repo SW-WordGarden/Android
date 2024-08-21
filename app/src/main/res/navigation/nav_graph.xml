@@ -80,13 +80,10 @@
                     app:nullable="true" />
         </action>
         <argument
-                android:name="argsSqId"
-                app:argType="string"
-                app:nullable="true" />
-        <argument
-                android:name="argsQTitle"
-                app:argType="string"
-                app:nullable="true" />
+                android:name="argsQuizKey"
+                app:argType="com.sw.wordgarden.presentation.model.QuizKey"
+                app:nullable="true"
+                android:defaultValue="@null" />
     </fragment>
 
     <fragment
@@ -213,13 +210,10 @@
                 android:id="@+id/action_mySelfQuizFragment_to_makeQuizFragment"
                 app:destination="@id/makeQuizFragment">
             <argument
-                    android:name="argsSqId"
-                    app:argType="string"
-                    app:nullable="true" />
-            <argument
-                    android:name="argsQTitle"
-                    app:argType="string"
-                    app:nullable="true" />
+                    android:name="argsQuizKey"
+                    app:argType="com.sw.wordgarden.presentation.model.QuizKey"
+                    app:nullable="true"
+                    android:defaultValue="@null" />
         </action>
     </fragment>
 
@@ -232,9 +226,10 @@
                 android:id="@+id/action_mySolvedQuizFragment_to_resultQuizFragment"
                 app:destination="@id/resultQuizFragment">
             <argument
-                    android:name="argsUidSqId"
-                    app:argType="string"
-                    app:nullable="true" />
+                    android:name="argsQuizKey"
+                    app:argType="com.sw.wordgarden.presentation.model.QuizKey"
+                    app:nullable="true"
+                    android:defaultValue="@null" />
         </action>
     </fragment>
 
@@ -247,9 +242,10 @@
                 android:id="@+id/action_myTakenQuizFragment_to_resultQuizFragment"
                 app:destination="@id/resultQuizFragment">
             <argument
-                    android:name="argsUidSqId"
-                    app:argType="string"
-                    app:nullable="true" />
+                    android:name="argsQuizKey"
+                    app:argType="com.sw.wordgarden.presentation.model.QuizKey"
+                    app:nullable="true"
+                    android:defaultValue="@null" />
         </action>
     </fragment>
 

@@ -215,7 +215,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_small"
                 android:layout_marginTop="@dimen/margin_small"
-                android:text="@string/mypage_my_made_quiz"
+                android:text="@string/mypage_my_self_quiz"
                 android:textSize="@dimen/text_mini"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cl_my_weekly_score" />

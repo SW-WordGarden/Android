@@ -1,7 +1,7 @@
 package com.sw.wordgarden.data.datasource.remote.retrofit
 
 import com.sw.wordgarden.data.dto.quiz.SqQuestionAnswerDto
-import com.sw.wordgarden.data.dto.quiz.SqQuizSummaryDto
+import com.sw.wordgarden.data.dto.quiz.QuizSummaryDto
 import com.sw.wordgarden.data.dto.quiz.SqCreatorInfoDto
 import com.sw.wordgarden.data.dto.quiz.SqDto
 import com.sw.wordgarden.data.dto.user.LoginRequestDto
@@ -86,7 +86,7 @@ interface Service {
     suspend fun createNewSq(@Body quizList: SqDto): Response<Unit>
 
     @GET("sq/created/{uid}")
-    suspend fun getUserSqTitles(@Path("uid") uid: String): Response<List<SqQuizSummaryDto>>
+    suspend fun getUserSqTitles(@Path("uid") uid: String): Response<List<QuizSummaryDto>>
 
     @GET("sq/created/{uid}/{sqid}")
     suspend fun getUserSq(@Path("uid") uid: String, @Path("sqid") quizId: String): Response<SqDto>
@@ -98,7 +98,7 @@ interface Service {
     suspend fun submitSq(@Body solvedQuiz: SqSolveQuizDto): Response<Unit>
 
     @GET("sq/solved/{uid}")
-    suspend fun getSolvedSqTitles(@Path("uid") uid: String): Response<List<String>>
+    suspend fun getSolvedSqTitles(@Path("uid") uid: String): Response<List<QuizSummaryDto>>
 
     @GET("sq/solved/{uid}/{title}")
     suspend fun getSolvedSq(@Path("uid") uid: String, @Path("title") title: String): Response<SqDto>

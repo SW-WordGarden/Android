@@ -55,7 +55,8 @@ class MakeQuizFragment : Fragment() {
 
     private fun getData() {
         val args: MakeQuizFragmentArgs by navArgs()
-        if (args.argsSqId == null) { // 새로운 퀴즈 생성 모드
+        val quizKey = args.argsQuizKey
+        if (quizKey?.sqId == null) { // 새로운 퀴즈 생성 모드
             enableMode = true
             val quizModel = QuizModel(
                 "",
@@ -66,7 +67,7 @@ class MakeQuizFragment : Fragment() {
         } else { // 기존 퀴즈 확인 모드
             setConfirmDialog()
             enableMode = false
-            viewmodel.getQuiz(args.argsSqId ?: "", args.argsQTitle ?: "")
+            viewmodel.getQuiz(quizKey.sqId ?: "", quizKey.qTitle ?: "")
         }
     }
 

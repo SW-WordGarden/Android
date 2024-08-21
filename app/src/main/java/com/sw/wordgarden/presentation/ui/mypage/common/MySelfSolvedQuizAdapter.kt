@@ -1,4 +1,4 @@
-package com.sw.wordgarden.presentation.ui.mypage.myselfquiz
+package com.sw.wordgarden.presentation.ui.mypage.common
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,11 +6,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.sw.wordgarden.databinding.ItemSelfSolvedQuizBinding
-import com.sw.wordgarden.domain.entity.quiz.SqQuizSummaryEntity
+import com.sw.wordgarden.domain.entity.quiz.QuizSummaryEntity
 
-class MySelfQuizAdapter(
+class MySelfSolvedQuizAdapter(
     private val quizListItemListener: QuizItemListener
-) : ListAdapter<SqQuizSummaryEntity, MySelfQuizAdapter.MySelfQuizViewHolder>(DIFF_UTIL) {
+) : ListAdapter<QuizSummaryEntity, MySelfSolvedQuizAdapter.MySelfQuizViewHolder>(DIFF_UTIL) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MySelfQuizViewHolder {
         return MySelfQuizViewHolder(
@@ -25,7 +25,7 @@ class MySelfQuizAdapter(
     inner class MySelfQuizViewHolder(
         private val binding: ItemSelfSolvedQuizBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(quizSummaryModel: SqQuizSummaryEntity) = with(binding) {
+        fun bind(quizSummaryModel: QuizSummaryEntity) = with(binding) {
             tvSelfSolvedItem.text = quizSummaryModel.title
 
             ivSelfSolvedDetailItem.setOnClickListener {
@@ -35,12 +35,12 @@ class MySelfQuizAdapter(
     }
 
     companion object {
-        private val DIFF_UTIL = object : DiffUtil.ItemCallback<SqQuizSummaryEntity>() {
-            override fun areItemsTheSame(oldItem: SqQuizSummaryEntity, newItem: SqQuizSummaryEntity): Boolean {
+        private val DIFF_UTIL = object : DiffUtil.ItemCallback<QuizSummaryEntity>() {
+            override fun areItemsTheSame(oldItem: QuizSummaryEntity, newItem: QuizSummaryEntity): Boolean {
                 return oldItem.quizId == newItem.quizId
             }
 
-            override fun areContentsTheSame(oldItem: SqQuizSummaryEntity, newItem: SqQuizSummaryEntity): Boolean {
+            override fun areContentsTheSame(oldItem: QuizSummaryEntity, newItem: QuizSummaryEntity): Boolean {
                 return oldItem == newItem
             }
         }

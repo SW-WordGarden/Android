@@ -1,7 +1,7 @@
 package com.sw.wordgarden.data.datasource.remote
 
 import com.sw.wordgarden.data.dto.quiz.SqQuestionAnswerDto
-import com.sw.wordgarden.data.dto.quiz.SqQuizSummaryDto
+import com.sw.wordgarden.data.dto.quiz.QuizSummaryDto
 import com.sw.wordgarden.data.dto.quiz.SqCreatorInfoDto
 import com.sw.wordgarden.data.dto.quiz.SqDto
 import com.sw.wordgarden.data.dto.user.LoginRequestDto
@@ -46,11 +46,11 @@ interface ServerDataSource {
 
     //quiz - sq
     suspend fun createNewSq(sqDto: SqDto)
-    suspend fun getUserSqTitles(): List<SqQuizSummaryDto>?
+    suspend fun getUserSqTitles(): List<QuizSummaryDto>?
     suspend fun getUserSq(creatorUid: String, quizId: String): SqDto?
     suspend fun getSq(quizId: String): List<SqQuestionAnswerDto>?
     suspend fun submitSq(solvedQuiz: SqSolveQuizDto)
-    suspend fun getSolvedSqTitles(): List<String>?
+    suspend fun getSolvedSqTitles(): List<QuizSummaryDto>?
     suspend fun getSolvedSq(title: String): SqDto?
     suspend fun getSqCreatorInfo(quizId: String): SqCreatorInfoDto?
     suspend fun shareQuiz(quizId: String, friendUid: String)

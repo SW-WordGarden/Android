@@ -5,7 +5,7 @@ import com.sw.wordgarden.data.dto.quiz.GroupedSqDto
 import com.sw.wordgarden.data.dto.quiz.SqQuestionAnswerDto
 import com.sw.wordgarden.data.dto.quiz.SqDto
 import com.sw.wordgarden.data.dto.quiz.SqresultDto
-import com.sw.wordgarden.data.dto.quiz.SqQuizSummaryDto
+import com.sw.wordgarden.data.dto.quiz.QuizSummaryDto
 import com.sw.wordgarden.data.dto.quiz.SqCreatorInfoDto
 import com.sw.wordgarden.data.dto.user.LoginRequestDto
 import com.sw.wordgarden.data.dto.quiz.SqSolveQuizDto
@@ -28,7 +28,7 @@ import com.sw.wordgarden.domain.entity.quiz.GroupedSqEntity
 import com.sw.wordgarden.domain.entity.quiz.SqQuestionAnswerEntity
 import com.sw.wordgarden.domain.entity.quiz.SqEntity
 import com.sw.wordgarden.domain.entity.quiz.SqresultEntity
-import com.sw.wordgarden.domain.entity.quiz.SqQuizSummaryEntity
+import com.sw.wordgarden.domain.entity.quiz.QuizSummaryEntity
 import com.sw.wordgarden.domain.entity.quiz.SqCreatorInfoEntity
 import com.sw.wordgarden.domain.entity.user.LoginRequestEntity
 import com.sw.wordgarden.domain.entity.quiz.SqQuestionEntity
@@ -219,12 +219,12 @@ object ServerMapper {
         questionNumber = questionNumber,
     )
 
-    fun SqQuizSummaryDto.toEntity() = SqQuizSummaryEntity(
+    fun QuizSummaryDto.toEntity() = QuizSummaryEntity(
         quizId = quizId,
         title = title
     )
 
-    fun SqQuizSummaryEntity.toDto() = SqQuizSummaryDto(
+    fun QuizSummaryEntity.toDto() = QuizSummaryDto(
         quizId = quizId,
         title = title
     )

@@ -4,7 +4,7 @@ import android.util.Log
 import com.sw.wordgarden.data.datasource.local.LocalDataSource
 import com.sw.wordgarden.data.datasource.remote.retrofit.Service
 import com.sw.wordgarden.data.dto.quiz.SqQuestionAnswerDto
-import com.sw.wordgarden.data.dto.quiz.SqQuizSummaryDto
+import com.sw.wordgarden.data.dto.quiz.QuizSummaryDto
 import com.sw.wordgarden.data.dto.quiz.SqCreatorInfoDto
 import com.sw.wordgarden.data.dto.quiz.SqDto
 import com.sw.wordgarden.data.dto.user.LoginRequestDto
@@ -269,7 +269,7 @@ class ServerDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun getUserSqTitles(): List<SqQuizSummaryDto>? {
+    override suspend fun getUserSqTitles(): List<QuizSummaryDto>? {
         return try {
             val uid = getUid()
 
@@ -330,7 +330,7 @@ class ServerDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun getSolvedSqTitles(): List<String>? {
+    override suspend fun getSolvedSqTitles(): List<QuizSummaryDto>? {
         return try {
             val uid = getUid()
 

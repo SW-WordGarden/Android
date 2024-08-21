@@ -46,6 +46,8 @@ import com.sw.wordgarden.domain.usecase.quiz.sq.SubmitSqUseCase
 import com.sw.wordgarden.domain.usecase.quiz.sq.SubmitSqUseCaseImpl
 import com.sw.wordgarden.domain.usecase.UpdateTreeUseCase
 import com.sw.wordgarden.domain.usecase.UpdateTreeUseCaseImpl
+import com.sw.wordgarden.domain.usecase.quiz.common.GetSolvedQuizTitlesUseCase
+import com.sw.wordgarden.domain.usecase.quiz.common.GetSolvedQuizTitlesUseCaseImpl
 import com.sw.wordgarden.domain.usecase.quiz.wq.GetGeneratedWqUseCase
 import com.sw.wordgarden.domain.usecase.quiz.wq.GetGeneratedWqUseCaseImpl
 import com.sw.wordgarden.domain.usecase.quiz.wq.GetSolvedWqTitlesUseCase
@@ -144,7 +146,13 @@ abstract class UseCaseModule {
         updateUserNicknameUseCaseImpl: UpdateUserNicknameUseCaseImpl
     ): UpdateUserNicknameUseCase
 
-    //quiz - share
+    //quiz - common
+    @Binds
+    @ViewModelScoped
+    abstract fun bindGetSolvedQuizTitlesUseCase(
+        getSolvedQuizTitlesUseCaseImpl: GetSolvedQuizTitlesUseCaseImpl
+    ): GetSolvedQuizTitlesUseCase
+
     @Binds
     @ViewModelScoped
     abstract fun bindShareQuizUseCase(

@@ -11,6 +11,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.sw.wordgarden.databinding.FragmentMySelfQuizBinding
 import com.sw.wordgarden.presentation.event.DefaultEvent
+import com.sw.wordgarden.presentation.model.QuizKey
+import com.sw.wordgarden.presentation.ui.mypage.common.MySelfSolvedQuizAdapter
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -19,16 +21,19 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class MySelfQuizFragment : Fragment() {
 
-    private val TAG = "MySelfQuizFragment"
-
     private var _binding: FragmentMySelfQuizBinding? = null
     private val binding get() = _binding!!
 
     private val viewmodel: MySelfQuizViewModel by viewModels()
-    private val adapter: MySelfQuizAdapter by lazy {
-        MySelfQuizAdapter(object : MySelfQuizAdapter.QuizItemListener {
+    private val adapter: MySelfSolvedQuizAdapter by lazy {
+        MySelfSolvedQuizAdapter(object : MySelfSolvedQuizAdapter.QuizItemListener {
             override fun onItemClicked(sqId: String, qTitle: String) {
-                goMakeQuiz(sqId, qTitle)
+                val quizKey = QuizKey(
+                    sqId = sqId,
+                    qTitle = qTitle,
+                    isWq = sqId.isEmpty() || sqId.isBlank()
+                )
+                goMakeQuiz(quizKey)
             }
         })
     }
@@ -87,9 +92,9 @@ class MySelfQuizFragment : Fragment() {
         }
     }
 
-    private fun goMakeQuiz(sqId: String, qTitle: String) {
+    private fun goMakeQuiz(quizKey: QuizKey) {
         val navController = findNavController()
-        val action = MySelfQuizFragmentDirections.actionMySelfQuizFragmentToMakeQuizFragment(sqId, qTitle)
+        val action = MySelfQuizFragmentDirections.actionMySelfQuizFragmentToMakeQuizFragment(quizKey)
         navController.navigate(action)
     }
 

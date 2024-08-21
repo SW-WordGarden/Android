@@ -3,7 +3,7 @@ package com.sw.wordgarden.presentation.ui.mypage.myselfquiz
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sw.wordgarden.R
-import com.sw.wordgarden.domain.entity.quiz.SqQuizSummaryEntity
+import com.sw.wordgarden.domain.entity.quiz.QuizSummaryEntity
 import com.sw.wordgarden.domain.usecase.quiz.sq.GetUserSqTitlesUseCase
 import com.sw.wordgarden.presentation.event.DefaultEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,8 +25,8 @@ class MySelfQuizViewModel @Inject constructor(
     private val _getMySelfQuizTitleListEvent = MutableSharedFlow<DefaultEvent>()
     val getMySelfQuizTitleListEvent: SharedFlow<DefaultEvent> = _getMySelfQuizTitleListEvent.asSharedFlow()
 
-    private val _getSelfQuizTitleList = MutableStateFlow<List<SqQuizSummaryEntity>>(emptyList())
-    val getMySelfQuizTitleList: StateFlow<List<SqQuizSummaryEntity>> = _getSelfQuizTitleList.asStateFlow()
+    private val _getSelfQuizTitleList = MutableStateFlow<List<QuizSummaryEntity>>(emptyList())
+    val getMySelfQuizTitleList: StateFlow<List<QuizSummaryEntity>> = _getSelfQuizTitleList.asStateFlow()
 
     init {
         getQuizTitleList()
@@ -44,7 +44,7 @@ class MySelfQuizViewModel @Inject constructor(
                 }
 
             }.onFailure {
-                _getMySelfQuizTitleListEvent.emit(DefaultEvent.Failure(R.string.mypage_my_made_quiz_msg_fail_load_quiz_title_list))
+                _getMySelfQuizTitleListEvent.emit(DefaultEvent.Failure(R.string.mypage_my_self_quiz_msg_fail_load_quiz_title_list))
             }.onSuccess {
                 _getMySelfQuizTitleListEvent.emit(DefaultEvent.Success)
             }

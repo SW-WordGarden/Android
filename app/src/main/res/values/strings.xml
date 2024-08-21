@@ -53,10 +53,13 @@
     <string name="mypage_friend_report_reason5">개인정보노출</string>
     <string name="mypage_friend_report_reason6">기타</string>
 
-    <string name="mypage_my_made_quiz">내가 낸 퀴즈 확인</string>
-    <string name="mypage_my_made_quiz_title">내가 낸 퀴즈</string>
-    <string name="mypage_my_made_quiz_no_quiz_list">아직 내가 만든 퀴즈가 없어요!</string>
-    <string name="mypage_my_made_quiz_msg_fail_load_quiz_title_list">내가 만든 퀴즈 목록 불러오기에 실패했습니다.</string>
+    <string name="mypage_my_self_quiz">내가 낸 퀴즈 확인</string>
+    <string name="mypage_my_self_quiz_title">내가 낸 퀴즈</string>
+    <string name="mypage_my_self_quiz_no_quiz_list">아직 내가 만든 퀴즈가 없어요!</string>
+    <string name="mypage_my_self_quiz_msg_fail_load_quiz_title_list">내가 만든 퀴즈 목록 불러오기에 실패했습니다.</string>
+
+    <string name="mypage_my_solved_quiz_no_quiz_list">아직 내가 푼 퀴즈가 없어요!</string>
+    <string name="mypage_my_solved_quiz_msg_fail_load_quiz_title_list">내가 푼 퀴즈 목록 불러오기에 실패했습니다.</string>
 
     <!-- setting -->
     <string name="setting_title">설정</string>
@@ -106,7 +109,6 @@
     <string name="make_quiz_msg_unknown_error">알 수 없는 이유로 퀴즈 만들기에 실패했어요.</string>
     <string name="make_quiz_msg_can_not_edit">내가 만든 커스텀 퀴즈는 확인만 가능해요!\n(수정 불가)</string>
     <string name="make_quiz_msg_fail_load_quiz_list">내가 만든 퀴즈 불러오기에 실패했습니다.</string>
-
 
     <string name="share_quiz_title">퀴즈 공유하기</string>
     <string name="share_quiz_description">친구랑 같이 퀴즈를 풀어보세요!</string>
