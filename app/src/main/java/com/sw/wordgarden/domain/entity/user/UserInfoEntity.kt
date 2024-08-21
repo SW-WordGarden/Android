@@ -6,6 +6,7 @@ data class UserInfoEntity(
     val rank: Int?,
     val randomFriends: List<FriendEntity>?,
     val name: String?,
+    val uUrl: String?,
     val all: Int?,
     val right: Int?,
     val latestCustomQuiz: CustomQuizEntity?,

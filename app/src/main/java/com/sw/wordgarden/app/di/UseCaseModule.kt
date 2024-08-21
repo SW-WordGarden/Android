@@ -24,8 +24,8 @@ import com.sw.wordgarden.domain.usecase.GetTreeListUseCase
 import com.sw.wordgarden.domain.usecase.GetTreeListUseCaseImpl
 import com.sw.wordgarden.domain.usecase.datastore.GetUidUseCase
 import com.sw.wordgarden.domain.usecase.datastore.GetUidUseCaseImpl
-import com.sw.wordgarden.domain.usecase.user.GetUserInfoForLogin
-import com.sw.wordgarden.domain.usecase.user.GetUserInfoForLoginImpl
+import com.sw.wordgarden.domain.usecase.user.GetUserInfoForLoginUseCase
+import com.sw.wordgarden.domain.usecase.user.GetUserInfoForLoginUseCaseImpl
 import com.sw.wordgarden.domain.usecase.GetWeeklyWordListUseCase
 import com.sw.wordgarden.domain.usecase.GetWeelkyWordListUseCaseImpl
 import com.sw.wordgarden.domain.usecase.quiz.sq.CreateNewSqUseCase
@@ -135,8 +135,8 @@ abstract class UseCaseModule {
     @Binds
     @ViewModelScoped
     abstract fun bindGetUserInfoUseCase(
-        getUserInfoUseCaseImpl: GetUserInfoForLoginImpl
-    ): GetUserInfoForLogin
+        getUserInfoUseCaseImpl: GetUserInfoForLoginUseCaseImpl
+    ): GetUserInfoForLoginUseCase
 
     @Binds
     @ViewModelScoped

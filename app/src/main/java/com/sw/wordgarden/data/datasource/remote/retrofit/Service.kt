@@ -17,16 +17,17 @@ import com.sw.wordgarden.data.dto.quiz.WqWrongAnswerDto
 import com.sw.wordgarden.data.dto.user.FriendListDto
 import com.sw.wordgarden.data.dto.user.LoginRequestDto
 import com.sw.wordgarden.data.dto.user.ReportInfoDto
-import com.sw.wordgarden.data.dto.user.RequestFriendDto
+import com.sw.wordgarden.data.dto.user.AddRequestFriendDto
+import com.sw.wordgarden.data.dto.user.DeleteRequestFriendDto
 import com.sw.wordgarden.data.dto.user.UserDto
 import com.sw.wordgarden.data.dto.user.UserInfoDto
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.HTTP
 import retrofit2.http.PATCH
 import retrofit2.http.POST
-import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -56,10 +57,11 @@ interface Service {
 
     //user - mypage - friend
     @POST("user/friend/add")
-    suspend fun addFriend(@Body friend: RequestFriendDto): Response<Unit>
+    suspend fun addFriend(@Body friend: AddRequestFriendDto): Response<Unit>
 
-    @DELETE("user/friend/delete")
-    suspend fun deleteFriend(@Body friend: RequestFriendDto): Response<Unit>
+//    @DELETE("user/friend/delete")
+    @HTTP(method = "DELETE", path = "user/friend/delete", hasBody = true)
+    suspend fun deleteFriend(@Body friend: DeleteRequestFriendDto): Response<Unit>
 
     @POST("user/report")
     suspend fun reportUser(@Body reportInfo: ReportInfoDto): Response<Unit>

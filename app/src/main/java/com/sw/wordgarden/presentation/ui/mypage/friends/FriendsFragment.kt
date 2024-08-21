@@ -1,5 +1,8 @@
 package com.sw.wordgarden.presentation.ui.mypage.friends
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +14,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.DialogReportBinding
 import com.sw.wordgarden.databinding.FragmentFriendsBinding
@@ -26,6 +30,7 @@ class FriendsFragment : Fragment() {
     private var _binding: FragmentFriendsBinding? = null
     private val binding get() = _binding!!
 
+    private val CLIP_LABEL = "wordgarden_code"
     private val viewmodel: FriendsViewModel by viewModels()
     private val adapter: FriendsAdapter by lazy {
         FriendsAdapter(object : FriendsAdapter.FriendsItemListener {
@@ -127,6 +132,18 @@ class FriendsFragment : Fragment() {
             goBack()
         }
 
+        llMyFriendsUrl.setOnClickListener {
+            val args: FriendsFragmentArgs by navArgs()
+            val myCode = args.argsMyCode
+
+            val clipboardManager =
+                context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clipData = ClipData.newPlainText(CLIP_LABEL, myCode)
+            clipboardManager.setPrimaryClip(clipData)
+
+            ToastMaker.make(requireContext(), R.string.mypage_friends_msg_copy_my_code)
+        }
+
         btnMyFriendsAdd.setOnClickListener {
             val friendUid = etMyFriendsEnter.text.toString()
             viewmodel.addFriend(friendUid)
@@ -168,7 +185,9 @@ class FriendsFragment : Fragment() {
                         ToastMaker.make(requireContext(), event.msg)
                     }
 
-                    DefaultEvent.Success -> {}
+                    DefaultEvent.Success -> {
+                        viewmodel.getFriends()
+                    }
                 }
             }
         }
@@ -180,7 +199,9 @@ class FriendsFragment : Fragment() {
                         ToastMaker.make(requireContext(), event.msg)
                     }
 
-                    DefaultEvent.Success -> {}
+                    DefaultEvent.Success -> {
+                        viewmodel.getFriends()
+                    }
                 }
             }
         }

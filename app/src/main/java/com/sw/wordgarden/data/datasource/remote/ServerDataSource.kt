@@ -34,7 +34,7 @@ interface ServerDataSource {
 
     //user - mypage - friend
     suspend fun addFriend(friendUrl: String)
-    suspend fun deleteFriend(friendUrl: String)
+    suspend fun deleteFriend(friendUid: String)
     suspend fun reportUser(friendUid: String, contents: String?)
 
     //alarm

@@ -1,6 +1,5 @@
 package com.sw.wordgarden.presentation.ui.mypage.mypage
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -13,17 +12,13 @@ import com.sw.wordgarden.databinding.ItemMyFriendsBinding
 import com.sw.wordgarden.domain.entity.user.FriendEntity
 import com.sw.wordgarden.presentation.util.ImageConverter.stringToByteArray
 
-@SuppressLint("NotifyDataSetChanged")
 class MyPageFriendAdapter(
+    private val context: Context,
     private val friendItemListener: FriendItemListener
 ) : ListAdapter<FriendEntity, MyPageFriendAdapter.MyPageFriendViewHolder>(DIFF_UTIL) {
-
-    private var friendList: List<FriendEntity> = emptyList()
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyPageFriendViewHolder {
         return MyPageFriendViewHolder(
             ItemMyFriendsBinding.inflate(LayoutInflater.from(parent.context), parent, false),
-            parent.context
         )
     }
 
@@ -31,13 +26,8 @@ class MyPageFriendAdapter(
         holder.bind(getItem(position))
     }
 
-    override fun getItemCount(): Int {
-        return friendList.size
-    }
-
     inner class MyPageFriendViewHolder(
         private val binding: ItemMyFriendsBinding,
-        private val context: Context
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: FriendEntity) = with(binding) {
             val thumbnail = stringToByteArray(item.profileImg ?: "")

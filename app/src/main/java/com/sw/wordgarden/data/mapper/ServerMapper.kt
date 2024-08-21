@@ -72,6 +72,7 @@ object ServerMapper {
         rank = rank,
         randomFriends = randomFriends?.map { it.toEntity() },
         name = name,
+        uUrl = uUrl,
         all = all,
         right = right,
         latestCustomQuiz = latestCustomQuiz?.toEntity(),

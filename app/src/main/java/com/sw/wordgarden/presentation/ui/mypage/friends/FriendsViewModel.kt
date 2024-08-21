@@ -47,7 +47,7 @@ class FriendsViewModel @Inject constructor(
         getFriends()
     }
 
-    private fun getFriends() =
+    fun getFriends() =
         viewModelScope.launch {
             runCatching {
                 val response = getFriendsUseCase()
@@ -65,15 +65,14 @@ class FriendsViewModel @Inject constructor(
             }
         }
 
-    fun addFriend(friendUid: String?) {
+    fun addFriend(friendUrl: String?) {
         viewModelScope.launch {
             runCatching {
-                val request = friendUid ?: ""
-                addFriendsUseCase.invoke(request)
+                addFriendsUseCase.invoke(friendUrl ?: "")
             }.onFailure {
-                _getFriendsEvent.emit(DefaultEvent.Failure(R.string.mypage_friends_msg_fail_add_friend))
+                _addFriendEvent.emit(DefaultEvent.Failure(R.string.mypage_friends_msg_fail_add_friend))
             }.onSuccess {
-                _getFriendsEvent.emit(DefaultEvent.Success)
+                _addFriendEvent.emit(DefaultEvent.Success)
             }
         }
     }
@@ -81,12 +80,11 @@ class FriendsViewModel @Inject constructor(
     fun deleteFriend(friendUid: String?) {
         viewModelScope.launch {
             runCatching {
-                val request = friendUid ?: ""
-                deleteFriendUseCase.invoke(request)
+                deleteFriendUseCase.invoke(friendUid ?: "")
             }.onFailure {
-                _getFriendsEvent.emit(DefaultEvent.Failure(R.string.mypage_friends_msg_fail_delete_friend))
+                _deleteFriendEvent.emit(DefaultEvent.Failure(R.string.mypage_friends_msg_fail_delete_friend))
             }.onSuccess {
-                _getFriendsEvent.emit(DefaultEvent.Success)
+                _deleteFriendEvent.emit(DefaultEvent.Success)
             }
         }
     }
@@ -94,12 +92,11 @@ class FriendsViewModel @Inject constructor(
     fun reportFriend(friendUid: String?, content: String?) {
         viewModelScope.launch {
             runCatching {
-                val requestUid = friendUid ?: ""
-                reportFriendUseCase.invoke(requestUid, content)
+                reportFriendUseCase.invoke(friendUid ?: "", content)
             }.onFailure {
-                _getFriendsEvent.emit(DefaultEvent.Failure(R.string.mypage_friends_msg_fail_report_friend))
+                _reportFriendEvent.emit(DefaultEvent.Failure(R.string.mypage_friends_msg_fail_report_friend))
             }.onSuccess {
-                _getFriendsEvent.emit(DefaultEvent.Success)
+                _reportFriendEvent.emit(DefaultEvent.Success)
             }
         }
     }

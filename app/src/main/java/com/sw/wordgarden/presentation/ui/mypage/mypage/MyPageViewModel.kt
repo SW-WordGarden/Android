@@ -34,10 +34,10 @@ class MyPageViewModel @Inject constructor(
     val updateUserImageEvent: SharedFlow<DefaultEvent> = _updateUserImageEvent.asSharedFlow()
 
     init {
-        getUserInfo()
+        getUserInfoData()
     }
 
-    private fun getUserInfo() =
+    fun getUserInfoData() =
         viewModelScope.launch {
             runCatching {
                 val response = getUserInfoForMypage()

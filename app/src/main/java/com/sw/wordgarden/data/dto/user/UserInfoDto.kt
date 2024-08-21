@@ -8,6 +8,7 @@ data class UserInfoDto(
     @SerializedName("rank") val rank: Int?,
     @SerializedName("randomFriends") val randomFriends: List<FriendDto>?,
     @SerializedName("name") val name: String?,
+    @SerializedName("uUrl") val uUrl: String?,
     @SerializedName("all") val all: Int?,
     @SerializedName("right") val right: Int?,
     @SerializedName("latestCustomQuiz") val latestCustomQuiz: CustomQuizDto?,

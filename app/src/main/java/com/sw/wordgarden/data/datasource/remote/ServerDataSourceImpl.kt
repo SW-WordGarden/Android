@@ -20,7 +20,8 @@ import com.sw.wordgarden.data.dto.quiz.WqWrongAnswerDto
 import com.sw.wordgarden.data.dto.alarm.ShareRequestDto
 import com.sw.wordgarden.data.dto.user.FriendListDto
 import com.sw.wordgarden.data.dto.user.ReportInfoDto
-import com.sw.wordgarden.data.dto.user.RequestFriendDto
+import com.sw.wordgarden.data.dto.user.AddRequestFriendDto
+import com.sw.wordgarden.data.dto.user.DeleteRequestFriendDto
 import com.sw.wordgarden.data.dto.user.UserInfoDto
 import retrofit2.HttpException
 import javax.inject.Inject
@@ -137,7 +138,7 @@ class ServerDataSourceImpl @Inject constructor(
     override suspend fun addFriend(friendUrl: String) {
         try {
             val uid = getUid()
-            val request = RequestFriendDto(uid!!, friendUrl)
+            val request = AddRequestFriendDto(uid!!, friendUrl)
 
             val response = service.addFriend(request)
             if (!response.isSuccessful) {
@@ -148,10 +149,10 @@ class ServerDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun deleteFriend(friendUrl: String) {
+    override suspend fun deleteFriend(friendUid: String) {
         try {
             val uid = getUid()
-            val request = RequestFriendDto(uid!!, friendUrl)
+            val request = DeleteRequestFriendDto(uid!!, friendUid)
 
             val response = service.deleteFriend(request)
             if (!response.isSuccessful) {

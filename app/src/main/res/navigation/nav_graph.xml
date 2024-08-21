@@ -61,7 +61,7 @@
             tools:layout="@layout/fragment_quiz">
         <action
                 android:id="@+id/action_quizFragment_to_makeQuizFragment"
-                app:destination="@id/makeQuizFragment" >
+                app:destination="@id/makeQuizFragment">
             <argument
                     android:name="argsQuizKey"
                     app:argType="com.sw.wordgarden.presentation.model.QuizKey"
@@ -159,7 +159,7 @@
         </action>
         <action
                 android:id="@+id/action_solveQuizFragment_to_quizFragment"
-                app:destination="@id/quizFragment" >
+                app:destination="@id/quizFragment">
             <argument
                     android:name="argsFromQuiz"
                     app:argType="boolean"
@@ -209,7 +209,12 @@
             tools:layout="@layout/fragment_mypage">
         <action
                 android:id="@+id/action_mypageFragment_to_friendsFragment"
-                app:destination="@id/friendsFragment" />
+                app:destination="@id/friendsFragment">
+            <argument
+                    android:name="argsMyCode"
+                    app:argType="string"
+                    android:defaultValue="" />
+        </action>
         <action
                 android:id="@+id/action_mypageFragment_to_mySelfQuizFragment"
                 app:destination="@id/myselfQuizFragment" />
@@ -226,11 +231,18 @@
                 android:id="@+id/action_mypageFragment_to_settingFragment"
                 app:destination="@id/settingFragment" />
     </fragment>
+
     <fragment
             android:id="@+id/friendsFragment"
             android:name="com.sw.wordgarden.presentation.ui.mypage.friends.FriendsFragment"
             android:label="fragment_friends"
-            tools:layout="@layout/fragment_friends" />
+            tools:layout="@layout/fragment_friends">
+        <argument
+                android:name="argsMyCode"
+                app:argType="string"
+                android:defaultValue="" />
+
+    </fragment>
 
     <fragment
             android:id="@+id/myselfQuizFragment"

@@ -31,17 +31,21 @@ class MypageFragment : Fragment() {
 
     private val viewmodel: MyPageViewModel by viewModels()
     private val adapter: MyPageFriendAdapter by lazy {
-        MyPageFriendAdapter(object : MyPageFriendAdapter.FriendItemListener {
+        MyPageFriendAdapter(requireContext(), object : MyPageFriendAdapter.FriendItemListener {
             override fun onItemClicked(item: FriendEntity) {
                 //TODO: 친구 상세 페이지 기능 추가 시 구현
             }
         })
     }
-    private val galleryLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-        uri?.let {
-            viewmodel.updateUserImage(uriToString(uri, requireContext()) ?: "")
+    private val galleryLauncher =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+            uri?.let {
+                binding.ivMyProfile.setImageURI(uri)
+                viewmodel.updateUserImage(uriToString(uri, requireContext()) ?: "")
+            }
         }
-    }
+
+    private var myCode = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -81,7 +85,8 @@ class MypageFragment : Fragment() {
 //            findNavController().navigate(R.id.action_mypageFragment_to_myTakenQuizFragment)
 //        }
         ivMyFriendsMore.setOnClickListener {
-            findNavController().navigate(R.id.action_mypageFragment_to_friendsFragment)
+            val action = MypageFragmentDirections.actionMypageFragmentToFriendsFragment(myCode)
+            findNavController().navigate(action)
         }
     }
 
@@ -100,6 +105,7 @@ class MypageFragment : Fragment() {
 
         lifecycleScope.launch {
             viewmodel.getUserInfo.flowWithLifecycle(lifecycle).collectLatest { info ->
+                myCode = info?.uUrl ?: ""
                 setupUi(info)
             }
         }
@@ -130,7 +136,9 @@ class MypageFragment : Fragment() {
         tvMyRank.text = info?.rank.toString()
 
         val weeklyState =
-            "${info?.all}${getString(R.string.mypage_weekly_score_text1)} ${info?.right}${getString(R.string.mypage_weekly_score_text2)}"
+            "${info?.all}${getString(R.string.mypage_weekly_score_text1)} ${info?.right}${getString(
+                    R.string.mypage_weekly_score_text2
+                )}"
         tvMyScore.text = weeklyState
 
         tvMySelfQuizTitleName.text = info?.latestCustomQuiz?.sqTitle ?: ""
@@ -138,6 +146,11 @@ class MypageFragment : Fragment() {
 
         rvMyFriendsList.adapter = adapter
         adapter.submitList(info?.randomFriends)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewmodel.getUserInfoData()
     }
 
     override fun onDestroyView() {

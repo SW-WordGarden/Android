@@ -4,9 +4,9 @@ import com.sw.wordgarden.domain.entity.user.UserEntity
 import com.sw.wordgarden.domain.repository.UserRepository
 import javax.inject.Inject
 
-class GetUserInfoForLoginImpl @Inject constructor(
+class GetUserInfoForLoginUseCaseImpl @Inject constructor(
     private val userRepository: UserRepository
-) : GetUserInfoForLogin {
+) : GetUserInfoForLoginUseCase {
     override suspend fun invoke(uid: String): UserEntity? {
         return userRepository.getUserInfoForLogin(uid)
     }
