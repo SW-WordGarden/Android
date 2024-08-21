@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class QAModel(
-    val questionId: String?,
+    var questionId: String?,
     var question: String?,
     var userAnswer: String?,
     var correctAnswer: String?,

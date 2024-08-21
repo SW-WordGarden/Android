@@ -63,23 +63,23 @@ interface Service {
 
 
     //quiz - wq
-    @GET("wq/generate")
-    suspend fun getGeneratedWq(@Path("uid") uid: String): Response<List<WqResponseDto>>
+    @POST("wq/generate")
+    suspend fun getGeneratedWq(): Response<List<WqResponseDto>>
 
     @POST("wq/submit")
     suspend fun submitWq(@Body wqSubmission: WqSubmissionDto): Response<Unit>
 
-    @GET("wq/stats/{uid}")
-    suspend fun getWqState(@Path("uid") uid: String): Response<WqStateDto>
+    @GET("wq/stats/{userId}")
+    suspend fun getWqState(@Path("userId") uid: String): Response<WqStateDto>
 
-    @GET("wq/wrong/{uid}")
-    suspend fun getWrongWqs(@Path("uid") uid: String): Response<List<WqWrongAnswerDto>>
+    @GET("wq/wrong/{userId}")
+    suspend fun getWrongWqs(@Path("userId") uid: String): Response<List<WqWrongAnswerDto>>
 
-    @GET("wq/title/{uid}")
-    suspend fun getSolvedWqTitles(@Path("uid") uid: String): Response<Set<String>>
+    @GET("wq/title/{userId}")
+    suspend fun getSolvedWqTitles(@Path("userId") uid: String): Response<Set<String>>
 
     @GET("wq/{title}")
-    suspend fun getSolvedWq(@Path("title") title: String, @Query("uid") uid: String): Response<List<WqResponseDto>>
+    suspend fun getSolvedWq(@Path("title") title: String, @Query("userId") uid: String): Response<List<WqResponseDto>>
 
     //quiz - sq
     @POST("sq/create")

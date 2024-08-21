@@ -152,12 +152,11 @@ class ServerDataSourceImpl @Inject constructor(
     //quiz - wq
     override suspend fun getGeneratedWq(): List<WqResponseDto>? {
         return try {
-            val uid = getUid()
-
-            val response = service.getGeneratedWq(uid!!)
+            val response = service.getGeneratedWq()
             if (!response.isSuccessful) {
                 throw HttpException(response)
             } else {
+                Log.d(TAG, "getGeneratedWq : ${response.body()}")
                 response.body()
             }
         } catch (e: Exception) {
@@ -169,8 +168,14 @@ class ServerDataSourceImpl @Inject constructor(
     override suspend fun submitWq(wqSubmission: WqSubmissionDto) {
         try {
             val uid = getUid()
+            val request = WqSubmissionDto(
+                uid = uid,
+                answers = wqSubmission.answers,
+            )
+            val response = service.submitWq(request)
 
-            val response = service.submitWq(wqSubmission)
+            Log.d(TAG, "submitWq - request : ${request}")
+
             if (!response.isSuccessful) {
                 throw HttpException(response)
             }
@@ -230,11 +235,12 @@ class ServerDataSourceImpl @Inject constructor(
     override suspend fun getSolvedWq(title: String): List<WqResponseDto>? {
         return try {
             val uid = getUid()
-
             val response = service.getSolvedWq(title, uid!!)
+
             if (!response.isSuccessful) {
                 throw HttpException(response)
             } else {
+                Log.d(TAG, "getSolvedWq : ${response.body()}")
                 response.body()
             }
         } catch (e: Exception) {

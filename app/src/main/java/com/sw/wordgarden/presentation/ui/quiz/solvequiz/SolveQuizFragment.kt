@@ -1,6 +1,7 @@
 package com.sw.wordgarden.presentation.ui.quiz.solvequiz
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -25,6 +26,8 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SolveQuizFragment : Fragment() {
+    private val TAG = "ServerDataSourceImpl"
+
     private var _binding: FragmentSolveQuizBinding? = null
     private val binding get() = _binding!!
 
@@ -56,6 +59,8 @@ class SolveQuizFragment : Fragment() {
         qTitle = quizModel?.qTitle ?: ""
         sqId = quizModel?.sqId ?: ""
 
+        Log.d(TAG, "getData: $questionList")
+
         setupUi(questionList)
     }
 
@@ -67,9 +72,10 @@ class SolveQuizFragment : Fragment() {
         val pagerAdapter = SolveQuizAdapter(
             this@SolveQuizFragment,
             questionList
-        ) { position, question, answer, isFull ->
+        ) { position, qid, question, answer, isFull ->
             enteredAnswers[position].question = question
             enteredAnswers[position].userAnswer = answer
+            enteredAnswers[position].questionId = qid
 
             if (isFull) {
                 indicatorAdapter.markAsFilled(position)
@@ -110,7 +116,7 @@ class SolveQuizFragment : Fragment() {
                 qaList = enteredAnswers
             )
 
-            viewmodel.submitAnswer(quizModelForCheck)
+            viewmodel.submitAnswers(quizModelForCheck)
         }
     }
 

@@ -1,4 +1,4 @@
-package com.sw.wordgarden.domain.usecase.quiz.share
+package com.sw.wordgarden.domain.usecase.quiz.common
 
 import com.sw.wordgarden.domain.repository.QuizRepository
 import javax.inject.Inject

@@ -16,15 +16,17 @@ class SolveQuizQuestionFragment : Fragment() {
     private var _binding: FragmentSolveQuizQuestionBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var qid: String
     private lateinit var question: String
     private lateinit var answer: String
     private var position: Int = 0
 
-    private var onNextClicked: ((position: Int, question: String, answer: String, isFull: Boolean) -> Unit)? = null
+    private var onNextClicked: ((position: Int, qid: String, question: String, answer: String, isFull: Boolean) -> Unit)? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
+            qid = it.getString(QUESTION_ID_KEY).toString()
             question = it.getString(QUESTION_KEY).toString()
             answer = it.getString(ANSWER_KEY).toString()
             position = it.getInt(POSITION_KEY)
@@ -60,7 +62,7 @@ class SolveQuizQuestionFragment : Fragment() {
         etSolveQuizItemFillAnswer.setOnEditorActionListener { _, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_DONE || event.keyCode == KeyEvent.KEYCODE_ENTER) {
                 val userAnswer = etSolveQuizItemFillAnswer.text.toString()
-                onNextClicked?.invoke(position, question, userAnswer, true)
+                onNextClicked?.invoke(position, qid, question, userAnswer, true)
                 true
             } else {
                 false
@@ -71,11 +73,11 @@ class SolveQuizQuestionFragment : Fragment() {
             val answer = etSolveQuizItemFillAnswer.text.toString()
 
             if (answer.isEmpty()) {
-                onNextClicked?.invoke(position, "", answer, false)
+                onNextClicked?.invoke(position, qid, "", answer, false)
 
                 ToastMaker.make(requireContext(), R.string.solve_quiz_msg_need_answer)
             } else {
-                onNextClicked?.invoke(position, "", answer, true)
+                onNextClicked?.invoke(position, qid, "", answer, true)
             }
         }
     }
@@ -85,19 +87,21 @@ class SolveQuizQuestionFragment : Fragment() {
         _binding = null
     }
 
-    fun setOnNextClickedListener(listener: (Int, String, String, Boolean) -> Unit) {
+    fun setOnNextClickedListener(listener: (Int, String, String, String, Boolean) -> Unit) {
         onNextClicked = listener
     }
 
     companion object {
+        const val QUESTION_ID_KEY = "QUESTION_ID_KEY"
         const val QUESTION_KEY = "QUESTION_KEY"
         const val ANSWER_KEY = "ANSWER_KEY"
         const val POSITION_KEY = "POSITION_KEY"
         const val QUIZ_SIZE = 10
 
-        fun newInstance(question: String, answer: String, position: Int) =
+        fun newInstance(qid: String, question: String, answer: String, position: Int) =
             SolveQuizQuestionFragment().apply {
                 arguments = Bundle().apply {
+                    putString(QUESTION_ID_KEY, qid)
                     putString(QUESTION_KEY, question)
                     putString(ANSWER_KEY, answer)
                     putInt(POSITION_KEY, position)

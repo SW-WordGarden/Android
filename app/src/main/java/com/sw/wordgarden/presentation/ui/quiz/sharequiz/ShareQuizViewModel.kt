@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.sw.wordgarden.R
 import com.sw.wordgarden.domain.entity.user.UserEntity
 import com.sw.wordgarden.domain.usecase.user.GetFriendsUseCase
-import com.sw.wordgarden.domain.usecase.quiz.share.ShareQuizUseCase
+import com.sw.wordgarden.domain.usecase.quiz.common.ShareQuizUseCase
 import com.sw.wordgarden.presentation.event.DefaultEvent
 import com.sw.wordgarden.presentation.model.QuizKey
 import dagger.hilt.android.lifecycle.HiltViewModel

@@ -62,9 +62,7 @@ class StartQuizFragment : Fragment() {
         }
 
         btnStartQuizStart.setOnClickListener {
-            val action =
-                StartQuizFragmentDirections.actionStartQuizFragmentToSolveQuizFragmentForWq(quiz)
-            findNavController().navigate(action)
+            goSolveQuiz()
         }
     }
 
@@ -94,6 +92,11 @@ class StartQuizFragment : Fragment() {
 
     private fun setupUi() = with(binding) {
         tvStartQuizIntroduce.text = quiz.qTitle
+    }
+
+    private fun goSolveQuiz() {
+        val action = StartQuizFragmentDirections.actionStartQuizFragmentToSolveQuizFragmentForWq(quiz)
+        findNavController().navigate(action)
     }
 
     override fun onDestroyView() {
