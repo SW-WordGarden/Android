@@ -224,8 +224,14 @@ class LoginFragment : Fragment() {
             provider = provider
         )
 
-        val action = LoginFragmentDirections.actionLoginFragmentToOnBoardingFragment(loginRequestEntity)
-        findNavController().navigate(action)
+        findNavController().apply {
+            if (currentBackStackEntry?.destination?.id == R.id.onBoardingFragment) {
+                popBackStack(R.id.onBoardingFragment, false)
+            } else {
+                val action = LoginFragmentDirections.actionLoginFragmentToOnBoardingFragment(loginRequestEntity)
+                navigate(action)
+            }
+        }
     }
 
     override fun onDestroyView() {
