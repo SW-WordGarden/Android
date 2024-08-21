@@ -90,8 +90,6 @@ class ResultQuizFragment : Fragment() {
     private fun setupUi(result: QuizModel?) = with(binding) {
         val quizList = result?.qaList ?: emptyList()
 
-        Log.d("quizList", quizList.toString())
-
         //-- 상단 text --
         val correctNumber = quizList.count { it.correct == true }
         val resultText = when (correctNumber) {

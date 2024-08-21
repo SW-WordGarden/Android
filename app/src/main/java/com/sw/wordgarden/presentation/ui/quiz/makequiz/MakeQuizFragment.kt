@@ -183,7 +183,7 @@ class MakeQuizFragment : Fragment() {
     }
 
     private fun shareQuiz(title: String) {
-        Log.i(TAG, "서버에 퀴즈 추가 요청 : $title || $qaModelListForInsert")
+        Log.i(TAG, "request make quiz to server : $title || $qaModelListForInsert")
         viewmodel.insertQuiz(qaModelListForInsert, title)
 
         goShare(title)

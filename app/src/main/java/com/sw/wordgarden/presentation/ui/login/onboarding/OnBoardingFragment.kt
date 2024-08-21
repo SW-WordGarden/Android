@@ -79,7 +79,7 @@ class OnBoardingFragment : Fragment() {
                     }
 
                     DefaultEvent.Success -> {
-                        Log.i(TAG, "회원가입 성공")
+                        Log.i(TAG, "success sign up")
                         goHome()
                     }
                 }

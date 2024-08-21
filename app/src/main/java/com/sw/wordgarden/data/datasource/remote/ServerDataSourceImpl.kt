@@ -156,7 +156,6 @@ class ServerDataSourceImpl @Inject constructor(
             if (!response.isSuccessful) {
                 throw HttpException(response)
             } else {
-                Log.d(TAG, "getGeneratedWq : ${response.body()}")
                 response.body()
             }
         } catch (e: Exception) {
@@ -173,8 +172,6 @@ class ServerDataSourceImpl @Inject constructor(
                 answers = wqSubmission.answers,
             )
             val response = service.submitWq(request)
-
-            Log.d(TAG, "submitWq - request : ${request}")
 
             if (!response.isSuccessful) {
                 throw HttpException(response)
@@ -240,7 +237,6 @@ class ServerDataSourceImpl @Inject constructor(
             if (!response.isSuccessful) {
                 throw HttpException(response)
             } else {
-                Log.d(TAG, "getSolvedWq : ${response.body()}")
                 response.body()
             }
         } catch (e: Exception) {
@@ -256,9 +252,6 @@ class ServerDataSourceImpl @Inject constructor(
             val quizListData = sqDto.copy(
                 uid = uid
             )
-
-            Log.i(TAG, "서버에 전달한 퀴즈 데이터 : $quizListData")
-
             val response = service.createNewSq(quizListData)
             if (!response.isSuccessful) {
                 throw HttpException(response)

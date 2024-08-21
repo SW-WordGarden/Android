@@ -59,8 +59,6 @@ class SolveQuizFragment : Fragment() {
         qTitle = quizModel?.qTitle ?: ""
         sqId = quizModel?.sqId ?: ""
 
-        Log.d(TAG, "getData: $questionList")
-
         setupUi(questionList)
     }
 
