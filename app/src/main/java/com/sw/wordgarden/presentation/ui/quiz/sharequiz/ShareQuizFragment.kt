@@ -3,14 +3,17 @@ package com.sw.wordgarden.presentation.ui.quiz.sharequiz
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.sw.wordgarden.R
@@ -45,6 +48,17 @@ class ShareQuizFragment : Fragment() {
     }
     private lateinit var quizKey: QuizKey
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                goQuizOrBack()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -73,7 +87,7 @@ class ShareQuizFragment : Fragment() {
 
     private fun setupListener() = with(binding) {
         ivShareQuizBack.setOnClickListener {
-            findNavController().navigate(R.id.action_shareQuizFragment_to_quizFragment)
+            goQuizOrBack()
         }
 
         etShareQuizInputTitle.addTextChangedListener(object : TextWatcher {
@@ -123,6 +137,22 @@ class ShareQuizFragment : Fragment() {
                         ToastMaker.make(requireContext(), R.string.share_quiz_msg_success_sharing)
                     }
                 }
+            }
+        }
+    }
+
+    private fun goQuizOrBack() {
+        val navController = findNavController()
+        if (navController.previousBackStackEntry?.destination?.id == R.id.makeQuizFragment) {
+            val fromQuiz = navController.previousBackStackEntry?.arguments?.getBoolean("argsFromQuiz") ?: false
+            if (fromQuiz) {
+                val navOptions = NavOptions.Builder()
+                    .setPopUpTo(R.id.quizFragment, true)
+                    .setLaunchSingleTop(true)
+                    .build()
+                navController.navigate(R.id.action_shareQuizFragment_to_quizFragment, null, navOptions)
+            } else {
+                navController.navigateUp()
             }
         }
     }

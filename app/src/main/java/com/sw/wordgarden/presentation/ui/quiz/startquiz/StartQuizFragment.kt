@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -25,6 +26,17 @@ class StartQuizFragment : Fragment() {
 
     private val viewmodel: StartQuizViewModel by viewModels()
     private lateinit var quiz: QuizModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                goBack()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -58,7 +70,7 @@ class StartQuizFragment : Fragment() {
 
     private fun setupListener() = with(binding) {
         btnStartQuizBack.setOnClickListener {
-            findNavController().navigateUp()
+            goBack()
         }
 
         btnStartQuizStart.setOnClickListener {
@@ -94,8 +106,12 @@ class StartQuizFragment : Fragment() {
         tvStartQuizIntroduce.text = quiz.qTitle
     }
 
+    private fun goBack() {
+        findNavController().navigateUp()
+    }
+
     private fun goSolveQuiz() {
-        val action = StartQuizFragmentDirections.actionStartQuizFragmentToSolveQuizFragmentForWq(quiz)
+        val action = StartQuizFragmentDirections.actionStartQuizFragmentToSolveQuizFragmentForWq(quiz, true)
         findNavController().navigate(action)
     }
 

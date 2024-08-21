@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
 import com.sw.wordgarden.databinding.FragmentFriendsBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -14,6 +15,17 @@ class FriendsFragment : Fragment() {
 
     private var _binding: FragmentFriendsBinding? = null
     private val binding get() = _binding!!
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                goBack()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,8 +43,12 @@ class FriendsFragment : Fragment() {
 
     private fun setupListener() = with(binding) {
         ivMyFriendsBack.setOnClickListener {
-            findNavController().navigateUp()
+            goBack()
         }
+    }
+
+    private fun goBack() {
+        findNavController().navigateUp()
     }
 
     override fun onDestroyView() {

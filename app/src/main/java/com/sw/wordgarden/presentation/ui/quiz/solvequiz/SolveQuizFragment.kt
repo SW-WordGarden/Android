@@ -1,14 +1,15 @@
 package com.sw.wordgarden.presentation.ui.quiz.solvequiz
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
@@ -35,6 +36,17 @@ class SolveQuizFragment : Fragment() {
     private val enteredAnswers: List<QAModel> = List(10) { QAModel("", "", "", "", null) }
     private var qTitle = ""
     private var sqId = ""
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                goBack()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -120,7 +132,7 @@ class SolveQuizFragment : Fragment() {
 
     private fun setupListener() = with(binding) {
         btnSolveQuizBack.setOnClickListener {
-            findNavController().navigateUp()
+            goBack()
         }
     }
 
@@ -145,9 +157,19 @@ class SolveQuizFragment : Fragment() {
         }
     }
 
+    private fun goBack() {
+        val navController = findNavController()
+        val navOptions = NavOptions.Builder()
+            .setPopUpTo(R.id.quizFragment, true)
+            .setLaunchSingleTop(true)
+            .build()
+
+        navController.navigate(R.id.action_solveQuizFragment_to_quizFragment, null, navOptions)
+    }
+
     private fun goResult(quizKey: QuizKey) {
         val action =
-            SolveQuizFragmentDirections.actionSolveQuizFragmentToResultQuizFragment(quizKey)
+            SolveQuizFragmentDirections.actionSolveQuizFragmentToResultQuizFragment(quizKey, true)
         findNavController().navigate(action)
     }
 

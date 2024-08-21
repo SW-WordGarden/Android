@@ -131,7 +131,7 @@ class QuizFragment : Fragment() {
             sqId = null,
             isWq = null
         )
-        val action = QuizFragmentDirections.actionQuizFragmentToMakeQuizFragment(quizKey)
+        val action = QuizFragmentDirections.actionQuizFragmentToMakeQuizFragment(quizKey, true)
         findNavController().navigate(action)
     }
 

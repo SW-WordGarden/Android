@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -38,6 +39,17 @@ class MySelfQuizFragment : Fragment() {
         })
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                goBack()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -60,7 +72,7 @@ class MySelfQuizFragment : Fragment() {
 
     private fun setupListener() = with(binding) {
         ivMySelfQuizBack.setOnClickListener {
-            findNavController().navigateUp()
+            goBack()
         }
     }
 
@@ -92,9 +104,13 @@ class MySelfQuizFragment : Fragment() {
         }
     }
 
+    private fun goBack() {
+        findNavController().navigateUp()
+    }
+
     private fun goMakeQuiz(quizKey: QuizKey) {
         val navController = findNavController()
-        val action = MySelfQuizFragmentDirections.actionMySelfQuizFragmentToMakeQuizFragment(quizKey)
+        val action = MySelfQuizFragmentDirections.actionMySelfQuizFragmentToMakeQuizFragment(quizKey, false)
         navController.navigate(action)
     }
 

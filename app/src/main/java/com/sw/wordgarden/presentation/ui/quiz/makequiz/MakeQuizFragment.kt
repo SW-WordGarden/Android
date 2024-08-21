@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -36,6 +37,17 @@ class MakeQuizFragment : Fragment() {
     private var qaModelListForInsert: List<QAModel> =
         List(10) { QAModel("", "", "", "", null) }
     private var enableMode = true
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                goBack()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -128,7 +140,7 @@ class MakeQuizFragment : Fragment() {
 
     private fun setUpListener() = with(binding) {
         btnMakeQuizBack.setOnClickListener {
-            findNavController().navigateUp()
+            goBack()
         }
     }
 
@@ -187,6 +199,10 @@ class MakeQuizFragment : Fragment() {
         viewmodel.insertQuiz(qaModelListForInsert, title)
 
         goShare(title)
+    }
+
+    private fun goBack() {
+        findNavController().navigateUp()
     }
 
     private fun goShare(quizId: String) {

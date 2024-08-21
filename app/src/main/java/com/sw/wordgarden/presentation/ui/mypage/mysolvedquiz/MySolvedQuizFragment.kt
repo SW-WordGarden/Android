@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -37,6 +38,17 @@ class MySolvedQuizFragment : Fragment() {
         })
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                goBack()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -59,7 +71,7 @@ class MySolvedQuizFragment : Fragment() {
 
     private fun setupListener() = with(binding) {
         ivMySolvedQuizBack.setOnClickListener {
-            findNavController().navigateUp()
+            goBack()
         }
     }
 
@@ -91,10 +103,14 @@ class MySolvedQuizFragment : Fragment() {
         }
     }
 
+    private fun goBack() {
+        findNavController().navigateUp()
+    }
+
     private fun goResultQuiz(quizKey: QuizKey) {
         val navController = findNavController()
         val action =
-            MySolvedQuizFragmentDirections.actionMySolvedQuizFragmentToResultQuizFragment(quizKey)
+            MySolvedQuizFragmentDirections.actionMySolvedQuizFragmentToResultQuizFragment(quizKey, false)
         navController.navigate(action)
     }
 
