@@ -6,7 +6,7 @@ data class UserInfoDto(
     @SerializedName("profileImage") val profileImage: String?,
     @SerializedName("point") val point: Int?,
     @SerializedName("rank") val rank: Int?,
-    @SerializedName("randomFriends") val randomFriends: List<String>?,
+    @SerializedName("randomFriends") val randomFriends: List<FriendDto>?,
     @SerializedName("name") val name: String?,
     @SerializedName("all") val all: Int?,
     @SerializedName("right") val right: Int?,

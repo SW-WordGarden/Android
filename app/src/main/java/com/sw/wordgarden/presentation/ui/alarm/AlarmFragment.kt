@@ -34,9 +34,9 @@ class AlarmFragment : Fragment() {
 
     private fun goStartQuiz(alarmEntity: AlarmEntity) {
         val quizKey = QuizKey(
-            qTitle = alarmEntity.qTitle,
-            sqId = alarmEntity.sqId,
-            isWq = alarmEntity.sqId?.isBlank() == true || alarmEntity.sqId.isNullOrEmpty()
+            qTitle = alarmEntity.content,
+            sqId = alarmEntity.content,
+            isWq = alarmEntity.content?.isBlank() == true || alarmEntity.content.isNullOrEmpty() //TODO: sq, wq 구분 필요
         )
         val navController = findNavController()
         val action = AlarmFragmentDirections.actionAlarmFragmentToStartQuizFragment(quizKey)

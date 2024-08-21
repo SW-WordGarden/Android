@@ -1,7 +1,7 @@
-package com.sw.wordgarden.domain.usecase.datastore
+package com.sw.wordgarden.domain.usecase.alarm
 
 import com.sw.wordgarden.domain.entity.alarm.AlarmEntity
 
-interface GetAlarmListUseCase {
+interface GetAlarmsUseCase {
     suspend operator fun invoke(): List<AlarmEntity>?
 }

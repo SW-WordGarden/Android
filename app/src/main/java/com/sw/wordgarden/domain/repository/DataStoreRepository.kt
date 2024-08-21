@@ -1,7 +1,5 @@
 package com.sw.wordgarden.domain.repository
 
-import com.sw.wordgarden.domain.entity.alarm.AlarmEntity
-
 interface DataStoreRepository {
 
     //user
@@ -13,7 +11,4 @@ interface DataStoreRepository {
     suspend fun saveDailyLimit(count: Int)
     suspend fun getDailyLimit(): Int?
     suspend fun deleteDailyLimit()
-
-    //alarm
-    suspend fun getAlarmList(): List<AlarmEntity>?
 }

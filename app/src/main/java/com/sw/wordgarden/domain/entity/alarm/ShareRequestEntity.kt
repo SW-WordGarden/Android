@@ -1,4 +1,4 @@
-package com.sw.wordgarden.domain.entity.quiz
+package com.sw.wordgarden.domain.entity.alarm
 
 data class ShareRequestEntity(
     val fromUserId: String?,

@@ -1,7 +1,7 @@
 package com.sw.wordgarden.domain.repository
 
+import com.sw.wordgarden.domain.entity.user.FriendListEntity
 import com.sw.wordgarden.domain.entity.user.LoginRequestEntity
-import com.sw.wordgarden.domain.entity.user.ReportInfoEntity
 import com.sw.wordgarden.domain.entity.user.UserEntity
 import com.sw.wordgarden.domain.entity.user.UserInfoEntity
 
@@ -14,6 +14,11 @@ interface UserRepository {
     //mapage
     suspend fun getUserInfoForMypage(): UserInfoEntity?
     suspend fun updateUserNickname(nickname: String)
-    suspend fun getFriends(): List<UserEntity>?
-    suspend fun reportUser(reportInfo: ReportInfoEntity)
+    suspend fun updateUserImage(image: String)
+    suspend fun getFriends(): FriendListEntity?
+
+    //mypage - friend
+    suspend fun addFriend(friendUrl: String)
+    suspend fun deleteFriend(friendUrl: String)
+    suspend fun reportUser(friendUid: String, contents: String?)
 }

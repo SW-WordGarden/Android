@@ -1,6 +1,5 @@
 package com.sw.wordgarden.data.datasource.remote
 
-import android.util.Log
 import com.sw.wordgarden.data.datasource.local.LocalDataSource
 import com.sw.wordgarden.data.datasource.remote.retrofit.Service
 import com.sw.wordgarden.data.dto.quiz.SqQuestionAnswerDto
@@ -12,11 +11,16 @@ import com.sw.wordgarden.data.dto.quiz.SqSolveQuizDto
 import com.sw.wordgarden.data.dto.TreeDto
 import com.sw.wordgarden.data.dto.user.UserDto
 import com.sw.wordgarden.data.dto.WordDto
+import com.sw.wordgarden.data.dto.alarm.AlarmDetailDto
+import com.sw.wordgarden.data.dto.alarm.AlarmDto
 import com.sw.wordgarden.data.dto.quiz.WqResponseDto
 import com.sw.wordgarden.data.dto.quiz.WqStateDto
 import com.sw.wordgarden.data.dto.quiz.WqSubmissionDto
 import com.sw.wordgarden.data.dto.quiz.WqWrongAnswerDto
+import com.sw.wordgarden.data.dto.alarm.ShareRequestDto
+import com.sw.wordgarden.data.dto.user.FriendListDto
 import com.sw.wordgarden.data.dto.user.ReportInfoDto
+import com.sw.wordgarden.data.dto.user.RequestFriendDto
 import com.sw.wordgarden.data.dto.user.UserInfoDto
 import retrofit2.HttpException
 import javax.inject.Inject
@@ -98,7 +102,20 @@ class ServerDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun getFriends(): List<UserDto>? {
+    override suspend fun updateUserImage(image: String) {
+        try {
+            val uid = getUid()
+
+            val response = service.updateUserImage(uid!!, image)
+            if (!response.isSuccessful) {
+                throw HttpException(response)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    override suspend fun getFriends(): FriendListDto? {
         return try {
             val uid = getUid()
 
@@ -114,14 +131,13 @@ class ServerDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun reportUser(reportInfo: ReportInfoDto) {
+    //user - mypage - friend
+    override suspend fun addFriend(friendUrl: String) {
         try {
             val uid = getUid()
-            val contents = reportInfo.copy(
-                reporterId = uid
-            )
+            val request = RequestFriendDto(uid!!, friendUrl)
 
-            val response = service.reportUser(contents)
+            val response = service.addFriend(request)
             if (!response.isSuccessful) {
                 throw HttpException(response)
             }
@@ -129,6 +145,92 @@ class ServerDataSourceImpl @Inject constructor(
             e.printStackTrace()
         }
     }
+
+    override suspend fun deleteFriend(friendUrl: String) {
+        try {
+            val uid = getUid()
+            val request = RequestFriendDto(uid!!, friendUrl)
+
+            val response = service.deleteFriend(request)
+            if (!response.isSuccessful) {
+                throw HttpException(response)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    override suspend fun reportUser(friendUid: String, contents: String?) {
+        try {
+            val uid = getUid()
+            val reportInfoDto = ReportInfoDto(
+                reporterId = uid!!,
+                reportedId = friendUid,
+                reason = contents
+            )
+
+            val response = service.reportUser(reportInfoDto)
+            if (!response.isSuccessful) {
+                throw HttpException(response)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    //alarm
+    override suspend fun makeSharingAlarm(shareRequest: ShareRequestDto) {
+        try {
+            val response = service.makeSharingAlarm(shareRequest)
+            if (!response.isSuccessful) {
+                throw HttpException(response)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    override suspend fun getAlarms(): List<AlarmDto>? {
+        return try {
+            val uid = getUid()
+
+            val response = service.getAlarms(uid!!)
+            if (!response.isSuccessful) {
+                throw HttpException(response)
+            } else {
+                response.body()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+    override suspend fun getAlarmDetail(alarmId: String): AlarmDetailDto? {
+        return try {
+            val response = service.getAlarmDetail(alarmId)
+            if (!response.isSuccessful) {
+                throw HttpException(response)
+            } else {
+                response.body()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+    override suspend fun deleteAlarm(alarmId: String) {
+        try {
+            val uid = getUid()
+
+            val response = service.deleteAlarm(alarmId, uid!!)
+            if (!response.isSuccessful) {
+                throw HttpException(response)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }    }
 
 
     //words

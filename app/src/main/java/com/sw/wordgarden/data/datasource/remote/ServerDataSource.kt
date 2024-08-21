@@ -9,10 +9,14 @@ import com.sw.wordgarden.data.dto.quiz.SqSolveQuizDto
 import com.sw.wordgarden.data.dto.TreeDto
 import com.sw.wordgarden.data.dto.user.UserDto
 import com.sw.wordgarden.data.dto.WordDto
+import com.sw.wordgarden.data.dto.alarm.AlarmDetailDto
+import com.sw.wordgarden.data.dto.alarm.AlarmDto
 import com.sw.wordgarden.data.dto.quiz.WqResponseDto
 import com.sw.wordgarden.data.dto.quiz.WqStateDto
 import com.sw.wordgarden.data.dto.quiz.WqSubmissionDto
 import com.sw.wordgarden.data.dto.quiz.WqWrongAnswerDto
+import com.sw.wordgarden.data.dto.alarm.ShareRequestDto
+import com.sw.wordgarden.data.dto.user.FriendListDto
 import com.sw.wordgarden.data.dto.user.ReportInfoDto
 import com.sw.wordgarden.data.dto.user.UserInfoDto
 
@@ -25,9 +29,19 @@ interface ServerDataSource {
     //user - mypage
     suspend fun getUserInfoForMypage(): UserInfoDto?
     suspend fun updateUserNickname(nickname: String)
-    suspend fun getFriends(): List<UserDto>?
-    suspend fun reportUser(reportInfo: ReportInfoDto)
+    suspend fun updateUserImage(image: String)
+    suspend fun getFriends(): FriendListDto?
 
+    //user - mypage - friend
+    suspend fun addFriend(friendUrl: String)
+    suspend fun deleteFriend(friendUrl: String)
+    suspend fun reportUser(friendUid: String, contents: String?)
+
+    //alarm
+    suspend fun makeSharingAlarm(shareRequest: ShareRequestDto)
+    suspend fun getAlarms(): List<AlarmDto>?
+    suspend fun getAlarmDetail(alarmId: String): AlarmDetailDto?
+    suspend fun deleteAlarm(alarmId: String)
 
     //words
     suspend fun insertLikedWord(word: WordDto)

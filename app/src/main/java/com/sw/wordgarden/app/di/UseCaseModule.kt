@@ -4,8 +4,6 @@ import com.sw.wordgarden.domain.usecase.datastore.DeleteDailyLimitUseCase
 import com.sw.wordgarden.domain.usecase.datastore.DeleteDailyLimitUseCaseImpl
 import com.sw.wordgarden.domain.usecase.datastore.DeleteUidUseCase
 import com.sw.wordgarden.domain.usecase.datastore.DeleteUidUseCaseImpl
-import com.sw.wordgarden.domain.usecase.datastore.GetAlarmListUseCase
-import com.sw.wordgarden.domain.usecase.datastore.GetAlarmListUseCaseImpl
 import com.sw.wordgarden.domain.usecase.datastore.GetDailyLimitUseCase
 import com.sw.wordgarden.domain.usecase.datastore.GetDailyLimitUseCaseImpl
 import com.sw.wordgarden.domain.usecase.user.GetFriendsUseCase
@@ -46,6 +44,12 @@ import com.sw.wordgarden.domain.usecase.quiz.sq.SubmitSqUseCase
 import com.sw.wordgarden.domain.usecase.quiz.sq.SubmitSqUseCaseImpl
 import com.sw.wordgarden.domain.usecase.UpdateTreeUseCase
 import com.sw.wordgarden.domain.usecase.UpdateTreeUseCaseImpl
+import com.sw.wordgarden.domain.usecase.alarm.DeleteAlarmUseCase
+import com.sw.wordgarden.domain.usecase.alarm.DeleteAlarmUseCaseImpl
+import com.sw.wordgarden.domain.usecase.alarm.GetAlarmDetailUseCase
+import com.sw.wordgarden.domain.usecase.alarm.GetAlarmDetailUseCaseImpl
+import com.sw.wordgarden.domain.usecase.alarm.GetAlarmsUseCase
+import com.sw.wordgarden.domain.usecase.alarm.GetAlarmsUseCaseImpl
 import com.sw.wordgarden.domain.usecase.quiz.common.GetSolvedQuizTitlesUseCase
 import com.sw.wordgarden.domain.usecase.quiz.common.GetSolvedQuizTitlesUseCaseImpl
 import com.sw.wordgarden.domain.usecase.quiz.wq.GetGeneratedWqUseCase
@@ -60,6 +64,18 @@ import com.sw.wordgarden.domain.usecase.quiz.wq.GetWrongWqsUseCase
 import com.sw.wordgarden.domain.usecase.quiz.wq.GetWrongWqsUseCaseImpl
 import com.sw.wordgarden.domain.usecase.quiz.wq.SubmitWqUseCase
 import com.sw.wordgarden.domain.usecase.quiz.wq.SubmitWqUseCaseImpl
+import com.sw.wordgarden.domain.usecase.alarm.MakeSharingAlarmUseCase
+import com.sw.wordgarden.domain.usecase.alarm.MakeSharingAlarmUseCaseImpl
+import com.sw.wordgarden.domain.usecase.user.AddFriendUseCase
+import com.sw.wordgarden.domain.usecase.user.AddFriendUseCaseImpl
+import com.sw.wordgarden.domain.usecase.user.DeleteFriendUseCase
+import com.sw.wordgarden.domain.usecase.user.DeleteFriendUseCaseImpl
+import com.sw.wordgarden.domain.usecase.user.GetUserInfoForMypage
+import com.sw.wordgarden.domain.usecase.user.GetUserInfoForMypageImpl
+import com.sw.wordgarden.domain.usecase.user.ReportFriendUseCase
+import com.sw.wordgarden.domain.usecase.user.ReportFriendUseCaseImpl
+import com.sw.wordgarden.domain.usecase.user.UpdateUserImageUseCase
+import com.sw.wordgarden.domain.usecase.user.UpdateUserImageUseCaseImpl
 import com.sw.wordgarden.domain.usecase.user.UpdateUserNicknameUseCase
 import com.sw.wordgarden.domain.usecase.user.UpdateUserNicknameUseCaseImpl
 import dagger.Binds
@@ -84,12 +100,6 @@ abstract class UseCaseModule {
     abstract fun bindDeleteUidUseCase(
         deleteUidUseCaseImpl: DeleteUidUseCaseImpl
     ): DeleteUidUseCase
-
-    @Binds
-    @ViewModelScoped
-    abstract fun bindGetAlarmListUseCase(
-        getAlarmListUseCaseImpl: GetAlarmListUseCaseImpl
-    ): GetAlarmListUseCase
 
     @Binds
     @ViewModelScoped
@@ -130,6 +140,12 @@ abstract class UseCaseModule {
 
     @Binds
     @ViewModelScoped
+    abstract fun bindGetUserInfoForMypage(
+        getUserInfoForMypageImpl: GetUserInfoForMypageImpl
+    ): GetUserInfoForMypage
+
+    @Binds
+    @ViewModelScoped
     abstract fun bindInsertUserUseCase(
         insertUserUseCaseImpl: InsertUserUseCaseImpl
     ): InsertUserUseCase
@@ -145,6 +161,55 @@ abstract class UseCaseModule {
     abstract fun bindUpdateUserNicknameUseCase(
         updateUserNicknameUseCaseImpl: UpdateUserNicknameUseCaseImpl
     ): UpdateUserNicknameUseCase
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindUpdateUserImageUseCase(
+        updateUserImageUseCaseImpl: UpdateUserImageUseCaseImpl
+    ): UpdateUserImageUseCase
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindAddFriendUseCase(
+        addFriendUseCaseImpl: AddFriendUseCaseImpl
+    ): AddFriendUseCase
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindDeleteFriendUseCase(
+        deleteFriendUseCaseImpl: DeleteFriendUseCaseImpl
+    ): DeleteFriendUseCase
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindReportFriendUseCase(
+        reportFriendUseCaseImpl: ReportFriendUseCaseImpl
+    ): ReportFriendUseCase
+
+    //alarm
+    @Binds
+    @ViewModelScoped
+    abstract fun bindMakeSharingAlarmUseCase(
+        makeShardingAlarmUseCaseImpl: MakeSharingAlarmUseCaseImpl
+    ): MakeSharingAlarmUseCase
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindGetAlarmsUseCase(
+        getAlarmsUseCaseImpl: GetAlarmsUseCaseImpl
+    ): GetAlarmsUseCase
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindGetAlarmDetailUseCase(
+        getAlarmDetailUseCaseImpl: GetAlarmDetailUseCaseImpl
+    ): GetAlarmDetailUseCase
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindDeleteAlarmUseCase(
+        deleteAlarmUseCaseImpl: DeleteAlarmUseCaseImpl
+    ): DeleteAlarmUseCase
 
     //quiz - common
     @Binds

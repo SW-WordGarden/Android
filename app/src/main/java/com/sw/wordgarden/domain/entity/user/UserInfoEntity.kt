@@ -4,7 +4,7 @@ data class UserInfoEntity(
     val profileImage: String?,
     val point: Int?,
     val rank: Int?,
-    val randomFriends: List<String>?,
+    val randomFriends: List<FriendEntity>?,
     val name: String?,
     val all: Int?,
     val right: Int?,
