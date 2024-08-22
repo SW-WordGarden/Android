@@ -22,7 +22,6 @@
             android:maxWidth="50dp"
             android:maxLines="1"
             android:singleLine="true"
-            android:text="username"
             android:textSize="@dimen/text_mini"
             android:gravity="center"
             app:layout_constraintEnd_toEndOf="@+id/iv_friend_thumbnail_item"

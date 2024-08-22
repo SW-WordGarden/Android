@@ -177,16 +177,18 @@
     <string name="detail_back">돌아가기</string>
     <string name="detail_next">넘어가기</string>
 
+    <!-- push message -->
+    <string name="default_notification_channel_id">channel_id_wordgarden</string>
+    <string name="push_share_quiz_title">친구에게 퀴즈를 공유 받았어요!</string>
+
+    <!-- loading -->
+    <string name="loading_loading">불러오는 중...</string>
+
     <!-- keys -->
     <string name="naver_client_id">fYtp0C5dQV4enao8hy1Q</string>
     <string name="naver_client_secret">EFmMabs3BG</string>
     <string name="kakao_native_key">9132f18301634afbec5f2618e16f5f09</string>
     <string name="kakao_native_key_kakao">kakao9132f18301634afbec5f2618e16f5f09</string>
-
-    <!-- push message -->
-    <string name="default_notification_channel_id">channel_id_wordgarden</string>
-    <string name="push_share_quiz_title">친구에게 퀴즈를 공유 받았어요!</string>
-
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

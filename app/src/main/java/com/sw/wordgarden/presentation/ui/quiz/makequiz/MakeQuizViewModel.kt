@@ -13,6 +13,7 @@ import com.sw.wordgarden.presentation.mapper.ModelMapper.toListQAModel
 import com.sw.wordgarden.presentation.mapper.ModelMapper.toSqQuestionAnswerEntity
 import com.sw.wordgarden.presentation.model.QAModel
 import com.sw.wordgarden.presentation.model.QuizModel
+import com.sw.wordgarden.presentation.shared.IsLoadingUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -31,6 +32,9 @@ class MakeQuizViewModel @Inject constructor(
     private val createNewSqUseCase: CreateNewSqUseCase
 ) : ViewModel() {
 
+    private val _uiState = MutableStateFlow(IsLoadingUiState.init())
+    val uiState: StateFlow<IsLoadingUiState> = _uiState.asStateFlow()
+
     private val _getSqEvent = MutableSharedFlow<DefaultEvent>()
     val getSqEvent: SharedFlow<DefaultEvent> = _getSqEvent.asSharedFlow()
 
@@ -42,6 +46,8 @@ class MakeQuizViewModel @Inject constructor(
 
     fun getQuiz(sqId: String, title: String) {
         viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true) }
+
             runCatching {
                 val response = getSqUseCase(sqId)
                 if (response != null) {
@@ -54,8 +60,11 @@ class MakeQuizViewModel @Inject constructor(
                     _getSq.update { quizModel }
                 }
             }.onFailure {
+                _uiState.update { it.copy(isLoading = false) }
                 _getSqEvent.emit(DefaultEvent.Failure(R.string.make_quiz_msg_fail_load_quiz_list))
             }.onSuccess {
+                _uiState.update { it.copy(isLoading = false) }
+
                 _getSqEvent.emit(DefaultEvent.Success)
             }
         }
@@ -63,6 +72,8 @@ class MakeQuizViewModel @Inject constructor(
 
     fun insertQuiz(qaModelList: List<QAModel>, title: String) {
         viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true) }
+
             runCatching {
                 val sqEntity = SqEntity(
                     uid = "",
@@ -74,6 +85,8 @@ class MakeQuizViewModel @Inject constructor(
 
                 createNewSqUseCase.invoke(sqEntity)
             }.onFailure { throwable ->
+                _uiState.update { it.copy(isLoading = false) }
+
                 when (throwable) {
                     is HttpException -> {
                         val errorResponse = throwable.response()?.errorBody()?.string()
@@ -85,6 +98,7 @@ class MakeQuizViewModel @Inject constructor(
                     }
                 }
             }.onSuccess {
+                _uiState.update { it.copy(isLoading = false) }
                 _insertQuizEvent.emit(DefaultEvent.Success)
             }
         }

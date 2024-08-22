@@ -9,6 +9,7 @@ import com.sw.wordgarden.presentation.event.DefaultEvent
 import com.sw.wordgarden.presentation.mapper.ModelMapper.toModel
 import com.sw.wordgarden.presentation.model.QuizKey
 import com.sw.wordgarden.presentation.model.QuizModel
+import com.sw.wordgarden.presentation.shared.IsLoadingUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -26,6 +27,9 @@ class ResultQuizViewModel @Inject constructor(
     private val getSolvedWqUseCase: GetSolvedWqUseCase,
 ) : ViewModel() {
 
+    private val _uiState = MutableStateFlow(IsLoadingUiState.init())
+    val uiState: StateFlow<IsLoadingUiState> = _uiState.asStateFlow()
+
     private val _getResultEvent = MutableSharedFlow<DefaultEvent>()
     val getResultEvent: SharedFlow<DefaultEvent> = _getResultEvent.asSharedFlow()
 
@@ -34,6 +38,8 @@ class ResultQuizViewModel @Inject constructor(
 
     fun getResult(quizKey: QuizKey) {
         viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true) }
+
             runCatching {
                 if (quizKey.isWq == true) {
                     val response = getSolvedWqUseCase.invoke(quizKey.qTitle ?: "")
@@ -43,8 +49,10 @@ class ResultQuizViewModel @Inject constructor(
                     _getResult.update { response?.toModel() }
                 }
             }.onFailure {
+                _uiState.update { it.copy(isLoading = false) }
                 _getResultEvent.emit(DefaultEvent.Failure(R.string.result_quiz_msg_fail_get_result))
             }.onSuccess {
+                _uiState.update { it.copy(isLoading = false) }
                 _getResultEvent.emit(DefaultEvent.Success)
             }
         }

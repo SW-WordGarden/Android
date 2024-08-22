@@ -10,9 +10,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentMySolvedQuizBinding
 import com.sw.wordgarden.presentation.event.DefaultEvent
 import com.sw.wordgarden.presentation.model.QuizKey
+import com.sw.wordgarden.presentation.ui.loading.LoadingDialog
 import com.sw.wordgarden.presentation.ui.mypage.common.MySelfSolvedQuizAdapter
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,6 +26,8 @@ class MySolvedQuizFragment : Fragment() {
 
     private var _binding: FragmentMySolvedQuizBinding? = null
     private val binding get() = _binding!!
+
+    private var loadingDialog: LoadingDialog? = null
     private val viewmodel: MySolvedQuizViewModel by viewModels()
     private val adapter: MySelfSolvedQuizAdapter by lazy {
         MySelfSolvedQuizAdapter(object : MySelfSolvedQuizAdapter.QuizItemListener {
@@ -101,10 +105,22 @@ class MySolvedQuizFragment : Fragment() {
                 }
             }
         }
+
+        lifecycleScope.launch {
+            viewmodel.uiState.flowWithLifecycle(lifecycle).collectLatest { state ->
+                if (state.isLoading) {
+                    loadingDialog = LoadingDialog()
+                    loadingDialog?.show(parentFragmentManager, null)
+                } else {
+                    loadingDialog?.dismiss()
+                    loadingDialog = null
+                }
+            }
+        }
     }
 
     private fun goBack() {
-        findNavController().navigateUp()
+        findNavController().navigate(R.id.action_mySolvedQuizFragment_to_mypageFragment)
     }
 
     private fun goResultQuiz(quizKey: QuizKey) {

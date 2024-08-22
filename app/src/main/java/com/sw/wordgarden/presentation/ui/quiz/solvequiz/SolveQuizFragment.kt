@@ -20,6 +20,7 @@ import com.sw.wordgarden.presentation.event.DefaultEvent
 import com.sw.wordgarden.presentation.model.QAModel
 import com.sw.wordgarden.presentation.model.QuizKey
 import com.sw.wordgarden.presentation.model.QuizModel
+import com.sw.wordgarden.presentation.ui.loading.LoadingDialog
 import com.sw.wordgarden.presentation.util.KeyboardCleaner
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,6 +34,7 @@ class SolveQuizFragment : Fragment() {
     private var _binding: FragmentSolveQuizBinding? = null
     private val binding get() = _binding!!
 
+    private var loadingDialog: LoadingDialog? = null
     private val viewmodel: SolveQuizViewModel by viewModels()
     private val enteredAnswers: List<QAModel> = List(10) { QAModel("", "", "", "", null) }
     private var qTitle = ""
@@ -155,6 +157,18 @@ class SolveQuizFragment : Fragment() {
                         )
                         goResult(quizKey)
                     }
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            viewmodel.uiState.flowWithLifecycle(lifecycle).collectLatest { state ->
+                if (state.isLoading) {
+                    loadingDialog = LoadingDialog()
+                    loadingDialog?.show(parentFragmentManager, null)
+                } else {
+                    loadingDialog?.dismiss()
+                    loadingDialog = null
                 }
             }
         }

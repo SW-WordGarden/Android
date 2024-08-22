@@ -10,8 +10,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentWeeklyBinding
 import com.sw.wordgarden.presentation.event.DefaultEvent
+import com.sw.wordgarden.presentation.ui.loading.LoadingDialog
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -23,6 +25,7 @@ class WeeklyQuizCheckFragment : Fragment() {
     private var _binding: FragmentWeeklyBinding? = null
     private val binding get() = _binding!!
 
+    private var loadingDialog: LoadingDialog? = null
     private val viewmodel: WeeklyQuizCheckViewModel by viewModels()
     private val adapter: WeeklyQuizCheckAdapter by lazy {
         WeeklyQuizCheckAdapter()
@@ -91,10 +94,22 @@ class WeeklyQuizCheckFragment : Fragment() {
                 }
             }
         }
+
+        lifecycleScope.launch {
+            viewmodel.uiState.flowWithLifecycle(lifecycle).collectLatest { state ->
+                if (state.isLoading) {
+                    loadingDialog = LoadingDialog()
+                    loadingDialog?.show(parentFragmentManager, null)
+                } else {
+                    loadingDialog?.dismiss()
+                    loadingDialog = null
+                }
+            }
+        }
     }
 
     private fun goBack() {
-        findNavController().navigateUp()
+        findNavController().navigate(R.id.action_weeklyQuizCheckFragment_to_mypageFragment)
     }
 
     override fun onDestroyView() {

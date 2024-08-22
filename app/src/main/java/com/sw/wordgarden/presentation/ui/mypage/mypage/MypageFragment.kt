@@ -18,6 +18,7 @@ import com.sw.wordgarden.domain.entity.user.UserInfoEntity
 import com.sw.wordgarden.presentation.event.DefaultEvent
 import com.sw.wordgarden.presentation.util.ImageConverter.stringToByteArray
 import com.sw.wordgarden.presentation.util.ImageConverter.uriToString
+import com.sw.wordgarden.presentation.ui.loading.LoadingDialog
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -29,6 +30,7 @@ class MypageFragment : Fragment() {
     private var _binding: FragmentMypageBinding? = null
     private val binding get() = _binding!!
 
+    private var loadingDialog: LoadingDialog? = null
     private val viewmodel: MyPageViewModel by viewModels()
     private val adapter: MyPageFriendAdapter by lazy {
         MyPageFriendAdapter(requireContext(), object : MyPageFriendAdapter.FriendItemListener {
@@ -44,10 +46,10 @@ class MypageFragment : Fragment() {
                 viewmodel.updateUserImage(uriToString(uri, requireContext()) ?: "")
             }
         }
-
     private var myCode = ""
 
     override fun onCreateView(
+
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
@@ -121,6 +123,18 @@ class MypageFragment : Fragment() {
                 }
             }
         }
+
+        lifecycleScope.launch {
+            viewmodel.uiState.flowWithLifecycle(lifecycle).collectLatest { state ->
+                if (state.isLoading) {
+                    loadingDialog = LoadingDialog()
+                    loadingDialog?.show(parentFragmentManager, null)
+                } else {
+                    loadingDialog?.dismiss()
+                    loadingDialog = null
+                }
+            }
+        }
     }
 
     private fun setupUi(info: UserInfoEntity?) = with(binding) {
@@ -132,17 +146,18 @@ class MypageFragment : Fragment() {
             .into(ivMyProfile)
         tvMyName.text = info?.name ?: ""
 
-        tvMyPoint.text = info?.point.toString()
-        tvMyRank.text = info?.rank.toString()
+        tvMyPoint.text = (info?.point ?: 0).toString()
+        tvMyRank.text = (info?.rank ?: 0).toString()
 
-        val weeklyState =
-            "${info?.all}${getString(R.string.mypage_weekly_score_text1)} ${info?.right}${getString(
-                    R.string.mypage_weekly_score_text2
-                )}"
+        val weeklyState = if (info?.all == null || info.right == null) {
+            ""
+        } else {
+            "${info.all}${getString(R.string.mypage_weekly_score_text1)} ${info.right}${getString(R.string.mypage_weekly_score_text2)}"
+        }
         tvMyScore.text = weeklyState
 
-        tvMySelfQuizTitleName.text = info?.latestCustomQuiz?.sqTitle ?: ""
-        tvMySolvedQuizTitleName.text = info?.latestSolvedQuiz?.title ?: ""
+        tvMySelfQuizTitleName.text = info?.latestCustomQuiz?.sqTitle ?: getString(R.string.mypage_my_self_quiz_no_quiz_list)
+        tvMySolvedQuizTitleName.text = info?.latestSolvedQuiz?.title ?: getString(R.string.mypage_my_solved_quiz_no_quiz_list)
 
         rvMyFriendsList.adapter = adapter
         adapter.submitList(info?.randomFriends)

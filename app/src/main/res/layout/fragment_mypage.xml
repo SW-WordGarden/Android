@@ -94,7 +94,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_small"
-                    android:text="username"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_content"
                     app:layout_constraintEnd_toEndOf="@+id/iv_my_profile"
@@ -117,7 +116,6 @@
                     android:id="@+id/tv_my_point"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0000점"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_text"
                     app:layout_constraintBottom_toBottomOf="@+id/view"
@@ -151,7 +149,6 @@
                     android:id="@+id/tv_my_rank"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0000위"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_text"
                     app:layout_constraintBottom_toBottomOf="@+id/view"
@@ -193,7 +190,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_small"
-                        android:text="0문제 중 0문제 정답!"
                         android:textSize="@dimen/padding_medium_18"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
@@ -246,7 +242,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start|center_vertical"
-                        android:text="퀴즈"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
             </LinearLayout>
@@ -288,7 +283,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start|center_vertical"
-                        android:text="퀴즈"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
             </LinearLayout>

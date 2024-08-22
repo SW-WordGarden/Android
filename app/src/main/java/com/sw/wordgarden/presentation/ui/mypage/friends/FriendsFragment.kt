@@ -19,6 +19,7 @@ import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.DialogReportBinding
 import com.sw.wordgarden.databinding.FragmentFriendsBinding
 import com.sw.wordgarden.presentation.event.DefaultEvent
+import com.sw.wordgarden.presentation.ui.loading.LoadingDialog
 import com.sw.wordgarden.presentation.util.Constants.CLIP_LABEL
 import com.sw.wordgarden.presentation.util.KeyboardCleaner
 import com.sw.wordgarden.presentation.util.ToastMaker
@@ -32,6 +33,7 @@ class FriendsFragment : Fragment() {
     private var _binding: FragmentFriendsBinding? = null
     private val binding get() = _binding!!
 
+    private var loadingDialog: LoadingDialog? = null
     private val viewmodel: FriendsViewModel by viewModels()
     private val adapter: FriendsAdapter by lazy {
         FriendsAdapter(object : FriendsAdapter.FriendsItemListener {
@@ -220,10 +222,22 @@ class FriendsFragment : Fragment() {
                 }
             }
         }
+
+        lifecycleScope.launch {
+            viewmodel.uiState.flowWithLifecycle(lifecycle).collectLatest { state ->
+                if (state.isLoading) {
+                    loadingDialog = LoadingDialog()
+                    loadingDialog?.show(parentFragmentManager, null)
+                } else {
+                    loadingDialog?.dismiss()
+                    loadingDialog = null
+                }
+            }
+        }
     }
 
     private fun goBack() {
-        findNavController().navigateUp()
+        findNavController().navigate(R.id.action_friendsFragment_to_mypageFragment)
     }
 
     override fun onDestroyView() {

@@ -8,6 +8,7 @@ import com.sw.wordgarden.domain.usecase.quiz.wq.GetGeneratedWqUseCase
 import com.sw.wordgarden.presentation.mapper.ModelMapper.toModel
 import com.sw.wordgarden.presentation.event.DefaultEvent
 import com.sw.wordgarden.presentation.model.QuizModel
+import com.sw.wordgarden.presentation.shared.IsLoadingUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,6 +26,9 @@ class StartQuizViewModel @Inject constructor(
     private val getGeneratedWqUseCase: GetGeneratedWqUseCase,
 ) : ViewModel() {
 
+    private val _uiState = MutableStateFlow(IsLoadingUiState.init())
+    val uiState: StateFlow<IsLoadingUiState> = _uiState.asStateFlow()
+
     private val _getQuizEvent = MutableSharedFlow<DefaultEvent>()
     val getQuizEvent: SharedFlow<DefaultEvent> = _getQuizEvent.asSharedFlow()
 
@@ -33,13 +37,17 @@ class StartQuizViewModel @Inject constructor(
 
     fun getQuizFromSq(creatorUid: String, sqId: String) {
         viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true) }
+
             runCatching {
                 val response = getUserSqUseCase.invoke(creatorUid, sqId)
                 val quizModel = response?.toModel()
                 _getQuiz.update { quizModel }
             }.onFailure {
+                _uiState.update { it.copy(isLoading = false) }
                 _getQuizEvent.emit(DefaultEvent.Failure(R.string.start_quiz_msg_fail_get_quiz))
             }.onSuccess {
+                _uiState.update { it.copy(isLoading = false) }
                 _getQuizEvent.emit(DefaultEvent.Success)
             }
         }
@@ -47,13 +55,17 @@ class StartQuizViewModel @Inject constructor(
 
     fun getQuizFromWq() {
         viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true) }
+
             runCatching {
                 val response = getGeneratedWqUseCase.invoke()
                 val quizModel = response?.toModel()
                 _getQuiz.update { quizModel }
             }.onFailure {
+                _uiState.update { it.copy(isLoading = false) }
                 _getQuizEvent.emit(DefaultEvent.Failure(R.string.start_quiz_msg_fail_get_quiz))
             }.onSuccess {
+                _uiState.update { it.copy(isLoading = false) }
                 _getQuizEvent.emit(DefaultEvent.Success)
             }
         }
