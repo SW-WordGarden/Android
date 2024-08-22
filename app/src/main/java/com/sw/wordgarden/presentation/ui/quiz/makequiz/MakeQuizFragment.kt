@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -37,6 +38,17 @@ class MakeQuizFragment : Fragment() {
         List(10) { QAModel("", "", "", "", null) }
     private var enableMode = true
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                goBack()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -55,7 +67,8 @@ class MakeQuizFragment : Fragment() {
 
     private fun getData() {
         val args: MakeQuizFragmentArgs by navArgs()
-        if (args.argsSqId == null) { // 새로운 퀴즈 생성 모드
+        val quizKey = args.argsQuizKey
+        if (quizKey?.sqId == null) { // 새로운 퀴즈 생성 모드
             enableMode = true
             val quizModel = QuizModel(
                 "",
@@ -66,7 +79,7 @@ class MakeQuizFragment : Fragment() {
         } else { // 기존 퀴즈 확인 모드
             setConfirmDialog()
             enableMode = false
-            viewmodel.getQuiz(args.argsSqId ?: "", args.argsQTitle ?: "")
+            viewmodel.getQuiz(quizKey.sqId ?: "", quizKey.qTitle ?: "")
         }
     }
 
@@ -127,7 +140,7 @@ class MakeQuizFragment : Fragment() {
 
     private fun setUpListener() = with(binding) {
         btnMakeQuizBack.setOnClickListener {
-            findNavController().navigateUp()
+            goBack()
         }
     }
 
@@ -182,10 +195,14 @@ class MakeQuizFragment : Fragment() {
     }
 
     private fun shareQuiz(title: String) {
-        Log.i(TAG, "서버에 퀴즈 추가 요청 : $title || $qaModelListForInsert")
+        Log.i(TAG, "request make quiz to server : $title || $qaModelListForInsert")
         viewmodel.insertQuiz(qaModelListForInsert, title)
 
         goShare(title)
+    }
+
+    private fun goBack() {
+        findNavController().navigateUp()
     }
 
     private fun goShare(quizId: String) {

@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.sw.wordgarden.R
 import com.sw.wordgarden.domain.usecase.datastore.DeleteUidUseCase
 import kotlinx.coroutines.launch
-import com.sw.wordgarden.domain.usecase.user.GetUserInfoForLogin
+import com.sw.wordgarden.domain.usecase.user.GetUserInfoForLoginUseCase
 import com.sw.wordgarden.domain.usecase.datastore.SaveUidUseCase
 import com.sw.wordgarden.presentation.event.DefaultEvent
 import com.sw.wordgarden.presentation.event.UserCheckEvent
@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val getUserInfoForLogin: GetUserInfoForLogin,
+    private val getUserInfoForLoginUseCase: GetUserInfoForLoginUseCase,
     private val deleteUidUseCase: DeleteUidUseCase,
     private val saveUidUserCase: SaveUidUseCase,
 ) : ViewModel() {
@@ -38,7 +38,7 @@ class LoginViewModel @Inject constructor(
             runCatching {
                 deleteUid()
 
-                val result = getUserInfoForLogin.invoke(uid)
+                val result = getUserInfoForLoginUseCase.invoke(uid)
                 if (result != null) { //앱 유저 확인 성공
                     _checkUserEvent.emit(UserCheckEvent.Success)
                 } else {

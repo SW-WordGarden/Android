@@ -1,7 +1,5 @@
 package com.sw.wordgarden.data.datasource.local
 
-import com.sw.wordgarden.data.dto.alarm.AlarmDto
-
 interface LocalDataSource {
 
     //user
@@ -13,5 +11,4 @@ interface LocalDataSource {
     suspend fun saveDailyLimit(count: Int)
     suspend fun getDailyLimit(): Int?
     suspend fun deleteDailyLimit()
-    suspend fun getAlarmList(): List<AlarmDto>?
 }

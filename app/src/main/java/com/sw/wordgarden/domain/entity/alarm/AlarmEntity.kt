@@ -1,10 +1,12 @@
 package com.sw.wordgarden.domain.entity.alarm
 
-import java.sql.Date
+import java.time.LocalDateTime
 
 data class AlarmEntity (
-    val qTitle: String?,
-    val sqId: String?,
-    val creator: String?,
-    val date: Date?
+    val alarmId: String?,
+    val content: String?,
+    val isRead: Boolean?,
+    val createTime: LocalDateTime?,
+    val fromUserName: String?,
+    val toUserName: String?,
 )

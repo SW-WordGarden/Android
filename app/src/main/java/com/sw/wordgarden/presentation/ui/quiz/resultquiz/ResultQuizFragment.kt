@@ -2,14 +2,15 @@ package com.sw.wordgarden.presentation.ui.quiz.resultquiz
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
@@ -32,6 +33,17 @@ class ResultQuizFragment : Fragment() {
 
     private val viewmodel: ResultQuizViewModel by viewModels()
     private var quizKey = QuizKey("", "", null)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                goQuizOrBack()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,11 +69,12 @@ class ResultQuizFragment : Fragment() {
 
     private fun setupListener() = with(binding) {
         btnResultQuizExit.setOnClickListener {
-            findNavController().navigate(R.id.action_resultQuizFragment_to_quizFragment)
+            goQuizOrBack()
         }
 
         btnResultFriend.setOnClickListener {
-            val action = ResultQuizFragmentDirections.actionResultQuizFragmentToShareQuizFragment(quizKey)
+            val action =
+                ResultQuizFragmentDirections.actionResultQuizFragmentToShareQuizFragment(quizKey)
             findNavController().navigate(action)
         }
     }
@@ -90,14 +103,16 @@ class ResultQuizFragment : Fragment() {
     private fun setupUi(result: QuizModel?) = with(binding) {
         val quizList = result?.qaList ?: emptyList()
 
-        Log.d("quizList", quizList.toString())
-
         //-- 상단 text --
         val correctNumber = quizList.count { it.correct == true }
         val resultText = when (correctNumber) {
             0 -> getString(R.string.result_quiz_title_all_incorrect)
             10 -> getString(R.string.result_quiz_title_all_correct)
-            else -> getString(R.string.result_quiz_title_total) + "\n" + "$correctNumber${getString(R.string.result_quiz_title_correct)}"
+            else -> getString(R.string.result_quiz_title_total) + "\n" + "$correctNumber${
+                getString(
+                    R.string.result_quiz_title_correct
+                )
+            }"
         }
 
         tvResultQuizResult.text = resultText
@@ -113,16 +128,36 @@ class ResultQuizFragment : Fragment() {
         }
 
         //-- viewpager --
-        val pagerAdapter = ResultQuizAdapter(this@ResultQuizFragment, quizList) { _, _, _, _, _ ->  }
+        val pagerAdapter = ResultQuizAdapter(this@ResultQuizFragment, quizList) { _, _, _, _, _ -> }
 
         vpResultQuiz.apply {
             adapter = pagerAdapter
-            registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
+            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
                     indicatorAdapter.updateSelectedPosition(position)
                 }
             })
+        }
+    }
+
+    private fun goQuizOrBack() {
+        val navController = findNavController()
+        if (navController.previousBackStackEntry?.destination?.id == R.id.solveQuizFragment) {
+            val fromQuiz =
+                navController.previousBackStackEntry?.arguments?.getBoolean("argsFromQuiz") ?: false
+            if (fromQuiz) {
+                val navOptions = NavOptions.Builder()
+                    .setPopUpTo(R.id.quizFragment, true)
+                    .setLaunchSingleTop(true)
+                    .build()
+                navController.navigate(
+                    R.id.action_resultQuizFragment_to_quizFragment, null, navOptions)
+            } else {
+                navController.navigateUp()
+            }
+        } else {
+            navController.navigateUp()
         }
     }
 

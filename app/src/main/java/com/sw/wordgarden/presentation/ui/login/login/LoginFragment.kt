@@ -78,15 +78,15 @@ class LoginFragment : Fragment() {
             override fun onFailure(httpStatus: Int, message: String) {
                 val errorCode = NaverIdLoginSDK.getLastErrorCode().code
                 val errorDescription = NaverIdLoginSDK.getLastErrorDescription()
-                Log.e(TAG, "네이버 로그인 실패 errorCode:$errorCode, errorDesc:$errorDescription")
+                Log.e(TAG, "fail to naver login - errorCode:$errorCode, errorDesc:$errorDescription")
             }
 
             override fun onSuccess() {
-                Log.i(TAG, "네이버 로그인 성공 ${NaverIdLoginSDK.getAccessToken()}")
+                Log.i(TAG, "success naver login ${NaverIdLoginSDK.getAccessToken()}")
 
                 NidOAuthLogin().callProfileApi(object : NidProfileCallback<NidProfileResponse> {
                     override fun onSuccess(result: NidProfileResponse) {
-                        Log.i(TAG, "네이버 사용자 정보 요청 성공 - 회원번호: ${result.profile?.id}")
+                        Log.i(TAG, "success request for naver user info - user number: ${result.profile?.id}")
 
                         provider = NAVER
 
@@ -98,7 +98,7 @@ class LoginFragment : Fragment() {
                         val errorDescription = NaverIdLoginSDK.getLastErrorDescription()
                         Log.e(
                             TAG,
-                            "네이버 사용자 정보 요청 실패 errorCode:$errorCode, errorDesc:$errorDescription"
+                            "fail to request for naver user info - errorCode:$errorCode, errorDesc:$errorDescription"
                         )
 
                     }
@@ -116,49 +116,46 @@ class LoginFragment : Fragment() {
     private fun kakaoLogin() {
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
             if (error != null) {
-                Log.e(TAG, "카카오계정으로 로그인 실패", error)
+                Log.e(TAG, "fail to kakao login", error)
             } else if (token != null) {
-                Log.i(TAG, "카카오계정으로 로그인 성공 ${token.accessToken}")
+                Log.i(TAG, "success kakao login ${token.accessToken}")
 
                 provider = KAKAO
 
                 UserApiClient.instance.me { user, e ->
                     if (e != null) {
-                        Log.e(TAG, "카카오 사용자 정보 요청 실패", e)
+                        Log.e(TAG, "fail to request for kakao user info", e)
                     } else if (user != null) {
-                        Log.i(TAG, "카카오 사용자 정보 요청 성공 - 회원번호: ${user.id}")
+                        Log.i(TAG, "success request for kakao user info - user number: ${user.id}")
                         checkMember(user.id.toString())
                     }
                 }
             }
         }
 
-        //카카오톡 설치 시 카카오톡으로 로그인, 아니면 카카오계정으로 로그인
         if (UserApiClient.instance.isKakaoTalkLoginAvailable(requireContext())) {
             UserApiClient.instance.loginWithKakaoTalk(requireContext()) { token, error ->
                 if (error != null) {
-                    Log.e(TAG, "카카오톡으로 로그인 실패 $error")
+                    Log.e(TAG, "fail to kakao login $error")
 
-                    //사용자가 카카오톡 설치 후 디바이스 권한 요청 화면에서 로그인 취소한 경우, 취소 처리
                     if (error is ClientError && error.reason == ClientErrorCause.Cancelled) {
                         return@loginWithKakaoTalk
                     }
 
-                    //카카오톡에 연결된 카카오계정이 없는 경우, 카카오계정으로 로그인 시도
                     UserApiClient.instance.loginWithKakaoAccount(
                         requireContext(),
                         callback = callback
                     )
                 } else if (token != null) {
-                    Log.i(TAG, "카카오톡으로 로그인 성공 ${token.accessToken}")
+                    Log.i(TAG, "success kakao login ${token.accessToken}")
 
                     provider = KAKAO
 
                     UserApiClient.instance.me { user, e ->
                         if (e != null) {
-                            Log.e(TAG, "카카오 사용자 정보 요청 실패", e)
+                            Log.e(TAG, "fail to request for kakao user info", e)
                         } else if (user != null) {
-                            Log.i(TAG, "카카오 사용자 정보 요청 성공 - 회원번호: ${user.id}")
+                            Log.i(TAG, "success request for kakao user info - user number: ${user.id}")
                             checkMember(user.id.toString())
                         }
                     }
@@ -196,7 +193,7 @@ class LoginFragment : Fragment() {
                         ToastMaker.make(requireContext(), event.msg)
                     }
                     DefaultEvent.Success -> {
-                        Log.i(TAG, "기기에 저장된 UID 초기화 완료")
+                        Log.i(TAG, "success renew local UID")
                     }
                 }
             }
@@ -209,7 +206,7 @@ class LoginFragment : Fragment() {
                         ToastMaker.make(requireContext(), event.msg)
                     }
                     DefaultEvent.Success -> {
-                        Log.i(TAG, "UID 기기 저장 완료")
+                        Log.i(TAG, "success save local UID")
                     }
                 }
             }
@@ -227,8 +224,14 @@ class LoginFragment : Fragment() {
             provider = provider
         )
 
-        val action = LoginFragmentDirections.actionLoginFragmentToOnBoardingFragment(loginRequestEntity)
-        findNavController().navigate(action)
+        findNavController().apply {
+            if (currentBackStackEntry?.destination?.id == R.id.onBoardingFragment) {
+                popBackStack(R.id.onBoardingFragment, false)
+            } else {
+                val action = LoginFragmentDirections.actionLoginFragmentToOnBoardingFragment(loginRequestEntity)
+                navigate(action)
+            }
+        }
     }
 
     override fun onDestroyView() {

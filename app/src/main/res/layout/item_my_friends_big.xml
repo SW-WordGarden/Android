@@ -39,7 +39,7 @@
         android:id="@+id/iv_friend_delete"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:src="@color/gray"
+        android:src="@drawable/ic_delete"
         app:layout_constraintBottom_toBottomOf="@+id/tv_friend_nickname"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv_friend_nickname" />
@@ -49,7 +49,7 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginEnd="@dimen/margin_medium"
-        android:src="@color/gray"
+        android:src="@drawable/ic_report"
         app:layout_constraintBottom_toBottomOf="@+id/tv_friend_nickname"
         app:layout_constraintEnd_toStartOf="@+id/iv_friend_delete"
         app:layout_constraintTop_toTopOf="@+id/tv_friend_nickname" />

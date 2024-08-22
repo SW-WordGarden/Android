@@ -1,6 +1,5 @@
 package com.sw.wordgarden.presentation.ui.quiz.resultquiz
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sw.wordgarden.R
@@ -38,15 +37,9 @@ class ResultQuizViewModel @Inject constructor(
             runCatching {
                 if (quizKey.isWq == true) {
                     val response = getSolvedWqUseCase.invoke(quizKey.qTitle ?: "")
-
-                    Log.d("ResultQuizViewModel", "getResult: $response")
-
                     _getResult.update { response?.toModel() }
                 } else {
                     val response = getSolvedSqUseCase.invoke(quizKey.sqId ?: "")
-
-                    Log.d("ResultQuizViewModel", "getResult: $response")
-
                     _getResult.update { response?.toModel() }
                 }
             }.onFailure {

@@ -1,4 +1,4 @@
-package com.sw.wordgarden.data.dto.quiz
+package com.sw.wordgarden.data.dto.alarm
 
 import com.google.gson.annotations.SerializedName
 

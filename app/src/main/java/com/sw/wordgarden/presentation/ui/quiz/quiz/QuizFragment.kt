@@ -14,6 +14,8 @@ import androidx.navigation.fragment.findNavController
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentQuizBinding
 import com.sw.wordgarden.presentation.event.DefaultEvent
+import com.sw.wordgarden.presentation.model.QuizKey
+import com.sw.wordgarden.presentation.model.QuizModel
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -124,7 +126,12 @@ class QuizFragment : Fragment() {
     }
 
     private fun goMakeQuiz() {
-        val action = QuizFragmentDirections.actionQuizFragmentToMakeQuizFragment(null, null)
+        val quizKey = QuizKey(
+            qTitle = null,
+            sqId = null,
+            isWq = null
+        )
+        val action = QuizFragmentDirections.actionQuizFragmentToMakeQuizFragment(quizKey, true)
         findNavController().navigate(action)
     }
 

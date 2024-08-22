@@ -4,8 +4,9 @@ data class UserInfoEntity(
     val profileImage: String?,
     val point: Int?,
     val rank: Int?,
-    val randomFriends: List<String>?,
+    val randomFriends: List<FriendEntity>?,
     val name: String?,
+    val uUrl: String?,
     val all: Int?,
     val right: Int?,
     val latestCustomQuiz: CustomQuizEntity?,
@@ -18,6 +19,6 @@ data class CustomQuizEntity(
 )
 
 data class SolvedQuizEntity(
-    val quizId: String?,
-    val quizTitle: String?
+    val type: String?,
+    val title: String?
 )

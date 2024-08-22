@@ -31,8 +31,8 @@ class AlarmAdapter(
         private val context: Context,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(alarmEntity: AlarmEntity) = with(binding) {
-            val date = alarmEntity.date.toString()
-            val title = "${alarmEntity.creator} ${getString(context, R.string.alarm_check_quiz)}"
+            val date = alarmEntity.createTime.toString()
+            val title = "${alarmEntity.fromUserName} ${getString(context, R.string.alarm_check_quiz)}"
             tvAlarmData.text = date
             tvAlarmTitle.text = title
 
@@ -45,7 +45,7 @@ class AlarmAdapter(
     companion object {
         private val DIFF_UTIL = object : DiffUtil.ItemCallback<AlarmEntity>() {
             override fun areItemsTheSame(oldItem: AlarmEntity, newItem: AlarmEntity): Boolean {
-                return oldItem.sqId == newItem.sqId
+                return oldItem.alarmId == newItem.alarmId
             }
 
             override fun areContentsTheSame(oldItem: AlarmEntity, newItem: AlarmEntity): Boolean {

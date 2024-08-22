@@ -6,8 +6,9 @@ data class UserInfoDto(
     @SerializedName("profileImage") val profileImage: String?,
     @SerializedName("point") val point: Int?,
     @SerializedName("rank") val rank: Int?,
-    @SerializedName("randomFriends") val randomFriends: List<String>?,
+    @SerializedName("randomFriends") val randomFriends: List<FriendDto>?,
     @SerializedName("name") val name: String?,
+    @SerializedName("uUrl") val uUrl: String?,
     @SerializedName("all") val all: Int?,
     @SerializedName("right") val right: Int?,
     @SerializedName("latestCustomQuiz") val latestCustomQuiz: CustomQuizDto?,
@@ -20,6 +21,6 @@ data class CustomQuizDto(
 )
 
 data class SolvedQuizDto(
-    @SerializedName("quizId") val quizId: String?,
-    @SerializedName("quizTitle") val quizTitle: String?
+    @SerializedName("type") val type: String?,
+    @SerializedName("title") val title: String?
 )

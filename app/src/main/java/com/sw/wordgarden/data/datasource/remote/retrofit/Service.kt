@@ -1,25 +1,33 @@
 package com.sw.wordgarden.data.datasource.remote.retrofit
 
-import com.sw.wordgarden.data.dto.quiz.SqQuestionAnswerDto
-import com.sw.wordgarden.data.dto.quiz.SqQuizSummaryDto
+import com.sw.wordgarden.data.dto.TreeDto
+import com.sw.wordgarden.data.dto.WordDto
+import com.sw.wordgarden.data.dto.alarm.AlarmDetailDto
+import com.sw.wordgarden.data.dto.alarm.AlarmDto
+import com.sw.wordgarden.data.dto.alarm.ShareRequestDto
+import com.sw.wordgarden.data.dto.quiz.QuizSummaryDto
 import com.sw.wordgarden.data.dto.quiz.SqCreatorInfoDto
 import com.sw.wordgarden.data.dto.quiz.SqDto
-import com.sw.wordgarden.data.dto.user.LoginRequestDto
+import com.sw.wordgarden.data.dto.quiz.SqQuestionAnswerDto
 import com.sw.wordgarden.data.dto.quiz.SqSolveQuizDto
-import com.sw.wordgarden.data.dto.TreeDto
-import com.sw.wordgarden.data.dto.user.UserDto
-import com.sw.wordgarden.data.dto.WordDto
 import com.sw.wordgarden.data.dto.quiz.WqResponseDto
 import com.sw.wordgarden.data.dto.quiz.WqStateDto
 import com.sw.wordgarden.data.dto.quiz.WqSubmissionDto
 import com.sw.wordgarden.data.dto.quiz.WqWrongAnswerDto
+import com.sw.wordgarden.data.dto.user.FriendListDto
+import com.sw.wordgarden.data.dto.user.LoginRequestDto
 import com.sw.wordgarden.data.dto.user.ReportInfoDto
+import com.sw.wordgarden.data.dto.user.AddRequestFriendDto
+import com.sw.wordgarden.data.dto.user.DeleteRequestFriendDto
+import com.sw.wordgarden.data.dto.user.UserDto
 import com.sw.wordgarden.data.dto.user.UserInfoDto
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.HTTP
+import retrofit2.http.PATCH
 import retrofit2.http.POST
-import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -38,15 +46,41 @@ interface Service {
     @GET("user/info/{uid}")
     suspend fun getUserInfoForMypage(@Path("uid") uid: String): Response<UserInfoDto>
 
-    @PUT("user/nickname/{uid}")
-    suspend fun updateUserNickname(@Path("uid") uid: String, @Body nickname: String): Response<Unit>
+    @PATCH("user/nickname/{uid}")
+    suspend fun updateUserNickname(@Path("uid") uid: String, @Body payload: Map<String, String>): Response<Unit>
+
+    @PATCH("user/image/{uid}")
+    suspend fun updateUserImage(@Path("uid") uid: String, @Body payload: Map<String, String>): Response<Unit>
 
     @GET("user/friends/{uid}")
-    suspend fun getFriends(@Path("uid") uid: String): Response<List<UserDto>>
+    suspend fun getFriends(@Path("uid") uid: String): Response<FriendListDto>
+
+    //user - mypage - friend
+    @POST("user/friend/add")
+    suspend fun addFriend(@Body friend: AddRequestFriendDto): Response<Unit>
+
+//    @DELETE("user/friend/delete")
+    @HTTP(method = "DELETE", path = "user/friend/delete", hasBody = true)
+    suspend fun deleteFriend(@Body friend: DeleteRequestFriendDto): Response<Unit>
 
     @POST("user/report")
     suspend fun reportUser(@Body reportInfo: ReportInfoDto): Response<Unit>
 
+    //alarm
+    @POST("share/quiz")
+    suspend fun makeSharingAlarm(@Body shareRequest: ShareRequestDto): Response<Unit>
+
+    @GET("share/alarms/{userId}")
+    suspend fun getAlarms(@Path("userId") uid: String): Response<List<AlarmDto>>
+
+    @GET("share/alarmdetail/{alarmId}")
+    suspend fun getAlarmDetail(@Path("alarmId") alarmId: String): Response<AlarmDetailDto>
+
+    @DELETE("share/alarmdetail/{alarmId}")
+    suspend fun deleteAlarm(
+        @Path("alarmId") alarmId: String,
+        @Query("userId") uid: String
+    ): Response<Unit>
 
     //word
     //    @POST("login/login")
@@ -79,14 +113,17 @@ interface Service {
     suspend fun getSolvedWqTitles(@Path("userId") uid: String): Response<Set<String>>
 
     @GET("wq/{title}")
-    suspend fun getSolvedWq(@Path("title") title: String, @Query("userId") uid: String): Response<List<WqResponseDto>>
+    suspend fun getSolvedWq(
+        @Path("title") title: String,
+        @Query("userId") uid: String
+    ): Response<List<WqResponseDto>>
 
     //quiz - sq
     @POST("sq/create")
     suspend fun createNewSq(@Body quizList: SqDto): Response<Unit>
 
     @GET("sq/created/{uid}")
-    suspend fun getUserSqTitles(@Path("uid") uid: String): Response<List<SqQuizSummaryDto>>
+    suspend fun getUserSqTitles(@Path("uid") uid: String): Response<List<QuizSummaryDto>>
 
     @GET("sq/created/{uid}/{sqid}")
     suspend fun getUserSq(@Path("uid") uid: String, @Path("sqid") quizId: String): Response<SqDto>
@@ -98,7 +135,7 @@ interface Service {
     suspend fun submitSq(@Body solvedQuiz: SqSolveQuizDto): Response<Unit>
 
     @GET("sq/solved/{uid}")
-    suspend fun getSolvedSqTitles(@Path("uid") uid: String): Response<List<String>>
+    suspend fun getSolvedSqTitles(@Path("uid") uid: String): Response<List<QuizSummaryDto>>
 
     @GET("sq/solved/{uid}/{title}")
     suspend fun getSolvedSq(@Path("uid") uid: String, @Path("title") title: String): Response<SqDto>

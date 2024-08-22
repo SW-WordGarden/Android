@@ -1,10 +1,12 @@
 package com.sw.wordgarden.app.di
 
+import com.sw.wordgarden.data.repository.AlarmRepositoryImpl
 import com.sw.wordgarden.data.repository.GardenRepositoryImpl
 import com.sw.wordgarden.data.repository.QuizRepositoryImpl
 import com.sw.wordgarden.data.repository.DataStoreRepositoryImpl
 import com.sw.wordgarden.data.repository.UserRepositoryImpl
 import com.sw.wordgarden.data.repository.WordRepositoryImpl
+import com.sw.wordgarden.domain.repository.AlarmRepository
 import com.sw.wordgarden.domain.repository.GardenRepository
 import com.sw.wordgarden.domain.repository.QuizRepository
 import com.sw.wordgarden.domain.repository.UserRepository
@@ -39,13 +41,19 @@ abstract class RepositoryModule {
 
     @Binds
     @Singleton
-    abstract fun bindWordRepositoryy(
+    abstract fun bindWordRepository(
         wordRepositoryImpl: WordRepositoryImpl
     ): WordRepository
 
     @Binds
     @Singleton
-    abstract fun bindUidRepositoryy(
+    abstract fun bindDataStoreRepository(
         dataStoreRepositoryImpl: DataStoreRepositoryImpl
     ): DataStoreRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindAlarmRepository(
+        alarmRepositoryImpl: AlarmRepositoryImpl
+    ): AlarmRepository
 }

@@ -1,8 +1,6 @@
 package com.sw.wordgarden.data.repository
 
 import com.sw.wordgarden.data.datasource.local.LocalDataSource
-import com.sw.wordgarden.data.mapper.LocalMapper.toEntity
-import com.sw.wordgarden.domain.entity.alarm.AlarmEntity
 import com.sw.wordgarden.domain.repository.DataStoreRepository
 import javax.inject.Inject
 
@@ -34,9 +32,5 @@ class DataStoreRepositoryImpl @Inject constructor(
 
     override suspend fun deleteDailyLimit() {
         localDataSource.deleteDailyLimit()
-    }
-
-    override suspend fun getAlarmList(): List<AlarmEntity>? {
-        return localDataSource.getAlarmList()?.map { it.toEntity() }
     }
 }
