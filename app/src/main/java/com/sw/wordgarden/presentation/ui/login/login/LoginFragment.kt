@@ -177,6 +177,25 @@ class LoginFragment : Fragment() {
 
     private fun setupObserver() {
         lifecycleScope.launch {
+            viewmodel.getUidEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
+                when (event) {
+                    is DefaultEvent.Failure -> {
+                        ToastMaker.make(requireContext(), event.msg)
+                    }
+                    DefaultEvent.Success -> {}
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            viewmodel.getUid.flowWithLifecycle(lifecycle).collectLatest { uid ->
+                if (!uid.isNullOrEmpty() && uid.isNotBlank()) {
+                    goHome()
+                }
+            }
+        }
+
+        lifecycleScope.launch {
             viewmodel.deleteUidEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
                 when (event) {
                     is DefaultEvent.Failure -> {
