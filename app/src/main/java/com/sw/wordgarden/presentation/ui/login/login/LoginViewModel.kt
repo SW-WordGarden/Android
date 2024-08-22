@@ -4,16 +4,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sw.wordgarden.R
 import com.sw.wordgarden.domain.usecase.datastore.DeleteUidUseCase
-import kotlinx.coroutines.launch
-import com.sw.wordgarden.domain.usecase.user.GetUserInfoForLoginUseCase
 import com.sw.wordgarden.domain.usecase.datastore.SaveUidUseCase
+import com.sw.wordgarden.domain.usecase.user.GetUserInfoForLoginUseCase
+import com.sw.wordgarden.domain.usecase.user.UpdateFcmTokenUseCase
 import com.sw.wordgarden.presentation.event.DefaultEvent
-import com.sw.wordgarden.presentation.event.UserCheckEvent
 import com.sw.wordgarden.presentation.event.ErrorMessage
+import com.sw.wordgarden.presentation.event.UserCheckEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import javax.inject.Inject
 
@@ -22,8 +23,8 @@ class LoginViewModel @Inject constructor(
     private val getUserInfoForLoginUseCase: GetUserInfoForLoginUseCase,
     private val deleteUidUseCase: DeleteUidUseCase,
     private val saveUidUserCase: SaveUidUseCase,
+    private val updateFcmTokenUseCase: UpdateFcmTokenUseCase,
 ) : ViewModel() {
-
     private val _checkUserEvent = MutableSharedFlow<UserCheckEvent>()
     val checkUserEvent: SharedFlow<UserCheckEvent> = _checkUserEvent.asSharedFlow()
 
@@ -33,19 +34,18 @@ class LoginViewModel @Inject constructor(
     private val _saveUidEvent = MutableSharedFlow<DefaultEvent>()
     val saveUidEvent: SharedFlow<DefaultEvent> = _saveUidEvent.asSharedFlow()
 
+    private val _updateTokenEvent = MutableSharedFlow<DefaultEvent>()
+    val updateTokenEvent: SharedFlow<DefaultEvent> = _updateTokenEvent.asSharedFlow()
+
     fun checkUserInfo(uid: String) {
         viewModelScope.launch {
             runCatching {
-                deleteUid()
-
                 val result = getUserInfoForLoginUseCase.invoke(uid)
                 if (result != null) { //앱 유저 확인 성공
                     _checkUserEvent.emit(UserCheckEvent.Success)
                 } else {
                     _checkUserEvent.emit(UserCheckEvent.NotFound)
                 }
-
-                saveUid(uid)
             }.onFailure { throwable ->
                 when (throwable) {
                     is HttpException -> {
@@ -65,7 +65,7 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    private fun deleteUid() {
+    fun deleteUidForStartingLogin() {
         viewModelScope.launch {
             runCatching {
                 deleteUidUseCase.invoke()
@@ -77,7 +77,7 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    private fun saveUid(uid: String) {
+    fun saveUid(uid: String) {
         viewModelScope.launch {
             runCatching {
                 saveUidUserCase.invoke(uid)
@@ -85,6 +85,18 @@ class LoginViewModel @Inject constructor(
                 _saveUidEvent.emit(DefaultEvent.Failure(R.string.login_msg_can_not_save_uid))
             }.onSuccess {
                 _saveUidEvent.emit(DefaultEvent.Success)
+            }
+        }
+    }
+
+    fun updateToken(token: String) {
+        viewModelScope.launch {
+            runCatching {
+                updateFcmTokenUseCase.invoke(token)
+            }.onFailure {
+                _updateTokenEvent.emit(DefaultEvent.Failure(R.string.login_msg_can_not_save_token))
+            }.onSuccess {
+                _updateTokenEvent.emit(DefaultEvent.Success)
             }
         }
     }

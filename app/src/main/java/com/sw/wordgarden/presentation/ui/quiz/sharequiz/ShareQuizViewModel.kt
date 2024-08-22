@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sw.wordgarden.R
 import com.sw.wordgarden.domain.entity.user.FriendListEntity
+import com.sw.wordgarden.domain.usecase.alarm.MakeSharingAlarmUseCase
 import com.sw.wordgarden.domain.usecase.user.GetFriendsUseCase
-import com.sw.wordgarden.domain.usecase.quiz.common.ShareQuizUseCase
 import com.sw.wordgarden.presentation.event.DefaultEvent
 import com.sw.wordgarden.presentation.model.QuizKey
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,7 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ShareQuizViewModel @Inject constructor(
     private val getFriendsUseCase: GetFriendsUseCase,
-    private val shareQuizUseCase: ShareQuizUseCase
+    private val makeSharingAlarmQuizUseCase: MakeSharingAlarmUseCase
 ) : ViewModel() {
 
     private val _getFriendsEvent = MutableSharedFlow<DefaultEvent>()
@@ -55,13 +55,13 @@ class ShareQuizViewModel @Inject constructor(
             }
         }
 
-    fun shareQuiz(quizKey: QuizKey, friendUid: String) {
+    fun makeSharingQuizAlarm(quizKey: QuizKey, friendUid: String) {
         viewModelScope.launch {
             runCatching {
                 if (quizKey.isWq == true) {
-                    shareQuizUseCase.invoke(quizKey.sqId ?: "", friendUid)
+                    makeSharingAlarmQuizUseCase.invoke(quizKey.sqId ?: "", friendUid)
                 } else {
-                    shareQuizUseCase.invoke(quizKey.sqId ?: "", friendUid)
+                    makeSharingAlarmQuizUseCase.invoke(quizKey.sqId ?: "", friendUid)
                 }
             }.onFailure {
                 _shareEvent.emit(DefaultEvent.Failure(R.string.share_quiz_msg_fail_to_share))

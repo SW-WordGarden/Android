@@ -15,7 +15,7 @@ import javax.inject.Singleton
 abstract class DataSourceModule {
     @Binds
     @Singleton
-    abstract fun bindSererDataSource(
+    abstract fun bindServerDataSource(
         serverDataSourceImpl: ServerDataSourceImpl
     ): ServerDataSource
 

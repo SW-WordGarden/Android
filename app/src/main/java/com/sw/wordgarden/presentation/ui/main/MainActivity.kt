@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -23,9 +24,10 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.sw.wordgarden.R
-import com.sw.wordgarden.presentation.ui.main.fcm.FirebaseMessagingService
 import com.sw.wordgarden.databinding.ActivityMainBinding
+import com.sw.wordgarden.presentation.ui.main.fcm.FirebaseMessagingService
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -35,20 +37,20 @@ class MainActivity : AppCompatActivity() {
     private val binding: ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
-
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     private val viewmodel: MainViewModel by viewModels()
+    private val NOTIFICATION_PERMISSION_REQUEST_CODE = 5000
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         permissionCheck()
-        setupMessaging()
+        setupFCM()
         setupSplash()
         setupUi()
-        setNavigation()
+        setupNavigation()
     }
 
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
@@ -65,7 +67,7 @@ class MainActivity : AppCompatActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
-            5000 -> {
+            NOTIFICATION_PERMISSION_REQUEST_CODE -> {
                 if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
                     Log.i(TAG, "Notification permission is denied")
                 } else {
@@ -85,14 +87,23 @@ class MainActivity : AppCompatActivity() {
                 ActivityCompat.requestPermissions(
                     this,
                     arrayOf(Manifest.permission.POST_NOTIFICATIONS),
-                    5000
+                    NOTIFICATION_PERMISSION_REQUEST_CODE
                 )
             }
         }
     }
 
-    private fun setupMessaging() {
-        FirebaseMessagingService().getFirebaseToken()
+    private fun setupFCM() {
+        lifecycleScope.launch {
+            val newToken = FirebaseMessagingService().getFirebaseToken()
+            if (newToken != null) {
+                Log.i(TAG, "Token: $newToken")
+
+                viewmodel.setFcmToken(newToken)
+            } else {
+                Log.e(TAG, "Failed to get token")
+            }
+        }
     }
 
     private fun setupSplash() {
@@ -111,18 +122,25 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setNavigation(){
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fcv_nav_host_fragment) as NavHostFragment
+    private fun setupNavigation() {
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fcv_nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
         val bottomNav = findViewById<BottomNavigationView>(R.id.bn_bottom_menu)
         bottomNav.setupWithNavController(navController)
 
         appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.homeFragment, R.id.wordFragment, R.id.quizFragment, R.id.gardenFragment, R.id.mypageFragment)
+            setOf(
+                R.id.homeFragment,
+                R.id.wordFragment,
+                R.id.quizFragment,
+                R.id.gardenFragment,
+                R.id.mypageFragment
+            )
         )
 
-        navController.addOnDestinationChangedListener{ _ , destination, _ ->
+        navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.homeFragment -> binding.bnBottomMenu.visibility = View.VISIBLE
                 else -> binding.bnBottomMenu.visibility = View.GONE

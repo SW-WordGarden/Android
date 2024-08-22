@@ -13,11 +13,11 @@ import com.sw.wordgarden.data.dto.user.UserDto
 import com.sw.wordgarden.data.dto.WordDto
 import com.sw.wordgarden.data.dto.alarm.AlarmDetailDto
 import com.sw.wordgarden.data.dto.alarm.AlarmDto
+import com.sw.wordgarden.data.dto.alarm.ShareRequestDto
 import com.sw.wordgarden.data.dto.quiz.WqResponseDto
 import com.sw.wordgarden.data.dto.quiz.WqStateDto
 import com.sw.wordgarden.data.dto.quiz.WqSubmissionDto
 import com.sw.wordgarden.data.dto.quiz.WqWrongAnswerDto
-import com.sw.wordgarden.data.dto.alarm.ShareRequestDto
 import com.sw.wordgarden.data.dto.user.FriendListDto
 import com.sw.wordgarden.data.dto.user.ReportInfoDto
 import com.sw.wordgarden.data.dto.user.AddRequestFriendDto
@@ -182,8 +182,14 @@ class ServerDataSourceImpl @Inject constructor(
     }
 
     //alarm
-    override suspend fun makeSharingAlarm(shareRequest: ShareRequestDto) {
+    override suspend fun makeSharingAlarm(toUserId: String, quizId: String) {
         try {
+            val uid = getUid()
+            val shareRequest = ShareRequestDto(
+                fromUserId = uid,
+                toUserId = toUserId,
+                quizId = quizId
+            )
             val response = service.makeSharingAlarm(shareRequest)
             if (!response.isSuccessful) {
                 throw HttpException(response)
@@ -471,21 +477,6 @@ class ServerDataSourceImpl @Inject constructor(
         } catch (e: Exception) {
             e.printStackTrace()
             null
-        }
-    }
-
-
-    override suspend fun shareQuiz(quizId: String, friendUid: String) {
-        try {
-            val uid = getUid()
-
-            val response = service.shareQuiz(uid!!, quizId, friendUid)
-            if (!response.isSuccessful) {
-                throw HttpException(response)
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-            throw e
         }
     }
 

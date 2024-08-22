@@ -1,7 +1,9 @@
 package com.sw.wordgarden.app.di
 
-import com.sw.wordgarden.domain.usecase.user.SendFirebaseTokenUseCase
-import com.sw.wordgarden.domain.usecase.user.SendFirebaseTokenUseCaseImpl
+import com.sw.wordgarden.domain.usecase.datastore.GetUidForServiceUseCase
+import com.sw.wordgarden.domain.usecase.datastore.GetUidForServiceUseCaseImpl
+import com.sw.wordgarden.domain.usecase.user.UpdateFcmTokenUseCase
+import com.sw.wordgarden.domain.usecase.user.UpdateFcmTokenUseCaseImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -14,7 +16,13 @@ import dagger.hilt.android.scopes.ServiceScoped
 abstract class ServiceUseCaseModule {
     @Binds
     @ServiceScoped
-    abstract fun bindSendFirebaseTokenUseCase(
-        sendFirebaseTokenUseCaseImpl: SendFirebaseTokenUseCaseImpl
-    ): SendFirebaseTokenUseCase
+    abstract fun bindUpdateFcmTokenUseCase(
+        updateFcmTokenUseCaseImpl: UpdateFcmTokenUseCaseImpl
+    ): UpdateFcmTokenUseCase
+
+    @Binds
+    @ServiceScoped
+    abstract fun bindGetUidForServiceUseCase(
+        getUidForServiceUseCaseImpl: GetUidForServiceUseCaseImpl
+    ): GetUidForServiceUseCase
 }

@@ -14,16 +14,15 @@ import com.sw.wordgarden.data.dto.quiz.WqResponseDto
 import com.sw.wordgarden.data.dto.quiz.WqStateDto
 import com.sw.wordgarden.data.dto.quiz.WqSubmissionDto
 import com.sw.wordgarden.data.dto.quiz.WqWrongAnswerDto
+import com.sw.wordgarden.data.dto.user.AddRequestFriendDto
+import com.sw.wordgarden.data.dto.user.DeleteRequestFriendDto
 import com.sw.wordgarden.data.dto.user.FriendListDto
 import com.sw.wordgarden.data.dto.user.LoginRequestDto
 import com.sw.wordgarden.data.dto.user.ReportInfoDto
-import com.sw.wordgarden.data.dto.user.AddRequestFriendDto
-import com.sw.wordgarden.data.dto.user.DeleteRequestFriendDto
 import com.sw.wordgarden.data.dto.user.UserDto
 import com.sw.wordgarden.data.dto.user.UserInfoDto
 import retrofit2.Response
 import retrofit2.http.Body
-import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.HTTP
 import retrofit2.http.PATCH
@@ -47,10 +46,16 @@ interface Service {
     suspend fun getUserInfoForMypage(@Path("uid") uid: String): Response<UserInfoDto>
 
     @PATCH("user/nickname/{uid}")
-    suspend fun updateUserNickname(@Path("uid") uid: String, @Body payload: Map<String, String>): Response<Unit>
+    suspend fun updateUserNickname(
+        @Path("uid") uid: String,
+        @Body payload: Map<String, String>
+    ): Response<Unit>
 
     @PATCH("user/image/{uid}")
-    suspend fun updateUserImage(@Path("uid") uid: String, @Body payload: Map<String, String>): Response<Unit>
+    suspend fun updateUserImage(
+        @Path("uid") uid: String,
+        @Body payload: Map<String, String>
+    ): Response<Unit>
 
     @GET("user/friends/{uid}")
     suspend fun getFriends(@Path("uid") uid: String): Response<FriendListDto>
@@ -59,7 +64,6 @@ interface Service {
     @POST("user/friend/add")
     suspend fun addFriend(@Body friend: AddRequestFriendDto): Response<Unit>
 
-//    @DELETE("user/friend/delete")
     @HTTP(method = "DELETE", path = "user/friend/delete", hasBody = true)
     suspend fun deleteFriend(@Body friend: DeleteRequestFriendDto): Response<Unit>
 
@@ -76,7 +80,8 @@ interface Service {
     @GET("share/alarmdetail/{alarmId}")
     suspend fun getAlarmDetail(@Path("alarmId") alarmId: String): Response<AlarmDetailDto>
 
-    @DELETE("share/alarmdetail/{alarmId}")
+    //    @DELETE("share/alarmdetail/{alarmId}")
+    @HTTP(method = "DELETE", path = "share/alarmdetail/{alarmId}", hasBody = true)
     suspend fun deleteAlarm(
         @Path("alarmId") alarmId: String,
         @Query("userId") uid: String
@@ -142,9 +147,6 @@ interface Service {
 
     @GET("sq/creator/{sqid}")
     suspend fun getSqCreatorInfo(@Path("sqid") quizId: String): Response<SqCreatorInfoDto>
-
-    @POST("") //TODO: 서버 구현 시 수정
-    suspend fun shareQuiz(@Body uid: String, quizTitle: String, friendId: String): Response<Unit>
 
     //garden
     //    @POST("login/login")

@@ -24,6 +24,8 @@
     <string name="login_msg_not_user">회원 가입이 필요합니다.</string>
     <string name="login_msg_can_not_delete_uid">회원 정보 초기화에 실패했습니다.</string>
     <string name="login_msg_can_not_save_uid">회원 정보 저장에 실패했습니다.</string>
+    <string name="login_msg_can_not_save_token">토큰 정보 저장에 실패했습니다.\n알람을 받을 수 없습니다.</string>
+    <string name="login_msg_can_not_update_token">토큰 업데이트를 실패했습니다.</string>
     <string name="onboarding_input_nickname">닉네임을 입력하세요</string>
     <string name="onboarding_next">다음</string>
     <string name="onboarding_msg_fill">닉네임을 입력해주세요.</string>

@@ -15,9 +15,7 @@ import com.sw.wordgarden.data.dto.quiz.WqResponseDto
 import com.sw.wordgarden.data.dto.quiz.WqStateDto
 import com.sw.wordgarden.data.dto.quiz.WqSubmissionDto
 import com.sw.wordgarden.data.dto.quiz.WqWrongAnswerDto
-import com.sw.wordgarden.data.dto.alarm.ShareRequestDto
 import com.sw.wordgarden.data.dto.user.FriendListDto
-import com.sw.wordgarden.data.dto.user.ReportInfoDto
 import com.sw.wordgarden.data.dto.user.UserInfoDto
 
 interface ServerDataSource {
@@ -38,7 +36,7 @@ interface ServerDataSource {
     suspend fun reportUser(friendUid: String, contents: String?)
 
     //alarm
-    suspend fun makeSharingAlarm(shareRequest: ShareRequestDto)
+    suspend fun makeSharingAlarm(toUserId: String, quizId: String)
     suspend fun getAlarms(): List<AlarmDto>?
     suspend fun getAlarmDetail(alarmId: String): AlarmDetailDto?
     suspend fun deleteAlarm(alarmId: String)
@@ -67,7 +65,6 @@ interface ServerDataSource {
     suspend fun getSolvedSqTitles(): List<QuizSummaryDto>?
     suspend fun getSolvedSq(title: String): SqDto?
     suspend fun getSqCreatorInfo(quizId: String): SqCreatorInfoDto?
-    suspend fun shareQuiz(quizId: String, friendUid: String)
 
 
     //garden

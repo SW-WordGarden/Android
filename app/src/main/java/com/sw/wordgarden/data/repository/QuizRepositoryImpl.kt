@@ -76,9 +76,4 @@ class QuizRepositoryImpl @Inject constructor(
     override suspend fun getSqCreatorInfo(quizId: String): SqCreatorInfoEntity? {
         return serverDataSource.getSqCreatorInfo(quizId)?.toEntity()
     }
-
-    override suspend fun shareQuiz(quizTitle: String, friendId: String) {
-        return serverDataSource.shareQuiz(quizTitle, friendId)
-    }
-
 }

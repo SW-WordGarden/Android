@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -24,6 +25,7 @@ import com.sw.wordgarden.databinding.FragmentLoginBinding
 import com.sw.wordgarden.domain.entity.user.LoginRequestEntity
 import com.sw.wordgarden.presentation.event.DefaultEvent
 import com.sw.wordgarden.presentation.event.UserCheckEvent
+import com.sw.wordgarden.presentation.ui.main.MainViewModel
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -36,9 +38,11 @@ class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
 
-    private val viewmodel: LoginViewModel by activityViewModels()
+    private val viewmodel: LoginViewModel by viewModels()
+    private val mainViewmodel: MainViewModel by activityViewModels()
     private var uid = ""
     private var provider = ""
+    private var token = ""
     private val NAVER = "NAVER"
     private val KAKAO = "KAKAO"
 
@@ -54,7 +58,7 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupListener()
-        setViewModelEvent()
+        setupObserver()
     }
 
     private fun setupListener() {
@@ -167,25 +171,11 @@ class LoginFragment : Fragment() {
     }
 
     private fun checkMember(uid: String) {
-
         this.uid = uid
-
-        viewmodel.checkUserInfo(uid)
+        viewmodel.deleteUidForStartingLogin()
     }
 
-    private fun setViewModelEvent() {
-        lifecycleScope.launch {
-            viewmodel.checkUserEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
-                when (event) {
-                    is UserCheckEvent.Failure -> {
-                        ToastMaker.make(requireContext(), event.msg)
-                    }
-                    is UserCheckEvent.NotFound -> { goOnboarding() }
-                    UserCheckEvent.Success -> { goHome() }
-                }
-            }
-        }
-
+    private fun setupObserver() {
         lifecycleScope.launch {
             viewmodel.deleteUidEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
                 when (event) {
@@ -193,7 +183,24 @@ class LoginFragment : Fragment() {
                         ToastMaker.make(requireContext(), event.msg)
                     }
                     DefaultEvent.Success -> {
-                        Log.i(TAG, "success renew local UID")
+                        Log.i(TAG, "success delete local UID")
+                        viewmodel.checkUserInfo(uid)
+                    }
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            viewmodel.checkUserEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
+                when (event) {
+                    is UserCheckEvent.Failure -> {
+                        ToastMaker.make(requireContext(), event.msg)
+                    }
+                    is UserCheckEvent.NotFound -> {
+                        goOnboarding()
+                    }
+                    UserCheckEvent.Success -> {
+                        viewmodel.saveUid(uid)
                     }
                 }
             }
@@ -207,8 +214,31 @@ class LoginFragment : Fragment() {
                     }
                     DefaultEvent.Success -> {
                         Log.i(TAG, "success save local UID")
+
+                        viewmodel.updateToken(token)
                     }
                 }
+            }
+        }
+
+        lifecycleScope.launch {
+            viewmodel.updateTokenEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
+                when (event) {
+                    is DefaultEvent.Failure -> {
+                        ToastMaker.make(requireContext(), event.msg)
+                        Log.i(TAG, "fail update fcm token")
+                    }
+                    DefaultEvent.Success -> {
+                        Log.i(TAG, "success update fcm token")
+                    }
+                }
+                goHome()
+            }
+        }
+
+        lifecycleScope.launch {
+            mainViewmodel.fcmToken.flowWithLifecycle(lifecycle).collectLatest { token ->
+                this@LoginFragment.token = token ?: ""
             }
         }
     }
@@ -221,7 +251,8 @@ class LoginFragment : Fragment() {
         val loginRequestEntity = LoginRequestEntity(
             uid = uid,
             nickname = "",
-            provider = provider
+            provider = provider,
+            fcmToken = token
         )
 
         findNavController().apply {

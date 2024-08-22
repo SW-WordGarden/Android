@@ -38,7 +38,7 @@ class ShareQuizFragment : Fragment() {
                 val builder = AlertDialog.Builder(requireActivity())
                 builder.setMessage(R.string.share_quiz_msg_share)
                 builder.setPositiveButton(R.string.common_positive) { _, _ ->
-                    viewmodel.shareQuiz(quizKey, item.uid ?: "")
+                    viewmodel.makeSharingQuizAlarm(quizKey, item.uid ?: "")
                 }
                 builder.setNegativeButton(R.string.common_negative) { _, _ -> }
                 builder.show()

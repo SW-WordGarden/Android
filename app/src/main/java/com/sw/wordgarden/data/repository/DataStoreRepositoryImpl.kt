@@ -17,6 +17,10 @@ class DataStoreRepositoryImpl @Inject constructor(
         return localDataSource.getUid()
     }
 
+    override suspend fun getUidForService(): String? {
+        return localDataSource.getUidForService()
+    }
+
     override suspend fun deleteUid() {
         localDataSource.deleteUid()
     }

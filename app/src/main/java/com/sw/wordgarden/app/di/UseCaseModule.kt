@@ -38,8 +38,6 @@ import com.sw.wordgarden.domain.usecase.datastore.SaveUidUseCase
 import com.sw.wordgarden.domain.usecase.datastore.SaveUidUseCaseImpl
 import com.sw.wordgarden.domain.usecase.user.SendFirebaseTokenUseCase
 import com.sw.wordgarden.domain.usecase.user.SendFirebaseTokenUseCaseImpl
-import com.sw.wordgarden.domain.usecase.quiz.common.ShareQuizUseCase
-import com.sw.wordgarden.domain.usecase.quiz.common.ShareQuizUseCaseImpl
 import com.sw.wordgarden.domain.usecase.quiz.sq.SubmitSqUseCase
 import com.sw.wordgarden.domain.usecase.quiz.sq.SubmitSqUseCaseImpl
 import com.sw.wordgarden.domain.usecase.UpdateTreeUseCase
@@ -217,12 +215,6 @@ abstract class UseCaseModule {
     abstract fun bindGetSolvedQuizTitlesUseCase(
         getSolvedQuizTitlesUseCaseImpl: GetSolvedQuizTitlesUseCaseImpl
     ): GetSolvedQuizTitlesUseCase
-
-    @Binds
-    @ViewModelScoped
-    abstract fun bindShareQuizUseCase(
-        shareQuizUseCaseImpl: ShareQuizUseCaseImpl
-    ): ShareQuizUseCase
 
     //quiz - sq
     @Binds
