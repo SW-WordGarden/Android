@@ -23,6 +23,7 @@ import com.sw.wordgarden.data.dto.user.UserDto
 import com.sw.wordgarden.data.dto.user.UserInfoDto
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.HTTP
 import retrofit2.http.PATCH
@@ -38,8 +39,11 @@ interface Service {
     @GET("login/user/{uid}")
     suspend fun getUserInfoForLogin(@Path("uid") uid: String): Response<UserDto>
 
-    @POST("") //TODO: 서버 구현 시 수정
-    suspend fun updateFcmToken(@Body uid: String, token: String): Response<UserDto>
+    @PATCH("user/fcmtoken/{uid}")
+    suspend fun updateFcmToken(
+        @Path("uid") uid: String,
+        @Body payload: Map<String, String>
+    ): Response<Unit>
 
     //user - mypage
     @GET("user/info/{uid}")
@@ -80,11 +84,10 @@ interface Service {
     @GET("share/alarmdetail/{alarmId}")
     suspend fun getAlarmDetail(@Path("alarmId") alarmId: String): Response<AlarmDetailDto>
 
-    //    @DELETE("share/alarmdetail/{alarmId}")
-    @HTTP(method = "DELETE", path = "share/alarmdetail/{alarmId}", hasBody = true)
+    @DELETE("share/alarmdelete/{alarmId}")
     suspend fun deleteAlarm(
         @Path("alarmId") alarmId: String,
-        @Query("userId") uid: String
+        @Query("userId") uid: String,
     ): Response<Unit>
 
     //word

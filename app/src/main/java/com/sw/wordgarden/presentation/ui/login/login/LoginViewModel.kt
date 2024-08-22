@@ -8,7 +8,7 @@ import com.sw.wordgarden.domain.usecase.datastore.SaveUidUseCase
 import com.sw.wordgarden.domain.usecase.user.GetUserInfoForLoginUseCase
 import com.sw.wordgarden.domain.usecase.user.UpdateFcmTokenUseCase
 import com.sw.wordgarden.presentation.event.DefaultEvent
-import com.sw.wordgarden.presentation.event.ErrorMessage
+import com.sw.wordgarden.presentation.util.Constants
 import com.sw.wordgarden.presentation.event.UserCheckEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -50,7 +50,7 @@ class LoginViewModel @Inject constructor(
                 when (throwable) {
                     is HttpException -> {
                         val errorResponse = throwable.response()?.errorBody()?.string()
-                        if (throwable.code() == 404 && errorResponse == ErrorMessage.USER_NOT_FOUND.name) {
+                        if (throwable.code() == 404 && errorResponse == Constants.USER_NOT_FOUND) {
                             _checkUserEvent.emit(UserCheckEvent.NotFound)
                         } else {
                             _checkUserEvent.emit(UserCheckEvent.Failure(R.string.login_msg_fail_check))
@@ -94,7 +94,7 @@ class LoginViewModel @Inject constructor(
             runCatching {
                 updateFcmTokenUseCase.invoke(token)
             }.onFailure {
-                _updateTokenEvent.emit(DefaultEvent.Failure(R.string.login_msg_can_not_save_token))
+                _updateTokenEvent.emit(DefaultEvent.Failure(R.string.login_msg_can_not_update_token))
             }.onSuccess {
                 _updateTokenEvent.emit(DefaultEvent.Success)
             }

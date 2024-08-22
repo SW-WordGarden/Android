@@ -5,9 +5,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.MotionEvent
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -51,13 +49,6 @@ class MainActivity : AppCompatActivity() {
         setupSplash()
         setupUi()
         setupNavigation()
-    }
-
-    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
-        val imm: InputMethodManager =
-            getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
-        return super.dispatchTouchEvent(ev)
     }
 
     override fun onRequestPermissionsResult(

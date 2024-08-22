@@ -19,6 +19,8 @@ import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.DialogReportBinding
 import com.sw.wordgarden.databinding.FragmentFriendsBinding
 import com.sw.wordgarden.presentation.event.DefaultEvent
+import com.sw.wordgarden.presentation.util.Constants.CLIP_LABEL
+import com.sw.wordgarden.presentation.util.KeyboardCleaner
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -30,7 +32,6 @@ class FriendsFragment : Fragment() {
     private var _binding: FragmentFriendsBinding? = null
     private val binding get() = _binding!!
 
-    private val CLIP_LABEL = "wordgarden_code"
     private val viewmodel: FriendsViewModel by viewModels()
     private val adapter: FriendsAdapter by lazy {
         FriendsAdapter(object : FriendsAdapter.FriendsItemListener {
@@ -112,7 +113,9 @@ class FriendsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentFriendsBinding.inflate(inflater, container, false)
-        return binding.root
+        val rootView = binding.root
+        KeyboardCleaner.setup(rootView, this)
+        return rootView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

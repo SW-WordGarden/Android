@@ -1,27 +1,28 @@
 package com.sw.wordgarden.data.datasource.remote
 
+import android.util.Log
 import com.sw.wordgarden.data.datasource.local.LocalDataSource
 import com.sw.wordgarden.data.datasource.remote.retrofit.Service
-import com.sw.wordgarden.data.dto.quiz.SqQuestionAnswerDto
-import com.sw.wordgarden.data.dto.quiz.QuizSummaryDto
-import com.sw.wordgarden.data.dto.quiz.SqCreatorInfoDto
-import com.sw.wordgarden.data.dto.quiz.SqDto
-import com.sw.wordgarden.data.dto.user.LoginRequestDto
-import com.sw.wordgarden.data.dto.quiz.SqSolveQuizDto
 import com.sw.wordgarden.data.dto.TreeDto
-import com.sw.wordgarden.data.dto.user.UserDto
 import com.sw.wordgarden.data.dto.WordDto
 import com.sw.wordgarden.data.dto.alarm.AlarmDetailDto
 import com.sw.wordgarden.data.dto.alarm.AlarmDto
 import com.sw.wordgarden.data.dto.alarm.ShareRequestDto
+import com.sw.wordgarden.data.dto.quiz.QuizSummaryDto
+import com.sw.wordgarden.data.dto.quiz.SqCreatorInfoDto
+import com.sw.wordgarden.data.dto.quiz.SqDto
+import com.sw.wordgarden.data.dto.quiz.SqQuestionAnswerDto
+import com.sw.wordgarden.data.dto.quiz.SqSolveQuizDto
 import com.sw.wordgarden.data.dto.quiz.WqResponseDto
 import com.sw.wordgarden.data.dto.quiz.WqStateDto
 import com.sw.wordgarden.data.dto.quiz.WqSubmissionDto
 import com.sw.wordgarden.data.dto.quiz.WqWrongAnswerDto
-import com.sw.wordgarden.data.dto.user.FriendListDto
-import com.sw.wordgarden.data.dto.user.ReportInfoDto
 import com.sw.wordgarden.data.dto.user.AddRequestFriendDto
 import com.sw.wordgarden.data.dto.user.DeleteRequestFriendDto
+import com.sw.wordgarden.data.dto.user.FriendListDto
+import com.sw.wordgarden.data.dto.user.LoginRequestDto
+import com.sw.wordgarden.data.dto.user.ReportInfoDto
+import com.sw.wordgarden.data.dto.user.UserDto
 import com.sw.wordgarden.data.dto.user.UserInfoDto
 import retrofit2.HttpException
 import javax.inject.Inject
@@ -56,20 +57,22 @@ class ServerDataSourceImpl @Inject constructor(
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            null
+            throw e
         }
     }
 
     override suspend fun updateFcmToken(token: String) {
         try {
             val uid = getUid()
+            val payload = mapOf("fcmToken" to token)
 
-            val response = service.updateFcmToken(uid!!, token)
+            val response = service.updateFcmToken(uid!!, payload)
             if (!response.isSuccessful) {
                 throw HttpException(response)
             }
         } catch (e: Exception) {
             e.printStackTrace()
+            throw e
         }
     }
 
@@ -86,7 +89,7 @@ class ServerDataSourceImpl @Inject constructor(
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            null
+            throw e
         }
     }
 
@@ -101,6 +104,7 @@ class ServerDataSourceImpl @Inject constructor(
             }
         } catch (e: Exception) {
             e.printStackTrace()
+            throw e
         }
     }
 
@@ -115,6 +119,7 @@ class ServerDataSourceImpl @Inject constructor(
             }
         } catch (e: Exception) {
             e.printStackTrace()
+            throw e
         }
     }
 
@@ -130,7 +135,7 @@ class ServerDataSourceImpl @Inject constructor(
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            null
+            throw e
         }
     }
 
@@ -146,6 +151,7 @@ class ServerDataSourceImpl @Inject constructor(
             }
         } catch (e: Exception) {
             e.printStackTrace()
+            throw e
         }
     }
 
@@ -160,6 +166,7 @@ class ServerDataSourceImpl @Inject constructor(
             }
         } catch (e: Exception) {
             e.printStackTrace()
+            throw e
         }
     }
 
@@ -178,6 +185,7 @@ class ServerDataSourceImpl @Inject constructor(
             }
         } catch (e: Exception) {
             e.printStackTrace()
+            throw e
         }
     }
 
@@ -196,6 +204,7 @@ class ServerDataSourceImpl @Inject constructor(
             }
         } catch (e: Exception) {
             e.printStackTrace()
+            throw e
         }
     }
 
@@ -211,7 +220,7 @@ class ServerDataSourceImpl @Inject constructor(
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            null
+            throw e
         }
     }
 
@@ -225,7 +234,7 @@ class ServerDataSourceImpl @Inject constructor(
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            null
+            throw e
         }
     }
 
@@ -239,7 +248,9 @@ class ServerDataSourceImpl @Inject constructor(
             }
         } catch (e: Exception) {
             e.printStackTrace()
-        }    }
+            throw e
+        }
+    }
 
 
     //words
@@ -271,7 +282,7 @@ class ServerDataSourceImpl @Inject constructor(
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            null
+            throw e
         }
     }
 
@@ -289,6 +300,7 @@ class ServerDataSourceImpl @Inject constructor(
             }
         } catch (e: Exception) {
             e.printStackTrace()
+            throw e
         }
     }
 
@@ -304,7 +316,7 @@ class ServerDataSourceImpl @Inject constructor(
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            null
+            throw e
         }
     }
 
@@ -320,7 +332,7 @@ class ServerDataSourceImpl @Inject constructor(
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            null
+            throw e
         }
     }
 
@@ -336,7 +348,7 @@ class ServerDataSourceImpl @Inject constructor(
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            null
+            throw e
         }
     }
 
@@ -352,7 +364,7 @@ class ServerDataSourceImpl @Inject constructor(
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            null
+            throw e
         }
     }
 
@@ -385,7 +397,7 @@ class ServerDataSourceImpl @Inject constructor(
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            null
+            throw e
         }
     }
 
@@ -405,7 +417,7 @@ class ServerDataSourceImpl @Inject constructor(
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            null
+            throw e
         }
     }
 
@@ -419,7 +431,7 @@ class ServerDataSourceImpl @Inject constructor(
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            null
+            throw e
         }
     }
 
@@ -431,6 +443,7 @@ class ServerDataSourceImpl @Inject constructor(
             }
         } catch (e: Exception) {
             e.printStackTrace()
+            throw e
         }
     }
 
@@ -446,7 +459,7 @@ class ServerDataSourceImpl @Inject constructor(
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            null
+            throw e
         }
     }
 
@@ -462,7 +475,7 @@ class ServerDataSourceImpl @Inject constructor(
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            null
+            throw e
         }
     }
 
@@ -476,7 +489,7 @@ class ServerDataSourceImpl @Inject constructor(
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            null
+            throw e
         }
     }
 

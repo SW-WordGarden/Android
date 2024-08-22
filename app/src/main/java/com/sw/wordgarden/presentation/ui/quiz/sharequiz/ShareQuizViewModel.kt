@@ -59,9 +59,9 @@ class ShareQuizViewModel @Inject constructor(
         viewModelScope.launch {
             runCatching {
                 if (quizKey.isWq == true) {
-                    makeSharingAlarmQuizUseCase.invoke(quizKey.sqId ?: "", friendUid)
+                    makeSharingAlarmQuizUseCase.invoke(friendUid, quizKey.qTitle ?: "", )
                 } else {
-                    makeSharingAlarmQuizUseCase.invoke(quizKey.sqId ?: "", friendUid)
+                    makeSharingAlarmQuizUseCase.invoke(friendUid, quizKey.sqId ?: "", )
                 }
             }.onFailure {
                 _shareEvent.emit(DefaultEvent.Failure(R.string.share_quiz_msg_fail_to_share))

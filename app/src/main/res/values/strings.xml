@@ -24,7 +24,7 @@
     <string name="login_msg_not_user">회원 가입이 필요합니다.</string>
     <string name="login_msg_can_not_delete_uid">회원 정보 초기화에 실패했습니다.</string>
     <string name="login_msg_can_not_save_uid">회원 정보 저장에 실패했습니다.</string>
-    <string name="login_msg_can_not_update_token">토큰 업데이트를 실패했습니다.</string>
+    <string name="login_msg_can_not_update_token">토큰 업데이트에 실패했습니다.</string>
     <string name="onboarding_input_nickname">닉네임을 입력하세요</string>
     <string name="onboarding_next">다음</string>
     <string name="onboarding_msg_fill">닉네임을 입력해주세요.</string>
@@ -101,6 +101,7 @@
     <string name="alarm_title">알람</string>
     <string name="alarm_check_quiz">님이 보낸 퀴즈를 확인하세요!</string>
     <string name="alarm_msg_fail_load_alarm">알람 데이터 불러오기에 실패했어요.</string>
+    <string name="alarm_msg_fail_delete_alarm">알람 데이터 삭제에 실패했어요.</string>
     <string name="alarm_msg_fail_get_quiz">퀴즈 불러오기에 실패했어요.</string>
     <string name="alarm_no_alarm_list">아직 받은 알람이 없어요!</string>
 
@@ -132,7 +133,7 @@
     <string name="share_quiz_description">친구랑 같이 퀴즈를 풀어보세요!</string>
     <string name="share_quiz_no_friends">아직 친구가 없어요!</string>
     <string name="share_quiz_msg_fail_load_friends">친구 목록 불러오기에 실패했습니다.</string>
-    <string name="share_quiz_msg_share">친구에게 방금 만든 퀴즈를 공유할게요!</string>
+    <string name="share_quiz_msg_share">친구에게 퀴즈를 공유할게요!</string>
     <string name="share_quiz_msg_fail_to_share">퀴즈 공유에 실패했어요.</string>
     <string name="share_quiz_msg_success_sharing">친구에게 퀴즈를 공유했어요!</string>
 
