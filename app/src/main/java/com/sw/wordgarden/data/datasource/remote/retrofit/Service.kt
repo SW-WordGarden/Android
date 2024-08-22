@@ -39,7 +39,7 @@ interface Service {
     suspend fun getUserInfoForLogin(@Path("uid") uid: String): Response<UserDto>
 
     @POST("") //TODO: 서버 구현 시 수정
-    suspend fun sendFirebaseToken(@Body uid: String, token: String): Response<UserDto>
+    suspend fun updateFcmToken(@Body uid: String, token: String): Response<UserDto>
 
     //user - mypage
     @GET("user/info/{uid}")

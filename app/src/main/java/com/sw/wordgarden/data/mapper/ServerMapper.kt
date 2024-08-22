@@ -64,6 +64,7 @@ object ServerMapper {
         uid = uid,
         nickname = nickname,
         provider = provider,
+        fcmToken = fcmToken,
     )
 
     fun UserInfoDto.toEntity() = UserInfoEntity(

@@ -36,8 +36,8 @@ import com.sw.wordgarden.domain.usecase.datastore.SaveDailyLimitUseCase
 import com.sw.wordgarden.domain.usecase.datastore.SaveDailyLimitUseCaseImpl
 import com.sw.wordgarden.domain.usecase.datastore.SaveUidUseCase
 import com.sw.wordgarden.domain.usecase.datastore.SaveUidUseCaseImpl
-import com.sw.wordgarden.domain.usecase.user.SendFirebaseTokenUseCase
-import com.sw.wordgarden.domain.usecase.user.SendFirebaseTokenUseCaseImpl
+import com.sw.wordgarden.domain.usecase.user.UpdateFcmTokenUseCase
+import com.sw.wordgarden.domain.usecase.user.UpdateFcmTokenUseCaseImpl
 import com.sw.wordgarden.domain.usecase.quiz.sq.SubmitSqUseCase
 import com.sw.wordgarden.domain.usecase.quiz.sq.SubmitSqUseCaseImpl
 import com.sw.wordgarden.domain.usecase.UpdateTreeUseCase
@@ -150,9 +150,9 @@ abstract class UseCaseModule {
 
     @Binds
     @ViewModelScoped
-    abstract fun bindSendFirebaseTokenUseCase(
-        sendFirebaseTokenUseCaseImpl: SendFirebaseTokenUseCaseImpl
-    ): SendFirebaseTokenUseCase
+    abstract fun bindUpdateFcmTokenUseCase(
+        updateFcmTokenUseCaseImpl: UpdateFcmTokenUseCaseImpl
+    ): UpdateFcmTokenUseCase
 
     @Binds
     @ViewModelScoped

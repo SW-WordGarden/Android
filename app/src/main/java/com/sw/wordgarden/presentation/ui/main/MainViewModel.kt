@@ -6,6 +6,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -13,12 +14,19 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor() : ViewModel() {
 
     private val _isLoading: MutableStateFlow<Boolean> = MutableStateFlow(true)
-    val isLoading: StateFlow<Boolean> get() = _isLoading
+    val isLoading: StateFlow<Boolean> get() = _isLoading.asStateFlow()
+
+    private val _fcmToken: MutableStateFlow<String?> = MutableStateFlow(null)
+    val fcmToken: StateFlow<String?> get() = _fcmToken.asStateFlow()
 
     init {
         viewModelScope.launch {
             delay(1000)
             _isLoading.value = false
         }
+    }
+
+    fun setFcmToken(token: String?) {
+        _fcmToken.value = token
     }
 }

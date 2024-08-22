@@ -9,7 +9,7 @@ interface UserRepository {
     //login
     suspend fun insertUser(loginRequestEntity: LoginRequestEntity)
     suspend fun getUserInfoForLogin(uid: String): UserEntity?
-    suspend fun sendFirebaseToken(token: String)
+    suspend fun updateFcmToken(token: String)
 
     //mapage
     suspend fun getUserInfoForMypage(): UserInfoEntity?

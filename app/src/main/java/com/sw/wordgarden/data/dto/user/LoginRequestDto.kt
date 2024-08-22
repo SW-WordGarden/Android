@@ -6,4 +6,5 @@ data class LoginRequestDto (
     @SerializedName("uid") val uid: String,
     @SerializedName("nickname") val nickname: String,
     @SerializedName("provider") val provider: String,
+    @SerializedName("fcmToken") val fcmToken: String,
 )

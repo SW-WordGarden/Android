@@ -8,4 +8,5 @@ data class LoginRequestEntity (
     val uid: String,
     val nickname: String,
     val provider: String,
+    val fcmToken: String,
 ): Parcelable

@@ -22,7 +22,7 @@ interface ServerDataSource {
     //user - login
     suspend fun insertUser(loginRequestDto: LoginRequestDto)
     suspend fun getUserInfoForLogin(uid: String): UserDto?
-    suspend fun sendFirebaseToken(token: String)
+    suspend fun updateFcmToken(token: String)
 
     //user - mypage
     suspend fun getUserInfoForMypage(): UserInfoDto?

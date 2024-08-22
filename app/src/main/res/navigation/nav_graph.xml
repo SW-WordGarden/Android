@@ -19,7 +19,7 @@
                 android:id="@+id/action_loginFragment_to_onBoardingFragment"
                 app:destination="@id/onBoardingFragment">
             <argument
-                    android:name="argsSignUpEntity"
+                    android:name="argsLoginRequestEntity"
                     android:defaultValue="@null"
                     app:argType="com.sw.wordgarden.domain.entity.user.LoginRequestEntity"
                     app:nullable="true" />
@@ -36,7 +36,7 @@
                 app:destination="@id/homeFragment"
                 app:popUpTo="@id/nav_graph" />
         <argument
-                android:name="argsSignUpEntity"
+                android:name="argsLoginRequestEntity"
                 android:defaultValue="@null"
                 app:argType="com.sw.wordgarden.domain.entity.user.LoginRequestEntity"
                 app:nullable="true" />

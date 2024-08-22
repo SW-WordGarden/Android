@@ -1,5 +1,5 @@
 package com.sw.wordgarden.domain.usecase.user
 
-interface SendFirebaseTokenUseCase {
+interface UpdateFcmTokenUseCase {
     suspend operator fun invoke(token: String)
 }

@@ -60,11 +60,11 @@ class ServerDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun sendFirebaseToken(token: String) {
+    override suspend fun updateFcmToken(token: String) {
         try {
             val uid = getUid()
 
-            val response = service.sendFirebaseToken(uid!!, token)
+            val response = service.updateFcmToken(uid!!, token)
             if (!response.isSuccessful) {
                 throw HttpException(response)
             }
