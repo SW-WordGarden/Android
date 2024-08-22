@@ -2,12 +2,12 @@ package com.sw.wordgarden.presentation.ui.quiz.makequiz
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -20,6 +20,7 @@ import com.sw.wordgarden.databinding.FragmentMakeQuizBinding
 import com.sw.wordgarden.presentation.event.DefaultEvent
 import com.sw.wordgarden.presentation.model.QAModel
 import com.sw.wordgarden.presentation.model.QuizModel
+import com.sw.wordgarden.presentation.util.KeyboardCleaner
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -54,7 +55,9 @@ class MakeQuizFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMakeQuizBinding.inflate(inflater, container, false)
-        return binding.root
+        val rootView = binding.root
+        KeyboardCleaner.setup(rootView, this)
+        return rootView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -64,6 +67,7 @@ class MakeQuizFragment : Fragment() {
         setUpListener()
         setupObserver()
     }
+
 
     private fun getData() {
         val args: MakeQuizFragmentArgs by navArgs()

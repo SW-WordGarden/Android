@@ -7,7 +7,7 @@ import com.sw.wordgarden.domain.entity.quiz.SqEntity
 import com.sw.wordgarden.domain.usecase.quiz.sq.CreateNewSqUseCase
 import com.sw.wordgarden.domain.usecase.quiz.sq.GetSqUseCase
 import com.sw.wordgarden.presentation.event.DefaultEvent
-import com.sw.wordgarden.presentation.event.ErrorMessage
+import com.sw.wordgarden.presentation.util.Constants
 import com.sw.wordgarden.presentation.mapper.ModelMapper.createEmptySqresultEntity
 import com.sw.wordgarden.presentation.mapper.ModelMapper.toListQAModel
 import com.sw.wordgarden.presentation.mapper.ModelMapper.toSqQuestionAnswerEntity
@@ -77,7 +77,7 @@ class MakeQuizViewModel @Inject constructor(
                 when (throwable) {
                     is HttpException -> {
                         val errorResponse = throwable.response()?.errorBody()?.string()
-                        if (throwable.code() == 403 && errorResponse == ErrorMessage.DUPLICATION_QUIZ_TITLE.name) {
+                        if (throwable.code() == 403 && errorResponse == Constants.DUPLICATION_QUIZ_TITLE) {
                             _insertQuizEvent.emit(DefaultEvent.Failure(R.string.make_quiz_msg_unknown_error))
                         } else {
                             _insertQuizEvent.emit(DefaultEvent.Failure(R.string.make_quiz_msg_fail_make_quiz))

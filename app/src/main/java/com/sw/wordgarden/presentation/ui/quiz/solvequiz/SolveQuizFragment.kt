@@ -20,6 +20,7 @@ import com.sw.wordgarden.presentation.event.DefaultEvent
 import com.sw.wordgarden.presentation.model.QAModel
 import com.sw.wordgarden.presentation.model.QuizKey
 import com.sw.wordgarden.presentation.model.QuizModel
+import com.sw.wordgarden.presentation.util.KeyboardCleaner
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -53,7 +54,9 @@ class SolveQuizFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSolveQuizBinding.inflate(inflater, container, false)
-        return binding.root
+        val rootView = binding.root
+        KeyboardCleaner.setup(rootView, this)
+        return rootView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

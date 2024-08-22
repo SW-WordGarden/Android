@@ -28,5 +28,4 @@ interface QuizRepository {
     suspend fun getSolvedSqTitles(): List<QuizSummaryEntity>?
     suspend fun getSolvedSq(title: String): SqEntity?
     suspend fun getSqCreatorInfo(quizId: String): SqCreatorInfoEntity?
-    suspend fun shareQuiz(quizTitle: String, friendId: String)
 }

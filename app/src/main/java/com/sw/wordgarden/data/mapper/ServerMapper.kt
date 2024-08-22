@@ -64,6 +64,7 @@ object ServerMapper {
         uid = uid,
         nickname = nickname,
         provider = provider,
+        fcmToken = fcmToken,
     )
 
     fun UserInfoDto.toEntity() = UserInfoEntity(
@@ -118,8 +119,10 @@ object ServerMapper {
         content = content,
         isRead = isRead,
         createTime = createTime,
+        fromUserUid = fromUserUid,
         fromUserName = fromUserName,
-        toUserName = toUserName
+        toUserName = toUserName,
+        quizType = quizType
     )
 
     fun AlarmDetailDto.toEntity() = AlarmDetailEntity(

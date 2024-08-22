@@ -23,8 +23,8 @@ class UserRepositoryImpl @Inject constructor(
         return serverDataSource.getUserInfoForLogin(uid)?.toEntity()
     }
 
-    override suspend fun sendFirebaseToken(token: String) {
-        serverDataSource.sendFirebaseToken(token)
+    override suspend fun updateFcmToken(token: String) {
+        serverDataSource.updateFcmToken(token)
     }
 
     //mypage

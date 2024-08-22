@@ -29,6 +29,10 @@ class LocalDataSourceImpl @Inject constructor(
         return preferencesStore.data.first()[USER_KEY]
     }
 
+    override suspend fun getUidForService(): String? {
+        return preferencesStore.data.first()[USER_KEY]
+    }
+
     override suspend fun deleteUid() {
         preferencesStore.edit { preferences ->
             preferences.remove(USER_KEY)

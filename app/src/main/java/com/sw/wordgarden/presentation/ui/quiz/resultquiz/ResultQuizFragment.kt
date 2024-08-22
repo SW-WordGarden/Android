@@ -20,6 +20,7 @@ import com.sw.wordgarden.databinding.FragmentResultQuizBinding
 import com.sw.wordgarden.presentation.event.DefaultEvent
 import com.sw.wordgarden.presentation.model.QuizKey
 import com.sw.wordgarden.presentation.model.QuizModel
+import com.sw.wordgarden.presentation.util.Constants.ARGS_FROM_QUIZ
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -145,7 +146,7 @@ class ResultQuizFragment : Fragment() {
         val navController = findNavController()
         if (navController.previousBackStackEntry?.destination?.id == R.id.solveQuizFragment) {
             val fromQuiz =
-                navController.previousBackStackEntry?.arguments?.getBoolean("argsFromQuiz") ?: false
+                navController.previousBackStackEntry?.arguments?.getBoolean(ARGS_FROM_QUIZ) ?: false
             if (fromQuiz) {
                 val navOptions = NavOptions.Builder()
                     .setPopUpTo(R.id.quizFragment, true)

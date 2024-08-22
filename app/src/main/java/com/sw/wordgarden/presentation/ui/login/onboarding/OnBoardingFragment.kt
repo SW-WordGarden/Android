@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -27,7 +27,7 @@ class OnBoardingFragment : Fragment() {
     private var _binding: FragmentOnboardingBinding? = null
     private val binding get() = _binding!!
 
-    private val viewmodel: OnBoardingViewModel by activityViewModels()
+    private val viewmodel: OnBoardingViewModel by viewModels()
     private lateinit var loginRequestEntity: LoginRequestEntity
 
     override fun onCreateView(
@@ -49,7 +49,7 @@ class OnBoardingFragment : Fragment() {
 
     private fun getDataFromLogin() {
         val args: OnBoardingFragmentArgs by navArgs()
-        loginRequestEntity = args.argsSignUpEntity ?: LoginRequestEntity("", "", "")
+        loginRequestEntity = args.argsLoginRequestEntity ?: LoginRequestEntity("", "", "", "")
     }
 
     private fun setupListener() {
@@ -59,13 +59,14 @@ class OnBoardingFragment : Fragment() {
             if (nickname == "") {
                 ToastMaker.make(requireContext(), getString(R.string.onboarding_msg_fill))
             } else {
-                val signUpData = loginRequestEntity.copy(
+                val loginRequestData = loginRequestEntity.copy(
                     uid = loginRequestEntity.uid,
                     nickname = nickname,
-                    provider = loginRequestEntity.provider
+                    provider = loginRequestEntity.provider,
+                    fcmToken = loginRequestEntity.fcmToken
                 )
 
-                viewmodel.signUp(signUpData)
+                viewmodel.signUp(loginRequestData)
             }
         }
     }

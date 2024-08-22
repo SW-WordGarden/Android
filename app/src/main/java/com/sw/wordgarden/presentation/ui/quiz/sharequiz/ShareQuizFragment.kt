@@ -20,6 +20,8 @@ import com.sw.wordgarden.databinding.FragmentShareQuizBinding
 import com.sw.wordgarden.domain.entity.user.FriendEntity
 import com.sw.wordgarden.presentation.event.DefaultEvent
 import com.sw.wordgarden.presentation.model.QuizKey
+import com.sw.wordgarden.presentation.util.Constants.ARGS_FROM_QUIZ
+import com.sw.wordgarden.presentation.util.KeyboardCleaner
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -38,7 +40,7 @@ class ShareQuizFragment : Fragment() {
                 val builder = AlertDialog.Builder(requireActivity())
                 builder.setMessage(R.string.share_quiz_msg_share)
                 builder.setPositiveButton(R.string.common_positive) { _, _ ->
-                    viewmodel.shareQuiz(quizKey, item.uid ?: "")
+                    viewmodel.makeSharingQuizAlarm(quizKey, item.uid ?: "")
                 }
                 builder.setNegativeButton(R.string.common_negative) { _, _ -> }
                 builder.show()
@@ -63,7 +65,9 @@ class ShareQuizFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentShareQuizBinding.inflate(inflater, container, false)
-        return binding.root
+        val rootView = binding.root
+        KeyboardCleaner.setup(rootView, this)
+        return rootView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -145,7 +149,7 @@ class ShareQuizFragment : Fragment() {
         val navController = findNavController()
         if (navController.previousBackStackEntry?.destination?.id == R.id.makeQuizFragment) {
             val fromQuiz =
-                navController.previousBackStackEntry?.arguments?.getBoolean("argsFromQuiz") ?: false
+                navController.previousBackStackEntry?.arguments?.getBoolean(ARGS_FROM_QUIZ) ?: false
             if (fromQuiz) {
                 val navOptions = NavOptions.Builder()
                     .setPopUpTo(R.id.quizFragment, true)
@@ -159,6 +163,8 @@ class ShareQuizFragment : Fragment() {
             } else {
                 navController.navigateUp()
             }
+        } else {
+            navController.navigateUp()
         }
     }
 
