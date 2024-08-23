@@ -7,6 +7,7 @@ import com.sw.wordgarden.domain.entity.alarm.AlarmEntity
 import com.sw.wordgarden.domain.usecase.alarm.DeleteAlarmUseCase
 import com.sw.wordgarden.domain.usecase.alarm.GetAlarmsUseCase
 import com.sw.wordgarden.presentation.event.DefaultEvent
+import com.sw.wordgarden.presentation.shared.IsLoadingUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,6 +24,10 @@ class AlarmViewModel @Inject constructor(
     private val getAlarmsUseCase: GetAlarmsUseCase,
     private val deleteAlarmUseCase: DeleteAlarmUseCase
 ) : ViewModel() {
+
+    private val _uiState = MutableStateFlow(IsLoadingUiState.init())
+    val uiState: StateFlow<IsLoadingUiState> = _uiState.asStateFlow()
+
     private val _getAlarmListEvent = MutableSharedFlow<DefaultEvent>()
     val getAlarmListEvent: SharedFlow<DefaultEvent> = _getAlarmListEvent.asSharedFlow()
 
@@ -38,11 +43,15 @@ class AlarmViewModel @Inject constructor(
 
     private fun getAlarmList() {
         viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true) }
+
             runCatching {
                 getAlarmsUseCase.invoke()
             }.onFailure {
+                _uiState.update { it.copy(isLoading = false) }
                 _getAlarmListEvent.emit(DefaultEvent.Failure(R.string.alarm_msg_fail_load_alarm))
             }.onSuccess { alarms ->
+                _uiState.update { it.copy(isLoading = false) }
                 _getAlarmList.update { alarms }
                 _getAlarmListEvent.emit(DefaultEvent.Success)
             }
@@ -51,11 +60,15 @@ class AlarmViewModel @Inject constructor(
 
     fun deleteAlarm(alarmId: String) {
         viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true) }
+
             runCatching {
                 deleteAlarmUseCase.invoke(alarmId)
             }.onFailure {
+                _uiState.update { it.copy(isLoading = false) }
                 _deleteAlarmEvent.emit(DefaultEvent.Failure(R.string.alarm_msg_fail_delete_alarm))
             }.onSuccess {
+                _uiState.update { it.copy(isLoading = false) }
                 _deleteAlarmEvent.emit(DefaultEvent.Success)
             }
         }

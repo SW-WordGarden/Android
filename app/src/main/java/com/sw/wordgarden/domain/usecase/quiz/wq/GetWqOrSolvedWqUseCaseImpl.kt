@@ -4,10 +4,10 @@ import com.sw.wordgarden.domain.entity.quiz.WqResponseEntity
 import com.sw.wordgarden.domain.repository.QuizRepository
 import javax.inject.Inject
 
-class GetSolvedWqUseCaseImpl @Inject constructor(
+class GetWqOrSolvedWqUseCaseImpl @Inject constructor(
     private val quizRepository: QuizRepository
-) : GetSolvedWqUseCase {
-    override suspend fun invoke(qTitle: String): List<WqResponseEntity>? {
-        return quizRepository.getSolvedWq(qTitle)
+) : GetWqOrSolvedWqUseCase {
+    override suspend fun invoke(qTitle: String, isSolved: Boolean): List<WqResponseEntity>? {
+        return quizRepository.getWqOrSolvedWq(qTitle, isSolved)
     }
 }

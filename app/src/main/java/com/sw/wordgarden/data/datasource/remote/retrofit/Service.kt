@@ -6,6 +6,7 @@ import com.sw.wordgarden.data.dto.alarm.AlarmDetailDto
 import com.sw.wordgarden.data.dto.alarm.AlarmDto
 import com.sw.wordgarden.data.dto.alarm.ShareRequestDto
 import com.sw.wordgarden.data.dto.quiz.QuizSummaryDto
+import com.sw.wordgarden.data.dto.quiz.SqCreatedInfoDto
 import com.sw.wordgarden.data.dto.quiz.SqCreatorInfoDto
 import com.sw.wordgarden.data.dto.quiz.SqDto
 import com.sw.wordgarden.data.dto.quiz.SqQuestionAnswerDto
@@ -121,14 +122,14 @@ interface Service {
     suspend fun getSolvedWqTitles(@Path("userId") uid: String): Response<Set<String>>
 
     @GET("wq/{title}")
-    suspend fun getSolvedWq(
+    suspend fun getWqOrSolvedWq(
         @Path("title") title: String,
-        @Query("userId") uid: String
+        @Query("userId") uid: String?
     ): Response<List<WqResponseDto>>
 
     //quiz - sq
     @POST("sq/create")
-    suspend fun createNewSq(@Body quizList: SqDto): Response<Unit>
+    suspend fun createNewSq(@Body quizList: SqDto): Response<SqCreatedInfoDto>
 
     @GET("sq/created/{uid}")
     suspend fun getUserSqTitles(@Path("uid") uid: String): Response<List<QuizSummaryDto>>

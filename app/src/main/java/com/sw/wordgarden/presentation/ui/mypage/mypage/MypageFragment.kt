@@ -7,8 +7,9 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.sw.wordgarden.R
@@ -18,6 +19,7 @@ import com.sw.wordgarden.domain.entity.user.UserInfoEntity
 import com.sw.wordgarden.presentation.event.DefaultEvent
 import com.sw.wordgarden.presentation.util.ImageConverter.stringToByteArray
 import com.sw.wordgarden.presentation.util.ImageConverter.uriToString
+import com.sw.wordgarden.presentation.ui.loading.LoadingDialog
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -29,6 +31,7 @@ class MypageFragment : Fragment() {
     private var _binding: FragmentMypageBinding? = null
     private val binding get() = _binding!!
 
+    private var loadingDialog: LoadingDialog? = null
     private val viewmodel: MyPageViewModel by viewModels()
     private val adapter: MyPageFriendAdapter by lazy {
         MyPageFriendAdapter(requireContext(), object : MyPageFriendAdapter.FriendItemListener {
@@ -44,10 +47,10 @@ class MypageFragment : Fragment() {
                 viewmodel.updateUserImage(uriToString(uri, requireContext()) ?: "")
             }
         }
-
     private var myCode = ""
 
     override fun onCreateView(
+
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
@@ -91,33 +94,49 @@ class MypageFragment : Fragment() {
     }
 
     private fun setupObserver() {
-        lifecycleScope.launch {
-            viewmodel.getUserInfoEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
-                when (event) {
-                    is DefaultEvent.Failure -> {
-                        ToastMaker.make(requireContext(), event.msg)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    viewmodel.getUserInfoEvent.collectLatest { event ->
+                        when (event) {
+                            is DefaultEvent.Failure -> {
+                                ToastMaker.make(requireContext(), event.msg)
+                            }
+                            DefaultEvent.Success -> {}
+                        }
                     }
-
-                    DefaultEvent.Success -> {}
                 }
-            }
-        }
 
-        lifecycleScope.launch {
-            viewmodel.getUserInfo.flowWithLifecycle(lifecycle).collectLatest { info ->
-                myCode = info?.uUrl ?: ""
-                setupUi(info)
-            }
-        }
-
-        lifecycleScope.launch {
-            viewmodel.updateUserImageEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
-                when (event) {
-                    is DefaultEvent.Failure -> {
-                        ToastMaker.make(requireContext(), event.msg)
+                launch {
+                    viewmodel.getUserInfo.collectLatest { info ->
+                        myCode = info?.uUrl ?: ""
+                        setupUi(info)
                     }
+                }
 
-                    DefaultEvent.Success -> {}
+                launch {
+                    viewmodel.updateUserImageEvent.collectLatest { event ->
+                        when (event) {
+                            is DefaultEvent.Failure -> {
+                                ToastMaker.make(requireContext(), event.msg)
+                            }
+                            DefaultEvent.Success -> {}
+                        }
+                    }
+                }
+
+                launch {
+                    viewmodel.uiState.collectLatest { state ->
+                        if (state.isLoading) {
+                            if (loadingDialog == null || loadingDialog?.dialog?.isShowing == false) {
+                                loadingDialog = LoadingDialog()
+                                loadingDialog?.show(parentFragmentManager, null)
+                            }
+                        } else {
+                            loadingDialog?.dismiss()
+                            loadingDialog = null
+                        }
+                    }
                 }
             }
         }
@@ -132,17 +151,18 @@ class MypageFragment : Fragment() {
             .into(ivMyProfile)
         tvMyName.text = info?.name ?: ""
 
-        tvMyPoint.text = info?.point.toString()
-        tvMyRank.text = info?.rank.toString()
+        tvMyPoint.text = (info?.point ?: 0).toString()
+        tvMyRank.text = (info?.rank ?: 0).toString()
 
-        val weeklyState =
-            "${info?.all}${getString(R.string.mypage_weekly_score_text1)} ${info?.right}${getString(
-                    R.string.mypage_weekly_score_text2
-                )}"
+        val weeklyState = if (info?.all == null || info.right == null) {
+            ""
+        } else {
+            "${info.all}${getString(R.string.mypage_weekly_score_text1)} ${info.right}${getString(R.string.mypage_weekly_score_text2)}"
+        }
         tvMyScore.text = weeklyState
 
-        tvMySelfQuizTitleName.text = info?.latestCustomQuiz?.sqTitle ?: ""
-        tvMySolvedQuizTitleName.text = info?.latestSolvedQuiz?.title ?: ""
+        tvMySelfQuizTitleName.text = info?.latestCustomQuiz?.sqTitle ?: getString(R.string.mypage_my_self_quiz_no_quiz_list)
+        tvMySolvedQuizTitleName.text = info?.latestSolvedQuiz?.title ?: getString(R.string.mypage_my_solved_quiz_no_quiz_list)
 
         rvMyFriendsList.adapter = adapter
         adapter.submitList(info?.randomFriends)

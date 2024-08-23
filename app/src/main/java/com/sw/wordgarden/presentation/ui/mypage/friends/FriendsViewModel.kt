@@ -9,6 +9,7 @@ import com.sw.wordgarden.domain.usecase.user.DeleteFriendUseCase
 import com.sw.wordgarden.domain.usecase.user.GetFriendsUseCase
 import com.sw.wordgarden.domain.usecase.user.ReportFriendUseCase
 import com.sw.wordgarden.presentation.event.DefaultEvent
+import com.sw.wordgarden.presentation.shared.IsLoadingUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,6 +28,9 @@ class FriendsViewModel @Inject constructor(
     private val deleteFriendUseCase: DeleteFriendUseCase,
     private val reportFriendUseCase: ReportFriendUseCase,
 ) : ViewModel() {
+
+    private val _uiState = MutableStateFlow(IsLoadingUiState.init())
+    val uiState: StateFlow<IsLoadingUiState> = _uiState.asStateFlow()
 
     private val _getFriendsEvent = MutableSharedFlow<DefaultEvent>()
     val getFriendsEvent: SharedFlow<DefaultEvent> = _getFriendsEvent.asSharedFlow()
@@ -49,6 +53,8 @@ class FriendsViewModel @Inject constructor(
 
     fun getFriends() =
         viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true) }
+
             runCatching {
                 val response = getFriendsUseCase()
 
@@ -59,19 +65,25 @@ class FriendsViewModel @Inject constructor(
                 }
 
             }.onFailure {
+                _uiState.update { it.copy(isLoading = false) }
                 _getFriendsEvent.emit(DefaultEvent.Failure(R.string.mypage_friends_msg_fail_load_friends))
             }.onSuccess {
+                _uiState.update { it.copy(isLoading = false) }
                 _getFriendsEvent.emit(DefaultEvent.Success)
             }
         }
 
     fun addFriend(friendUrl: String?) {
         viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true) }
+
             runCatching {
                 addFriendsUseCase.invoke(friendUrl ?: "")
             }.onFailure {
+                _uiState.update { it.copy(isLoading = false) }
                 _addFriendEvent.emit(DefaultEvent.Failure(R.string.mypage_friends_msg_fail_add_friend))
             }.onSuccess {
+                _uiState.update { it.copy(isLoading = false) }
                 _addFriendEvent.emit(DefaultEvent.Success)
             }
         }
@@ -79,11 +91,15 @@ class FriendsViewModel @Inject constructor(
 
     fun deleteFriend(friendUid: String?) {
         viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true) }
+
             runCatching {
                 deleteFriendUseCase.invoke(friendUid ?: "")
             }.onFailure {
+                _uiState.update { it.copy(isLoading = false) }
                 _deleteFriendEvent.emit(DefaultEvent.Failure(R.string.mypage_friends_msg_fail_delete_friend))
             }.onSuccess {
+                _uiState.update { it.copy(isLoading = false) }
                 _deleteFriendEvent.emit(DefaultEvent.Success)
             }
         }
@@ -91,11 +107,15 @@ class FriendsViewModel @Inject constructor(
 
     fun reportFriend(friendUid: String?, content: String?) {
         viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true) }
+
             runCatching {
                 reportFriendUseCase.invoke(friendUid ?: "", content)
             }.onFailure {
+                _uiState.update { it.copy(isLoading = false) }
                 _reportFriendEvent.emit(DefaultEvent.Failure(R.string.mypage_friends_msg_fail_report_friend))
             }.onSuccess {
+                _uiState.update { it.copy(isLoading = false) }
                 _reportFriendEvent.emit(DefaultEvent.Success)
             }
         }

@@ -6,6 +6,7 @@ import com.sw.wordgarden.R
 import com.sw.wordgarden.domain.entity.quiz.WqWrongAnswerEntity
 import com.sw.wordgarden.domain.usecase.quiz.wq.GetWrongWqsUseCase
 import com.sw.wordgarden.presentation.event.DefaultEvent
+import com.sw.wordgarden.presentation.shared.IsLoadingUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,6 +23,9 @@ class WeeklyQuizCheckViewModel @Inject constructor(
     private val getWrongWqsUseCase: GetWrongWqsUseCase,
 ) : ViewModel() {
 
+    private val _uiState = MutableStateFlow(IsLoadingUiState.init())
+    val uiState: StateFlow<IsLoadingUiState> = _uiState.asStateFlow()
+
     private val _getWrongWqsEvent = MutableSharedFlow<DefaultEvent>()
     val getWrongWqsEvent: SharedFlow<DefaultEvent> = _getWrongWqsEvent.asSharedFlow()
 
@@ -34,6 +38,8 @@ class WeeklyQuizCheckViewModel @Inject constructor(
 
     private fun getWrongWqsData() =
         viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true) }
+
             runCatching {
                 val response = getWrongWqsUseCase()
 
@@ -44,8 +50,10 @@ class WeeklyQuizCheckViewModel @Inject constructor(
                 }
 
             }.onFailure {
+                _uiState.update { it.copy(isLoading = false) }
                 _getWrongWqsEvent.emit(DefaultEvent.Failure(R.string.mypage_my_solved_quiz_msg_fail_load_wrong_quiz))
             }.onSuccess {
+                _uiState.update { it.copy(isLoading = false) }
                 _getWrongWqsEvent.emit(DefaultEvent.Success)
             }
         }

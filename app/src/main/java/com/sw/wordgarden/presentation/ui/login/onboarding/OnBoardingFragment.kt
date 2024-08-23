@@ -15,6 +15,7 @@ import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentOnboardingBinding
 import com.sw.wordgarden.domain.entity.user.LoginRequestEntity
 import com.sw.wordgarden.presentation.event.DefaultEvent
+import com.sw.wordgarden.presentation.ui.loading.LoadingDialog
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -27,6 +28,7 @@ class OnBoardingFragment : Fragment() {
     private var _binding: FragmentOnboardingBinding? = null
     private val binding get() = _binding!!
 
+    private var loadingDialog: LoadingDialog? = null
     private val viewmodel: OnBoardingViewModel by viewModels()
     private lateinit var loginRequestEntity: LoginRequestEntity
 
@@ -83,6 +85,18 @@ class OnBoardingFragment : Fragment() {
                         Log.i(TAG, "success sign up")
                         goHome()
                     }
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            viewmodel.uiState.flowWithLifecycle(lifecycle).collectLatest { state ->
+                if (state.isLoading) {
+                    loadingDialog = LoadingDialog()
+                    loadingDialog?.show(parentFragmentManager, null)
+                } else {
+                    loadingDialog?.dismiss()
+                    loadingDialog = null
                 }
             }
         }

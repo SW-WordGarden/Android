@@ -54,8 +54,8 @@ import com.sw.wordgarden.domain.usecase.quiz.wq.GetGeneratedWqUseCase
 import com.sw.wordgarden.domain.usecase.quiz.wq.GetGeneratedWqUseCaseImpl
 import com.sw.wordgarden.domain.usecase.quiz.wq.GetSolvedWqTitlesUseCase
 import com.sw.wordgarden.domain.usecase.quiz.wq.GetSolvedWqTitlesUseCaseImpl
-import com.sw.wordgarden.domain.usecase.quiz.wq.GetSolvedWqUseCase
-import com.sw.wordgarden.domain.usecase.quiz.wq.GetSolvedWqUseCaseImpl
+import com.sw.wordgarden.domain.usecase.quiz.wq.GetWqOrSolvedWqUseCase
+import com.sw.wordgarden.domain.usecase.quiz.wq.GetWqOrSolvedWqUseCaseImpl
 import com.sw.wordgarden.domain.usecase.quiz.wq.GetWqStateUseCase
 import com.sw.wordgarden.domain.usecase.quiz.wq.GetWqStateUseCaseImpl
 import com.sw.wordgarden.domain.usecase.quiz.wq.GetWrongWqsUseCase
@@ -280,9 +280,9 @@ abstract class UseCaseModule {
 
     @Binds
     @ViewModelScoped
-    abstract fun bindGetSolvedWqUseCase(
-        getSolvedWqUseCaseImpl: GetSolvedWqUseCaseImpl
-    ): GetSolvedWqUseCase
+    abstract fun bindGetWqOrSolvedWqUseCase(
+        getWqOrSolvedWqUseCaseImpl: GetWqOrSolvedWqUseCaseImpl
+    ): GetWqOrSolvedWqUseCase
 
     @Binds
     @ViewModelScoped
