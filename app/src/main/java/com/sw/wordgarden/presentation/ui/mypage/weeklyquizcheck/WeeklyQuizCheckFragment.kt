@@ -109,7 +109,7 @@ class WeeklyQuizCheckFragment : Fragment() {
     }
 
     private fun goBack() {
-        findNavController().navigate(R.id.action_weeklyQuizCheckFragment_to_mypageFragment)
+        findNavController().navigateUp()
     }
 
     override fun onDestroyView() {

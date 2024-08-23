@@ -7,7 +7,7 @@ import javax.inject.Inject
 class GetUserSqUseCaseImpl @Inject constructor(
     private val quizRepository: QuizRepository
 ) : GetUserSqUseCase {
-    override suspend fun invoke(creatorUid: String, sqId: String): SqEntity? {
+    override suspend fun invoke(creatorUid: String?, sqId: String): SqEntity? {
         return quizRepository.getUserSq(creatorUid, sqId)
     }
 }

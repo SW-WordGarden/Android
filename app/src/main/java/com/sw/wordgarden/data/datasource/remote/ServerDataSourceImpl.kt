@@ -8,6 +8,7 @@ import com.sw.wordgarden.data.dto.alarm.AlarmDetailDto
 import com.sw.wordgarden.data.dto.alarm.AlarmDto
 import com.sw.wordgarden.data.dto.alarm.ShareRequestDto
 import com.sw.wordgarden.data.dto.quiz.QuizSummaryDto
+import com.sw.wordgarden.data.dto.quiz.SqCreatedInfoDto
 import com.sw.wordgarden.data.dto.quiz.SqCreatorInfoDto
 import com.sw.wordgarden.data.dto.quiz.SqDto
 import com.sw.wordgarden.data.dto.quiz.SqQuestionAnswerDto
@@ -24,6 +25,7 @@ import com.sw.wordgarden.data.dto.user.ReportInfoDto
 import com.sw.wordgarden.data.dto.user.UserDto
 import com.sw.wordgarden.data.dto.user.UserInfoDto
 import retrofit2.HttpException
+import retrofit2.Response
 import javax.inject.Inject
 
 class ServerDataSourceImpl @Inject constructor(
@@ -288,6 +290,7 @@ class ServerDataSourceImpl @Inject constructor(
     override suspend fun submitWq(wqSubmission: WqSubmissionDto) {
         try {
             val uid = getUid()
+
             val request = WqSubmissionDto(
                 uid = uid,
                 answers = wqSubmission.answers,
@@ -351,10 +354,17 @@ class ServerDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun getSolvedWq(title: String): List<WqResponseDto>? {
+    override suspend fun getWqOrSolvedWq(title: String, isSolved: Boolean): List<WqResponseDto>? {
         return try {
-            val uid = getUid()
-            val response = service.getSolvedWq(title, uid!!)
+            val uid: String?
+            val response: Response<List<WqResponseDto>>?
+
+            if (isSolved) {
+                uid = getUid()
+                response = service.getWqOrSolvedWq(title, uid!!)
+            } else {
+                response = service.getWqOrSolvedWq(title, null)
+            }
 
             if (!response.isSuccessful) {
                 throw HttpException(response)
@@ -368,8 +378,8 @@ class ServerDataSourceImpl @Inject constructor(
     }
 
     //quiz - sq
-    override suspend fun createNewSq(sqDto: SqDto) {
-        try {
+    override suspend fun createNewSq(sqDto: SqDto): SqCreatedInfoDto? {
+        return try {
             val uid = getUid()
             val quizListData = sqDto.copy(
                 uid = uid
@@ -377,6 +387,8 @@ class ServerDataSourceImpl @Inject constructor(
             val response = service.createNewSq(quizListData)
             if (!response.isSuccessful) {
                 throw HttpException(response)
+            } else {
+                response.body()
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -400,9 +412,9 @@ class ServerDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun getUserSq(creatorUid: String, quizId: String): SqDto? {
+    override suspend fun getUserSq(creatorUid: String?, quizId: String): SqDto? {
         return try {
-            val uid = if (creatorUid == "") {
+            val uid = if (creatorUid.isNullOrEmpty()) {
                 getUid()
             } else {
                 creatorUid

@@ -1,5 +1,6 @@
 package com.sw.wordgarden.presentation.mapper
 
+import android.util.Log
 import com.sw.wordgarden.domain.entity.quiz.SqAnswerEntity
 import com.sw.wordgarden.domain.entity.quiz.SqQuestionAnswerEntity
 import com.sw.wordgarden.domain.entity.quiz.SqEntity
@@ -14,7 +15,8 @@ import com.sw.wordgarden.presentation.model.QuizModel
 object ModelMapper {
 
     //quiz - wq
-    fun List<WqResponseEntity>.toModel(): QuizModel {
+    @JvmName("forWq")
+    fun List<WqResponseEntity>.toQuizModel(): QuizModel {
         if (this.isEmpty()) return QuizModel(qTitle = null, sqId = null, qaList = null)
 
         val firstEntity = this.first()
@@ -33,8 +35,33 @@ object ModelMapper {
         return QuizModel(qTitle = qTitle, sqId = null, qaList = qaList)
     }
 
+    fun QuizModel.toWqSubmissionEntity(): WqSubmissionEntity {
+        val entity = WqSubmissionEntity(
+            uid = null,
+            answers = this.qaList?.toWqAnswerEntity()
+        )
+
+        return entity
+    }
+
+    private fun List<QAModel>.toWqAnswerEntity(): List<WqAnswerEntity> {
+        val list: MutableList<WqAnswerEntity> = mutableListOf()
+
+        this.forEach { model ->
+            val entity = WqAnswerEntity(
+                wqId = model.questionId,
+                uWqA = model.userAnswer,
+            )
+            list.add(entity)
+        }
+        return list
+    }
+
+
+
+
     //quiz - sq
-    fun SqEntity.toModel() = QuizModel(
+    fun SqEntity.toQuizModel() = QuizModel(
         qTitle = quizTitle,
         sqId = sqId,
         qaList = qaListEntityToModel(questionsAndAnswers, sqresults)
@@ -47,17 +74,33 @@ object ModelMapper {
         val length = questionsAndAnswers?.size
         val list: MutableList<QAModel> = mutableListOf()
 
-        for (i in 0 until length!!) {
-            list.add(
-                QAModel(
-                    questionId = "", //TODO: 어떤 값 가져와야 하는지 확인
-                    question = questionsAndAnswers[i].question,
-                    userAnswer = sqresults?.get(i)?.userAnswer,
-                    correctAnswer = questionsAndAnswers[i].answer,
-                    correct = sqresults?.get(i)?.correct
+        if (sqresults.isNullOrEmpty()) { //결과 없는 데이터 처리
+            for (i in 0 until length!!) {
+                list.add(
+                    QAModel(
+                        questionId = questionsAndAnswers[i].sqQnum.toString(),
+                        question = questionsAndAnswers[i].question,
+                        userAnswer = null,
+                        correctAnswer = questionsAndAnswers[i].answer,
+                        correct = null
+                    )
                 )
-            )
+            }
+        } else { //결과 있는 데이터 처리
+            for (i in 0 until length!!) {
+                list.add(
+                    QAModel(
+                        questionId = questionsAndAnswers[i].sqQnum.toString(),
+                        question = questionsAndAnswers[i].question,
+                        userAnswer = sqresults[i].userAnswer,
+                        correctAnswer = questionsAndAnswers[i].answer,
+                        correct = sqresults[i].correct
+                    )
+                )
+            }
         }
+
+
 
         return list
     }
@@ -83,28 +126,6 @@ object ModelMapper {
             list.add(entity)
         }
 
-        return list
-    }
-
-    fun QuizModel.toWqSubmissionEntity(): WqSubmissionEntity {
-        val entity = WqSubmissionEntity(
-            uid = null,
-            answers = this.qaList?.toWqAnswerEntity()
-        )
-
-        return entity
-    }
-
-    private fun List<QAModel>.toWqAnswerEntity(): List<WqAnswerEntity> {
-        val list: MutableList<WqAnswerEntity> = mutableListOf()
-
-        this.forEach { model ->
-            val entity = WqAnswerEntity(
-                wqId = model.questionId,
-                uWqA = model.userAnswer,
-            )
-            list.add(entity)
-        }
         return list
     }
 
@@ -138,6 +159,24 @@ object ModelMapper {
         }
 
         return list
+    }
+
+    @JvmName("forSq")
+    fun List<SqQuestionAnswerEntity>.toQuizModel(): QuizModel {
+        if (this.isEmpty()) return QuizModel(qTitle = null, sqId = null, qaList = null)
+
+        val qTitle = ""
+        val qaList = this.map { entity ->
+            QAModel(
+                questionId = entity.sqQnum.toString(),
+                question = entity.question,
+                userAnswer = null,
+                correctAnswer = entity.answer,
+                correct = null
+            )
+        }
+
+        return QuizModel(qTitle = qTitle, sqId = null, qaList = qaList)
     }
 
     fun createEmptySqresultEntity(): List<SqresultEntity> {

@@ -237,7 +237,7 @@ class FriendsFragment : Fragment() {
     }
 
     private fun goBack() {
-        findNavController().navigate(R.id.action_friendsFragment_to_mypageFragment)
+        findNavController().navigateUp()
     }
 
     override fun onDestroyView() {
