@@ -149,7 +149,7 @@
     <string name="solve_quiz_next">다음</string>
     <string name="solve_quiz_submit">제출하기</string>
     <string name="solve_quiz_fill_answer">빈칸에 정답을 입력해 주세요.</string>
-    <string name="solve_quiz_msg_need_select_answer">정답을 골라주세요.</string>
+    <string name="solve_quiz_msg_need_select_answer">정답을 선택해주세요.</string>
     <string name="solve_quiz_msg_need_answer">정답을 입력해주세요.</string>
     <string name="solve_quiz_msg_need_all_check">모든 문제의 정답을 입력하였는지 확인해주세요.</string>
     <string name="solve_quiz_msg_fail_submit">문제 제출에 실패했어요.</string>

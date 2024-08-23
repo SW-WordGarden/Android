@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class wordFragment : Fragment() {
+class WordFragment : Fragment() {
     private var _binding : FragmentWordBinding? = null
     private val binding get() = _binding!!
 
@@ -52,7 +52,7 @@ class wordFragment : Fragment() {
             viewModel.selectWord(item)
         }
         rvWord.adapter = wordAdapter
-        rvWord.layoutManager = LinearLayoutManager(this@wordFragment.activity)
+        rvWord.layoutManager = LinearLayoutManager(this@WordFragment.activity)
     }
     private fun initViewModel(){
         viewLifecycleOwner.lifecycleScope.launch {

@@ -1,12 +1,14 @@
 package com.sw.wordgarden.presentation.ui.quiz.resultquiz
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.sw.wordgarden.databinding.FragmentResultQuestionChoiceBinding
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentResultQuestionOXBinding
+import com.sw.wordgarden.presentation.util.Constants.QUESTION_O
 
 class ResultQuestionOXFragment : Fragment() {
 
@@ -18,7 +20,8 @@ class ResultQuestionOXFragment : Fragment() {
     private lateinit var userAnswer: String
     private var position: Int = 0
 
-    private var onNextClicked: ((position: Int, question: String, answer: String, userAnswer: String, isCorrect: Boolean) -> Unit)? = null
+    private var onNextClicked: ((position: Int, question: String, answer: String, userAnswer: String, isCorrect: Boolean) -> Unit)? =
+        null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,23 +48,29 @@ class ResultQuestionOXFragment : Fragment() {
     }
 
     private fun setupUi() = with(binding) {
-//        tvResultQuizItemQuestion.text = question
-//
-//        val answer = getString(R.string.result_quiz_correct) + " " + this@ResultQuestionWritingFragment.answer
-//        val userAnswer = getString(R.string.result_quiz_answer) + " " + this@ResultQuestionWritingFragment.userAnswer
-//
-//        if (this@ResultQuestionWritingFragment.answer == this@ResultQuestionWritingFragment.userAnswer) {
-//            tvResultQuizItemCorrect.text = answer
-//            tvResultQuizItemAnswer.visibility = View.GONE
-//        } else {
-//            tvResultQuizItemCorrect.text = answer
-//            tvResultQuizItemAnswer.text = userAnswer
-//
-//            val params = tvResultQuizItemCorrect.layoutParams as ViewGroup.MarginLayoutParams
-//            params.bottomMargin = resources.getDimensionPixelSize(R.dimen.margin_extra_small)
-//            tvResultQuizItemCorrect.layoutParams = params
-//            tvResultQuizItemAnswer.visibility = View.VISIBLE
-//        }
+        tvResultQuizItemQuestionOx.text = question
+
+        if (userAnswer == answer) {
+            if (answer == QUESTION_O) {
+                btnResultQuizItemQuestionO.backgroundTintList =
+                    ContextCompat.getColorStateList(requireContext(), R.color.light_green)
+            } else {
+                btnResultQuizItemQuestionX.backgroundTintList =
+                    ContextCompat.getColorStateList(requireContext(), R.color.light_green)
+            }
+        } else {
+            if (answer == QUESTION_O) {
+                btnResultQuizItemQuestionO.backgroundTintList =
+                    ContextCompat.getColorStateList(requireContext(), R.color.light_green)
+                btnResultQuizItemQuestionX.backgroundTintList =
+                    ContextCompat.getColorStateList(requireContext(), R.color.light_red)
+            } else {
+                btnResultQuizItemQuestionO.backgroundTintList =
+                    ContextCompat.getColorStateList(requireContext(), R.color.light_red)
+                btnResultQuizItemQuestionX.backgroundTintList =
+                    ContextCompat.getColorStateList(requireContext(), R.color.light_green)
+            }
+        }
     }
 
     override fun onDestroyView() {
@@ -79,7 +88,12 @@ class ResultQuestionOXFragment : Fragment() {
         const val USER_ANSWER_KEY = "USER_ANSWER_KEY"
         const val POSITION_KEY = "POSITION_KEY"
 
-        fun newInstance(question: String, answer: String, userAnswer: String, position: Int) =
+        fun newInstance(
+            question: String,
+            answer: String,
+            userAnswer: String,
+            position: Int
+        ) =
             ResultQuestionOXFragment().apply {
                 arguments = Bundle().apply {
                     putString(QUESTION_KEY, question)

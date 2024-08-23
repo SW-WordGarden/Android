@@ -1,15 +1,15 @@
 package com.sw.wordgarden.presentation.ui.quiz.solvequiz
 
 import android.os.Bundle
-import android.view.KeyEvent
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
+import androidx.fragment.app.Fragment
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentSolveQuestionOXBinding
-import com.sw.wordgarden.databinding.FragmentSolveQuestionWritingBinding
+import com.sw.wordgarden.presentation.util.Constants.QUESTION_O
+import com.sw.wordgarden.presentation.util.Constants.QUESTION_X
+import com.sw.wordgarden.presentation.util.Constants.QUIZ_AMOUNT
 import com.sw.wordgarden.presentation.util.ToastMaker
 
 class SolveQuestionOXFragment : Fragment() {
@@ -22,7 +22,8 @@ class SolveQuestionOXFragment : Fragment() {
     private lateinit var answer: String
     private var position: Int = 0
 
-    private var onNextClicked: ((position: Int, qid: String, question: String, answer: String, isFull: Boolean) -> Unit)? = null
+    private var onNextClicked: ((position: Int, qid: String, question: String, answer: String, isFull: Boolean) -> Unit)? =
+        null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,37 +51,31 @@ class SolveQuestionOXFragment : Fragment() {
     }
 
     private fun setupUi() = with(binding) {
-//        tvSolveQuizItemQuestion.text = question
-//
-//        if (position < QUIZ_SIZE - 1) {
-//            btnSolveQuizSubmit.text = getString(R.string.solve_quiz_next)
-//        } else {
-//            btnSolveQuizSubmit.text = getString(R.string.solve_quiz_submit)
-//        }
+        tvSolveQuizItemQuestionOx.text = question
+
+        if (position < QUIZ_AMOUNT - 1) {
+            btnSolveQuizQuestionSubmitOx.text = getString(R.string.solve_quiz_next)
+        } else {
+            btnSolveQuizQuestionSubmitOx.text = getString(R.string.solve_quiz_submit)
+        }
     }
 
     private fun setupListener() = with(binding) {
-//        etSolveQuizItemFillAnswer.setOnEditorActionListener { _, actionId, event ->
-//            if (actionId == EditorInfo.IME_ACTION_DONE || event.keyCode == KeyEvent.KEYCODE_ENTER) {
-//                val userAnswer = etSolveQuizItemFillAnswer.text.toString()
-//                onNextClicked?.invoke(position, qid, question, userAnswer, true)
-//                true
-//            } else {
-//                false
-//            }
-//        }
-//
-//        btnSolveQuizSubmit.setOnClickListener {
-//            val answer = etSolveQuizItemFillAnswer.text.toString()
-//
-//            if (answer.isEmpty()) {
-//                onNextClicked?.invoke(position, qid, "", answer, false)
-//
-//                ToastMaker.make(requireContext(), R.string.solve_quiz_msg_need_answer)
-//            } else {
-//                onNextClicked?.invoke(position, qid, "", answer, true)
-//            }
-//        }
+        btnSolveQuizQuestionSubmitOx.setOnClickListener {
+            val checkedItem =
+                when (rgSolveQuizItemQuestionOx.checkedRadioButtonId) {
+                    R.id.rb_solve_quiz_item_question_o -> { QUESTION_O }
+                    R.id.rb_solve_quiz_item_question_x -> { QUESTION_X }
+                    else -> { "" }
+                }
+
+            if (checkedItem == "") {
+                onNextClicked?.invoke(position, qid, "", checkedItem, false)
+                ToastMaker.make(requireContext(), R.string.solve_quiz_msg_need_select_answer)
+            } else {
+                onNextClicked?.invoke(position, qid, "", checkedItem, true)
+            }
+        }
     }
 
     override fun onDestroyView() {
@@ -97,7 +92,6 @@ class SolveQuestionOXFragment : Fragment() {
         const val QUESTION_KEY = "QUESTION_KEY"
         const val ANSWER_KEY = "ANSWER_KEY"
         const val POSITION_KEY = "POSITION_KEY"
-        const val QUIZ_SIZE = 10
 
         fun newInstance(qid: String, question: String, answer: String, position: Int) =
             SolveQuestionOXFragment().apply {

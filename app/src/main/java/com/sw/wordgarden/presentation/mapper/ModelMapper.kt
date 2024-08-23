@@ -1,9 +1,8 @@
 package com.sw.wordgarden.presentation.mapper
 
-import android.util.Log
 import com.sw.wordgarden.domain.entity.quiz.SqAnswerEntity
-import com.sw.wordgarden.domain.entity.quiz.SqQuestionAnswerEntity
 import com.sw.wordgarden.domain.entity.quiz.SqEntity
+import com.sw.wordgarden.domain.entity.quiz.SqQuestionAnswerEntity
 import com.sw.wordgarden.domain.entity.quiz.SqSolveQuizEntity
 import com.sw.wordgarden.domain.entity.quiz.SqresultEntity
 import com.sw.wordgarden.domain.entity.quiz.WqAnswerEntity
@@ -11,6 +10,7 @@ import com.sw.wordgarden.domain.entity.quiz.WqResponseEntity
 import com.sw.wordgarden.domain.entity.quiz.WqSubmissionEntity
 import com.sw.wordgarden.presentation.model.QAModel
 import com.sw.wordgarden.presentation.model.QuizModel
+import com.sw.wordgarden.presentation.util.Constants.QUIZ_AMOUNT
 
 object ModelMapper {
 
@@ -22,13 +22,16 @@ object ModelMapper {
         val firstEntity = this.first()
         val qTitle = firstEntity.wqTitle
 
-        val qaList =  this.map { entity ->
+        val qaList = this.map { entity ->
             QAModel(
                 questionId = entity.wqId,
                 question = entity.wqQuestion,
                 userAnswer = entity.userAnswer,
                 correctAnswer = entity.correctAnswer,
-                correct = entity.correctAnswer == entity.userAnswer
+                correct = entity.correctAnswer == entity.userAnswer,
+                questionType = entity.questionType,
+                options = entity.options,
+                word = entity.word
             )
         }
 
@@ -58,8 +61,6 @@ object ModelMapper {
     }
 
 
-
-
     //quiz - sq
     fun SqEntity.toQuizModel() = QuizModel(
         qTitle = quizTitle,
@@ -82,7 +83,10 @@ object ModelMapper {
                         question = questionsAndAnswers[i].question,
                         userAnswer = null,
                         correctAnswer = questionsAndAnswers[i].answer,
-                        correct = null
+                        correct = null,
+                        questionType = null, //sq는 questionType이 없음
+                        options = null, //sq는 options가 없음
+                        word = null //sq는 word가 없음
                     )
                 )
             }
@@ -94,7 +98,10 @@ object ModelMapper {
                         question = questionsAndAnswers[i].question,
                         userAnswer = sqresults[i].userAnswer,
                         correctAnswer = questionsAndAnswers[i].answer,
-                        correct = sqresults[i].correct
+                        correct = sqresults[i].correct,
+                        questionType = null, //sq는 questionType이 없음
+                        options = null, //sq는 options가 없음
+                        word = null //sq는 word가 없음
                     )
                 )
             }
@@ -153,7 +160,10 @@ object ModelMapper {
                 question = model.question,
                 userAnswer = null,
                 correctAnswer = model.answer,
-                correct = null
+                correct = null,
+                questionType = null, //sq는 questionType이 없음
+                options = null, //sq는 options가 없음
+                word = null //sq는 word가 없음
             )
             list.add(entity)
         }
@@ -172,7 +182,10 @@ object ModelMapper {
                 question = entity.question,
                 userAnswer = null,
                 correctAnswer = entity.answer,
-                correct = null
+                correct = null,
+                questionType = null, //sq는 questionType이 없음
+                options = null, //sq는 options가 없음
+                word = null //sq는 word가 없음
             )
         }
 
@@ -181,7 +194,7 @@ object ModelMapper {
 
     fun createEmptySqresultEntity(): List<SqresultEntity> {
         val emptyQuizList: List<SqresultEntity> =
-            List(10) { SqresultEntity(null, null, null, null) }
+            List(QUIZ_AMOUNT) { SqresultEntity(null, null, null, null) }
 
         return emptyQuizList
     }

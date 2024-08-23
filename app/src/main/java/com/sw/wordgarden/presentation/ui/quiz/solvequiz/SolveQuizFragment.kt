@@ -1,11 +1,11 @@
 package com.sw.wordgarden.presentation.ui.quiz.solvequiz
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -21,6 +21,7 @@ import com.sw.wordgarden.presentation.model.QAModel
 import com.sw.wordgarden.presentation.model.QuizKey
 import com.sw.wordgarden.presentation.model.QuizModel
 import com.sw.wordgarden.presentation.ui.loading.LoadingDialog
+import com.sw.wordgarden.presentation.util.Constants.QUIZ_AMOUNT
 import com.sw.wordgarden.presentation.util.KeyboardCleaner
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,7 +35,7 @@ class SolveQuizFragment : Fragment() {
 
     private var loadingDialog: LoadingDialog? = null
     private val viewmodel: SolveQuizViewModel by viewModels()
-    private val enteredAnswers: List<QAModel> = List(10) { QAModel("", "", "", "", null) }
+    private val enteredAnswers: List<QAModel> = List(QUIZ_AMOUNT) { QAModel.emptyQAModel() }
     private var qTitle = ""
     private var sqId = ""
 
@@ -85,7 +86,7 @@ class SolveQuizFragment : Fragment() {
         val pagerAdapter = SolveQuizAdapter(
             this@SolveQuizFragment,
             questionList
-        ) { position, qid, question, answer, isFull ->
+        ) { position, qid, question, word, answer, options, isFull ->
             enteredAnswers[position].question = question
             enteredAnswers[position].userAnswer = answer
             enteredAnswers[position].questionId = qid

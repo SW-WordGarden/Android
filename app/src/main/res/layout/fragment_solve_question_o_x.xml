@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -25,6 +24,7 @@
                     android:id="@+id/tv_solve_quiz_item_question_ox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_medium"
                     android:gravity="center"
                     android:text="문제 내용"
                     android:textColor="@color/green"
@@ -52,32 +52,38 @@
                     android:textColor="@color/green"
                     android:textSize="@dimen/text_smaller" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
+            <RadioGroup
+                    android:id="@+id/rg_solve_quiz_item_question_ox"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_larger">
+                    android:layout_marginTop="@dimen/margin_larger"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
 
-                <androidx.appcompat.widget.AppCompatImageButton
-                        android:id="@+id/btn_solve_quiz_item_question_o"
+                <RadioButton
+                        android:id="@+id/rb_solve_quiz_item_question_o"
                         android:layout_width="110dp"
                         android:layout_height="40dp"
-                        android:background="@drawable/bg_rec_stroke_radius_10"
-                        android:src="@drawable/ic_o"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/btn_solve_quiz_item_question_x" />
+                        android:background="@drawable/se_rec_radio"
+                        android:drawableStart="@drawable/ic_o"
+                        android:paddingStart="45dp"
+                        android:paddingEnd="45dp"
+                        android:button="@drawable/bg_circle_white" />
 
-                <androidx.appcompat.widget.AppCompatImageButton
-                        android:id="@+id/btn_solve_quiz_item_question_x"
+                <Space
+                        android:layout_width="@dimen/margin_large"
+                        android:layout_height="0dp" />
+
+                <RadioButton
+                        android:id="@+id/rb_solve_quiz_item_question_x"
                         android:layout_width="110dp"
                         android:layout_height="40dp"
-                        android:background="@drawable/bg_rec_stroke_radius_10"
-                        android:src="@drawable/ic_x"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/btn_solve_quiz_item_question_o"
-                        app:layout_constraintEnd_toEndOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                        android:background="@drawable/se_rec_radio"
+                        android:drawableStart="@drawable/ic_x"
+                        android:paddingStart="45dp"
+                        android:paddingEnd="45dp"
+                        android:button="@drawable/bg_circle_white" />
+            </RadioGroup>
 
             <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_solve_quiz_question_submit_ox"
