@@ -91,17 +91,20 @@ interface Service {
     ): Response<Unit>
 
     //word
-    //    @POST("login/login")
-    suspend fun insertLikedWord(@Body word: WordDto): Response<Unit>
+    @GET("word/learning/{category}")
+    suspend fun getWeeklyCategoryWordList(@Path("category") category: String): Response<List<WordDto>>
 
-    //    @POST("login/login")
-    suspend fun deleteLikedWord(@Body wordId: String): Response<Unit>
+    @GET("word/words/{wordId}")
+    suspend fun getDetailWord(@Path("wordId") wordId : String) : Response<WordDto>
 
-    //    @POST("login/login")
-    suspend fun getLikedWordList(@Body uid: String): Response<List<WordDto>>
+    @POST("like/toggle/{uid}/{wordId}")
+    suspend fun insertLikedWord(@Path("uid") uid: String, @Path("wordId") wordId: String, @Body isLiked:Boolean) :Response<Unit>
 
-    //    @POST("login/login")
-    suspend fun getWeeklyWordList(@Body uid: String): Response<List<WordDto>>
+    @GET("like/status/{uid}/{wordId}")
+    suspend fun getWordLikedStatus(@Path("uid") uid: String, @Path("wordId") wordId: String):Response<Boolean>
+
+    @GET("word/learning/")
+    suspend fun getWeeklyWordList() : Response<List<WordDto>>
 
 
     //quiz - wq

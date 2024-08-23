@@ -26,7 +26,6 @@ import com.sw.wordgarden.domain.usecase.datastore.GetUidUseCase
 import com.sw.wordgarden.domain.usecase.datastore.GetUidUseCaseImpl
 import com.sw.wordgarden.domain.usecase.user.GetUserInfoForLoginUseCase
 import com.sw.wordgarden.domain.usecase.user.GetUserInfoForLoginUseCaseImpl
-import com.sw.wordgarden.domain.usecase.GetWeeklyWordListUseCase
 import com.sw.wordgarden.domain.usecase.GetWeelkyWordListUseCaseImpl
 import com.sw.wordgarden.domain.usecase.quiz.sq.CreateNewSqUseCase
 import com.sw.wordgarden.domain.usecase.quiz.sq.CreateNewSqUseCaseImpl

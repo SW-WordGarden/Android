@@ -12,13 +12,15 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentWordBinding
+import com.sw.wordgarden.presentation.event.DefaultEvent
 import com.sw.wordgarden.presentation.model.WordModel
+import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class wordFragment : Fragment() {
+class WordFragment : Fragment() {
     private var _binding : FragmentWordBinding? = null
     private val binding get() = _binding!!
 
@@ -52,7 +54,7 @@ class wordFragment : Fragment() {
             viewModel.selectWord(item)
         }
         rvWord.adapter = wordAdapter
-        rvWord.layoutManager = LinearLayoutManager(this@wordFragment.activity)
+        rvWord.layoutManager = LinearLayoutManager(this@WordFragment.activity)
     }
     private fun initViewModel(){
         viewLifecycleOwner.lifecycleScope.launch {
@@ -67,6 +69,17 @@ class wordFragment : Fragment() {
                 setRadioBtn()
             }
         }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.wordEvent.flowWithLifecycle(viewLifecycleOwner.lifecycle).collectLatest { event ->
+                when(event){
+                    is DefaultEvent.Failure -> {
+                        ToastMaker.make(requireContext(), event.msg)
+                    }
+                    DefaultEvent.Success -> {}
+                }
+            }
+        }
+
     }
     private fun setRadioBtn() = with(binding){
         wordRadioGrooup.setOnCheckedChangeListener { _, id ->
