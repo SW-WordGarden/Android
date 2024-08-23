@@ -71,16 +71,16 @@ class IndicatorAdapter(
 
                 when {
                     isSelected -> {
-                        tvItemMakingQuizIndicator.setBackgroundResource(R.drawable.bg_selected_indicator)
+                        tvItemMakingQuizIndicator.setBackgroundResource(R.drawable.bg_circle_selected_indicator)
                         tvItemMakingQuizIndicator.setTextColor(Color.WHITE)
 
                     }
                     isFilled || !isEnableMode ->  {
-                        tvItemMakingQuizIndicator.setBackgroundResource(R.drawable.bg_filled_indicator)
+                        tvItemMakingQuizIndicator.setBackgroundResource(R.drawable.bg_circle_filled_indicator)
                         tvItemMakingQuizIndicator.setTextColor(Color.BLACK)
                     }
                     else -> {
-                        tvItemMakingQuizIndicator.setBackgroundResource(R.drawable.bg_unselected_indicator)
+                        tvItemMakingQuizIndicator.setBackgroundResource(R.drawable.bg_circle_unselected_indicator)
                         tvItemMakingQuizIndicator.setTextColor(Color.BLACK)
                     }
                 }

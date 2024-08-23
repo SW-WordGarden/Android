@@ -59,10 +59,10 @@ class IndicatorAdapter(
                 tvItemMakingQuizIndicator.text = newPosition.toString()
 
                 val backgroundResource = when {
-                    isSelected && isCorrect -> R.drawable.bg_selected_indicator_correct
-                    !isSelected && isCorrect -> R.drawable.bg_unselected_indicator_correct
-                    isSelected && !isCorrect -> R.drawable.bg_selected_indicator_incorrect
-                    else -> R.drawable.bg_unselected_indicator_incorrect
+                    isSelected && isCorrect -> R.drawable.bg_circle_selected_indicator_correct
+                    !isSelected && isCorrect -> R.drawable.bg_circle_unselected_indicator_correct
+                    isSelected && !isCorrect -> R.drawable.bg_circle_selected_indicator_incorrect
+                    else -> R.drawable.bg_circle_unselected_indicator_incorrect
                 }
 
                 tvItemMakingQuizIndicator.setBackgroundResource(backgroundResource)

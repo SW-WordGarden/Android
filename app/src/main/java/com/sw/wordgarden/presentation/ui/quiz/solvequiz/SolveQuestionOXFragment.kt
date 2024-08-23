@@ -8,12 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import com.sw.wordgarden.R
-import com.sw.wordgarden.databinding.FragmentSolveQuizQuestionBinding
+import com.sw.wordgarden.databinding.FragmentSolveQuestionOXBinding
+import com.sw.wordgarden.databinding.FragmentSolveQuestionWritingBinding
 import com.sw.wordgarden.presentation.util.ToastMaker
 
-class SolveQuizQuestionFragment : Fragment() {
+class SolveQuestionOXFragment : Fragment() {
 
-    private var _binding: FragmentSolveQuizQuestionBinding? = null
+    private var _binding: FragmentSolveQuestionOXBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var qid: String
@@ -37,7 +38,7 @@ class SolveQuizQuestionFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentSolveQuizQuestionBinding.inflate(inflater, container, false)
+        _binding = FragmentSolveQuestionOXBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -49,37 +50,37 @@ class SolveQuizQuestionFragment : Fragment() {
     }
 
     private fun setupUi() = with(binding) {
-        tvSolveQuizItemQuestion.text = question
-
-        if (position < QUIZ_SIZE - 1) {
-            btnSolveQuizSubmit.text = getString(R.string.solve_quiz_next)
-        } else {
-            btnSolveQuizSubmit.text = getString(R.string.solve_quiz_submit)
-        }
+//        tvSolveQuizItemQuestion.text = question
+//
+//        if (position < QUIZ_SIZE - 1) {
+//            btnSolveQuizSubmit.text = getString(R.string.solve_quiz_next)
+//        } else {
+//            btnSolveQuizSubmit.text = getString(R.string.solve_quiz_submit)
+//        }
     }
 
     private fun setupListener() = with(binding) {
-        etSolveQuizItemFillAnswer.setOnEditorActionListener { _, actionId, event ->
-            if (actionId == EditorInfo.IME_ACTION_DONE || event.keyCode == KeyEvent.KEYCODE_ENTER) {
-                val userAnswer = etSolveQuizItemFillAnswer.text.toString()
-                onNextClicked?.invoke(position, qid, question, userAnswer, true)
-                true
-            } else {
-                false
-            }
-        }
-
-        btnSolveQuizSubmit.setOnClickListener {
-            val answer = etSolveQuizItemFillAnswer.text.toString()
-
-            if (answer.isEmpty()) {
-                onNextClicked?.invoke(position, qid, "", answer, false)
-
-                ToastMaker.make(requireContext(), R.string.solve_quiz_msg_need_answer)
-            } else {
-                onNextClicked?.invoke(position, qid, "", answer, true)
-            }
-        }
+//        etSolveQuizItemFillAnswer.setOnEditorActionListener { _, actionId, event ->
+//            if (actionId == EditorInfo.IME_ACTION_DONE || event.keyCode == KeyEvent.KEYCODE_ENTER) {
+//                val userAnswer = etSolveQuizItemFillAnswer.text.toString()
+//                onNextClicked?.invoke(position, qid, question, userAnswer, true)
+//                true
+//            } else {
+//                false
+//            }
+//        }
+//
+//        btnSolveQuizSubmit.setOnClickListener {
+//            val answer = etSolveQuizItemFillAnswer.text.toString()
+//
+//            if (answer.isEmpty()) {
+//                onNextClicked?.invoke(position, qid, "", answer, false)
+//
+//                ToastMaker.make(requireContext(), R.string.solve_quiz_msg_need_answer)
+//            } else {
+//                onNextClicked?.invoke(position, qid, "", answer, true)
+//            }
+//        }
     }
 
     override fun onDestroyView() {
@@ -99,7 +100,7 @@ class SolveQuizQuestionFragment : Fragment() {
         const val QUIZ_SIZE = 10
 
         fun newInstance(qid: String, question: String, answer: String, position: Int) =
-            SolveQuizQuestionFragment().apply {
+            SolveQuestionOXFragment().apply {
                 arguments = Bundle().apply {
                     putString(QUESTION_ID_KEY, qid)
                     putString(QUESTION_KEY, question)

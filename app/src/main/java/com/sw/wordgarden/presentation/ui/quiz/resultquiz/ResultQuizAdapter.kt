@@ -15,7 +15,7 @@ class ResultQuizAdapter(
     override fun createFragment(position: Int): Fragment {
         val quizItem = quizList[position]
 
-        return ResultQuizQuestionFragment.newInstance(
+        return ResultQuestionWritingFragment.newInstance(
             quizItem.question ?: "",
             quizItem.correctAnswer ?: "",
             quizItem.userAnswer ?: "",

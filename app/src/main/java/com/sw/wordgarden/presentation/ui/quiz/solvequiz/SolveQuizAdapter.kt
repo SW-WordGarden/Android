@@ -15,7 +15,12 @@ class SolveQuizAdapter(
     override fun createFragment(position: Int): Fragment {
         val quizItem = quizList[position]
 
-        return SolveQuizQuestionFragment.newInstance(quizItem.questionId ?: "", quizItem.question ?: "", quizItem.userAnswer ?: "", position).apply {
+        return SolveQuestionWritingFragment.newInstance(
+            quizItem.questionId ?: "",
+            quizItem.question ?: "",
+            quizItem.userAnswer ?: "",
+            position
+        ).apply {
             setOnNextClickedListener { position, qid, question, answer, isFull ->
                 onNextClicked(position, qid, question, answer, isFull)
             }

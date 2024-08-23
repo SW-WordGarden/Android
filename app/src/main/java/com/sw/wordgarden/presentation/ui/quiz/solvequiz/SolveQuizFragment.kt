@@ -29,8 +29,6 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SolveQuizFragment : Fragment() {
-    private val TAG = "ServerDataSourceImpl"
-
     private var _binding: FragmentSolveQuizBinding? = null
     private val binding get() = _binding!!
 
