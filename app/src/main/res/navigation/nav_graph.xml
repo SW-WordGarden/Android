@@ -241,11 +241,6 @@
                 android:name="argsMyCode"
                 app:argType="string"
                 android:defaultValue="" />
-        <action
-                android:id="@+id/action_friendsFragment_to_mypageFragment"
-                app:destination="@id/mypageFragment"
-                app:popUpToInclusive="false"
-                app:popUpTo="@id/mypageFragment" />
 
     </fragment>
 
@@ -267,11 +262,6 @@
                     app:argType="boolean"
                     android:defaultValue="false" />
         </action>
-        <action
-                android:id="@+id/action_myselfQuizFragment_to_mypageFragment"
-                app:destination="@id/mypageFragment"
-                app:popUpToInclusive="false"
-                app:popUpTo="@id/mypageFragment" />
     </fragment>
 
     <fragment
@@ -288,11 +278,6 @@
                     app:nullable="true"
                     android:defaultValue="@null" />
         </action>
-        <action
-                android:id="@+id/action_mySolvedQuizFragment_to_mypageFragment"
-                app:destination="@id/mypageFragment"
-                app:popUpToInclusive="false"
-                app:popUpTo="@id/mypageFragment" />
     </fragment>
 
     <fragment
@@ -313,11 +298,6 @@
                     app:argType="boolean"
                     android:defaultValue="false" />
         </action>
-        <action
-                android:id="@+id/action_myTakenQuizFragment_to_mypageFragment"
-                app:destination="@id/mypageFragment"
-                app:popUpToInclusive="false"
-                app:popUpTo="@id/mypageFragment" />
     </fragment>
 
     <fragment
@@ -325,11 +305,6 @@
             android:name="com.sw.wordgarden.presentation.ui.mypage.weeklyquizcheck.WeeklyQuizCheckFragment"
             android:label="fragment_weekly"
             tools:layout="@layout/fragment_weekly" >
-        <action
-                android:id="@+id/action_weeklyQuizCheckFragment_to_mypageFragment"
-                app:destination="@id/mypageFragment"
-                app:popUpToInclusive="false"
-                app:popUpTo="@id/mypageFragment" />
     </fragment>
     <fragment
             android:id="@+id/settingFragment"

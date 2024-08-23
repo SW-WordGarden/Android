@@ -49,7 +49,7 @@ class MyTakenQuizFragment : Fragment() {
     }
 
     private fun goBack() {
-        findNavController().navigate(R.id.action_myTakenQuizFragment_to_mypageFragment)
+        findNavController().navigateUp()
     }
 
     override fun onDestroyView() {

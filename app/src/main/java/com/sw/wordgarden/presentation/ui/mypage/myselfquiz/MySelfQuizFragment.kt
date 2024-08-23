@@ -120,7 +120,7 @@ class MySelfQuizFragment : Fragment() {
     }
 
     private fun goBack() {
-        findNavController().navigate(R.id.action_myselfQuizFragment_to_mypageFragment)
+        findNavController().navigateUp()
     }
 
     private fun goMakeQuiz(quizKey: QuizKey) {

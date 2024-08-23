@@ -289,6 +289,9 @@ class ServerDataSourceImpl @Inject constructor(
     override suspend fun submitWq(wqSubmission: WqSubmissionDto) {
         try {
             val uid = getUid()
+
+            Log.d(TAG, "uid: $uid")
+
             val request = WqSubmissionDto(
                 uid = uid,
                 answers = wqSubmission.answers,

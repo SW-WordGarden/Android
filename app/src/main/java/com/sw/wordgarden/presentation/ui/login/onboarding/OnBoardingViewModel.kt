@@ -36,10 +36,10 @@ class OnBoardingViewModel @Inject constructor(
                 insertUserUseCase.invoke(loginRequestEntity)
             }.onFailure {
                 _uiState.update { it.copy(isLoading = false) }
-                _insertEvent.emit(DefaultEvent.Success)
+                _insertEvent.emit(DefaultEvent.Failure(R.string.onboarding_msg_fail_signup))
             }.onSuccess {
                 _uiState.update { it.copy(isLoading = false) }
-                _insertEvent.emit(DefaultEvent.Failure(R.string.onboarding_msg_fail_signup))
+                _insertEvent.emit(DefaultEvent.Success)
             }
         }
     }

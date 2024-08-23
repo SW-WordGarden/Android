@@ -120,7 +120,7 @@ class MySolvedQuizFragment : Fragment() {
     }
 
     private fun goBack() {
-        findNavController().navigate(R.id.action_mySolvedQuizFragment_to_mypageFragment)
+        findNavController().navigateUp()
     }
 
     private fun goResultQuiz(quizKey: QuizKey) {

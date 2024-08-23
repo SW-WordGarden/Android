@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.sw.wordgarden.R
@@ -93,45 +95,49 @@ class MypageFragment : Fragment() {
     }
 
     private fun setupObserver() {
-        lifecycleScope.launch {
-            viewmodel.getUserInfoEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
-                when (event) {
-                    is DefaultEvent.Failure -> {
-                        ToastMaker.make(requireContext(), event.msg)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    viewmodel.getUserInfoEvent.collectLatest { event ->
+                        when (event) {
+                            is DefaultEvent.Failure -> {
+                                ToastMaker.make(requireContext(), event.msg)
+                            }
+                            DefaultEvent.Success -> {}
+                        }
                     }
-
-                    DefaultEvent.Success -> {}
                 }
-            }
-        }
 
-        lifecycleScope.launch {
-            viewmodel.getUserInfo.flowWithLifecycle(lifecycle).collectLatest { info ->
-                myCode = info?.uUrl ?: ""
-                setupUi(info)
-            }
-        }
-
-        lifecycleScope.launch {
-            viewmodel.updateUserImageEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
-                when (event) {
-                    is DefaultEvent.Failure -> {
-                        ToastMaker.make(requireContext(), event.msg)
+                launch {
+                    viewmodel.getUserInfo.collectLatest { info ->
+                        myCode = info?.uUrl ?: ""
+                        setupUi(info)
                     }
-
-                    DefaultEvent.Success -> {}
                 }
-            }
-        }
 
-        lifecycleScope.launch {
-            viewmodel.uiState.flowWithLifecycle(lifecycle).collectLatest { state ->
-                if (state.isLoading) {
-                    loadingDialog = LoadingDialog()
-                    loadingDialog?.show(parentFragmentManager, null)
-                } else {
-                    loadingDialog?.dismiss()
-                    loadingDialog = null
+                launch {
+                    viewmodel.updateUserImageEvent.collectLatest { event ->
+                        when (event) {
+                            is DefaultEvent.Failure -> {
+                                ToastMaker.make(requireContext(), event.msg)
+                            }
+                            DefaultEvent.Success -> {}
+                        }
+                    }
+                }
+
+                launch {
+                    viewmodel.uiState.collectLatest { state ->
+                        if (state.isLoading) {
+                            if (loadingDialog == null || loadingDialog?.dialog?.isShowing == false) {
+                                loadingDialog = LoadingDialog()
+                                loadingDialog?.show(parentFragmentManager, null)
+                            }
+                        } else {
+                            loadingDialog?.dismiss()
+                            loadingDialog = null
+                        }
+                    }
                 }
             }
         }
