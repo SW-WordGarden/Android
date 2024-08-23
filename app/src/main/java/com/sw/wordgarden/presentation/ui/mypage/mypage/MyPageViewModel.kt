@@ -7,6 +7,7 @@ import com.sw.wordgarden.domain.entity.user.UserInfoEntity
 import com.sw.wordgarden.domain.usecase.user.GetUserInfoForMypage
 import com.sw.wordgarden.domain.usecase.user.UpdateUserImageUseCase
 import com.sw.wordgarden.presentation.event.DefaultEvent
+import com.sw.wordgarden.presentation.shared.IsLoadingUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,6 +25,9 @@ class MyPageViewModel @Inject constructor(
     private val updateUserImageUseCase: UpdateUserImageUseCase
 ) : ViewModel() {
 
+    private val _uiState = MutableStateFlow(IsLoadingUiState.init())
+    val uiState: StateFlow<IsLoadingUiState> = _uiState.asStateFlow()
+
     private val _getUserInfoEvent = MutableSharedFlow<DefaultEvent>()
     val getUserInfoEvent: SharedFlow<DefaultEvent> = _getUserInfoEvent.asSharedFlow()
 
@@ -39,6 +43,8 @@ class MyPageViewModel @Inject constructor(
 
     fun getUserInfoData() =
         viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true) }
+
             runCatching {
                 val response = getUserInfoForMypage()
 
@@ -47,21 +53,26 @@ class MyPageViewModel @Inject constructor(
                 } else {
                     _getUserInfo.update { null }
                 }
-
             }.onFailure {
+                _uiState.update { it.copy(isLoading = false) }
                 _getUserInfoEvent.emit(DefaultEvent.Failure(R.string.mypage_my_self_quiz_msg_fail_load_quiz_title_list))
             }.onSuccess {
+                _uiState.update { it.copy(isLoading = false) }
                 _getUserInfoEvent.emit(DefaultEvent.Success)
             }
         }
 
     fun updateUserImage(image: String) {
         viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true) }
+
             runCatching {
                 updateUserImageUseCase.invoke(image)
             }.onFailure {
+                _uiState.update { it.copy(isLoading = false) }
                 _updateUserImageEvent.emit(DefaultEvent.Failure(R.string.mypage_msg_fail_update_image))
             }.onSuccess {
+                _uiState.update { it.copy(isLoading = false) }
                 _updateUserImageEvent.emit(DefaultEvent.Success)
             }
         }

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.ItemAlarmBinding
 import com.sw.wordgarden.domain.entity.alarm.AlarmEntity
+import com.sw.wordgarden.presentation.util.TextConverter.formatDateString
 
 class AlarmAdapter(
     private val alarmListItemListener: AlarmItemListener
@@ -31,7 +32,7 @@ class AlarmAdapter(
         private val context: Context,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(alarmEntity: AlarmEntity) = with(binding) {
-            val date = alarmEntity.createTime.toString()
+            val date = formatDateString(alarmEntity.createTime ?: "")
             val title = "${alarmEntity.fromUserName} ${getString(context, R.string.alarm_check_quiz)}"
             tvAlarmData.text = date
             tvAlarmTitle.text = title

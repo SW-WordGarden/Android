@@ -90,15 +90,16 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_setting_hole_quiz" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_setting_agreement"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_extra_larger"
-            android:text="@string/setting_agreement"
-            android:textSize="@dimen/text_caption"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/tv_setting_hole_quiz"
-            app:layout_constraintTop_toBottomOf="@+id/v_line" />
+                android:id="@+id/tv_setting_agreement"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_extra_larger"
+                android:text="@string/setting_agreement"
+                android:textSize="@dimen/text_caption"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/tv_setting_hole_quiz"
+                app:layout_constraintTop_toBottomOf="@+id/v_line"
+                app:layout_constraintEnd_toStartOf="@+id/iv_setting_agreement" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_setting_agreement"
@@ -110,15 +111,16 @@
             app:layout_constraintTop_toTopOf="@+id/tv_setting_agreement" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_setting_logout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_extra_larger"
-            android:text="@string/setting_logout"
-            android:textSize="@dimen/text_caption"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/tv_setting_hole_quiz"
-            app:layout_constraintTop_toBottomOf="@+id/tv_setting_agreement" />
+                android:id="@+id/tv_setting_logout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_extra_larger"
+                android:text="@string/setting_logout"
+                android:textSize="@dimen/text_caption"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/tv_setting_hole_quiz"
+                app:layout_constraintTop_toBottomOf="@+id/tv_setting_agreement"
+                app:layout_constraintEnd_toStartOf="@+id/iv_setting_logout" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_setting_logout"

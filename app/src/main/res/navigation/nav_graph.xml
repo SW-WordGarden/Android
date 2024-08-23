@@ -85,9 +85,10 @@
                 android:id="@+id/action_makeQuizFragment_to_shareQuizFragment"
                 app:destination="@id/shareQuizFragment">
             <argument
-                    android:name="argsSqId"
-                    app:argType="string"
-                    app:nullable="true" />
+                    android:name="argsQuizKey"
+                    app:argType="com.sw.wordgarden.presentation.model.QuizKey"
+                    app:nullable="true"
+                    android:defaultValue="@null" />
         </action>
         <argument
                 android:name="argsQuizKey"
@@ -304,7 +305,8 @@
             android:id="@+id/weeklyQuizCheckFragment"
             android:name="com.sw.wordgarden.presentation.ui.mypage.weeklyquizcheck.WeeklyQuizCheckFragment"
             android:label="fragment_weekly"
-            tools:layout="@layout/fragment_weekly" />
+            tools:layout="@layout/fragment_weekly" >
+    </fragment>
     <fragment
             android:id="@+id/settingFragment"
             android:name="com.sw.wordgarden.presentation.ui.setting.setting.SettingFragment"
@@ -313,6 +315,16 @@
         <action
                 android:id="@+id/action_settingFragment_to_agreementFragment"
                 app:destination="@id/agreementFragment" />
+        <action
+                android:id="@+id/action_settingFragment_to_mypageFragment"
+                app:destination="@id/mypageFragment"
+                app:popUpToInclusive="false"
+                app:popUpTo="@id/mypageFragment"/>
+        <action
+                android:id="@+id/action_settingFragment_to_loginFragment"
+                app:destination="@id/loginFragment"
+                app:popUpToInclusive="false"
+                app:popUpTo="@id/loginFragment" />
     </fragment>
     <fragment
             android:id="@+id/agreementFragment"

@@ -1,10 +1,9 @@
-package com.sw.wordgarden.presentation.ui.mypage.mysolvedquiz
+package com.sw.wordgarden.presentation.ui.setting.setting
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sw.wordgarden.R
-import com.sw.wordgarden.domain.entity.quiz.QuizSummaryEntity
-import com.sw.wordgarden.domain.usecase.quiz.common.GetSolvedQuizTitlesUseCase
+import com.sw.wordgarden.domain.usecase.datastore.DeleteUidUseCase
 import com.sw.wordgarden.presentation.event.DefaultEvent
 import com.sw.wordgarden.presentation.shared.IsLoadingUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,36 +18,28 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MySolvedQuizViewModel @Inject constructor(
-    private val getSolvedTitlesUseCase: GetSolvedQuizTitlesUseCase,
+class SettingViewModel @Inject constructor(
+    private val deleteUidUseCase: DeleteUidUseCase,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(IsLoadingUiState.init())
     val uiState: StateFlow<IsLoadingUiState> = _uiState.asStateFlow()
 
-    private val _getQuizTitlesEvent = MutableSharedFlow<DefaultEvent>()
-    val getQuizTitlesEvent: SharedFlow<DefaultEvent> = _getQuizTitlesEvent.asSharedFlow()
+    private val _deleteUidEvent = MutableSharedFlow<DefaultEvent>()
+    val deleteUidEvent: SharedFlow<DefaultEvent> = _deleteUidEvent.asSharedFlow()
 
-    private val _getQuizTitles = MutableStateFlow<List<QuizSummaryEntity>>(emptyList())
-    val getQuizTitles: StateFlow<List<QuizSummaryEntity>> = _getQuizTitles.asStateFlow()
-
-    init {
-        getSolvedQuizTitles()
-    }
-
-    private fun getSolvedQuizTitles() {
+    fun deleteUidForLogout() {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
 
             runCatching {
-                getSolvedTitlesUseCase.invoke()
+                deleteUidUseCase.invoke()
             }.onFailure {
                 _uiState.update { it.copy(isLoading = false) }
-                _getQuizTitlesEvent.emit(DefaultEvent.Failure(R.string.mypage_my_solved_quiz_msg_fail_load_quiz_title_list))
-            }.onSuccess { limit ->
+                _deleteUidEvent.emit(DefaultEvent.Failure(R.string.setting_msg_fail_logout))
+            }.onSuccess {
                 _uiState.update { it.copy(isLoading = false) }
-                _getQuizTitles.update { limit }
-                _getQuizTitlesEvent.emit(DefaultEvent.Success)
+                _deleteUidEvent.emit(DefaultEvent.Success)
             }
         }
     }
