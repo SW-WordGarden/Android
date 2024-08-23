@@ -3,10 +3,13 @@ package com.sw.wordgarden.presentation.ui.quiz.startquiz
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sw.wordgarden.R
-import com.sw.wordgarden.domain.usecase.quiz.sq.GetUserSqUseCase
+import com.sw.wordgarden.domain.entity.quiz.SqCreatorInfoEntity
+import com.sw.wordgarden.domain.usecase.quiz.sq.GetSqCreatorInfoUseCase
+import com.sw.wordgarden.domain.usecase.quiz.sq.GetSqUseCase
 import com.sw.wordgarden.domain.usecase.quiz.wq.GetGeneratedWqUseCase
-import com.sw.wordgarden.presentation.mapper.ModelMapper.toModel
+import com.sw.wordgarden.domain.usecase.quiz.wq.GetWqOrSolvedWqUseCase
 import com.sw.wordgarden.presentation.event.DefaultEvent
+import com.sw.wordgarden.presentation.mapper.ModelMapper.toQuizModel
 import com.sw.wordgarden.presentation.model.QuizModel
 import com.sw.wordgarden.presentation.shared.IsLoadingUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,8 +25,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class StartQuizViewModel @Inject constructor(
-    private val getUserSqUseCase: GetUserSqUseCase,
+    private val getSqCreatorInfoUseCase: GetSqCreatorInfoUseCase,
     private val getGeneratedWqUseCase: GetGeneratedWqUseCase,
+    private val getWqOrSolvedWqUseCase: GetWqOrSolvedWqUseCase,
+    private val getSqUseCase: GetSqUseCase,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(IsLoadingUiState.init())
@@ -35,13 +40,19 @@ class StartQuizViewModel @Inject constructor(
     private val _getQuiz = MutableStateFlow<QuizModel?>(null)
     val getQuiz: StateFlow<QuizModel?> = _getQuiz.asStateFlow()
 
-    fun getQuizFromSq(creatorUid: String, sqId: String) {
+    private val _getQuizCreatorInfoEvent = MutableSharedFlow<DefaultEvent>()
+    val getQuizCreatorInfoEvent: SharedFlow<DefaultEvent> = _getQuizCreatorInfoEvent.asSharedFlow()
+
+    private val _getQuizCreatorInfo = MutableSharedFlow<SqCreatorInfoEntity?>()
+    val getQuizCreatorInfo: SharedFlow<SqCreatorInfoEntity?> = _getQuizCreatorInfo.asSharedFlow()
+
+    fun getWq() {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
 
             runCatching {
-                val response = getUserSqUseCase.invoke(creatorUid, sqId)
-                val quizModel = response?.toModel()
+                val response = getGeneratedWqUseCase.invoke()
+                val quizModel = response?.toQuizModel()
                 _getQuiz.update { quizModel }
             }.onFailure {
                 _uiState.update { it.copy(isLoading = false) }
@@ -53,13 +64,13 @@ class StartQuizViewModel @Inject constructor(
         }
     }
 
-    fun getQuizFromWq() {
+    fun getQuizFromWq(qTitle: String) {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
 
             runCatching {
-                val response = getGeneratedWqUseCase.invoke()
-                val quizModel = response?.toModel()
+                val response = getWqOrSolvedWqUseCase.invoke(qTitle, false)
+                val quizModel = response?.toQuizModel()
                 _getQuiz.update { quizModel }
             }.onFailure {
                 _uiState.update { it.copy(isLoading = false) }
@@ -67,6 +78,46 @@ class StartQuizViewModel @Inject constructor(
             }.onSuccess {
                 _uiState.update { it.copy(isLoading = false) }
                 _getQuizEvent.emit(DefaultEvent.Success)
+            }
+        }
+    }
+
+    fun getQuizFromSq(sqId: String) {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true) }
+
+            runCatching {
+                val response = getSqUseCase.invoke(sqId)
+                val quizModel = response?.toQuizModel()
+                _getQuiz.update { quizModel }
+            }.onFailure {
+                _uiState.update { it.copy(isLoading = false) }
+                _getQuizEvent.emit(DefaultEvent.Failure(R.string.start_quiz_msg_fail_get_quiz))
+            }.onSuccess {
+                _uiState.update { it.copy(isLoading = false) }
+                _getQuizEvent.emit(DefaultEvent.Success)
+            }
+        }
+    }
+
+    fun getQuizCreatorInfo(sqId: String) {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true) }
+
+            runCatching {
+                val response = getSqCreatorInfoUseCase.invoke(sqId)
+
+                if (response != null) {
+                    _getQuizCreatorInfo.emit(response)
+                } else {
+                    _getQuizCreatorInfo.emit(null)
+                }
+            }.onFailure {
+                _uiState.update { it.copy(isLoading = false) }
+                _getQuizCreatorInfoEvent.emit(DefaultEvent.Failure(R.string.start_quiz_msg_fail_get_quiz))
+            }.onSuccess {
+                _uiState.update { it.copy(isLoading = false) }
+                _getQuizCreatorInfoEvent.emit(DefaultEvent.Success)
             }
         }
     }

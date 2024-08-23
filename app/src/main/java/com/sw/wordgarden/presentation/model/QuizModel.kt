@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class QuizModel(
-    val qTitle: String?, //wq key
+    var qTitle: String?, //wq key
     val sqId: String?, //sq key
     val qaList: List<QAModel>?,
 ) : Parcelable

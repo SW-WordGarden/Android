@@ -5,6 +5,7 @@ import com.sw.wordgarden.data.mapper.ServerMapper.toDto
 import com.sw.wordgarden.data.mapper.ServerMapper.toEntity
 import com.sw.wordgarden.domain.entity.quiz.SqQuestionAnswerEntity
 import com.sw.wordgarden.domain.entity.quiz.QuizSummaryEntity
+import com.sw.wordgarden.domain.entity.quiz.SqCreatedInfoEntity
 import com.sw.wordgarden.domain.entity.quiz.SqCreatorInfoEntity
 import com.sw.wordgarden.domain.entity.quiz.SqEntity
 import com.sw.wordgarden.domain.entity.quiz.SqSolveQuizEntity
@@ -40,20 +41,20 @@ class QuizRepositoryImpl @Inject constructor(
         return serverDataSource.getSolvedWqTitles()
     }
 
-    override suspend fun getSolvedWq(title: String): List<WqResponseEntity>? {
-        return serverDataSource.getSolvedWq(title)?.map { it.toEntity() }
+    override suspend fun getWqOrSolvedWq(title: String, isSolved: Boolean): List<WqResponseEntity>? {
+        return serverDataSource.getWqOrSolvedWq(title, isSolved)?.map { it.toEntity() }
     }
 
     //sq
-    override suspend fun createNewSq(selfQuiz: SqEntity) {
-        serverDataSource.createNewSq(selfQuiz.toDto())
+    override suspend fun createNewSq(selfQuiz: SqEntity): SqCreatedInfoEntity? {
+        return serverDataSource.createNewSq(selfQuiz.toDto())?.toEntity()
     }
 
     override suspend fun getUserSqTitles(): List<QuizSummaryEntity>? {
         return serverDataSource.getUserSqTitles()?.map { it.toEntity() }
     }
 
-    override suspend fun getUserSq(creatorUid: String, quizId: String): SqEntity? {
+    override suspend fun getUserSq(creatorUid: String?, quizId: String): SqEntity? {
         return serverDataSource.getUserSq(creatorUid, quizId)?.toEntity()
     }
 

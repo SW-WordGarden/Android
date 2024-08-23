@@ -1,7 +1,6 @@
 package com.sw.wordgarden.presentation.ui.quiz.makequiz
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +18,7 @@ import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentMakeQuizBinding
 import com.sw.wordgarden.presentation.event.DefaultEvent
 import com.sw.wordgarden.presentation.model.QAModel
+import com.sw.wordgarden.presentation.model.QuizKey
 import com.sw.wordgarden.presentation.model.QuizModel
 import com.sw.wordgarden.presentation.ui.loading.LoadingDialog
 import com.sw.wordgarden.presentation.util.KeyboardCleaner
@@ -30,8 +30,6 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class MakeQuizFragment : Fragment() {
 
-    private val TAG = "MakeQuizFragment"
-
     private var _binding: FragmentMakeQuizBinding? = null
     private val binding get() = _binding!!
 
@@ -40,6 +38,7 @@ class MakeQuizFragment : Fragment() {
     private var qaModelListForInsert: List<QAModel> =
         List(10) { QAModel("", "", "", "", null) }
     private var enableMode = true
+    private lateinit var quizKey: QuizKey
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,8 +72,9 @@ class MakeQuizFragment : Fragment() {
 
     private fun getData() {
         val args: MakeQuizFragmentArgs by navArgs()
-        val quizKey = args.argsQuizKey
-        if (quizKey?.sqId == null) { // 새로운 퀴즈 생성 모드
+        quizKey = args.argsQuizKey ?: QuizKey(qTitle = "", sqId = "", isWq = false)
+
+        if (quizKey.sqId.isNullOrBlank()) { // 새로운 퀴즈 생성 모드
             enableMode = true
             val quizModel = QuizModel(
                 "",
@@ -85,7 +85,7 @@ class MakeQuizFragment : Fragment() {
         } else { // 기존 퀴즈 확인 모드
             setConfirmDialog()
             enableMode = false
-            viewmodel.getQuiz(quizKey.sqId ?: "", quizKey.qTitle ?: "")
+            viewmodel.getUserSq(quizKey.sqId ?: "")
         }
     }
 
@@ -121,7 +121,11 @@ class MakeQuizFragment : Fragment() {
                 if (position < quizListModel.size - 1) {
                     vpMakeQuiz.setCurrentItem(position + 1, true)
                 } else {
-                    checkQuiz(qaModelListForInsert)
+                    if (enableMode) { //새로운 퀴즈 생성
+                        createQuiz(qaModelListForInsert)
+                    } else { //기존 퀴즈 공유
+                        goShare()
+                    }
                 }
             } else {
                 indicatorAdapter.markAsEmpty(position)
@@ -141,6 +145,22 @@ class MakeQuizFragment : Fragment() {
                     indicatorAdapter.updateSelectedPosition(position)
                 }
             })
+        }
+    }
+
+    private fun createQuiz(quizListModelForCheck: List<QAModel>) {
+        val title = binding.etMakeQuizInputTitle.text.toString()
+        if (title.isEmpty()) {
+            ToastMaker.make(requireContext(), R.string.make_quiz_msg_need_title)
+            return
+        }
+
+        val hasEmptyValue =
+            quizListModelForCheck.any { it.question.isNullOrEmpty() || it.correctAnswer.isNullOrEmpty() }
+        if (hasEmptyValue) {
+            ToastMaker.make(requireContext(), R.string.make_quiz_msg_need_all_check)
+        } else {
+            viewmodel.createNewSq(qaModelListForInsert, title)
         }
     }
 
@@ -172,7 +192,7 @@ class MakeQuizFragment : Fragment() {
         }
 
         lifecycleScope.launch {
-            viewmodel.insertQuizEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
+            viewmodel.createNewSqEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
                 when (event) {
                     is DefaultEvent.Failure -> {
                         ToastMaker.make(requireContext(), event.msg)
@@ -194,37 +214,25 @@ class MakeQuizFragment : Fragment() {
                 }
             }
         }
-    }
 
-    private fun checkQuiz(quizListModelForCheck: List<QAModel>) {
-        val title = binding.etMakeQuizInputTitle.text.toString()
-        if (title.isEmpty()) {
-            ToastMaker.make(requireContext(), R.string.make_quiz_msg_need_title)
-            return
+        lifecycleScope.launch {
+            viewmodel.createdSqInfo.flowWithLifecycle(lifecycle).collectLatest { info ->
+                quizKey.qTitle = info?.quizTitle ?: ""
+                quizKey.sqId = info?.sqId ?: ""
+
+                if (!info?.sqId.isNullOrBlank()) {
+                    goShare()
+                }
+            }
         }
-
-        val hasEmptyValue =
-            quizListModelForCheck.any { it.question.isNullOrEmpty() || it.correctAnswer.isNullOrEmpty() }
-        if (hasEmptyValue) {
-            ToastMaker.make(requireContext(), R.string.make_quiz_msg_need_all_check)
-        } else {
-            shareQuiz(title)
-        }
-    }
-
-    private fun shareQuiz(title: String) {
-        Log.i(TAG, "request make quiz to server : $title || $qaModelListForInsert")
-        viewmodel.insertQuiz(qaModelListForInsert, title)
-
-        goShare(title)
     }
 
     private fun goBack() {
         findNavController().navigateUp()
     }
 
-    private fun goShare(quizId: String) {
-        val action = MakeQuizFragmentDirections.actionMakeQuizFragmentToShareQuizFragment(quizId)
+    private fun goShare() {
+        val action = MakeQuizFragmentDirections.actionMakeQuizFragmentToShareQuizFragment(quizKey)
         findNavController().navigate(action)
     }
 

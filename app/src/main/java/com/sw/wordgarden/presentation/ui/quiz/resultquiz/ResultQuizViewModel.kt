@@ -4,9 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sw.wordgarden.R
 import com.sw.wordgarden.domain.usecase.quiz.sq.GetSolvedSqUseCase
-import com.sw.wordgarden.domain.usecase.quiz.wq.GetSolvedWqUseCase
+import com.sw.wordgarden.domain.usecase.quiz.wq.GetWqOrSolvedWqUseCase
 import com.sw.wordgarden.presentation.event.DefaultEvent
-import com.sw.wordgarden.presentation.mapper.ModelMapper.toModel
+import com.sw.wordgarden.presentation.mapper.ModelMapper.toQuizModel
 import com.sw.wordgarden.presentation.model.QuizKey
 import com.sw.wordgarden.presentation.model.QuizModel
 import com.sw.wordgarden.presentation.shared.IsLoadingUiState
@@ -24,7 +24,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ResultQuizViewModel @Inject constructor(
     private val getSolvedSqUseCase: GetSolvedSqUseCase,
-    private val getSolvedWqUseCase: GetSolvedWqUseCase,
+    private val getWqOrSolvedWqUseCase: GetWqOrSolvedWqUseCase,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(IsLoadingUiState.init())
@@ -42,11 +42,11 @@ class ResultQuizViewModel @Inject constructor(
 
             runCatching {
                 if (quizKey.isWq == true) {
-                    val response = getSolvedWqUseCase.invoke(quizKey.qTitle ?: "")
-                    _getResult.update { response?.toModel() }
+                    val response = getWqOrSolvedWqUseCase.invoke(quizKey.qTitle ?: "", true)
+                    _getResult.update { response?.toQuizModel() }
                 } else {
                     val response = getSolvedSqUseCase.invoke(quizKey.sqId ?: "")
-                    _getResult.update { response?.toModel() }
+                    _getResult.update { response?.toQuizModel() }
                 }
             }.onFailure {
                 _uiState.update { it.copy(isLoading = false) }
