@@ -63,9 +63,11 @@ class WordViewModel @Inject constructor(
                     category = wordEntity.category
                 )
             }
+
             _wordListState.update {
                 getWordList
             }
+
 
         } .onSuccess {
             _wordEvent.emit(DefaultEvent.Success)

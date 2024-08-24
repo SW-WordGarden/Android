@@ -28,10 +28,10 @@ class WordFragment : Fragment() {
     private lateinit var wordAdapter : WordAdapter
 
     private lateinit var weeklyWordList: List<WordModel>
-    private lateinit var basicWordList: List<WordModel>
-    private lateinit var societyWordList: List<WordModel>
-    private lateinit var scienceWordList: List<WordModel>
-    private lateinit var idiomWordList: List<WordModel>
+    private var basicWordList: List<WordModel> = listOf<WordModel>()
+    private var societyWordList: List<WordModel> = listOf<WordModel>()
+    private var scienceWordList: List<WordModel> = listOf<WordModel>()
+    private var idiomWordList: List<WordModel> = listOf<WordModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,12 +59,14 @@ class WordFragment : Fragment() {
     private fun initViewModel(){
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.wordListState.flowWithLifecycle(viewLifecycleOwner.lifecycle).collectLatest { wordList ->
-                weeklyWordList = wordList
-                basicWordList = wordList.slice(0..9)
-                societyWordList = wordList.slice(10..19)
-                scienceWordList = wordList.slice(20..29)
-                idiomWordList = wordList.slice(30..39)
-                wordAdapter.submitList(basicWordList)
+                if(wordList.isNotEmpty()){
+                    weeklyWordList = wordList
+                    basicWordList = wordList.slice(0..9)
+                    societyWordList = wordList.slice(10..19)
+                    scienceWordList = wordList.slice(20..29)
+                    idiomWordList = wordList.slice(30..39)
+                    wordAdapter.submitList(basicWordList)
+                }
 
                 setRadioBtn()
             }

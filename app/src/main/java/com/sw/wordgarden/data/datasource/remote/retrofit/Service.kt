@@ -104,7 +104,7 @@ interface Service {
     @GET("like/status/{uid}/{wordId}")
     suspend fun getWordLikedStatus(@Path("uid") uid: String, @Path("wordId") wordId: String):Response<Boolean>
 
-    @GET("word/learning/")
+    @GET("word/learning")
     suspend fun getWeeklyWordList() : Response<List<WordDto>>
 
 
