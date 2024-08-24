@@ -49,7 +49,7 @@
     <string name="mypage_msg_fail_update_image">프로필 사진 업데이트를 실패했습니다.</string>
 
     <string name="mypage_friend_title">친구 관리</string>
-    <string name="mypage_friend_my_code">내 친구 코드 복사하기</string>
+    <string name="mypage_friend_my_code">나의 친구 코드 복사하기</string>
     <string name="mypage_friend_enter_code">친구 코드를 입력하세요.</string>
     <string name="mypage_friend_add">친구 추가</string>
     <string name="mypage_friends_no_friends">아직 친구가 없어요.</string>

@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:text="@string/mypage_friend_report_title"
             android:textSize="@dimen/text_caption"
-            android:textStyle="bold"
+            android:textFontWeight="600"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_report_exit" />
@@ -39,42 +39,77 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_report_title">
 
-        <RadioButton
-                android:id="@+id/rb_report_reason1"
-                android:layout_width="wrap_content"
+        <GridLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/mypage_friend_report_reason1" />
+                android:columnCount="2">
 
-        <RadioButton
-                android:id="@+id/rb_report_reason2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/mypage_friend_report_reason2" />
+            <RadioButton
+                    android:id="@+id/rb_report_reason1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_extra_small"
+                    android:button="@drawable/se_circle_radio"
+                    android:text="@string/mypage_friend_report_reason1"
+                    android:textSize="@dimen/text_smaller"
+                    android:theme="@style/customRadioButtonFontStyle" />
 
-        <RadioButton
-                android:id="@+id/rb_report_reason3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/mypage_friend_report_reason3" />
+            <RadioButton
+                    android:id="@+id/rb_report_reason2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_medium"
+                    android:padding="@dimen/padding_extra_small"
+                    android:button="@drawable/se_circle_radio"
+                    android:text="@string/mypage_friend_report_reason2"
+                    android:textSize="@dimen/text_smaller"
+                    android:theme="@style/customRadioButtonFontStyle" />
 
-        <RadioButton
-                android:id="@+id/rb_report_reason4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/mypage_friend_report_reason4" />
+            <RadioButton
+                    android:id="@+id/rb_report_reason3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_extra_small"
+                    android:button="@drawable/se_circle_radio"
+                    android:text="@string/mypage_friend_report_reason3"
+                    android:textSize="@dimen/text_smaller"
+                    android:theme="@style/customRadioButtonFontStyle" />
 
-        <RadioButton
-                android:id="@+id/rb_report_reason5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/mypage_friend_report_reason5"
-                app:layout_constraintStart_toStartOf="parent" />
+            <RadioButton
+                    android:id="@+id/rb_report_reason4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_medium"
+                    android:padding="@dimen/padding_extra_small"
+                    android:button="@drawable/se_circle_radio"
+                    android:text="@string/mypage_friend_report_reason4"
+                    android:textSize="@dimen/text_smaller"
+                    android:theme="@style/customRadioButtonFontStyle" />
 
-        <RadioButton
-                android:id="@+id/rb_report_reason6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/mypage_friend_report_reason6" />
+            <RadioButton
+                    android:id="@+id/rb_report_reason5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_extra_small"
+                    android:button="@drawable/se_circle_radio"
+                    android:text="@string/mypage_friend_report_reason5"
+                    android:textSize="@dimen/text_smaller"
+                    android:theme="@style/customRadioButtonFontStyle" />
+
+            <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+
+            <RadioButton
+                    android:id="@+id/rb_report_reason6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_extra_small"
+                    android:button="@drawable/se_circle_radio"
+                    android:text="@string/mypage_friend_report_reason6"
+                    android:textSize="@dimen/text_smaller"
+                    android:theme="@style/customRadioButtonFontStyle" />
+        </GridLayout>
     </RadioGroup>
 
     <androidx.appcompat.widget.AppCompatEditText
@@ -82,10 +117,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_extra_small"
-            android:background="@drawable/bg_rec_stroke_radius_10"
             android:padding="@dimen/padding_extra_smaller"
-            app:layout_constraintTop_toBottomOf="@+id/rg_report"
-            tools:layout_editor_absoluteX="20dp" />
+            android:background="@drawable/bg_rec_stroke_radius_10"
+            app:layout_constraintTop_toBottomOf="@+id/rg_report" />
 
     <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_report"
@@ -94,6 +128,7 @@
             android:layout_marginStart="@dimen/margin_medium"
             android:layout_marginTop="@dimen/margin_large"
             android:layout_marginEnd="@dimen/margin_medium"
+            android:background="@drawable/bg_rec_radius_10"
             android:backgroundTint="@color/light_red"
             android:padding="@dimen/padding_medium"
             android:text="@string/mypage_friend_report_title"

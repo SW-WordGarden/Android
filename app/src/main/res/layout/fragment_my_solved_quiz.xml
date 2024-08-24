@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/mypage_my_solved_quiz_title"
                 android:textColor="@color/green"
-                android:textSize="@dimen/text_caption"
+                android:textSize="@dimen/text_text"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_my_solved_quiz_back"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

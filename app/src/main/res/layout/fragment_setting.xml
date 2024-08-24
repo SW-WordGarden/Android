@@ -1,144 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/cl_setting_main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context=".presentation.ui.setting.setting.SettingFragment">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/cl_setting_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        tools:context=".presentation.ui.setting.setting.SettingFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_setting_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/padding_medium"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_setting_back"
-            android:layout_width="wrap_content"
+            android:id="@+id/cl_setting_bar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_small"
-            android:src="@drawable/ic_back"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_setting_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/setting_title"
-            android:textColor="@color/green"
-            android:textSize="@dimen/text_caption"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_setting_back"
+            android:paddingBottom="@dimen/padding_medium"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/iv_setting_back" />
+            app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_setting_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_small"
+                android:src="@drawable/ic_back"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+                android:id="@+id/tv_setting_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/setting_title"
+                android:textColor="@color/green"
+                android:textSize="@dimen/text_text"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_setting_back"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/iv_setting_back" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_setting_inner"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="@dimen/margin_medium"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cl_setting_bar">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_setting_quiz"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="@string/setting_quiz"
-            android:textSize="@dimen/text_caption"
-            android:textStyle="bold"
+            android:id="@+id/cl_setting_inner"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/margin_medium"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/cl_setting_bar">
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_setting_hole_quiz"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_larger"
-            android:text="@string/setting_hold_quiz"
-            android:textSize="@dimen/text_caption"
-            app:layout_constraintStart_toStartOf="@+id/tv_setting_quiz"
-            app:layout_constraintTop_toBottomOf="@+id/tv_setting_quiz" />
+                android:id="@+id/tv_setting_quiz"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_extra_small"
+                android:text="@string/setting_quiz"
+                android:textSize="@dimen/text_caption"
+                android:textFontWeight="600"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_setting_hole_quiz"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_larger"
+                android:text="@string/setting_hold_quiz"
+                android:textSize="@dimen/text_caption"
+                app:layout_constraintStart_toStartOf="@+id/tv_setting_quiz"
+                app:layout_constraintTop_toBottomOf="@+id/tv_setting_quiz" />
 
         <com.google.android.material.materialswitch.MaterialSwitch
-            android:id="@+id/sw_setting_hold_quiz"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_setting_hole_quiz"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tv_setting_hole_quiz" />
+                android:id="@+id/sw_setting_hold_quiz"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_extra_small"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_setting_hole_quiz"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_setting_hole_quiz" />
 
         <View
-            android:id="@+id/v_line"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="@dimen/margin_small"
-            android:background="@color/gray"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_setting_hole_quiz" />
+                android:id="@+id/v_line"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/margin_small"
+                android:background="@color/gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_setting_hole_quiz" />
 
         <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_setting_agreement"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_extra_larger"
+                android:layout_marginStart="@dimen/margin_extra_small"
                 android:text="@string/setting_agreement"
                 android:textSize="@dimen/text_caption"
-                android:textStyle="bold"
+                android:textFontWeight="600"
                 app:layout_constraintStart_toStartOf="@+id/tv_setting_hole_quiz"
                 app:layout_constraintTop_toBottomOf="@+id/v_line"
                 app:layout_constraintEnd_toStartOf="@+id/iv_setting_agreement" />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_setting_agreement"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_arrow_simple"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_setting_agreement"
-            app:layout_constraintEnd_toEndOf="@+id/sw_setting_hold_quiz"
-            app:layout_constraintTop_toTopOf="@+id/tv_setting_agreement" />
+                android:id="@+id/iv_setting_agreement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_simple"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_setting_agreement"
+                app:layout_constraintEnd_toEndOf="@+id/sw_setting_hold_quiz"
+                app:layout_constraintTop_toTopOf="@+id/tv_setting_agreement" />
 
         <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_setting_logout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_extra_larger"
+                android:layout_marginStart="@dimen/margin_extra_small"
                 android:text="@string/setting_logout"
                 android:textSize="@dimen/text_caption"
-                android:textStyle="bold"
+                android:textFontWeight="600"
                 app:layout_constraintStart_toStartOf="@+id/tv_setting_hole_quiz"
                 app:layout_constraintTop_toBottomOf="@+id/tv_setting_agreement"
                 app:layout_constraintEnd_toStartOf="@+id/iv_setting_logout" />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_setting_logout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_arrow_simple"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_setting_logout"
-            app:layout_constraintEnd_toEndOf="@+id/iv_setting_agreement"
-            app:layout_constraintTop_toTopOf="@+id/tv_setting_logout" />
+                android:id="@+id/iv_setting_logout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_simple"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_setting_logout"
+                app:layout_constraintEnd_toEndOf="@+id/iv_setting_agreement"
+                app:layout_constraintTop_toTopOf="@+id/tv_setting_logout" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_setting_withdrawal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/setting_withdrawal"
-            android:textColor="@color/light_red"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+                android:id="@+id/tv_setting_withdrawal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/setting_withdrawal"
+                android:textColor="@color/light_red"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
