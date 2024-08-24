@@ -8,7 +8,9 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentResultQuestionOXBinding
+import com.sw.wordgarden.presentation.util.Constants
 import com.sw.wordgarden.presentation.util.Constants.QUESTION_O
+import com.sw.wordgarden.presentation.util.Constants.QUESTION_OX_TITLE
 
 class ResultQuestionOXFragment : Fragment() {
 
@@ -48,7 +50,10 @@ class ResultQuestionOXFragment : Fragment() {
     }
 
     private fun setupUi() = with(binding) {
-        tvResultQuizItemQuestionOx.text = question
+        tvResultQuizItemQuestionOxTitle.text = QUESTION_OX_TITLE
+
+        val question = question.substringAfter(QUESTION_OX_TITLE)
+        tvResultQuizItemQuestionOxQuestion.text = question
 
         if (userAnswer == answer) {
             if (answer == QUESTION_O) {

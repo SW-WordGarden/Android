@@ -9,6 +9,16 @@
         android:orientation="vertical"
         tools:context=".presentation.ui.quiz.solvequiz.SolveQuestionChoiceFragment">
 
+    <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_solve_quiz_item_question_choice_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_medium"
+            android:gravity="center_horizontal|top"
+            android:text="지시문"
+            android:textColor="@color/green"
+            android:textSize="@dimen/text_small" />
+
     <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -18,15 +28,17 @@
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center">
+                android:layout_gravity="center"
+                android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_solve_quiz_item_question_choice"
+                    android:id="@+id/tv_solve_quiz_item_question_choice_question"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margin_medium"
                     android:gravity="center"
-                    android:text="문제 내용"
+                    android:text="단어"
+                    android:textStyle="bold"
                     android:textColor="@color/green"
                     android:textSize="@dimen/text_caption" />
         </LinearLayout>
@@ -55,7 +67,10 @@
                     android:id="@+id/ll_solve_quiz_item_choice1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_extra_small"
+                    android:layout_marginStart="@dimen/margin_smaller"
+                    android:layout_marginEnd="@dimen/margin_smaller"
+                    android:layout_marginTop="@dimen/margin_extra_small"
+                    android:layout_marginBottom="@dimen/margin_extra_small"
                     android:layout_gravity="center">
 
                 <androidx.appcompat.widget.AppCompatImageView
@@ -78,7 +93,10 @@
                     android:id="@+id/ll_solve_quiz_item_choice2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_extra_small"
+                    android:layout_marginStart="@dimen/margin_smaller"
+                    android:layout_marginEnd="@dimen/margin_smaller"
+                    android:layout_marginTop="@dimen/margin_extra_small"
+                    android:layout_marginBottom="@dimen/margin_extra_small"
                     android:layout_gravity="center">
 
                 <androidx.appcompat.widget.AppCompatImageView
@@ -101,7 +119,10 @@
                     android:id="@+id/ll_solve_quiz_item_choice3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_extra_small"
+                    android:layout_marginStart="@dimen/margin_smaller"
+                    android:layout_marginEnd="@dimen/margin_smaller"
+                    android:layout_marginTop="@dimen/margin_extra_small"
+                    android:layout_marginBottom="@dimen/margin_extra_small"
                     android:layout_gravity="center">
 
                 <androidx.appcompat.widget.AppCompatImageView
@@ -124,7 +145,10 @@
                     android:id="@+id/ll_solve_quiz_item_choice4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_extra_small"
+                    android:layout_marginStart="@dimen/margin_smaller"
+                    android:layout_marginEnd="@dimen/margin_smaller"
+                    android:layout_marginTop="@dimen/margin_extra_small"
+                    android:layout_marginBottom="@dimen/margin_extra_small"
                     android:layout_gravity="center">
 
                 <androidx.appcompat.widget.AppCompatImageView

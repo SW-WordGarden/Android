@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentSolveQuestionWritingBinding
+import com.sw.wordgarden.presentation.util.Constants
 import com.sw.wordgarden.presentation.util.ToastMaker
 
 class SolveQuestionWritingFragment : Fragment() {
@@ -49,7 +50,10 @@ class SolveQuestionWritingFragment : Fragment() {
     }
 
     private fun setupUi() = with(binding) {
-        tvSolveQuizItemQuestion.text = question
+        tvSolveQuizItemQuestionTitle.text = Constants.QUESTION_WRITE_TITLE
+
+        val question = question.substringAfter(Constants.QUESTION_WRITE_TITLE)
+        tvSolveQuizItemQuestionQuestion.text = question
 
         if (position < QUIZ_SIZE - 1) {
             btnSolveQuizSubmit.text = getString(R.string.solve_quiz_next)

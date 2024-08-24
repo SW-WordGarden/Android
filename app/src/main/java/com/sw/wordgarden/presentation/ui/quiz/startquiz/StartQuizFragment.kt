@@ -1,19 +1,20 @@
 package com.sw.wordgarden.presentation.ui.quiz.startquiz
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.navArgs
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentStartQuizBinding
+import com.sw.wordgarden.domain.entity.quiz.SqCreatorInfoEntity
 import com.sw.wordgarden.presentation.event.DefaultEvent
 import com.sw.wordgarden.presentation.model.QuizKey
 import com.sw.wordgarden.presentation.model.QuizModel
@@ -31,9 +32,10 @@ class StartQuizFragment : Fragment() {
 
     private var loadingDialog: LoadingDialog? = null
     private val viewmodel: StartQuizViewModel by viewModels()
-    private lateinit var quiz: QuizModel
     private lateinit var quizKey: QuizKey
-    private var thumbnail: ByteArray? = null
+    private lateinit var quiz: QuizModel
+    private lateinit var info: SqCreatorInfoEntity
+    private var isReadyForUi = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,8 +95,10 @@ class StartQuizFragment : Fragment() {
                     }
 
                     DefaultEvent.Success -> {
-                        if (!quizKey.sqId.isNullOrBlank()) {
+                        if (!quizKey.sqId.isNullOrBlank()) { //sq 추가 정보 요청
                             viewmodel.getQuizCreatorInfo(quizKey.sqId ?: "")
+                        } else {
+                            setupUi()
                         }
                     }
                 }
@@ -126,10 +130,8 @@ class StartQuizFragment : Fragment() {
         lifecycleScope.launch {
             viewmodel.getQuizCreatorInfo.flowWithLifecycle(lifecycle).collectLatest { info ->
                 if (info != null) {
-                    val sqTitle = info.quizTitle
-                    val sqCreator = info.nickname
-                    quiz.qTitle = "${sqTitle}\n-${sqCreator}-"
-                    thumbnail = stringToByteArray(info.thumbnail ?: "")
+                    this@StartQuizFragment.info = info
+                    quiz.qTitle = "${info.quizTitle}\n-${info.nickname}-"
                 }
             }
         }
@@ -148,13 +150,19 @@ class StartQuizFragment : Fragment() {
     }
 
     private fun setupUi() = with(binding) {
-        Glide.with(requireContext())
-            .load(thumbnail)
-            .error(R.drawable.img_default_thumbnail)
-            .fallback(R.drawable.img_default_thumbnail)
-            .into(ivStartQuizThumbnail)
+        if (quizKey.isWq == true || quizKey.sqId.isNullOrBlank()) { //wq 퀴즈
+            ivStartQuizThumbnail.visibility = View.INVISIBLE
+            tvStartQuizIntroduce.text = getString(R.string.start_quiz_app_quiz)
+        } else { //sq 퀴즈
+            val thumbnail = stringToByteArray(info.thumbnail ?: "")
+            Glide.with(requireContext())
+                .load(thumbnail)
+                .error(R.drawable.img_default_thumbnail)
+                .fallback(R.drawable.img_default_thumbnail)
+                .into(ivStartQuizThumbnail)
 
-        tvStartQuizIntroduce.text = quiz.qTitle
+            tvStartQuizIntroduce.text = quiz.qTitle
+        }
     }
 
     private fun goBack() {

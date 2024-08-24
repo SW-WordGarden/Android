@@ -1,12 +1,13 @@
 package com.sw.wordgarden.presentation.ui.quiz.resultquiz
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentResultQuestionWritingBinding
+import com.sw.wordgarden.presentation.util.Constants.QUESTION_WRITE_TITLE
 
 class ResultQuestionWritingFragment : Fragment() {
 
@@ -18,7 +19,8 @@ class ResultQuestionWritingFragment : Fragment() {
     private lateinit var userAnswer: String
     private var position: Int = 0
 
-    private var onNextClicked: ((position: Int, question: String, answer: String, userAnswer: String, isCorrect: Boolean) -> Unit)? = null
+    private var onNextClicked: ((position: Int, question: String, answer: String, userAnswer: String, isCorrect: Boolean) -> Unit)? =
+        null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,10 +47,15 @@ class ResultQuestionWritingFragment : Fragment() {
     }
 
     private fun setupUi() = with(binding) {
-        tvResultQuizItemQuestion.text = question
+        tvResultQuizItemQuestionTitle.text = QUESTION_WRITE_TITLE
 
-        val answer = getString(R.string.result_quiz_correct) + " " + this@ResultQuestionWritingFragment.answer
-        val userAnswer = getString(R.string.result_quiz_answer) + " " + this@ResultQuestionWritingFragment.userAnswer
+        val question = question.substringAfter(QUESTION_WRITE_TITLE)
+        tvResultQuizItemQuestionQuestion.text = question
+
+        val answer =
+            getString(R.string.result_quiz_correct) + " " + this@ResultQuestionWritingFragment.answer
+        val userAnswer =
+            getString(R.string.result_quiz_answer) + " " + this@ResultQuestionWritingFragment.userAnswer
 
         if (this@ResultQuestionWritingFragment.answer == this@ResultQuestionWritingFragment.userAnswer) {
             tvResultQuizItemCorrect.text = answer

@@ -52,7 +52,8 @@ class ResultQuestionChoiceFragment : Fragment() {
 
     @SuppressLint("SetTextI18n")
     private fun setupUi() = with(binding) {
-        tvResultQuizItemQuestionChoice.text = "${question}\n${word}"
+        tvResultQuizItemQuestionChoiceTitle.text = question
+        tvResultQuizItemQuestionChoiceQuestion.text = word
         tvResultQuizItemChoice1.text = options[0]
         tvResultQuizItemChoice2.text = options[1]
         tvResultQuizItemChoice3.text = options[2]

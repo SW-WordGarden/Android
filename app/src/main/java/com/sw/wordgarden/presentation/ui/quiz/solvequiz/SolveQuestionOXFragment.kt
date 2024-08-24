@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentSolveQuestionOXBinding
 import com.sw.wordgarden.presentation.util.Constants.QUESTION_O
+import com.sw.wordgarden.presentation.util.Constants.QUESTION_OX_TITLE
 import com.sw.wordgarden.presentation.util.Constants.QUESTION_X
 import com.sw.wordgarden.presentation.util.Constants.QUIZ_AMOUNT
 import com.sw.wordgarden.presentation.util.ToastMaker
@@ -51,7 +52,10 @@ class SolveQuestionOXFragment : Fragment() {
     }
 
     private fun setupUi() = with(binding) {
-        tvSolveQuizItemQuestionOx.text = question
+        tvSolveQuizItemQuestionOxTitle.text = QUESTION_OX_TITLE
+
+        val question = question.substringAfter(QUESTION_OX_TITLE)
+        tvSolveQuizItemQuestionOxQuestion.text = question
 
         if (position < QUIZ_AMOUNT - 1) {
             btnSolveQuizQuestionSubmitOx.text = getString(R.string.solve_quiz_next)

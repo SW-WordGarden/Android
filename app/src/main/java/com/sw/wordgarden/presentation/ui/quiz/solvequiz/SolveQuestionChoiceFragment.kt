@@ -54,7 +54,8 @@ class SolveQuestionChoiceFragment : Fragment() {
     }
 
     private fun setupUi() = with(binding) {
-        tvSolveQuizItemQuestionChoice.text = question
+        tvSolveQuizItemQuestionChoiceTitle.text = question
+        tvSolveQuizItemQuestionChoiceQuestion.text = word
 
         if (position < QUIZ_AMOUNT - 1) {
             btnSolveQuizQuestionSubmitChoice.text = getString(R.string.solve_quiz_next)
@@ -65,7 +66,6 @@ class SolveQuestionChoiceFragment : Fragment() {
 
     @SuppressLint("SetTextI18n")
     private fun setupListener() = with(binding) {
-        tvSolveQuizItemQuestionChoice.text = "${question}\n${word}"
         tvSolveQuizItemChoice1.text = options[0]
         tvSolveQuizItemChoice2.text = options[1]
         tvSolveQuizItemChoice3.text = options[2]

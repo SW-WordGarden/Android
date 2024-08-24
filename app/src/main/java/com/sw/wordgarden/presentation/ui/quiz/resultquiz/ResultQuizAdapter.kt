@@ -3,7 +3,7 @@ package com.sw.wordgarden.presentation.ui.quiz.resultquiz
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.sw.wordgarden.presentation.model.QAModel
-import com.sw.wordgarden.presentation.util.Constants.QUESTION_TYPE_FOUR
+import com.sw.wordgarden.presentation.util.Constants.QUESTION_TYPE_CHOICE
 import com.sw.wordgarden.presentation.util.Constants.QUESTION_TYPE_OX
 
 class ResultQuizAdapter(
@@ -39,7 +39,7 @@ class ResultQuizAdapter(
                 }
             }
 
-            QUESTION_TYPE_FOUR -> {
+            QUESTION_TYPE_CHOICE -> {
                 ResultQuestionChoiceFragment.newInstance(
                     question = quizItem.question ?: "",
                     word = quizItem.word ?: "",

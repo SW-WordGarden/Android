@@ -142,6 +142,7 @@
     <string name="start_quiz_title">퀴즈 게임</string>
     <string name="start_quiz_made_by">님이 만든 퀴즈</string>
     <string name="start_quiz_start">퀴즈 시작하기</string>
+    <string name="start_quiz_app_quiz">어휘의 정원에서 만든\n어휘력 향상 퀴즈 준비 완료!</string>
     <string name="start_quiz_msg_fail_get_quiz">퀴즈 받아오기에 실패했어요.</string>
     <string name="start_quiz_msg_fail_get_quiz_info">퀴즈 정보 받아오기에 실패했어요.</string>
     <string name="start_quiz_msg_fail_save_daily_limit">일일 퀴즈 횟수 저장에 실패했어요.</string>

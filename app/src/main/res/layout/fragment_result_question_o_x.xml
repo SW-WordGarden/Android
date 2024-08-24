@@ -11,21 +11,46 @@
         tools:context=".presentation.ui.quiz.resultquiz.ResultQuestionOXFragment">
 
     <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_result_quiz_item_question_ox"
+            android:id="@+id/tv_result_quiz_item_question_ox_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_extra_larger"
-            android:layout_marginBottom="@dimen/margin_extra_larger"
+            android:layout_margin="@dimen/margin_medium"
             android:gravity="center"
-            android:text="문제 내용"
+            android:text="지시문"
             android:textColor="@color/green"
-            android:textSize="@dimen/text_caption" />
+            android:textSize="@dimen/text_small" />
+
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:scrollbars="none">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_result_quiz_item_question_ox_question"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_medium"
+                    android:gravity="center"
+                    android:text="문제 내용"
+                    android:textStyle="bold"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/text_caption" />
+        </LinearLayout>
+    </ScrollView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginTop="@dimen/margin_larger"
-            android:layout_marginBottom="@dimen/margin_extra_larger">
+            android:layout_marginBottom="@dimen/margin_extra_larger"
+            android:layout_weight="1">
 
         <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/btn_result_quiz_item_question_o"
@@ -36,7 +61,8 @@
                 android:enabled="false"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btn_result_quiz_item_question_x" />
+                app:layout_constraintEnd_toStartOf="@+id/btn_result_quiz_item_question_x"
+                app:layout_constraintBottom_toBottomOf="parent" />
 
         <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/btn_result_quiz_item_question_x"
@@ -47,6 +73,7 @@
                 android:enabled="false"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/btn_result_quiz_item_question_o"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>
