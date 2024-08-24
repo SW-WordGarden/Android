@@ -30,4 +30,8 @@ class WordRepositoryImpl @Inject constructor(
         return serverDataSource.getWeeklyWordList()?.map { it.toEntity() }
     }
 
+    override suspend fun getRandomWord(): WordEntity? {
+        return serverDataSource.getRandomWord()?.toEntity()
+    }
+
 }
