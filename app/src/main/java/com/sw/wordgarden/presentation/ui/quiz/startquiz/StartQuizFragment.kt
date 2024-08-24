@@ -35,6 +35,7 @@ class StartQuizFragment : Fragment() {
     private lateinit var quizKey: QuizKey
     private lateinit var quiz: QuizModel
     private lateinit var info: SqCreatorInfoEntity
+    private var fromQuiz = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,6 +66,7 @@ class StartQuizFragment : Fragment() {
     private fun getData() {
         val args: StartQuizFragmentArgs by navArgs()
         quizKey = args.argsQuizKey ?: QuizKey(qTitle = "", sqId = "", isWq = false)
+        fromQuiz = args.argsFromQuiz
 
         if (quizKey.isWq == true) { //공유 wq 퀴즈
             viewmodel.getQuizFromWq(quizKey.qTitle ?: "")
@@ -94,7 +96,7 @@ class StartQuizFragment : Fragment() {
                     }
 
                     DefaultEvent.Success -> {
-                        if (quizKey.isWq == false) { //sq 추가 정보 요청
+                        if (!quizKey.sqId.isNullOrBlank()) { //sq 추가 정보 요청
                             viewmodel.getQuizCreatorInfo(quizKey.sqId ?: "")
                         } else {
                             setupUi()
@@ -149,7 +151,7 @@ class StartQuizFragment : Fragment() {
     }
 
     private fun setupUi() = with(binding) {
-        if (quizKey.isWq == true) { //wq 퀴즈
+        if (quizKey.isWq == true || fromQuiz) { //공유 받은 wq 퀴즈 or 신규 wq 퀴즈
             ivStartQuizThumbnail.visibility = View.INVISIBLE
             tvStartQuizIntroduce.text = getString(R.string.start_quiz_app_quiz)
         } else { //sq 퀴즈
