@@ -107,6 +107,9 @@ interface Service {
     @GET("word/learning")
     suspend fun getWeeklyWordList() : Response<List<WordDto>>
 
+    @GET("word/learning/random")
+    suspend fun getRandomWord() : Response<WordDto>
+
 
     //quiz - wq
     @POST("wq/generate")
@@ -156,9 +159,6 @@ interface Service {
     suspend fun getSqCreatorInfo(@Path("sqid") quizId: String): Response<SqCreatorInfoDto>
 
     //garden
-    //    @POST("login/login")
-    suspend fun updateTree(@Body treeId: String): Response<Unit>
-
-    //    @POST("login/login")
-    suspend fun getTreeList(@Body uid: String): Response<List<TreeDto>>
+    @GET("garden/grow/{userId}")
+    suspend fun getGrowInfo(@Path("userId") userId:String) : Response<TreeDto>
 }

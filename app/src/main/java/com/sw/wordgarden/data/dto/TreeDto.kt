@@ -1,8 +1,11 @@
 package com.sw.wordgarden.data.dto
 
+import com.google.gson.annotations.SerializedName
+import java.util.Date
+
 data class TreeDto (
-    val id: String,
-    val name: String?,
-    val image: String?,
-    val growth: Int?,
+    @SerializedName("plantName") val name:String?,
+    @SerializedName("growthValue") val growthValue : Int?,
+    @SerializedName("growthStage") val growthStage : Int?,
+    @SerializedName("completionDate") val date : Date?,
 )

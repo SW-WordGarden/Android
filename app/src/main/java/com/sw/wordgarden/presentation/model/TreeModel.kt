@@ -1,8 +1,8 @@
-package com.sw.wordgarden.domain.entity
+package com.sw.wordgarden.presentation.model
 
 import java.util.Date
 
-data class TreeEntity (
+class TreeModel(
     val name:String?,
     val growthValue : Int?,
     val growthStage : Int?,
