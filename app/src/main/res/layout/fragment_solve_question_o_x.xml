@@ -38,7 +38,7 @@
                     android:layout_margin="@dimen/margin_medium"
                     android:gravity="center"
                     android:text="문제 내용"
-                    android:textStyle="bold"
+                    android:textFontWeight="600"
                     android:textColor="@color/green"
                     android:textSize="@dimen/text_caption" />
         </LinearLayout>

@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.sw.wordgarden.R
-import com.sw.wordgarden.databinding.ItemMakingQuizIndicatorBinding
+import com.sw.wordgarden.databinding.ItemQuizIndicatorBinding
 import com.sw.wordgarden.presentation.model.QAModel
 
 class IndicatorAdapter(
@@ -26,7 +26,7 @@ class IndicatorAdapter(
     override fun getItemCount(): Int = itemCount
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IndicatorViewHolder {
-        val binding = ItemMakingQuizIndicatorBinding.inflate(
+        val binding = ItemQuizIndicatorBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
@@ -43,7 +43,7 @@ class IndicatorAdapter(
     }
 
     class IndicatorViewHolder(
-        private val binding: ItemMakingQuizIndicatorBinding,
+        private val binding: ItemQuizIndicatorBinding,
         private val onClick: (position: Int) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 

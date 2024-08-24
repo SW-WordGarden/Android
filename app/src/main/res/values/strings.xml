@@ -111,7 +111,7 @@
 
     <!-- quiz -->
     <string name="quiz_title">퀴즈 게임</string>
-    <string name="quiz_welcome">오늘의 퀴즈가 준비되어 있어요!</string>
+    <string name="quiz_welcome">오늘의 퀴즈가\n준비되어 있어요!</string>
     <string name="quiz_support_btn">친구가 만든 퀴즈를 맞혀보세요!</string>
     <string name="quiz_all_clear">축하합니다!\n모든 퀴즈를 다 풀었어요!</string>
     <string name="quiz_alone">퀴즈 풀기</string>

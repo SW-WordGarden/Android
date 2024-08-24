@@ -38,7 +38,7 @@
                     android:layout_margin="@dimen/margin_medium"
                     android:gravity="center"
                     android:text="문제"
-                    android:textStyle="bold"
+                    android:textFontWeight="600"
                     android:textColor="@color/green"
                     android:textSize="@dimen/text_caption" />
         </LinearLayout>
@@ -75,7 +75,7 @@
                     android:layout_marginEnd="@dimen/margin_extra_larger"
                     android:layout_marginBottom="@dimen/margin_extra_larger"
                     android:text="@string/result_quiz_answer"
-                    android:textColor="@color/light_red"
+                    android:textColor="@color/light_pink"
                     android:textSize="@dimen/text_text" />
         </LinearLayout>
     </ScrollView>
