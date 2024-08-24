@@ -7,6 +7,7 @@ import com.sw.wordgarden.data.dto.alarm.AlarmDto
 import com.sw.wordgarden.data.dto.alarm.ShareRequestDto
 import com.sw.wordgarden.data.dto.quiz.QuizSummaryDto
 import com.sw.wordgarden.data.dto.quiz.SqAnswerDto
+import com.sw.wordgarden.data.dto.quiz.SqCreatedInfoDto
 import com.sw.wordgarden.data.dto.quiz.SqCreatorInfoDto
 import com.sw.wordgarden.data.dto.quiz.SqDto
 import com.sw.wordgarden.data.dto.quiz.SqQuestionAnswerDto
@@ -31,6 +32,7 @@ import com.sw.wordgarden.domain.entity.alarm.AlarmEntity
 import com.sw.wordgarden.domain.entity.alarm.ShareRequestEntity
 import com.sw.wordgarden.domain.entity.quiz.QuizSummaryEntity
 import com.sw.wordgarden.domain.entity.quiz.SqAnswerEntity
+import com.sw.wordgarden.domain.entity.quiz.SqCreatedInfoEntity
 import com.sw.wordgarden.domain.entity.quiz.SqCreatorInfoEntity
 import com.sw.wordgarden.domain.entity.quiz.SqEntity
 import com.sw.wordgarden.domain.entity.quiz.SqQuestionAnswerEntity
@@ -257,6 +259,11 @@ object ServerMapper {
         correct = correct,
         time = time,
         sqQnum = sqQnum,
+    )
+
+    fun SqCreatedInfoDto.toEntity() = SqCreatedInfoEntity(
+        sqId = sqId,
+        quizTitle = quizTitle,
     )
 
     //garden

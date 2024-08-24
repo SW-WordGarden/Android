@@ -13,6 +13,7 @@ import com.sw.wordgarden.databinding.FragmentAlarmBinding
 import com.sw.wordgarden.domain.entity.alarm.AlarmEntity
 import com.sw.wordgarden.presentation.event.DefaultEvent
 import com.sw.wordgarden.presentation.model.QuizKey
+import com.sw.wordgarden.presentation.ui.loading.LoadingDialog
 import com.sw.wordgarden.presentation.util.Constants.QUIZ_TYPE_WQ
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,6 +25,7 @@ class AlarmFragment : Fragment() {
     private var _binding: FragmentAlarmBinding? = null
     private val binding get() = _binding!!
 
+    private var loadingDialog: LoadingDialog? = null
     private val viewmodel: AlarmViewModel by viewModels()
     private val adapter: AlarmAdapter by lazy {
         AlarmAdapter(object : AlarmAdapter.AlarmItemListener {
@@ -99,6 +101,18 @@ class AlarmFragment : Fragment() {
                     DefaultEvent.Success -> {
                         goStartQuiz()
                     }
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            viewmodel.uiState.flowWithLifecycle(lifecycle).collectLatest { state ->
+                if (state.isLoading) {
+                    loadingDialog = LoadingDialog()
+                    loadingDialog?.show(parentFragmentManager, null)
+                } else {
+                    loadingDialog?.dismiss()
+                    loadingDialog = null
                 }
             }
         }

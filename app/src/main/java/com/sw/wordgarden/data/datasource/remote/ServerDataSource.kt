@@ -11,6 +11,7 @@ import com.sw.wordgarden.data.dto.user.UserDto
 import com.sw.wordgarden.data.dto.WordDto
 import com.sw.wordgarden.data.dto.alarm.AlarmDetailDto
 import com.sw.wordgarden.data.dto.alarm.AlarmDto
+import com.sw.wordgarden.data.dto.quiz.SqCreatedInfoDto
 import com.sw.wordgarden.data.dto.quiz.WqResponseDto
 import com.sw.wordgarden.data.dto.quiz.WqStateDto
 import com.sw.wordgarden.data.dto.quiz.WqSubmissionDto
@@ -42,11 +43,11 @@ interface ServerDataSource {
     suspend fun deleteAlarm(alarmId: String)
 
     //words
-    suspend fun insertLikedWord(word: WordDto)
-    suspend fun deleteLikedWord(wordId: String)
-    suspend fun getLikedWordList(): List<WordDto>?
-    suspend fun getWeeklyWordList(): List<WordDto>?
-
+    suspend fun getWeeklyCategoryWordList(category:String) : List<WordDto>?
+    suspend fun getDetailWord(wordId: String) : WordDto?
+    suspend fun insertLikedWord( wordId: String, isLiked :Boolean)
+    suspend fun getWordLikedStatus(wordId: String) : Boolean?
+    suspend fun getWeeklyWordList() : List<WordDto>?
 
     //quiz - wq
     suspend fun getGeneratedWq(): List<WqResponseDto>?
@@ -54,12 +55,12 @@ interface ServerDataSource {
     suspend fun getWqState(): WqStateDto?
     suspend fun getWrongWqs(): List<WqWrongAnswerDto>?
     suspend fun getSolvedWqTitles(): Set<String>?
-    suspend fun getSolvedWq(title: String): List<WqResponseDto>?
+    suspend fun getWqOrSolvedWq(title: String, isSolved: Boolean): List<WqResponseDto>?
 
     //quiz - sq
-    suspend fun createNewSq(sqDto: SqDto)
+    suspend fun createNewSq(sqDto: SqDto): SqCreatedInfoDto?
     suspend fun getUserSqTitles(): List<QuizSummaryDto>?
-    suspend fun getUserSq(creatorUid: String, quizId: String): SqDto?
+    suspend fun getUserSq(creatorUid: String?, quizId: String): SqDto?
     suspend fun getSq(quizId: String): List<SqQuestionAnswerDto>?
     suspend fun submitSq(solvedQuiz: SqSolveQuizDto)
     suspend fun getSolvedSqTitles(): List<QuizSummaryDto>?

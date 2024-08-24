@@ -20,9 +20,10 @@
     <string name="login_kakao">카카오로 계속하기</string>
     <string name="login_start">가장 편한 방법으로 시작하세요!</string>
     <string name="login_msg_fail_check">회원 정보 조회에 실패했습니다.</string>
+    <string name="login_msg_fail_auto_login">자동 로그인에 실패했습니다.</string>
     <string name="login_msg_result_null">회원 정보가 없습니다.</string>
     <string name="login_msg_not_user">회원 가입이 필요합니다.</string>
-    <string name="login_msg_can_not_delete_uid">회원 정보 초기화에 실패했습니다.</string>
+    <string name="login_msg_can_not_delete_uid">회원 정보 초기화 작업을 실패했습니다.</string>
     <string name="login_msg_can_not_save_uid">회원 정보 저장에 실패했습니다.</string>
     <string name="login_msg_can_not_update_token">토큰 업데이트에 실패했습니다.</string>
     <string name="onboarding_input_nickname">닉네임을 입력하세요</string>
@@ -86,6 +87,7 @@
     <string name="setting_agreement">이용 약관</string>
     <string name="setting_logout">로그아웃</string>
     <string name="setting_msg_logout">로그아웃 하시겠습니까?</string>
+    <string name="setting_msg_fail_logout">회원 정보 초기화에 실패했습니다.</string>
     <string name="setting_msg_logout_yes">로그아웃</string>
     <string name="setting_msg_logout_no">취소</string>
     <string name="setting_withdrawal">회원탈퇴</string>
@@ -141,6 +143,7 @@
     <string name="start_quiz_made_by">님이 만든 퀴즈</string>
     <string name="start_quiz_start">퀴즈 시작하기</string>
     <string name="start_quiz_msg_fail_get_quiz">퀴즈 받아오기에 실패했어요.</string>
+    <string name="start_quiz_msg_fail_get_quiz_info">퀴즈 정보 받아오기에 실패했어요.</string>
     <string name="start_quiz_msg_fail_save_daily_limit">일일 퀴즈 횟수 저장에 실패했어요.</string>
 
     <string name="solve_quiz_next">다음</string>
@@ -177,16 +180,22 @@
     <string name="detail_back">돌아가기</string>
     <string name="detail_next">넘어가기</string>
 
-    <!-- keys -->
-    <string name="naver_client_id">fYtp0C5dQV4enao8hy1Q</string>
-    <string name="naver_client_secret">EFmMabs3BG</string>
-    <string name="kakao_native_key">9132f18301634afbec5f2618e16f5f09</string>
-    <string name="kakao_native_key_kakao">kakao9132f18301634afbec5f2618e16f5f09</string>
+    <string name="word_unload">단어를 불러오는데 실패했어요.</string>
+    <string name="word_like">좋아요 정보를 불러오지 못했습니다.</string>
+    <string name="word_like_save">좋아요 저장에 실패했습니다.</string>
 
     <!-- push message -->
     <string name="default_notification_channel_id">channel_id_wordgarden</string>
     <string name="push_share_quiz_title">친구에게 퀴즈를 공유 받았어요!</string>
 
+    <!-- loading -->
+    <string name="loading_loading">불러오는 중...</string>
+
+    <!-- keys -->
+    <string name="naver_client_id">fYtp0C5dQV4enao8hy1Q</string>
+    <string name="naver_client_secret">EFmMabs3BG</string>
+    <string name="kakao_native_key">9132f18301634afbec5f2618e16f5f09</string>
+    <string name="kakao_native_key_kakao">kakao9132f18301634afbec5f2618e16f5f09</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

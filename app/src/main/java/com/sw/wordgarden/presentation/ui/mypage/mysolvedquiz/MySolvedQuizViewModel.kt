@@ -6,6 +6,7 @@ import com.sw.wordgarden.R
 import com.sw.wordgarden.domain.entity.quiz.QuizSummaryEntity
 import com.sw.wordgarden.domain.usecase.quiz.common.GetSolvedQuizTitlesUseCase
 import com.sw.wordgarden.presentation.event.DefaultEvent
+import com.sw.wordgarden.presentation.shared.IsLoadingUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,6 +23,9 @@ class MySolvedQuizViewModel @Inject constructor(
     private val getSolvedTitlesUseCase: GetSolvedQuizTitlesUseCase,
 ) : ViewModel() {
 
+    private val _uiState = MutableStateFlow(IsLoadingUiState.init())
+    val uiState: StateFlow<IsLoadingUiState> = _uiState.asStateFlow()
+
     private val _getQuizTitlesEvent = MutableSharedFlow<DefaultEvent>()
     val getQuizTitlesEvent: SharedFlow<DefaultEvent> = _getQuizTitlesEvent.asSharedFlow()
 
@@ -34,11 +38,15 @@ class MySolvedQuizViewModel @Inject constructor(
 
     private fun getSolvedQuizTitles() {
         viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true) }
+
             runCatching {
                 getSolvedTitlesUseCase.invoke()
             }.onFailure {
+                _uiState.update { it.copy(isLoading = false) }
                 _getQuizTitlesEvent.emit(DefaultEvent.Failure(R.string.mypage_my_solved_quiz_msg_fail_load_quiz_title_list))
             }.onSuccess { limit ->
+                _uiState.update { it.copy(isLoading = false) }
                 _getQuizTitles.update { limit }
                 _getQuizTitlesEvent.emit(DefaultEvent.Success)
             }

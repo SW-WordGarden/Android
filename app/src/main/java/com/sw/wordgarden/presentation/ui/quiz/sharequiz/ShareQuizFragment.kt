@@ -20,6 +20,7 @@ import com.sw.wordgarden.databinding.FragmentShareQuizBinding
 import com.sw.wordgarden.domain.entity.user.FriendEntity
 import com.sw.wordgarden.presentation.event.DefaultEvent
 import com.sw.wordgarden.presentation.model.QuizKey
+import com.sw.wordgarden.presentation.ui.loading.LoadingDialog
 import com.sw.wordgarden.presentation.util.Constants.ARGS_FROM_QUIZ
 import com.sw.wordgarden.presentation.util.KeyboardCleaner
 import com.sw.wordgarden.presentation.util.ToastMaker
@@ -33,6 +34,7 @@ class ShareQuizFragment : Fragment() {
     private var _binding: FragmentShareQuizBinding? = null
     private val binding get() = _binding!!
 
+    private var loadingDialog: LoadingDialog? = null
     private val viewmodel: ShareQuizViewModel by viewModels()
     private val adapter: ShareQuizAdapter by lazy {
         ShareQuizAdapter(object : ShareQuizAdapter.FriendItemListener {
@@ -140,6 +142,18 @@ class ShareQuizFragment : Fragment() {
                     DefaultEvent.Success -> {
                         ToastMaker.make(requireContext(), R.string.share_quiz_msg_success_sharing)
                     }
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            viewmodel.uiState.flowWithLifecycle(lifecycle).collectLatest { state ->
+                if (state.isLoading) {
+                    loadingDialog = LoadingDialog()
+                    loadingDialog?.show(parentFragmentManager, null)
+                } else {
+                    loadingDialog?.dismiss()
+                    loadingDialog = null
                 }
             }
         }
