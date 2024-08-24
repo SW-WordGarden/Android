@@ -1,5 +1,6 @@
 package com.sw.wordgarden.app.di
 
+import com.sw.wordgarden.data.dto.WordDto
 import com.sw.wordgarden.domain.usecase.datastore.DeleteDailyLimitUseCase
 import com.sw.wordgarden.domain.usecase.datastore.DeleteDailyLimitUseCaseImpl
 import com.sw.wordgarden.domain.usecase.datastore.DeleteUidUseCase
@@ -20,8 +21,6 @@ import com.sw.wordgarden.domain.usecase.quiz.sq.GetSolvedSqUseCase
 import com.sw.wordgarden.domain.usecase.quiz.sq.GetSolvedSqUseCaseImpl
 import com.sw.wordgarden.domain.usecase.quiz.sq.GetSolvedSqTitlesUseCase
 import com.sw.wordgarden.domain.usecase.quiz.sq.GetSolvedSqTitlesUseCaseImpl
-import com.sw.wordgarden.domain.usecase.GetTreeListUseCase
-import com.sw.wordgarden.domain.usecase.GetTreeListUseCaseImpl
 import com.sw.wordgarden.domain.usecase.datastore.GetUidUseCase
 import com.sw.wordgarden.domain.usecase.datastore.GetUidUseCaseImpl
 import com.sw.wordgarden.domain.usecase.user.GetUserInfoForLoginUseCase
@@ -38,8 +37,6 @@ import com.sw.wordgarden.domain.usecase.user.UpdateFcmTokenUseCase
 import com.sw.wordgarden.domain.usecase.user.UpdateFcmTokenUseCaseImpl
 import com.sw.wordgarden.domain.usecase.quiz.sq.SubmitSqUseCase
 import com.sw.wordgarden.domain.usecase.quiz.sq.SubmitSqUseCaseImpl
-import com.sw.wordgarden.domain.usecase.UpdateTreeUseCase
-import com.sw.wordgarden.domain.usecase.UpdateTreeUseCaseImpl
 import com.sw.wordgarden.domain.usecase.alarm.DeleteAlarmUseCase
 import com.sw.wordgarden.domain.usecase.alarm.DeleteAlarmUseCaseImpl
 import com.sw.wordgarden.domain.usecase.alarm.GetAlarmDetailUseCase
@@ -62,6 +59,8 @@ import com.sw.wordgarden.domain.usecase.quiz.wq.SubmitWqUseCase
 import com.sw.wordgarden.domain.usecase.quiz.wq.SubmitWqUseCaseImpl
 import com.sw.wordgarden.domain.usecase.alarm.MakeSharingAlarmUseCase
 import com.sw.wordgarden.domain.usecase.alarm.MakeSharingAlarmUseCaseImpl
+import com.sw.wordgarden.domain.usecase.garden.GetGrowInfoUseCase
+import com.sw.wordgarden.domain.usecase.garden.GetGrowInfoUseCaseImpl
 import com.sw.wordgarden.domain.usecase.user.AddFriendUseCase
 import com.sw.wordgarden.domain.usecase.user.AddFriendUseCaseImpl
 import com.sw.wordgarden.domain.usecase.user.DeleteAccountUseCase
@@ -78,6 +77,8 @@ import com.sw.wordgarden.domain.usecase.user.UpdateUserNicknameUseCase
 import com.sw.wordgarden.domain.usecase.user.UpdateUserNicknameUseCaseImpl
 import com.sw.wordgarden.domain.usecase.word.GetDetailWordUseCase
 import com.sw.wordgarden.domain.usecase.word.GetDetailWordUseCaseImpl
+import com.sw.wordgarden.domain.usecase.word.GetRandomWordUseCase
+import com.sw.wordgarden.domain.usecase.word.GetRandomWordUseCaseImpl
 import com.sw.wordgarden.domain.usecase.word.GetWeeklyCategoryWordListUseCase
 import com.sw.wordgarden.domain.usecase.word.GetWeeklyCategoryWordListUseCaseImpl
 import com.sw.wordgarden.domain.usecase.word.GetWeeklyWordListUseCase
@@ -91,6 +92,7 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
+import retrofit2.Response
 
 @Module
 @InstallIn(ViewModelComponent::class)
@@ -322,15 +324,9 @@ abstract class UseCaseModule {
     //garden
     @Binds
     @ViewModelScoped
-    abstract fun bindGetTreeListUseCase(
-        getTreeListUseCaseImpl: GetTreeListUseCaseImpl
-    ): GetTreeListUseCase
-
-    @Binds
-    @ViewModelScoped
-    abstract fun bindUpdateTreeUseCase(
-        updateTreeUseCaseImpl: UpdateTreeUseCaseImpl
-    ): UpdateTreeUseCase
+    abstract fun bindGetGrowInfoUseCase(
+        getGrowInfoUseCaseImpl: GetGrowInfoUseCaseImpl
+    ): GetGrowInfoUseCase
 
     //word
     @Binds
@@ -362,5 +358,11 @@ abstract class UseCaseModule {
     abstract fun bindInsertLikedWordUseCase(
         insertLikedWordUseCaseImpl: InsertLikedWordUseCaseImpl
     ):InsertLikedWordUseCase
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindGetRandomWord(
+        getRandomWordUseCaseImpl: GetRandomWordUseCaseImpl
+    ): GetRandomWordUseCase
 }
 

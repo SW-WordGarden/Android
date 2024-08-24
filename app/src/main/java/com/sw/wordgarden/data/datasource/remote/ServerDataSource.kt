@@ -18,6 +18,7 @@ import com.sw.wordgarden.data.dto.quiz.WqSubmissionDto
 import com.sw.wordgarden.data.dto.quiz.WqWrongAnswerDto
 import com.sw.wordgarden.data.dto.user.FriendListDto
 import com.sw.wordgarden.data.dto.user.UserInfoDto
+import retrofit2.Response
 
 interface ServerDataSource {
     //user - login
@@ -49,6 +50,7 @@ interface ServerDataSource {
     suspend fun insertLikedWord( wordId: String, isLiked :Boolean)
     suspend fun getWordLikedStatus(wordId: String) : Boolean?
     suspend fun getWeeklyWordList() : List<WordDto>?
+    suspend fun getRandomWord() : WordDto?
 
     //quiz - wq
     suspend fun getGeneratedWq(): List<WqResponseDto>?
@@ -70,6 +72,5 @@ interface ServerDataSource {
 
 
     //garden
-    suspend fun updateTree(treeId: String)
-    suspend fun getTreeList(): List<TreeDto>?
+    suspend fun getGrowInfo(): TreeDto?
 }

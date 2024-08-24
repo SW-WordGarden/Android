@@ -1,5 +1,7 @@
 package com.sw.wordgarden.presentation.mapper
 
+import com.sw.wordgarden.domain.entity.TreeEntity
+import com.sw.wordgarden.domain.entity.WordEntity
 import com.sw.wordgarden.domain.entity.quiz.SqAnswerEntity
 import com.sw.wordgarden.domain.entity.quiz.SqEntity
 import com.sw.wordgarden.domain.entity.quiz.SqQuestionAnswerEntity
@@ -11,6 +13,8 @@ import com.sw.wordgarden.domain.entity.quiz.WqSubmissionEntity
 import com.sw.wordgarden.presentation.model.QAModel
 import com.sw.wordgarden.presentation.model.QuizModel
 import com.sw.wordgarden.presentation.util.Constants.QUIZ_AMOUNT
+import com.sw.wordgarden.presentation.model.TreeModel
+import com.sw.wordgarden.presentation.model.WordModel
 
 object ModelMapper {
 
@@ -198,4 +202,20 @@ object ModelMapper {
 
         return emptyQuizList
     }
+
+    //home
+    fun TreeEntity.toTreeModel() = TreeModel(
+        name = name,
+        growthValue = growthValue ,
+        growthStage = growthStage,
+        date = date
+    )
+
+    fun WordEntity.toWordModel() = WordModel(
+        id = id,
+        title = title,
+        description = description,
+        thumbnail = thumbnail,
+        category = category
+    )
 }

@@ -127,7 +127,8 @@ class QuizFragment : Fragment() {
     }
 
     private fun goStartQuiz() {
-        findNavController().navigate(R.id.action_quizFragment_to_startQuizFragment)
+        val action = QuizFragmentDirections.actionQuizFragmentToStartQuizFragment(true)
+        findNavController().navigate(action)
     }
 
     private fun goMakeQuiz() {
