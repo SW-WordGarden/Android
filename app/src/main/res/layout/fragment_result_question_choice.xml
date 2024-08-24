@@ -2,53 +2,30 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_extra_larger"
-        android:background="@color/white"
+        android:background="@drawable/bg_rec_radius_10"
         android:backgroundTint="@color/white"
         android:orientation="vertical"
         tools:context=".presentation.ui.quiz.resultquiz.ResultQuestionChoiceFragment">
 
     <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_result_quiz_item_question_choice_title"
+            android:id="@+id/tv_result_quiz_item_question_choice_question"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_medium"
-            android:gravity="center_horizontal|top"
-            android:text="지시문"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginEnd="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_extra_larger"
+            android:layout_marginBottom="@dimen/margin_extra_larger"
+            android:gravity="center"
+            android:text="단어"
+            android:textFontWeight="600"
             android:textColor="@color/green"
-            android:textSize="@dimen/text_small" />
-
-    <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:scrollbars="none">
-
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="vertical">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_result_quiz_item_question_choice_question"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_medium"
-                    android:gravity="center"
-                    android:text="단어"
-                    android:textFontWeight="600"
-                    android:textColor="@color/green"
-                    android:textSize="@dimen/text_caption" />
-        </LinearLayout>
-    </ScrollView>
-
+            android:textSize="@dimen/text_caption" />
 
     <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
         <LinearLayout
@@ -72,6 +49,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_extra_small"
+                    android:layout_gravity="center"
                     android:text="선택지"
                     android:textSize="@dimen/text_smaller"
                     android:textColor="@color/green"/>
@@ -98,6 +76,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_extra_small"
+                    android:layout_gravity="center"
                     android:text="선택지"
                     android:textSize="@dimen/text_smaller"
                     android:textColor="@color/green"/>
@@ -124,6 +103,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_extra_small"
+                    android:layout_gravity="center"
                     android:text="선택지"
                     android:textSize="@dimen/text_smaller"
                     android:textColor="@color/green"/>
@@ -136,7 +116,7 @@
                 android:layout_marginStart="@dimen/margin_smaller"
                 android:layout_marginEnd="@dimen/margin_smaller"
                 android:layout_marginTop="@dimen/margin_extra_small"
-                android:layout_marginBottom="@dimen/margin_extra_small"
+                android:layout_marginBottom="@dimen/margin_extra_larger"
                 android:layout_gravity="center">
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -150,6 +130,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_extra_small"
+                    android:layout_gravity="center"
                     android:text="선택지"
                     android:textSize="@dimen/text_smaller"
                     android:textColor="@color/green"/>

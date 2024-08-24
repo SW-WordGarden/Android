@@ -50,8 +50,6 @@ class ResultQuestionOXFragment : Fragment() {
     }
 
     private fun setupUi() = with(binding) {
-        tvResultQuizItemQuestionOxTitle.text = QUESTION_OX_TITLE
-
         val question = question.substringAfter(QUESTION_OX_TITLE)
         tvResultQuizItemQuestionOxQuestion.text = question
 
@@ -68,14 +66,19 @@ class ResultQuestionOXFragment : Fragment() {
                 btnResultQuizItemQuestionO.backgroundTintList =
                     ContextCompat.getColorStateList(requireContext(), R.color.light_green)
                 btnResultQuizItemQuestionX.backgroundTintList =
-                    ContextCompat.getColorStateList(requireContext(), R.color.light_red)
+                    ContextCompat.getColorStateList(requireContext(), R.color.light_pink)
             } else {
                 btnResultQuizItemQuestionO.backgroundTintList =
-                    ContextCompat.getColorStateList(requireContext(), R.color.light_red)
+                    ContextCompat.getColorStateList(requireContext(), R.color.light_pink)
                 btnResultQuizItemQuestionX.backgroundTintList =
                     ContextCompat.getColorStateList(requireContext(), R.color.light_green)
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.root.requestLayout()
     }
 
     override fun onDestroyView() {

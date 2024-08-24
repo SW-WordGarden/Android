@@ -42,7 +42,10 @@
     <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:scrollbars="none"
             app:layout_constraintTop_toBottomOf="@+id/cl_check_quiz_top_bar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -88,10 +91,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margin_extra_larger"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/rv_result_quiz_indicator" />
+                    app:layout_constraintTop_toBottomOf="@+id/rv_result_quiz_indicator"
+                    app:layout_constraintBottom_toTopOf="@+id/btn_result_friend" />
 
             <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_result_friend"
@@ -103,7 +106,6 @@
                     android:textSize="@dimen/text_small"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/vp_result_quiz"
                     app:layout_constraintBottom_toBottomOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

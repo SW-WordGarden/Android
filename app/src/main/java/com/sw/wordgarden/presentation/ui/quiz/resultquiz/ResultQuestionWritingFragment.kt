@@ -47,8 +47,6 @@ class ResultQuestionWritingFragment : Fragment() {
     }
 
     private fun setupUi() = with(binding) {
-        tvResultQuizItemQuestionTitle.text = QUESTION_WRITE_TITLE
-
         val question = question.substringAfter(QUESTION_WRITE_TITLE)
         tvResultQuizItemQuestionQuestion.text = question
 
@@ -69,6 +67,11 @@ class ResultQuestionWritingFragment : Fragment() {
             tvResultQuizItemCorrect.layoutParams = params
             tvResultQuizItemAnswer.visibility = View.VISIBLE
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.root.requestLayout()
     }
 
     override fun onDestroyView() {

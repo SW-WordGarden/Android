@@ -52,7 +52,6 @@ class ResultQuestionChoiceFragment : Fragment() {
 
     @SuppressLint("SetTextI18n")
     private fun setupUi() = with(binding) {
-        tvResultQuizItemQuestionChoiceTitle.text = question
         tvResultQuizItemQuestionChoiceQuestion.text = word
         tvResultQuizItemChoice1.text = options[0]
         tvResultQuizItemChoice2.text = options[1]
@@ -86,6 +85,11 @@ class ResultQuestionChoiceFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        binding.root.requestLayout()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -100,7 +104,7 @@ class ResultQuestionChoiceFragment : Fragment() {
         const val WORD_KEY = "WORD_KEY"
         const val ANSWER_KEY = "ANSWER_KEY"
         const val OPTIONS_KEY = "OPTIONS_KEY"
-        const val USER_ANSWER_KEY = "OPTIONS_KEY"
+        const val USER_ANSWER_KEY = "USER_ANSWER_KEY"
         const val POSITION_KEY = "POSITION_KEY"
 
         fun newInstance(
