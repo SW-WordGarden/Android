@@ -1,13 +1,13 @@
-package com.sw.wordgarden.domain.usecase
+package com.sw.wordgarden.domain.usecase.word
 
 import com.sw.wordgarden.domain.entity.WordEntity
 import com.sw.wordgarden.domain.repository.WordRepository
 import javax.inject.Inject
 
-class GetWeelkyWordListUseCaseImpl @Inject constructor(
+class GetWeeklyWordListUseCaseImpl @Inject constructor(
     private val wordRepository: WordRepository
-) : GetWeeklyWordListUseCase {
+) : GetWeeklyWordListUseCase{
     override suspend fun invoke(): List<WordEntity>? {
-        TODO("Not yet implemented")
+        return wordRepository.getWeeklyWordList()
     }
 }
