@@ -1,42 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/light_khaki"
-    tools:context=".presentation.ui.login.onboarding.OnBoardingFragment">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_gradient_my"
+        tools:context=".presentation.ui.login.onboarding.OnBoardingFragment">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_onboarding_thumbnail"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="100dp"
+            android:src="@drawable/img_default_thumbnail"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_onboarding_camera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-28dp"
+            android:layout_marginEnd="@dimen/margin_extra_small"
+            android:src="@drawable/ic_camera"
+            app:layout_constraintEnd_toEndOf="@+id/iv_onboarding_thumbnail"
+            app:layout_constraintTop_toBottomOf="@+id/iv_onboarding_thumbnail" />
 
     <TextView
-        android:id="@+id/tv_onboarding_nickname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="160dp"
-        android:text="@string/onboarding_input_nickname"
-        android:textSize="@dimen/text_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            android:id="@+id/tv_onboarding_nickname1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="56dp"
+            android:layout_marginTop="@dimen/margin_extra_large"
+            android:text="@string/onboarding_input_nickname1"
+            android:textSize="@dimen/text_content"
+            android:textColor="@color/green"
+            app:layout_constraintTop_toBottomOf="@+id/iv_onboarding_thumbnail"
+            app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/et_onboarding_nickname"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="@dimen/margin_large"
-        android:layout_marginEnd="50dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_onboarding_nickname" />
+            android:id="@+id/et_onboarding_nickname"
+            android:layout_width="240dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="@dimen/margin_extra_small"
+            android:background="@drawable/bg_rec_stroke_radius_15"
+            android:inputType="text"
+            app:layout_constraintTop_toBottomOf="@+id/tv_onboarding_nickname1"
+            app:layout_constraintStart_toStartOf="@+id/tv_onboarding_nickname1" />
+
+    <TextView
+            android:id="@+id/tv_onboarding_nickname2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_extra_small"
+            android:text="@string/onboarding_input_nickname2"
+            android:textSize="@dimen/text_content"
+            android:textColor="@color/green"
+            app:layout_constraintTop_toBottomOf="@+id/et_onboarding_nickname"
+            app:layout_constraintStart_toStartOf="@+id/tv_onboarding_nickname1" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_onboarding_limit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_extra_small"
+            android:text="0/10"
+            android:textSize="@dimen/text_small"
+            android:textColor="@color/green"
+            app:layout_constraintStart_toEndOf="@+id/et_onboarding_nickname"
+            app:layout_constraintBottom_toBottomOf="@+id/et_onboarding_nickname" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_onboarding_next"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_extra_small"
-        android:layout_marginEnd="50dp"
-        android:text="@string/onboarding_next"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_onboarding_nickname" />
+            android:id="@+id/iv_onboarding_next"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="50dp"
+            android:background="@drawable/bg_rec_radius_15"
+            android:backgroundTint="@color/light_khaki"
+            android:text="@string/onboarding_next"
+            android:textSize="@dimen/text_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

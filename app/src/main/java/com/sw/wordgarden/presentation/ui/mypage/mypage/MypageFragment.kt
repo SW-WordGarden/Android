@@ -50,7 +50,6 @@ class MypageFragment : Fragment() {
     private var myCode = ""
 
     override fun onCreateView(
-
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {

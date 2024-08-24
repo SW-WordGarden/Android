@@ -23,4 +23,7 @@ object Constants {
 
     //quiz
     const val QUIZ_AMOUNT = 10
+
+    //user
+    const val NICKNAME_LIMIT = 10
 }

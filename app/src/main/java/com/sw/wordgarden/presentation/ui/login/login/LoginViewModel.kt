@@ -1,6 +1,5 @@
 package com.sw.wordgarden.presentation.ui.login.login
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sw.wordgarden.R
@@ -10,8 +9,8 @@ import com.sw.wordgarden.domain.usecase.datastore.SaveUidUseCase
 import com.sw.wordgarden.domain.usecase.user.GetUserInfoForLoginUseCase
 import com.sw.wordgarden.domain.usecase.user.UpdateFcmTokenUseCase
 import com.sw.wordgarden.presentation.event.DefaultEvent
-import com.sw.wordgarden.presentation.util.Constants
 import com.sw.wordgarden.presentation.event.UserCheckEvent
+import com.sw.wordgarden.presentation.util.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,7 +26,7 @@ class LoginViewModel @Inject constructor(
     private val getUidUseCase: GetUidUseCase,
     private val getUserInfoForLoginUseCase: GetUserInfoForLoginUseCase,
     private val deleteUidUseCase: DeleteUidUseCase,
-    private val saveUidUserCase: SaveUidUseCase,
+    private val saveUidUseCase: SaveUidUseCase,
     private val updateFcmTokenUseCase: UpdateFcmTokenUseCase,
 ) : ViewModel() {
 
@@ -90,6 +89,7 @@ class LoginViewModel @Inject constructor(
                             _checkUserEvent.emit(UserCheckEvent.Failure(R.string.login_msg_fail_check))
                         }
                     }
+
                     else -> {
                         _checkUserEvent.emit(UserCheckEvent.Failure(R.string.login_msg_fail_check))
                     }
@@ -113,7 +113,7 @@ class LoginViewModel @Inject constructor(
     fun saveUid(uid: String) {
         viewModelScope.launch {
             runCatching {
-                saveUidUserCase.invoke(uid)
+                saveUidUseCase.invoke(uid)
             }.onFailure {
                 _saveUidEvent.emit(DefaultEvent.Failure(R.string.login_msg_can_not_save_uid))
             }.onSuccess {
