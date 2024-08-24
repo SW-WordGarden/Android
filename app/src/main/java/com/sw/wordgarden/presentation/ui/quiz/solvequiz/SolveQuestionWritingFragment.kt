@@ -10,6 +10,7 @@ import android.view.inputmethod.EditorInfo
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentSolveQuestionWritingBinding
 import com.sw.wordgarden.presentation.util.Constants
+import com.sw.wordgarden.presentation.util.Constants.QUESTION_WRITE_TITLE
 import com.sw.wordgarden.presentation.util.ToastMaker
 
 class SolveQuestionWritingFragment : Fragment() {
@@ -50,9 +51,13 @@ class SolveQuestionWritingFragment : Fragment() {
     }
 
     private fun setupUi() = with(binding) {
-        tvSolveQuizItemQuestionTitle.text = Constants.QUESTION_WRITE_TITLE
+        if (question.contains(QUESTION_WRITE_TITLE)) { //wq인 경우
+            tvSolveQuizItemQuestionTitle.text = QUESTION_WRITE_TITLE
+        } else {
+            tvSolveQuizItemQuestionTitle.text = ""
+        }
 
-        val question = question.substringAfter(Constants.QUESTION_WRITE_TITLE)
+        val question = question.substringAfter(QUESTION_WRITE_TITLE)
         tvSolveQuizItemQuestionQuestion.text = question
 
         if (position < QUIZ_SIZE - 1) {
