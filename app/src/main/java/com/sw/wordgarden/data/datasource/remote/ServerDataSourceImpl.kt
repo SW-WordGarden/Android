@@ -255,21 +255,78 @@ class ServerDataSourceImpl @Inject constructor(
 
 
     //words
-    override suspend fun insertLikedWord(word: WordDto) {
-        TODO("Not yet implemented")
+    override suspend fun getWeeklyCategoryWordList(category:String) : List<WordDto>? {
+        return try {
+            val response = service.getWeeklyCategoryWordList(category)
+            if (!response.isSuccessful){
+                throw HttpException(response)
+            } else{
+                response.body()
+            }
+        } catch (e:Exception){
+            e.printStackTrace()
+            throw e
+        }
     }
 
-    override suspend fun deleteLikedWord(wordId: String) {
-        TODO("Not yet implemented")
+    override suspend fun getDetailWord(wordId: String): WordDto? {
+        return try {
+            val response = service.getDetailWord(wordId)
+            if (!response.isSuccessful){
+                throw HttpException(response)
+            }else{
+                response.body()
+            }
+        }catch (e:Exception){
+            e.printStackTrace()
+            throw e
+        }
     }
 
-    override suspend fun getLikedWordList(): List<WordDto>? {
-        TODO("Not yet implemented")
+    override suspend fun insertLikedWord(wordId: String, isLiked: Boolean) {
+        try {
+            val uid = getUid()
+            val response = service.insertLikedWord(uid!!, wordId, isLiked)
+            if (!response.isSuccessful){
+                throw HttpException(response)
+            }else{
+                response.body()
+            }
+        }catch (e:Exception){
+            e.printStackTrace()
+            throw e
+        }
+    }
+
+    override suspend fun getWordLikedStatus(wordId: String) :Boolean?{
+        return try {
+            val uid = getUid()
+            val response = service.getWordLikedStatus(uid!!, wordId)
+            if (!response.isSuccessful){
+                throw HttpException(response)
+            }else{
+                response.body()
+            }
+        }catch (e:Exception){
+            e.printStackTrace()
+            throw e
+        }
     }
 
     override suspend fun getWeeklyWordList(): List<WordDto>? {
-        TODO("Not yet implemented")
+        return try {
+            val response = service.getWeeklyWordList()
+            if (!response.isSuccessful){
+                throw HttpException(response)
+            }else{
+                response.body()
+            }
+        }catch (e:Exception){
+            e.printStackTrace()
+            throw e
+        }
     }
+
 
 
     //quiz - wq

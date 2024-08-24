@@ -43,11 +43,11 @@ interface ServerDataSource {
     suspend fun deleteAlarm(alarmId: String)
 
     //words
-    suspend fun insertLikedWord(word: WordDto)
-    suspend fun deleteLikedWord(wordId: String)
-    suspend fun getLikedWordList(): List<WordDto>?
-    suspend fun getWeeklyWordList(): List<WordDto>?
-
+    suspend fun getWeeklyCategoryWordList(category:String) : List<WordDto>?
+    suspend fun getDetailWord(wordId: String) : WordDto?
+    suspend fun insertLikedWord( wordId: String, isLiked :Boolean)
+    suspend fun getWordLikedStatus(wordId: String) : Boolean?
+    suspend fun getWeeklyWordList() : List<WordDto>?
 
     //quiz - wq
     suspend fun getGeneratedWq(): List<WqResponseDto>?

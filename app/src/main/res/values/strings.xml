@@ -184,6 +184,10 @@
     <string name="detail_back">돌아가기</string>
     <string name="detail_next">넘어가기</string>
 
+    <string name="word_unload">단어를 불러오는데 실패했어요.</string>
+    <string name="word_like">좋아요 정보를 불러오지 못했습니다.</string>
+    <string name="word_like_save">좋아요 저장에 실패했습니다.</string>
+
     <!-- push message -->
     <string name="default_notification_channel_id">channel_id_wordgarden</string>
     <string name="push_share_quiz_title">친구에게 퀴즈를 공유 받았어요!</string>
