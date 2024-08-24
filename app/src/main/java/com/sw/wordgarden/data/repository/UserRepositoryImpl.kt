@@ -44,6 +44,10 @@ class UserRepositoryImpl @Inject constructor(
         return serverDataSource.getFriends()?.toEntity()
     }
 
+    override suspend fun deleteAccout() {
+        return serverDataSource.deleteAccout()
+    }
+
     //mypage - friend
     override suspend fun addFriend(friendUrl: String) {
         serverDataSource.addFriend(friendUrl)

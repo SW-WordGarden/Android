@@ -30,6 +30,7 @@ interface ServerDataSource {
     suspend fun updateUserNickname(nickname: String)
     suspend fun updateUserImage(image: String)
     suspend fun getFriends(): FriendListDto?
+    suspend fun deleteAccout()
 
     //user - mypage - friend
     suspend fun addFriend(friendUrl: String)

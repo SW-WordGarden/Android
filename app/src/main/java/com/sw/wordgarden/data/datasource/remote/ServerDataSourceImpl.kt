@@ -140,6 +140,20 @@ class ServerDataSourceImpl @Inject constructor(
         }
     }
 
+    override suspend fun deleteAccout() {
+        try {
+            val uid = getUid()
+
+            val response = service.deleteAccout(uid!!)
+            if (!response.isSuccessful) {
+                throw HttpException(response)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            throw e
+        }
+    }
+
     //user - mypage - friend
     override suspend fun addFriend(friendUrl: String) {
         try {

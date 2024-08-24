@@ -51,6 +51,9 @@ class SettingFragment : Fragment() {
         tvSettingLogout.setOnClickListener {
             logout()
         }
+        tvSettingWithdrawal.setOnClickListener {
+            withdrawal()
+        }
     }
 
     private fun logout() {
@@ -61,8 +64,16 @@ class SettingFragment : Fragment() {
         }
         builder.setNegativeButton(R.string.setting_msg_logout_no) { _, _ -> }
         builder.show()
+    }
 
-
+    private fun withdrawal() {
+        val builder = AlertDialog.Builder(requireActivity())
+        builder.setMessage(R.string.setting_msg_withdrawal)
+        builder.setPositiveButton(R.string.setting_msg_withdrawal_yes) { _, _ ->
+            viewmodel.deleteAccount()
+        }
+        builder.setNegativeButton(R.string.setting_msg_withdrawal_no) { _, _ -> }
+        builder.show()
     }
 
     private fun setupObserver() {
@@ -75,6 +86,20 @@ class SettingFragment : Fragment() {
 
                     DefaultEvent.Success -> {
                         goLogin()
+                    }
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            viewmodel.deleteAccountEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
+                when (event) {
+                    is DefaultEvent.Failure -> {
+                        ToastMaker.make(requireContext(), event.msg)
+                    }
+
+                    DefaultEvent.Success -> {
+                        viewmodel.deleteUidForLogout()
                     }
                 }
             }

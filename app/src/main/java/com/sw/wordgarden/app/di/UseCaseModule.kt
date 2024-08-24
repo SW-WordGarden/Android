@@ -64,6 +64,8 @@ import com.sw.wordgarden.domain.usecase.alarm.MakeSharingAlarmUseCase
 import com.sw.wordgarden.domain.usecase.alarm.MakeSharingAlarmUseCaseImpl
 import com.sw.wordgarden.domain.usecase.user.AddFriendUseCase
 import com.sw.wordgarden.domain.usecase.user.AddFriendUseCaseImpl
+import com.sw.wordgarden.domain.usecase.user.DeleteAccountUseCase
+import com.sw.wordgarden.domain.usecase.user.DeleteAccountUseCaseImpl
 import com.sw.wordgarden.domain.usecase.user.DeleteFriendUseCase
 import com.sw.wordgarden.domain.usecase.user.DeleteFriendUseCaseImpl
 import com.sw.wordgarden.domain.usecase.user.GetUserInfoForMypage
@@ -137,6 +139,12 @@ abstract class UseCaseModule {
     abstract fun bindGetFriendListUseCase(
         getFriendListUseCaseImpl: GetFriendsUseCaseImpl
     ): GetFriendsUseCase
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindDeleteAccountUseCase(
+        deleteAccountUseCaseImpl: DeleteAccountUseCaseImpl
+    ): DeleteAccountUseCase
 
     @Binds
     @ViewModelScoped
