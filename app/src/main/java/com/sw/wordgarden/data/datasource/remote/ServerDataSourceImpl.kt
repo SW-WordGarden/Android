@@ -327,6 +327,20 @@ class ServerDataSourceImpl @Inject constructor(
         }
     }
 
+    override suspend fun getRandomWord(): WordDto? {
+        return try {
+            val response = service.getRandomWord()
+            if (!response.isSuccessful){
+                throw HttpException(response)
+            }else{
+                response.body()
+            }
+        }catch (e:Exception){
+            e.printStackTrace()
+            throw e
+        }
+    }
+
 
 
     //quiz - wq
@@ -563,12 +577,19 @@ class ServerDataSourceImpl @Inject constructor(
 
 
     //garden
-    override suspend fun updateTree(treeId: String) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun getTreeList(): List<TreeDto>? {
-        TODO("Not yet implemented")
+    override suspend fun getGrowInfo(): TreeDto? {
+        return try {
+            val uid = getUid()
+            val response = service.getGrowInfo(uid!!)
+            if (!response.isSuccessful) {
+                throw HttpException(response)
+            } else {
+                response.body()
+            }
+        }catch (e:Exception){
+            e.printStackTrace()
+            throw e
+        }
     }
 
 
