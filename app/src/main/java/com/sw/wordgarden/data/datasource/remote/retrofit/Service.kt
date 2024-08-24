@@ -66,7 +66,7 @@ interface Service {
     suspend fun getFriends(@Path("uid") uid: String): Response<FriendListDto>
 
     @DELETE("user/delete/{uid}")
-    suspend fun deleteAccout(@Path("uid") uid: String): Response<Unit>
+    suspend fun deleteAccount(@Path("uid") uid: String): Response<Unit>
 
     //user - mypage - friend
     @POST("user/friend/add")

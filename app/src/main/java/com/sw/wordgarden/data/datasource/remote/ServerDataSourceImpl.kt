@@ -144,7 +144,7 @@ class ServerDataSourceImpl @Inject constructor(
         try {
             val uid = getUid()
 
-            val response = service.deleteAccout(uid!!)
+            val response = service.deleteAccount(uid!!)
             if (!response.isSuccessful) {
                 throw HttpException(response)
             }

@@ -78,6 +78,34 @@ class SettingFragment : Fragment() {
 
     private fun setupObserver() {
         lifecycleScope.launch {
+            viewmodel.deleteAccountEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
+                when (event) {
+                    is DefaultEvent.Failure -> {
+                        ToastMaker.make(requireContext(), event.msg)
+                    }
+
+                    DefaultEvent.Success -> {
+                        viewmodel.deleteDailyLimit()
+                    }
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            viewmodel.deleteDailyLimitEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
+                when (event) {
+                    is DefaultEvent.Failure -> {
+                        ToastMaker.make(requireContext(), event.msg)
+                    }
+
+                    DefaultEvent.Success -> {
+                        viewmodel.deleteUidForLogout()
+                    }
+                }
+            }
+        }
+
+        lifecycleScope.launch {
             viewmodel.deleteUidEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
                 when (event) {
                     is DefaultEvent.Failure -> {
@@ -86,20 +114,6 @@ class SettingFragment : Fragment() {
 
                     DefaultEvent.Success -> {
                         goLogin()
-                    }
-                }
-            }
-        }
-
-        lifecycleScope.launch {
-            viewmodel.deleteAccountEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
-                when (event) {
-                    is DefaultEvent.Failure -> {
-                        ToastMaker.make(requireContext(), event.msg)
-                    }
-
-                    DefaultEvent.Success -> {
-                        viewmodel.deleteUidForLogout()
                     }
                 }
             }
