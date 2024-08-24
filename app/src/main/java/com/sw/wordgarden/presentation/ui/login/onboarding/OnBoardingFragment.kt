@@ -1,23 +1,21 @@
 package com.sw.wordgarden.presentation.ui.login.onboarding
 
-import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.setFragmentResultListener
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentOnboardingBinding
-import com.sw.wordgarden.domain.entity.SignUpEntity
-import com.sw.wordgarden.presentation.model.DefaultEvent
-import com.sw.wordgarden.presentation.ui.home.HomeFragment
-import com.sw.wordgarden.presentation.ui.main.MainActivity
+import com.sw.wordgarden.domain.entity.user.LoginRequestEntity
+import com.sw.wordgarden.presentation.event.DefaultEvent
+import com.sw.wordgarden.presentation.ui.loading.LoadingDialog
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -25,14 +23,14 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class OnBoardingFragment : Fragment() {
-
     private val TAG = "OnBoardingFragment"
 
     private var _binding: FragmentOnboardingBinding? = null
     private val binding get() = _binding!!
 
-    private val viewmodel: OnBoardingViewModel by activityViewModels()
-    private lateinit var signUpEntity: SignUpEntity
+    private var loadingDialog: LoadingDialog? = null
+    private val viewmodel: OnBoardingViewModel by viewModels()
+    private lateinit var loginRequestEntity: LoginRequestEntity
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,15 +50,8 @@ class OnBoardingFragment : Fragment() {
     }
 
     private fun getDataFromLogin() {
-        setFragmentResultListener(LOGIN_TO_ONBOARDING_REQUEST_KEY) { _, bundle ->
-            signUpEntity = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                bundle.getParcelable(LOGIN_TO_ONBOARDING_BUNDLE_KEY, SignUpEntity::class.java)
-                    ?: SignUpEntity("", "", "")
-            } else {
-                bundle.getParcelable(LOGIN_TO_ONBOARDING_BUNDLE_KEY)
-                    ?: SignUpEntity("", "", "")
-            }
-        }
+        val args: OnBoardingFragmentArgs by navArgs()
+        loginRequestEntity = args.argsLoginRequestEntity ?: LoginRequestEntity("", "", "", "")
     }
 
     private fun setupListener() {
@@ -70,13 +61,14 @@ class OnBoardingFragment : Fragment() {
             if (nickname == "") {
                 ToastMaker.make(requireContext(), getString(R.string.onboarding_msg_fill))
             } else {
-                val signUpData = signUpEntity.copy(
-                    uid = signUpEntity.uid,
+                val loginRequestData = loginRequestEntity.copy(
+                    uid = loginRequestEntity.uid,
                     nickname = nickname,
-                    provider = signUpEntity.provider
+                    provider = loginRequestEntity.provider,
+                    fcmToken = loginRequestEntity.fcmToken
                 )
 
-                viewmodel.signUp(signUpData)
+                viewmodel.signUp(loginRequestData)
             }
         }
     }
@@ -90,28 +82,32 @@ class OnBoardingFragment : Fragment() {
                     }
 
                     DefaultEvent.Success -> {
-                        Log.i(TAG, "회원가입 성공")
+                        Log.i(TAG, "success sign up")
                         goHome()
                     }
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            viewmodel.uiState.flowWithLifecycle(lifecycle).collectLatest { state ->
+                if (state.isLoading) {
+                    loadingDialog = LoadingDialog()
+                    loadingDialog?.show(parentFragmentManager, null)
+                } else {
+                    loadingDialog?.dismiss()
+                    loadingDialog = null
                 }
             }
         }
     }
 
     private fun goHome() {
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.cl_login_main, HomeFragment())
-            .addToBackStack(null)
-            .commit()
+        findNavController().navigate(R.id.action_onBoardingFragment_to_homeFragment)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object {
-        const val LOGIN_TO_ONBOARDING_REQUEST_KEY = "LOGIN_TO_ONBOARDING_REQUEST_KEY"
-        const val LOGIN_TO_ONBOARDING_BUNDLE_KEY = "LOGIN_TO_ONBOARDING_BUNDLE_KEY"
     }
 }

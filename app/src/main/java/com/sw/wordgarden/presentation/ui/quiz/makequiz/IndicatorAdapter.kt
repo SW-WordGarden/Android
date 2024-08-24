@@ -9,6 +9,7 @@ import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.ItemMakingQuizIndicatorBinding
 
 class IndicatorAdapter(
+    private val isEnableMode: Boolean,
     private val itemCount: Int,
     private val onClick: (position: Int) -> Unit
 ) : RecyclerView.Adapter<IndicatorAdapter.IndicatorViewHolder>() {
@@ -52,7 +53,7 @@ class IndicatorAdapter(
         holder.bind(position, position == selectedPosition, filledPositions.contains(position))
     }
 
-    class IndicatorViewHolder(
+    inner class IndicatorViewHolder(
         private val binding: ItemMakingQuizIndicatorBinding,
         private val onClick: (position: Int) -> Unit
     ) : ViewHolder(binding.root) {
@@ -74,7 +75,7 @@ class IndicatorAdapter(
                         tvItemMakingQuizIndicator.setTextColor(Color.WHITE)
 
                     }
-                    isFilled ->  {
+                    isFilled || !isEnableMode ->  {
                         tvItemMakingQuizIndicator.setBackgroundResource(R.drawable.bg_filled_indicator)
                         tvItemMakingQuizIndicator.setTextColor(Color.BLACK)
                     }

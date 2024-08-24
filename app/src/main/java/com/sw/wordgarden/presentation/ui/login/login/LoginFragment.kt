@@ -6,11 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
@@ -22,13 +22,10 @@ import com.navercorp.nid.profile.NidProfileCallback
 import com.navercorp.nid.profile.data.NidProfileResponse
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentLoginBinding
-import com.sw.wordgarden.domain.entity.SignUpEntity
-import com.sw.wordgarden.presentation.model.DefaultEvent
-import com.sw.wordgarden.presentation.model.UserCheckEvent
-import com.sw.wordgarden.presentation.ui.home.HomeFragment
-import com.sw.wordgarden.presentation.ui.login.onboarding.OnBoardingFragment
-import com.sw.wordgarden.presentation.ui.login.onboarding.OnBoardingFragment.Companion.LOGIN_TO_ONBOARDING_BUNDLE_KEY
-import com.sw.wordgarden.presentation.ui.login.onboarding.OnBoardingFragment.Companion.LOGIN_TO_ONBOARDING_REQUEST_KEY
+import com.sw.wordgarden.domain.entity.user.LoginRequestEntity
+import com.sw.wordgarden.presentation.event.DefaultEvent
+import com.sw.wordgarden.presentation.event.UserCheckEvent
+import com.sw.wordgarden.presentation.ui.main.MainViewModel
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -36,15 +33,16 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
-
     private val TAG = "LoginFragment"
 
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
 
-    private val viewmodel: LoginViewModel by activityViewModels()
+    private val viewmodel: LoginViewModel by viewModels()
+    private val mainViewmodel: MainViewModel by activityViewModels()
     private var uid = ""
     private var provider = ""
+    private var token = ""
     private val NAVER = "NAVER"
     private val KAKAO = "KAKAO"
 
@@ -60,7 +58,7 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupListener()
-        setViewModelEvent()
+        setupObserver()
     }
 
     private fun setupListener() {
@@ -84,15 +82,15 @@ class LoginFragment : Fragment() {
             override fun onFailure(httpStatus: Int, message: String) {
                 val errorCode = NaverIdLoginSDK.getLastErrorCode().code
                 val errorDescription = NaverIdLoginSDK.getLastErrorDescription()
-                Log.e(TAG, "네이버 로그인 실패 errorCode:$errorCode, errorDesc:$errorDescription")
+                Log.e(TAG, "fail to naver login - errorCode:$errorCode, errorDesc:$errorDescription")
             }
 
             override fun onSuccess() {
-                Log.i(TAG, "네이버 로그인 성공 ${NaverIdLoginSDK.getAccessToken()}")
+                Log.i(TAG, "success naver login ${NaverIdLoginSDK.getAccessToken()}")
 
                 NidOAuthLogin().callProfileApi(object : NidProfileCallback<NidProfileResponse> {
                     override fun onSuccess(result: NidProfileResponse) {
-                        Log.i(TAG, "네이버 사용자 정보 요청 성공 - 회원번호: ${result.profile?.id}")
+                        Log.i(TAG, "success request for naver user info - user number: ${result.profile?.id}")
 
                         provider = NAVER
 
@@ -104,7 +102,7 @@ class LoginFragment : Fragment() {
                         val errorDescription = NaverIdLoginSDK.getLastErrorDescription()
                         Log.e(
                             TAG,
-                            "네이버 사용자 정보 요청 실패 errorCode:$errorCode, errorDesc:$errorDescription"
+                            "fail to request for naver user info - errorCode:$errorCode, errorDesc:$errorDescription"
                         )
 
                     }
@@ -122,49 +120,46 @@ class LoginFragment : Fragment() {
     private fun kakaoLogin() {
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
             if (error != null) {
-                Log.e(TAG, "카카오계정으로 로그인 실패", error)
+                Log.e(TAG, "fail to kakao login", error)
             } else if (token != null) {
-                Log.i(TAG, "카카오계정으로 로그인 성공 ${token.accessToken}")
+                Log.i(TAG, "success kakao login ${token.accessToken}")
 
                 provider = KAKAO
 
                 UserApiClient.instance.me { user, e ->
                     if (e != null) {
-                        Log.e(TAG, "카카오 사용자 정보 요청 실패", e)
+                        Log.e(TAG, "fail to request for kakao user info", e)
                     } else if (user != null) {
-                        Log.i(TAG, "카카오 사용자 정보 요청 성공 - 회원번호: ${user.id}")
+                        Log.i(TAG, "success request for kakao user info - user number: ${user.id}")
                         checkMember(user.id.toString())
                     }
                 }
             }
         }
 
-        //카카오톡 설치 시 카카오톡으로 로그인, 아니면 카카오계정으로 로그인
         if (UserApiClient.instance.isKakaoTalkLoginAvailable(requireContext())) {
             UserApiClient.instance.loginWithKakaoTalk(requireContext()) { token, error ->
                 if (error != null) {
-                    Log.e(TAG, "카카오톡으로 로그인 실패 $error")
+                    Log.e(TAG, "fail to kakao login $error")
 
-                    //사용자가 카카오톡 설치 후 디바이스 권한 요청 화면에서 로그인 취소한 경우, 취소 처리
                     if (error is ClientError && error.reason == ClientErrorCause.Cancelled) {
                         return@loginWithKakaoTalk
                     }
 
-                    //카카오톡에 연결된 카카오계정이 없는 경우, 카카오계정으로 로그인 시도
                     UserApiClient.instance.loginWithKakaoAccount(
                         requireContext(),
                         callback = callback
                     )
                 } else if (token != null) {
-                    Log.i(TAG, "카카오톡으로 로그인 성공 ${token.accessToken}")
+                    Log.i(TAG, "success kakao login ${token.accessToken}")
 
                     provider = KAKAO
 
                     UserApiClient.instance.me { user, e ->
                         if (e != null) {
-                            Log.e(TAG, "카카오 사용자 정보 요청 실패", e)
+                            Log.e(TAG, "fail to request for kakao user info", e)
                         } else if (user != null) {
-                            Log.i(TAG, "카카오 사용자 정보 요청 성공 - 회원번호: ${user.id}")
+                            Log.i(TAG, "success request for kakao user info - user number: ${user.id}")
                             checkMember(user.id.toString())
                         }
                     }
@@ -176,21 +171,26 @@ class LoginFragment : Fragment() {
     }
 
     private fun checkMember(uid: String) {
-
         this.uid = uid
-
-        viewmodel.checkUserInfo(uid)
+        viewmodel.deleteUidForStartingLogin()
     }
 
-    private fun setViewModelEvent() {
+    private fun setupObserver() {
         lifecycleScope.launch {
-            viewmodel.checkUserEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
+            viewmodel.getUidEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
                 when (event) {
-                    is UserCheckEvent.Failure -> {
+                    is DefaultEvent.Failure -> {
                         ToastMaker.make(requireContext(), event.msg)
                     }
-                    is UserCheckEvent.NotFound -> { goOnboarding() }
-                    UserCheckEvent.Success -> { goHome() }
+                    DefaultEvent.Success -> {}
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            viewmodel.getUid.flowWithLifecycle(lifecycle).collectLatest { uid ->
+                if (!uid.isNullOrEmpty() && uid.isNotBlank()) {
+                    goHome()
                 }
             }
         }
@@ -202,7 +202,24 @@ class LoginFragment : Fragment() {
                         ToastMaker.make(requireContext(), event.msg)
                     }
                     DefaultEvent.Success -> {
-                        Log.i(TAG, "기기에 저장된 UID 초기화 완료")
+                        Log.i(TAG, "success delete local UID")
+                        viewmodel.checkUserInfo(uid)
+                    }
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            viewmodel.checkUserEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
+                when (event) {
+                    is UserCheckEvent.Failure -> {
+                        ToastMaker.make(requireContext(), event.msg)
+                    }
+                    is UserCheckEvent.NotFound -> {
+                        goOnboarding()
+                    }
+                    UserCheckEvent.Success -> {
+                        viewmodel.saveUid(uid)
                     }
                 }
             }
@@ -215,35 +232,56 @@ class LoginFragment : Fragment() {
                         ToastMaker.make(requireContext(), event.msg)
                     }
                     DefaultEvent.Success -> {
-                        Log.i(TAG, "UID 기기 저장 완료")
+                        Log.i(TAG, "success save local UID")
+
+                        viewmodel.updateToken(token)
                     }
                 }
+            }
+        }
+
+        lifecycleScope.launch {
+            viewmodel.updateTokenEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
+                when (event) {
+                    is DefaultEvent.Failure -> {
+                        ToastMaker.make(requireContext(), event.msg)
+                        Log.i(TAG, "fail update fcm token")
+                    }
+                    DefaultEvent.Success -> {
+                        Log.i(TAG, "success update fcm token")
+                    }
+                }
+                goHome()
+            }
+        }
+
+        lifecycleScope.launch {
+            mainViewmodel.fcmToken.flowWithLifecycle(lifecycle).collectLatest { token ->
+                this@LoginFragment.token = token ?: ""
             }
         }
     }
 
     private fun goHome() {
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.cl_login_main, HomeFragment())
-            .addToBackStack(null)
-            .commit()
+        findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
     }
 
     private fun goOnboarding() {
-        val signUpEntity = SignUpEntity(
+        val loginRequestEntity = LoginRequestEntity(
             uid = uid,
             nickname = "",
-            provider = provider
+            provider = provider,
+            fcmToken = token
         )
 
-        setFragmentResult(
-            LOGIN_TO_ONBOARDING_REQUEST_KEY,
-            bundleOf(LOGIN_TO_ONBOARDING_BUNDLE_KEY to signUpEntity)
-        )
-
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.cl_login_main, OnBoardingFragment())
-            .commit()
+        findNavController().apply {
+            if (currentBackStackEntry?.destination?.id == R.id.onBoardingFragment) {
+                popBackStack(R.id.onBoardingFragment, false)
+            } else {
+                val action = LoginFragmentDirections.actionLoginFragmentToOnBoardingFragment(loginRequestEntity)
+                navigate(action)
+            }
+        }
     }
 
     override fun onDestroyView() {

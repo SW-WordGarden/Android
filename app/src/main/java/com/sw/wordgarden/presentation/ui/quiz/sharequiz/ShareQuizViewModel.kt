@@ -3,10 +3,12 @@ package com.sw.wordgarden.presentation.ui.quiz.sharequiz
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sw.wordgarden.R
-import com.sw.wordgarden.domain.usecase.GetFriendListUseCase
-import com.sw.wordgarden.domain.usecase.ShareQuizUseCase
-import com.sw.wordgarden.presentation.model.DefaultEvent
-import com.sw.wordgarden.presentation.model.FriendModel
+import com.sw.wordgarden.domain.entity.user.FriendListEntity
+import com.sw.wordgarden.domain.usecase.alarm.MakeSharingAlarmUseCase
+import com.sw.wordgarden.domain.usecase.user.GetFriendsUseCase
+import com.sw.wordgarden.presentation.event.DefaultEvent
+import com.sw.wordgarden.presentation.model.QuizKey
+import com.sw.wordgarden.presentation.shared.IsLoadingUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,15 +22,18 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ShareQuizViewModel @Inject constructor(
-    private val getFriendListUseCase: GetFriendListUseCase,
-    private val shareQuizUseCase: ShareQuizUseCase
+    private val getFriendsUseCase: GetFriendsUseCase,
+    private val makeSharingAlarmQuizUseCase: MakeSharingAlarmUseCase
 ) : ViewModel() {
 
-    private val _getFriendEvent = MutableSharedFlow<DefaultEvent>()
-    val getFriendEvent: SharedFlow<DefaultEvent> = _getFriendEvent.asSharedFlow()
+    private val _uiState = MutableStateFlow(IsLoadingUiState.init())
+    val uiState: StateFlow<IsLoadingUiState> = _uiState.asStateFlow()
 
-    private val _getFriendList = MutableStateFlow<List<FriendModel>>(emptyList())
-    val getFriendList: StateFlow<List<FriendModel>> = _getFriendList.asStateFlow()
+    private val _getFriendsEvent = MutableSharedFlow<DefaultEvent>()
+    val getFriendsEvent: SharedFlow<DefaultEvent> = _getFriendsEvent.asSharedFlow()
+
+    private val _getFriends = MutableStateFlow<FriendListEntity?>(null)
+    val getFriends: StateFlow<FriendListEntity?> = _getFriends.asStateFlow()
 
     private val _shareEvent = MutableSharedFlow<DefaultEvent>()
     val shareEvent: SharedFlow<DefaultEvent> = _shareEvent.asSharedFlow()
@@ -39,35 +44,40 @@ class ShareQuizViewModel @Inject constructor(
 
     private fun getFriends() =
         viewModelScope.launch {
-            runCatching {
-                val friendList = getFriendListUseCase()?.map {
-                    FriendModel(
-                        uid = it.uid ?: "",
-                        nickname = it.nickname ?: "",
-                        thumbnail = it.thumbnail ?: ""
-                    )
-                }
+            _uiState.update { it.copy(isLoading = true) }
 
+            runCatching {
+                val friendList = getFriendsUseCase()
                 if (friendList != null) {
-                    _getFriendList.update { friendList }
+                    _getFriends.update { friendList }
                 } else {
-                    _getFriendList.update { emptyList() }
+                    _getFriends.update { null }
                 }
 
             }.onFailure {
-                _getFriendEvent.emit(DefaultEvent.Failure(R.string.share_quiz_msg_fail_load_friends))
+                _uiState.update { it.copy(isLoading = false) }
+                _getFriendsEvent.emit(DefaultEvent.Failure(R.string.share_quiz_msg_fail_load_friends))
             }.onSuccess {
-                _getFriendEvent.emit(DefaultEvent.Success)
+                _uiState.update { it.copy(isLoading = false) }
+                _getFriendsEvent.emit(DefaultEvent.Success)
             }
         }
 
-    fun shareQuiz(quizTitle: String, friendUid: String) {
+    fun makeSharingQuizAlarm(quizKey: QuizKey, friendUid: String) {
         viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true) }
+
             runCatching {
-                shareQuizUseCase.invoke(quizTitle, friendUid)
+                if (quizKey.isWq == true) {
+                    makeSharingAlarmQuizUseCase.invoke(friendUid, quizKey.qTitle ?: "", )
+                } else {
+                    makeSharingAlarmQuizUseCase.invoke(friendUid, quizKey.sqId ?: "", )
+                }
             }.onFailure {
+                _uiState.update { it.copy(isLoading = false) }
                 _shareEvent.emit(DefaultEvent.Failure(R.string.share_quiz_msg_fail_to_share))
             }.onSuccess {
+                _uiState.update { it.copy(isLoading = false) }
                 _shareEvent.emit(DefaultEvent.Success)
             }
         }

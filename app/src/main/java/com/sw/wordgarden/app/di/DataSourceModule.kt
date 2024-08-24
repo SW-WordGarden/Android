@@ -1,7 +1,7 @@
 package com.sw.wordgarden.app.di
 
-import com.sw.wordgarden.data.datasource.local.LocalDataAuth
-import com.sw.wordgarden.data.datasource.local.LocalDataAuthImpl
+import com.sw.wordgarden.data.datasource.local.LocalDataSource
+import com.sw.wordgarden.data.datasource.local.LocalDataSourceImpl
 import com.sw.wordgarden.data.datasource.remote.ServerDataSource
 import com.sw.wordgarden.data.datasource.remote.ServerDataSourceImpl
 import dagger.Binds
@@ -15,13 +15,13 @@ import javax.inject.Singleton
 abstract class DataSourceModule {
     @Binds
     @Singleton
-    abstract fun bindSererDataSource(
+    abstract fun bindServerDataSource(
         serverDataSourceImpl: ServerDataSourceImpl
     ): ServerDataSource
 
     @Binds
     @Singleton
     abstract fun bindLocalDataSource(
-        localDataSourceImpl: LocalDataAuthImpl
-    ): LocalDataAuth
+        localDataSourceImpl: LocalDataSourceImpl
+    ): LocalDataSource
 }
