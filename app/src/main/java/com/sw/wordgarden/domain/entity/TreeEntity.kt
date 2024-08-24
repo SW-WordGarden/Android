@@ -1,8 +1,10 @@
 package com.sw.wordgarden.domain.entity
 
+import java.util.Date
+
 data class TreeEntity (
-    val id: String,
-    val name: String?,
-    val image: String?,
-    val growth: Int?,
+    val name:String?,
+    val growthValue : Int?,
+    val growthStage : Int?,
+    val date : Date?,
 )

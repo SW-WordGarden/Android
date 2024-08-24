@@ -8,4 +8,5 @@ interface WordRepository {
     suspend fun insertLikedWord(wordId: String, isLiked: Boolean)
     suspend fun getWordLikedStatus(wordId: String) :Boolean?
     suspend fun getWeeklyWordList() : List<WordEntity>?
+    suspend fun getRandomWord() : WordEntity?
 }
