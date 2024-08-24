@@ -113,10 +113,10 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
     <androidx.appcompat.widget.AppCompatImageView
-        android:layout_width="220dp"
-        android:layout_height="300dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/iv_flower"
-        android:src="@drawable/testtree"
+        android:src="@drawable/tree_watermelon_tree1_12_"
         app:layout_constraintTop_toBottomOf="@+id/iv_top_water"
         app:layout_constraintBottom_toTopOf="@+id/tv_user_name"
         app:layout_constraintLeft_toLeftOf="parent"
