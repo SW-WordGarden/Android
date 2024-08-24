@@ -26,8 +26,6 @@ import com.sw.wordgarden.domain.usecase.datastore.GetUidUseCase
 import com.sw.wordgarden.domain.usecase.datastore.GetUidUseCaseImpl
 import com.sw.wordgarden.domain.usecase.user.GetUserInfoForLoginUseCase
 import com.sw.wordgarden.domain.usecase.user.GetUserInfoForLoginUseCaseImpl
-import com.sw.wordgarden.domain.usecase.GetWeeklyWordListUseCase
-import com.sw.wordgarden.domain.usecase.GetWeelkyWordListUseCaseImpl
 import com.sw.wordgarden.domain.usecase.quiz.sq.CreateNewSqUseCase
 import com.sw.wordgarden.domain.usecase.quiz.sq.CreateNewSqUseCaseImpl
 import com.sw.wordgarden.domain.usecase.user.InsertUserUseCase
@@ -76,6 +74,16 @@ import com.sw.wordgarden.domain.usecase.user.UpdateUserImageUseCase
 import com.sw.wordgarden.domain.usecase.user.UpdateUserImageUseCaseImpl
 import com.sw.wordgarden.domain.usecase.user.UpdateUserNicknameUseCase
 import com.sw.wordgarden.domain.usecase.user.UpdateUserNicknameUseCaseImpl
+import com.sw.wordgarden.domain.usecase.word.GetDetailWordUseCase
+import com.sw.wordgarden.domain.usecase.word.GetDetailWordUseCaseImpl
+import com.sw.wordgarden.domain.usecase.word.GetWeeklyCategoryWordListUseCase
+import com.sw.wordgarden.domain.usecase.word.GetWeeklyCategoryWordListUseCaseImpl
+import com.sw.wordgarden.domain.usecase.word.GetWeeklyWordListUseCase
+import com.sw.wordgarden.domain.usecase.word.GetWeeklyWordListUseCaseImpl
+import com.sw.wordgarden.domain.usecase.word.GetWordLikedStatusUseCase
+import com.sw.wordgarden.domain.usecase.word.GetWordLikedStatusUseCaseImpl
+import com.sw.wordgarden.domain.usecase.word.InsertLikedWordUseCase
+import com.sw.wordgarden.domain.usecase.word.InsertLikedWordUseCaseImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -319,7 +327,32 @@ abstract class UseCaseModule {
     //word
     @Binds
     @ViewModelScoped
-    abstract fun bindGetWordListUseCase(
-        getWordListUseCaseImpl: GetWeelkyWordListUseCaseImpl
+    abstract fun bindGetDetailWordUseCase(
+        getDetailWordUseCaseImpl: GetDetailWordUseCaseImpl
+    ): GetDetailWordUseCase
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindGetWeeklyCategoryWordListUseCase(
+        getWeeklyCategoryWordListUseCaseImpl: GetWeeklyCategoryWordListUseCaseImpl
+    ): GetWeeklyCategoryWordListUseCase
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindGetWeeklyWordListUseCase(
+        getWeeklyWordListUseCaseImpl: GetWeeklyWordListUseCaseImpl
     ): GetWeeklyWordListUseCase
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindGetWordLikedStatusUseCase(
+        getWordLikedStatusUseCaseImpl: GetWordLikedStatusUseCaseImpl
+    ):GetWordLikedStatusUseCase
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindInsertLikedWordUseCase(
+        insertLikedWordUseCaseImpl: InsertLikedWordUseCaseImpl
+    ):InsertLikedWordUseCase
 }
+

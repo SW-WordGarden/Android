@@ -344,7 +344,7 @@
     </fragment>
     <fragment
             android:id="@+id/wordFragment"
-            android:name="com.sw.wordgarden.presentation.ui.word.wordFragment"
+            android:name="com.sw.wordgarden.presentation.ui.word.WordFragment"
             android:label="LearningWordFragment"
             tools:layout="@layout/fragment_word">
         <action

@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -46,7 +47,6 @@ class DetailWordFragment : Fragment() {
                     tvQuizTitle.text = wordData.category
                     detailTitle.text = wordData.title
                     detailContents.text = wordData.description
-                    //좋아요 상태 적용 필요
                 }
             }
         }
@@ -62,6 +62,20 @@ class DetailWordFragment : Fragment() {
                 else btTextNext.visibility = AppCompatTextView.VISIBLE
             }
         }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.wordLikeState.flowWithLifecycle(viewLifecycleOwner.lifecycle).collectLatest { state ->
+                when(state) {
+                    true -> {
+                        binding.ivHeart.visibility = AppCompatImageView.INVISIBLE
+                        binding.ivFullHeart.visibility = AppCompatImageView.VISIBLE
+                    }
+                    else -> {
+                        binding.ivHeart.visibility = AppCompatImageView.VISIBLE
+                        binding.ivFullHeart.visibility = AppCompatImageView.INVISIBLE
+                    }
+                }
+            }
+        }
     }
     private fun setButton() = with(binding){
         btQuizBack.setOnClickListener {
@@ -75,6 +89,12 @@ class DetailWordFragment : Fragment() {
         btTextNext.setOnClickListener {
             position++
             viewModel.selectWord(position)
+        }
+        ivHeart.setOnClickListener {
+            viewModel.insertLikeState(true)
+        }
+        ivFullHeart.setOnClickListener {
+            viewModel.insertLikeState(false)
         }
     }
 }
