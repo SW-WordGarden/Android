@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/margin_extra_larger"
+        android:background="@drawable/bg_rec_radius_10"
+        android:backgroundTint="@color/white"
+        android:orientation="vertical"
+        tools:context=".presentation.ui.quiz.solvequiz.SolveQuestionChoiceFragment">
+
+    <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_solve_quiz_item_question_choice_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_medium"
+            android:gravity="center_horizontal|top"
+            android:text="지시문"
+            android:textColor="@color/green"
+            android:textSize="@dimen/text_small" />
+
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:scrollbars="none">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_solve_quiz_item_question_choice_question"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_medium"
+                    android:gravity="center"
+                    android:text="단어"
+                    android:textFontWeight="600"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/text_caption" />
+        </LinearLayout>
+    </ScrollView>
+
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:scrollbars="none">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_small"
+                    android:text="@string/solve_quiz_msg_need_select_answer"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/text_smaller" />
+
+            <LinearLayout
+                    android:id="@+id/ll_solve_quiz_item_choice1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_smaller"
+                    android:layout_marginEnd="@dimen/margin_smaller"
+                    android:layout_marginTop="@dimen/margin_extra_small"
+                    android:layout_marginBottom="@dimen/margin_extra_small"
+                    android:layout_gravity="center">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_solve_quiz_item_choice1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_select_1" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_solve_quiz_item_choice1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_extra_small"
+                        android:text="선택지"
+                        android:textSize="@dimen/text_smaller"
+                        android:textColor="@color/green"/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:id="@+id/ll_solve_quiz_item_choice2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_smaller"
+                    android:layout_marginEnd="@dimen/margin_smaller"
+                    android:layout_marginTop="@dimen/margin_extra_small"
+                    android:layout_marginBottom="@dimen/margin_extra_small"
+                    android:layout_gravity="center">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_solve_quiz_item_choice2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_select_2" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_solve_quiz_item_choice2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_extra_small"
+                        android:text="선택지"
+                        android:textSize="@dimen/text_smaller"
+                        android:textColor="@color/green"/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:id="@+id/ll_solve_quiz_item_choice3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_smaller"
+                    android:layout_marginEnd="@dimen/margin_smaller"
+                    android:layout_marginTop="@dimen/margin_extra_small"
+                    android:layout_marginBottom="@dimen/margin_extra_small"
+                    android:layout_gravity="center">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_solve_quiz_item_choice3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_select_3" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_solve_quiz_item_choice3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_extra_small"
+                        android:text="선택지"
+                        android:textSize="@dimen/text_smaller"
+                        android:textColor="@color/green"/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:id="@+id/ll_solve_quiz_item_choice4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_smaller"
+                    android:layout_marginEnd="@dimen/margin_smaller"
+                    android:layout_marginTop="@dimen/margin_extra_small"
+                    android:layout_marginBottom="@dimen/margin_extra_small"
+                    android:layout_gravity="center">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_solve_quiz_item_choice4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_select_4" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_solve_quiz_item_choice4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_extra_small"
+                        android:text="선택지"
+                        android:textSize="@dimen/text_smaller"
+                        android:textColor="@color/green"/>
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_solve_quiz_question_submit_choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:layout_marginEnd="@dimen/margin_extra_small"
+                    android:layout_marginBottom="@dimen/margin_medium"
+                    android:background="@drawable/bg_rec_button_15"
+                    android:text="@string/solve_quiz_submit" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

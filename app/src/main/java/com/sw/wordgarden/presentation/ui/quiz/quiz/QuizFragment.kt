@@ -105,23 +105,30 @@ class QuizFragment : Fragment() {
 
     @SuppressLint("SetTextI18n")
     private fun setupUi() = with(binding) {
-//        ivQuizUserThumbnail.setImageResource()
-        if (limitCount >= MAX) {
-            tvQuizDescription.text =
+        tvQuizLimit.text = "(${limitCount}/${MAX})"
+
+        if (limitCount >= MAX) { //최대 도달
+            tvQuizAllClear.visibility = View.VISIBLE
+            tvQuizWelcomeUser.visibility = View.INVISIBLE
+            tvQuizLimit.visibility = View.INVISIBLE
+            ivQuizBean.visibility = View.INVISIBLE
+            btnQuizAlone.visibility = View.INVISIBLE
+
+            tvQuizAllClear.text =
                 "${getString(R.string.quiz_all_clear)}\n" +
                         "(${MAX}/${MAX})"
-            btnQuizAlone.visibility = View.INVISIBLE
         } else {
-            tvQuizWelcomeUser.text =
-                "${getString(R.string.quiz_welcome)}\n" +
-                        "(${limitCount}/${MAX})"
-            tvQuizDescription.text = getString(R.string.quiz_support_btn)
+            tvQuizAllClear.visibility = View.INVISIBLE
+            tvQuizWelcomeUser.visibility = View.VISIBLE
+            tvQuizLimit.visibility = View.VISIBLE
+            ivQuizBean.visibility = View.VISIBLE
             btnQuizAlone.visibility = View.VISIBLE
         }
     }
 
     private fun goStartQuiz() {
-        findNavController().navigate(R.id.action_quizFragment_to_startQuizFragment)
+        val action = QuizFragmentDirections.actionQuizFragmentToStartQuizFragment(true)
+        findNavController().navigate(action)
     }
 
     private fun goMakeQuiz() {

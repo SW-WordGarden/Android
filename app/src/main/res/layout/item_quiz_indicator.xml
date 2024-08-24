@@ -10,7 +10,7 @@
         android:id="@+id/tv_item_making_quiz_indicator"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bg_unselected_indicator"
+        android:background="@drawable/bg_circle_unselected_indicator"
         android:textColor="@color/black"
         android:textSize="@dimen/text_text"
         android:gravity="center"

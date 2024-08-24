@@ -10,4 +10,22 @@ data class QAModel(
     var userAnswer: String?,
     var correctAnswer: String?,
     val correct: Boolean?,
-) : Parcelable
+    val questionType: String?,
+    val options: List<String>?,
+    val word: String?,
+) : Parcelable {
+    companion object {
+        fun emptyQAModel(): QAModel {
+            return QAModel(
+                questionId = "",
+                question = "",
+                userAnswer = "",
+                correctAnswer = "",
+                correct = false,
+                questionType = "",
+                options = emptyList(),
+                word = ""
+            )
+        }
+    }
+}

@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/mypage_friend_title"
                 android:textColor="@color/green"
-                android:textSize="@dimen/text_caption"
+                android:textSize="@dimen/text_text"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_my_friends_back"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -42,10 +42,11 @@
             android:id="@+id/ll_my_friends_url"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_extra_small"
+            android:layout_marginStart="@dimen/margin_medium"
             android:layout_marginTop="@dimen/margin_extra_small"
-            android:layout_marginEnd="@dimen/margin_extra_small"
+            android:layout_marginEnd="@dimen/margin_medium"
             android:background="@drawable/bg_rec_radius_10"
+            android:backgroundTint="@color/white"
             android:padding="@dimen/padding_medium"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -73,10 +74,11 @@
             android:id="@+id/ll_my_friends_enter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_extra_small"
-            android:layout_marginEnd="@dimen/margin_extra_small"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginEnd="@dimen/margin_medium"
             android:layout_marginTop="@dimen/margin_smaller"
             android:background="@drawable/bg_rec_radius_10"
+            android:backgroundTint="@color/white"
             android:padding="@dimen/padding_medium"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -89,7 +91,7 @@
                 android:layout_gravity="start|center_vertical"
                 android:layout_weight="1"
                 android:layout_marginEnd="@dimen/margin_small"
-                android:textSize="@dimen/text_caption"
+                android:textSize="@dimen/text_small"
                 android:hint="@string/mypage_friend_enter_code"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -99,8 +101,11 @@
                 android:layout_width="wrap_content"
                 android:backgroundTint="@color/khaki"
                 android:layout_height="wrap_content"
+                android:layout_gravity="start|center_vertical"
+                android:background="@drawable/bg_rec_radius_10"
                 android:text="@string/mypage_friend_add"
-                android:layout_gravity="start|center_vertical" />
+                android:textColor="@color/green"
+                android:textSize="@dimen/text_small" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

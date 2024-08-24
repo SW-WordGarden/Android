@@ -1,6 +1,5 @@
 package com.sw.wordgarden.data.datasource.remote
 
-import android.util.Log
 import com.sw.wordgarden.data.datasource.local.LocalDataSource
 import com.sw.wordgarden.data.datasource.remote.retrofit.Service
 import com.sw.wordgarden.data.dto.TreeDto

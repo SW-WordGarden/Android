@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/margin_extra_larger"
+        android:background="@drawable/bg_rec_radius_10"
+        android:backgroundTint="@color/white"
+        android:orientation="vertical"
+        tools:context=".presentation.ui.quiz.solvequiz.SolveQuestionOXFragment">
+
+    <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_solve_quiz_item_question_ox_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_medium"
+            android:gravity="center"
+            android:text="지시문"
+            android:textColor="@color/green"
+            android:textSize="@dimen/text_small" />
+
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:scrollbars="none">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_solve_quiz_item_question_ox_question"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_medium"
+                    android:gravity="center"
+                    android:text="문제 내용"
+                    android:textFontWeight="600"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/text_caption" />
+        </LinearLayout>
+    </ScrollView>
+
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:scrollbars="none">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_small"
+                    android:layout_gravity="center"
+                    android:text="@string/solve_quiz_msg_need_select_answer"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/text_smaller" />
+
+            <RadioGroup
+                    android:id="@+id/rg_solve_quiz_item_question_ox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_larger"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+
+                <RadioButton
+                        android:id="@+id/rb_solve_quiz_item_question_o"
+                        android:layout_width="110dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/se_rec_radio"
+                        android:drawableStart="@drawable/ic_o"
+                        android:paddingStart="45dp"
+                        android:paddingEnd="45dp"
+                        android:button="@drawable/bg_circle_white" />
+
+                <Space
+                        android:layout_width="@dimen/margin_large"
+                        android:layout_height="0dp" />
+
+                <RadioButton
+                        android:id="@+id/rb_solve_quiz_item_question_x"
+                        android:layout_width="110dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/se_rec_radio"
+                        android:drawableStart="@drawable/ic_x"
+                        android:paddingStart="45dp"
+                        android:paddingEnd="45dp"
+                        android:button="@drawable/bg_circle_white" />
+            </RadioGroup>
+
+            <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_solve_quiz_question_submit_ox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:layout_marginEnd="@dimen/margin_extra_small"
+                    android:layout_marginBottom="@dimen/margin_medium"
+                    android:background="@drawable/bg_rec_button_15"
+                    android:text="@string/solve_quiz_submit" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

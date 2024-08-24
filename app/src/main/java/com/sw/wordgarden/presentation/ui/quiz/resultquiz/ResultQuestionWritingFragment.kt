@@ -1,16 +1,17 @@
 package com.sw.wordgarden.presentation.ui.quiz.resultquiz
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.sw.wordgarden.R
-import com.sw.wordgarden.databinding.FragmentResultQuizQuestionBinding
+import com.sw.wordgarden.databinding.FragmentResultQuestionWritingBinding
+import com.sw.wordgarden.presentation.util.Constants.QUESTION_WRITE_TITLE
 
-class ResultQuizQuestionFragment : Fragment() {
+class ResultQuestionWritingFragment : Fragment() {
 
-    private var _binding: FragmentResultQuizQuestionBinding? = null
+    private var _binding: FragmentResultQuestionWritingBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var question: String
@@ -18,7 +19,8 @@ class ResultQuizQuestionFragment : Fragment() {
     private lateinit var userAnswer: String
     private var position: Int = 0
 
-    private var onNextClicked: ((position: Int, question: String, answer: String, userAnswer: String, isCorrect: Boolean) -> Unit)? = null
+    private var onNextClicked: ((position: Int, question: String, answer: String, userAnswer: String, isCorrect: Boolean) -> Unit)? =
+        null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +36,7 @@ class ResultQuizQuestionFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentResultQuizQuestionBinding.inflate(inflater, container, false)
+        _binding = FragmentResultQuestionWritingBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -45,12 +47,15 @@ class ResultQuizQuestionFragment : Fragment() {
     }
 
     private fun setupUi() = with(binding) {
-        tvResultQuizItemQuestion.text = question
+        val question = question.substringAfter(QUESTION_WRITE_TITLE)
+        tvResultQuizItemQuestionQuestion.text = question
 
-        val answer = getString(R.string.result_quiz_correct) + " " + this@ResultQuizQuestionFragment.answer
-        val userAnswer = getString(R.string.result_quiz_answer) + " " + this@ResultQuizQuestionFragment.userAnswer
+        val answer =
+            getString(R.string.result_quiz_correct) + " " + this@ResultQuestionWritingFragment.answer
+        val userAnswer =
+            getString(R.string.result_quiz_answer) + " " + this@ResultQuestionWritingFragment.userAnswer
 
-        if (this@ResultQuizQuestionFragment.answer == this@ResultQuizQuestionFragment.userAnswer) {
+        if (this@ResultQuestionWritingFragment.answer == this@ResultQuestionWritingFragment.userAnswer) {
             tvResultQuizItemCorrect.text = answer
             tvResultQuizItemAnswer.visibility = View.GONE
         } else {
@@ -62,6 +67,11 @@ class ResultQuizQuestionFragment : Fragment() {
             tvResultQuizItemCorrect.layoutParams = params
             tvResultQuizItemAnswer.visibility = View.VISIBLE
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.root.requestLayout()
     }
 
     override fun onDestroyView() {
@@ -80,7 +90,7 @@ class ResultQuizQuestionFragment : Fragment() {
         const val POSITION_KEY = "POSITION_KEY"
 
         fun newInstance(question: String, answer: String, userAnswer: String, position: Int) =
-            ResultQuizQuestionFragment().apply {
+            ResultQuestionWritingFragment().apply {
                 arguments = Bundle().apply {
                     putString(QUESTION_KEY, question)
                     putString(ANSWER_KEY, answer)

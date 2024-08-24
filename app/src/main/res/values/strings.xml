@@ -26,10 +26,12 @@
     <string name="login_msg_can_not_delete_uid">회원 정보 초기화 작업을 실패했습니다.</string>
     <string name="login_msg_can_not_save_uid">회원 정보 저장에 실패했습니다.</string>
     <string name="login_msg_can_not_update_token">토큰 업데이트에 실패했습니다.</string>
-    <string name="onboarding_input_nickname">닉네임을 입력하세요</string>
-    <string name="onboarding_next">다음</string>
+    <string name="onboarding_input_nickname1">저는 닉네임을</string>
+    <string name="onboarding_input_nickname2">시작할래요!</string>
+    <string name="onboarding_next">시작하기</string>
     <string name="onboarding_msg_fill">닉네임을 입력해주세요.</string>
     <string name="onboarding_msg_fail_signup">회원 가입에 실패했습니다.</string>
+    <string name="onboarding_msg_fail_update_image">회원 데이터 처리에 실패했습니다.</string>
 
     <!-- mypage -->
     <string name="mypage_title">마이페이지</string>
@@ -49,7 +51,7 @@
     <string name="mypage_msg_fail_update_image">프로필 사진 업데이트를 실패했습니다.</string>
 
     <string name="mypage_friend_title">친구 관리</string>
-    <string name="mypage_friend_my_code">내 친구 코드 복사하기</string>
+    <string name="mypage_friend_my_code">나의 친구 코드 복사하기</string>
     <string name="mypage_friend_enter_code">친구 코드를 입력하세요.</string>
     <string name="mypage_friend_add">친구 추가</string>
     <string name="mypage_friends_no_friends">아직 친구가 없어요.</string>
@@ -111,7 +113,7 @@
 
     <!-- quiz -->
     <string name="quiz_title">퀴즈 게임</string>
-    <string name="quiz_welcome">오늘의 퀴즈가 준비되어 있어요!</string>
+    <string name="quiz_welcome">오늘의 퀴즈가\n준비되어 있어요!</string>
     <string name="quiz_support_btn">친구가 만든 퀴즈를 맞혀보세요!</string>
     <string name="quiz_all_clear">축하합니다!\n모든 퀴즈를 다 풀었어요!</string>
     <string name="quiz_alone">퀴즈 풀기</string>
@@ -144,6 +146,7 @@
     <string name="start_quiz_title">퀴즈 게임</string>
     <string name="start_quiz_made_by">님이 만든 퀴즈</string>
     <string name="start_quiz_start">퀴즈 시작하기</string>
+    <string name="start_quiz_app_quiz">어휘의 정원에서 만든\n어휘력 향상 퀴즈 준비 완료!</string>
     <string name="start_quiz_msg_fail_get_quiz">퀴즈 받아오기에 실패했어요.</string>
     <string name="start_quiz_msg_fail_get_quiz_info">퀴즈 정보 받아오기에 실패했어요.</string>
     <string name="start_quiz_msg_fail_save_daily_limit">일일 퀴즈 횟수 저장에 실패했어요.</string>
@@ -151,6 +154,7 @@
     <string name="solve_quiz_next">다음</string>
     <string name="solve_quiz_submit">제출하기</string>
     <string name="solve_quiz_fill_answer">빈칸에 정답을 입력해 주세요.</string>
+    <string name="solve_quiz_msg_need_select_answer">정답을 선택해주세요.</string>
     <string name="solve_quiz_msg_need_answer">정답을 입력해주세요.</string>
     <string name="solve_quiz_msg_need_all_check">모든 문제의 정답을 입력하였는지 확인해주세요.</string>
     <string name="solve_quiz_msg_fail_submit">문제 제출에 실패했어요.</string>

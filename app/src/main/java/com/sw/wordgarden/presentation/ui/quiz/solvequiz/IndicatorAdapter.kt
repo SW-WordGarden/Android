@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.sw.wordgarden.R
-import com.sw.wordgarden.databinding.ItemMakingQuizIndicatorBinding
+import com.sw.wordgarden.databinding.ItemQuizIndicatorBinding
 
 class IndicatorAdapter(
     private val itemCount: Int,
@@ -38,7 +38,7 @@ class IndicatorAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IndicatorViewHolder {
-        val binding = ItemMakingQuizIndicatorBinding.inflate(
+        val binding = ItemQuizIndicatorBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
@@ -53,7 +53,7 @@ class IndicatorAdapter(
     }
 
     class IndicatorViewHolder(
-        private val binding: ItemMakingQuizIndicatorBinding,
+        private val binding: ItemQuizIndicatorBinding,
         private val onClick: (position: Int) -> Unit
     ) : ViewHolder(binding.root) {
 
@@ -70,16 +70,16 @@ class IndicatorAdapter(
 
                 when {
                     isSelected -> {
-                        tvItemMakingQuizIndicator.setBackgroundResource(R.drawable.bg_selected_indicator)
+                        tvItemMakingQuizIndicator.setBackgroundResource(R.drawable.bg_circle_selected_indicator)
                         tvItemMakingQuizIndicator.setTextColor(Color.WHITE)
 
                     }
                     isFilled ->  {
-                        tvItemMakingQuizIndicator.setBackgroundResource(R.drawable.bg_filled_indicator)
+                        tvItemMakingQuizIndicator.setBackgroundResource(R.drawable.bg_circle_filled_indicator)
                         tvItemMakingQuizIndicator.setTextColor(Color.BLACK)
                     }
                     else -> {
-                        tvItemMakingQuizIndicator.setBackgroundResource(R.drawable.bg_unselected_indicator)
+                        tvItemMakingQuizIndicator.setBackgroundResource(R.drawable.bg_circle_unselected_indicator)
                         tvItemMakingQuizIndicator.setTextColor(Color.BLACK)
                     }
                 }
