@@ -8,13 +8,20 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentGardenBinding
+import com.sw.wordgarden.presentation.event.DefaultEvent
 import com.sw.wordgarden.presentation.model.TreeModel
+import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class GardenFragment : Fragment() {
@@ -22,9 +29,6 @@ class GardenFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel:GardenViewModel by activityViewModels()
     private lateinit var navController: NavController
-
-    private val testImg = context?.let { ContextCompat.getDrawable(it, R.drawable.testtree).toString() }
-    private val testTree = TreeModel("testTree", "아카시아 나무", testImg, 0)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,32 +49,54 @@ class GardenFragment : Fragment() {
     }
 
     private fun observeViewModel() = with(binding){
-        /** 서버 연결 후 수정 필요 **/
-        tvCoin.text = "test"
-        tvWater.text = "test"
-        tvCategory.text = "test"
-        tvUserName.text = "testUser"
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.gardenEvent.flowWithLifecycle(viewLifecycleOwner.lifecycle).collectLatest {   event ->
+                when (event) {
+                    is DefaultEvent.Failure -> {
+                        ToastMaker.make(requireContext(), event.msg)
+                    }
 
-        tvFlowerName.text = testTree.name
-        Glide.with(requireContext())
-            .load(testTree.image)
-            .into(ivFlower)
+                    DefaultEvent.Success -> {}
+                }
+            }
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.growData.flowWithLifecycle(viewLifecycleOwner.lifecycle).collectLatest {  data ->
+                if (data != null) {
+                    tvFlowerName.text = data.name
+                    val img = GetFlowerImg.getFlowerImg(data.growthStage!!, data.growthValue!!)
+                    Glide.with(requireContext())
+                        .load(img)
+                        .into(ivFlower)
+                }
+            }
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.resourceData.flowWithLifecycle(viewLifecycleOwner.lifecycle).collectLatest {  data ->
+                if (data != null) {
+                    btWater.isEnabled = data.plantCount != 0
+
+                    tvCoin.text = data.coins.toString()
+                    tvWater.text = data.wateringCans.toString()
+                    tvCategory.text = data.plantCount.toString()
+                }
+            }
+        }
     }
     private fun buttonEvent() = with(binding){
         ivTopWater.setOnClickListener {
-            //navigation 이동
-        // navController.navigate()
+            findNavController().navigate(R.id.action_gardenFragment_to_shopFragment)
         }
         ivTopCategory.setOnClickListener {
-            //navigation 이동
-            //navController.navigate()
+            findNavController().navigate(R.id.action_gardenFragment_to_flowerBookFragment)
         }
         btCancel.setOnClickListener {
-            //navigation 이동
-            //navController.navigate()
+            findNavController().navigate(R.id.action_gardenFragment_to_homeFragment)
         }
         btWater.setOnClickListener {
-
+            viewModel.useWateringCans()
+            viewModel.getGrowInfo()
+            viewModel.getUserResource()
         }
 
     }

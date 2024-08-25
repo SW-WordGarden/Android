@@ -99,7 +99,7 @@
         android:background="@null"
         android:src="@drawable/ic_bot_water"
         android:scaleType="centerCrop"
-        android:layout_marginBottom="@dimen/margin_small"
+        android:layout_margin="@dimen/margin_small"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
     <androidx.appcompat.widget.AppCompatImageButton
@@ -118,38 +118,19 @@
         android:id="@+id/iv_flower"
         android:src="@drawable/tree_watermelon_tree1_12_"
         app:layout_constraintTop_toBottomOf="@+id/iv_top_water"
-        app:layout_constraintBottom_toTopOf="@+id/tv_user_name"
+        app:layout_constraintBottom_toTopOf="@+id/tv_flower_name"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
+
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tv_flower_name"
-        android:text="name"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_text"
-        app:layout_constraintTop_toBottomOf="@+id/iv_flower"
-        app:layout_constraintLeft_toLeftOf="@+id/iv_flower"
-        app:layout_constraintRight_toRightOf="@+id/iv_flower"/>
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv_user_name"
         android:text="user"
-        android:textSize="@dimen/text_small"
-        android:textStyle="bold"
+        android:textSize="@dimen/text_text"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/tv_user_garden"
-        app:layout_constraintTop_toTopOf="@+id/bt_cancel"/>
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv_user_garden"
-        android:text="@string/garden_user_name"
-        android:textSize="@dimen/text_small"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/tv_user_name"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_user_name"/>
+        app:layout_constraintTop_toTopOf="@+id/bt_cancel"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

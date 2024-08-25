@@ -7,12 +7,18 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentShopBinding
+import com.sw.wordgarden.presentation.event.DefaultEvent
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ShopFragment : Fragment() {
@@ -38,22 +44,34 @@ class ShopFragment : Fragment() {
         buttonEvent()
     }
     private fun observeViewModel() = with(binding){
-        tvCoin.text = "test"
-        tvWater.text = "test"
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.gardenEvent.flowWithLifecycle(viewLifecycleOwner.lifecycle).collectLatest {   event ->
+                when (event) {
+                    is DefaultEvent.Failure -> {
+                        ToastMaker.make(requireContext(), event.msg)
+                    }
+
+                    DefaultEvent.Success -> {}
+                }
+            }
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.resourceData.flowWithLifecycle(viewLifecycleOwner.lifecycle).collectLatest {  data ->
+                if (data != null) {
+                    btBuyWater.isEnabled = data.coins!! >= 1000
+                    tvCoin.text = data.coins.toString()
+                    tvWater.text = data.wateringCans.toString()
+                }
+            }
+        }
 
     }
     private fun buttonEvent() = with(binding){
         btCancel.setOnClickListener {
-            //navigation 이동
-            //navController.navigate()
+            findNavController().navigate(R.id.action_shopFragment_to_gardenFragment)
         }
         btBuyWater.setOnClickListener{
-//            if(userWater >= 1000){
-//
-//            }
-//            else {
-//                ToastMaker.make( requireContext(), R.string.shop_lake_of_momey)
-//            }
+            viewModel.buyWateringCans()
         }
     }
 

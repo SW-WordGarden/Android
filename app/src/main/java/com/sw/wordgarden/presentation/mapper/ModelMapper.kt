@@ -11,9 +11,11 @@ import com.sw.wordgarden.domain.entity.quiz.SqresultEntity
 import com.sw.wordgarden.domain.entity.quiz.WqAnswerEntity
 import com.sw.wordgarden.domain.entity.quiz.WqResponseEntity
 import com.sw.wordgarden.domain.entity.quiz.WqSubmissionEntity
+import com.sw.wordgarden.domain.entity.user.UserResponseEntity
 import com.sw.wordgarden.presentation.model.QAModel
 import com.sw.wordgarden.presentation.model.QuizModel
 import com.sw.wordgarden.presentation.model.TreeModel
+import com.sw.wordgarden.presentation.model.UserResponseModel
 import com.sw.wordgarden.presentation.model.WordModel
 
 object ModelMapper {
@@ -204,5 +206,10 @@ object ModelMapper {
         description = description,
         thumbnail = thumbnail,
         category = category
+    )
+    fun UserResponseEntity.toUserResponseModel() = UserResponseModel(
+        coins = coins,
+        wateringCans = wateringCans,
+        plantCount = plantCount
     )
 }
