@@ -59,8 +59,14 @@ import com.sw.wordgarden.domain.usecase.quiz.wq.SubmitWqUseCase
 import com.sw.wordgarden.domain.usecase.quiz.wq.SubmitWqUseCaseImpl
 import com.sw.wordgarden.domain.usecase.alarm.MakeSharingAlarmUseCase
 import com.sw.wordgarden.domain.usecase.alarm.MakeSharingAlarmUseCaseImpl
+import com.sw.wordgarden.domain.usecase.garden.BuyWateringCansUseCase
+import com.sw.wordgarden.domain.usecase.garden.BuyWateringCansUseCaseImpl
 import com.sw.wordgarden.domain.usecase.garden.GetGrowInfoUseCase
 import com.sw.wordgarden.domain.usecase.garden.GetGrowInfoUseCaseImpl
+import com.sw.wordgarden.domain.usecase.garden.GetUserResourceUseCase
+import com.sw.wordgarden.domain.usecase.garden.GetUserResourceUseCaseImpl
+import com.sw.wordgarden.domain.usecase.garden.UseWateringCansUseCase
+import com.sw.wordgarden.domain.usecase.garden.UseWateringCansUseCaseImpl
 import com.sw.wordgarden.domain.usecase.user.AddFriendUseCase
 import com.sw.wordgarden.domain.usecase.user.AddFriendUseCaseImpl
 import com.sw.wordgarden.domain.usecase.user.DeleteFriendUseCase
@@ -319,6 +325,24 @@ abstract class UseCaseModule {
     abstract fun bindGetGrowInfoUseCase(
         getGrowInfoUseCaseImpl: GetGrowInfoUseCaseImpl
     ): GetGrowInfoUseCase
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindBuyWateringCansUseCase(
+        buyWateringCansUseCaseImpl: BuyWateringCansUseCaseImpl
+    ):BuyWateringCansUseCase
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindGetUserResourceUseCase(
+        getUserResourceUseCaseImpl: GetUserResourceUseCaseImpl
+    ):GetUserResourceUseCase
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindUseWateringCansUseCase(
+        useWateringCansUseCaseImpl: UseWateringCansUseCaseImpl
+    ):UseWateringCansUseCase
 
     //word
     @Binds

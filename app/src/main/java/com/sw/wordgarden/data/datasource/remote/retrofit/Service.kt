@@ -22,6 +22,7 @@ import com.sw.wordgarden.data.dto.user.LoginRequestDto
 import com.sw.wordgarden.data.dto.user.ReportInfoDto
 import com.sw.wordgarden.data.dto.user.UserDto
 import com.sw.wordgarden.data.dto.user.UserInfoDto
+import com.sw.wordgarden.data.dto.user.UserResourceDto
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -161,4 +162,13 @@ interface Service {
     //garden
     @GET("garden/grow/{userId}")
     suspend fun getGrowInfo(@Path("userId") userId:String) : Response<TreeDto>
+
+    @GET("garden/user/{userId}")
+    suspend fun getUserResource(@Path("userId") userId:String) : Response<UserResourceDto>
+
+    @POST("garden/buy/{uid}")
+    suspend fun buyWateringCans(@Path("uid") userId:String) : Response<Unit>
+
+    @POST("garden/{uid}/watertree")
+    suspend fun useWateringCans(@Path("userId") userId:String) : Response<Unit>
 }

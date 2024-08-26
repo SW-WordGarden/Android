@@ -143,6 +143,17 @@
     <string name="share_quiz_msg_fail_to_share">퀴즈 공유에 실패했어요.</string>
     <string name="share_quiz_msg_success_sharing">친구에게 퀴즈를 공유했어요!</string>
 
+    <!-- garden -->
+    <string name="garden_user_name">님의 정원</string>
+    <string name="garden_buy_watering_cans">물뿌리개 구매에 실패했습니다.</string>
+    <string name="garden_use_watering_cans">물뿌리개 사용에 실패했습니다.</string>
+
+    <string name="shop_title">상점</string>
+    <string name="shop_use_water_pot">물뿌리개를 사용해보세요!</string>
+    <string name="shop_lake_of_momey">재화가 부족합니다!</string>
+    <string name="shop_resource">재화를 불러오는데 실패했어요.</string>
+
+    <string name="book_user_book">님의 도감</string>
     <string name="start_quiz_title">퀴즈 게임</string>
     <string name="start_quiz_made_by">님이 만든 퀴즈</string>
     <string name="start_quiz_start">퀴즈 시작하기</string>
