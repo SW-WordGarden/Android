@@ -16,6 +16,7 @@ interface UserRepository {
     suspend fun updateUserNickname(nickname: String)
     suspend fun updateUserImage(image: String)
     suspend fun getFriends(): FriendListEntity?
+    suspend fun deleteAccout()
 
     //mypage - friend
     suspend fun addFriend(friendUrl: String)

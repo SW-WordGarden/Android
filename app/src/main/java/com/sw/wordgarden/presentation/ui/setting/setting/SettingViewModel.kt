@@ -3,7 +3,9 @@ package com.sw.wordgarden.presentation.ui.setting.setting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sw.wordgarden.R
+import com.sw.wordgarden.domain.usecase.datastore.DeleteDailyLimitUseCase
 import com.sw.wordgarden.domain.usecase.datastore.DeleteUidUseCase
+import com.sw.wordgarden.domain.usecase.user.DeleteAccountUseCase
 import com.sw.wordgarden.presentation.event.DefaultEvent
 import com.sw.wordgarden.presentation.shared.IsLoadingUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,6 +22,8 @@ import javax.inject.Inject
 @HiltViewModel
 class SettingViewModel @Inject constructor(
     private val deleteUidUseCase: DeleteUidUseCase,
+    private val deleteAccountUseCase: DeleteAccountUseCase,
+    private val deleteDailyLimitUseCase: DeleteDailyLimitUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(IsLoadingUiState.init())
@@ -27,6 +31,12 @@ class SettingViewModel @Inject constructor(
 
     private val _deleteUidEvent = MutableSharedFlow<DefaultEvent>()
     val deleteUidEvent: SharedFlow<DefaultEvent> = _deleteUidEvent.asSharedFlow()
+
+    private val _deleteAccountEvent = MutableSharedFlow<DefaultEvent>()
+    val deleteAccountEvent: SharedFlow<DefaultEvent> = _deleteAccountEvent.asSharedFlow()
+
+    private val _deleteDailyLimitEvent = MutableSharedFlow<DefaultEvent>()
+    val deleteDailyLimitEvent: SharedFlow<DefaultEvent> = _deleteDailyLimitEvent.asSharedFlow()
 
     fun deleteUidForLogout() {
         viewModelScope.launch {
@@ -40,6 +50,37 @@ class SettingViewModel @Inject constructor(
             }.onSuccess {
                 _uiState.update { it.copy(isLoading = false) }
                 _deleteUidEvent.emit(DefaultEvent.Success)
+            }
+        }
+    }
+
+    fun deleteAccount() {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true) }
+
+            runCatching {
+                deleteAccountUseCase.invoke()
+            }.onFailure {
+                _uiState.update { it.copy(isLoading = false) }
+                _deleteAccountEvent.emit(DefaultEvent.Failure(R.string.setting_msg_fail_withdrawal))
+            }.onSuccess {
+                _uiState.update { it.copy(isLoading = false) }
+                _deleteAccountEvent.emit(DefaultEvent.Success)
+            }
+        }
+    }
+
+    fun deleteDailyLimit() {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true) }
+            runCatching {
+                deleteDailyLimitUseCase.invoke()
+            }.onFailure {
+                _uiState.update { it.copy(isLoading = false) }
+                _deleteAccountEvent.emit(DefaultEvent.Failure(R.string.setting_msg_fail_limit))
+            }.onSuccess {
+                _uiState.update { it.copy(isLoading = false) }
+                _deleteDailyLimitEvent.emit(DefaultEvent.Success)
             }
         }
     }
