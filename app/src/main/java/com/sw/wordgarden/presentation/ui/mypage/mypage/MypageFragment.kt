@@ -50,7 +50,6 @@ class MypageFragment : Fragment() {
     private var myCode = ""
 
     override fun onCreateView(
-
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
@@ -66,6 +65,9 @@ class MypageFragment : Fragment() {
     }
 
     private fun setupListener() = with(binding) {
+        ivMyProfile.setOnClickListener {
+            galleryLauncher.launch("image/*")
+        }
         ivMyEdit.setOnClickListener {
             galleryLauncher.launch("image/*")
         }
@@ -152,7 +154,7 @@ class MypageFragment : Fragment() {
         tvMyName.text = info?.name ?: ""
 
         tvMyPoint.text = (info?.point ?: 0).toString()
-        tvMyRank.text = (info?.rank ?: 0).toString()
+        tvMyRank.text = if (info?.rank == 0) "-" else (info?.rank ?: 0).toString()
 
         val weeklyState = if (info?.all == null || info.right == null) {
             ""
@@ -160,6 +162,9 @@ class MypageFragment : Fragment() {
             "${info.all}${getString(R.string.mypage_weekly_score_text1)} ${info.right}${getString(R.string.mypage_weekly_score_text2)}"
         }
         tvMyScore.text = weeklyState
+
+        pbMyScore.max = info?.all ?: 0
+        pbMyScore.progress = info?.right ?: 0
 
         tvMySelfQuizTitleName.text = info?.latestCustomQuiz?.sqTitle ?: getString(R.string.mypage_my_self_quiz_no_quiz_list)
         tvMySolvedQuizTitleName.text = info?.latestSolvedQuiz?.title ?: getString(R.string.mypage_my_solved_quiz_no_quiz_list)

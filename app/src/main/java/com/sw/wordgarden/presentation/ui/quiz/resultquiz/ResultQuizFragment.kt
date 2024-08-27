@@ -143,7 +143,7 @@ class ResultQuizFragment : Fragment() {
         }
 
         //-- viewpager --
-        val pagerAdapter = ResultQuizAdapter(this@ResultQuizFragment, quizList) { _, _, _, _, _ -> }
+        val pagerAdapter = ResultQuizAdapter(this@ResultQuizFragment, quizList) { _, _, _, _, _, _, _ -> }
 
         vpResultQuiz.apply {
             adapter = pagerAdapter

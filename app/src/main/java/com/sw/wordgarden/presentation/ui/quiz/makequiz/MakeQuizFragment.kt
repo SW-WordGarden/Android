@@ -18,9 +18,11 @@ import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentMakeQuizBinding
 import com.sw.wordgarden.presentation.event.DefaultEvent
 import com.sw.wordgarden.presentation.model.QAModel
+import com.sw.wordgarden.presentation.model.QAModel.Companion.emptyQAModel
 import com.sw.wordgarden.presentation.model.QuizKey
 import com.sw.wordgarden.presentation.model.QuizModel
 import com.sw.wordgarden.presentation.ui.loading.LoadingDialog
+import com.sw.wordgarden.presentation.util.Constants.QUIZ_AMOUNT
 import com.sw.wordgarden.presentation.util.KeyboardCleaner
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,8 +37,7 @@ class MakeQuizFragment : Fragment() {
 
     private var loadingDialog: LoadingDialog? = null
     private val viewmodel: MakeQuizViewModel by viewModels()
-    private var qaModelListForInsert: List<QAModel> =
-        List(10) { QAModel("", "", "", "", null) }
+    private var qaModelListForInsert: List<QAModel> = List(QUIZ_AMOUNT) { emptyQAModel() }
     private var enableMode = true
     private lateinit var quizKey: QuizKey
 
@@ -79,7 +80,7 @@ class MakeQuizFragment : Fragment() {
             val quizModel = QuizModel(
                 "",
                 "",
-                List(10) { QAModel("", "", "", "", null) })
+                List(QUIZ_AMOUNT) { emptyQAModel() })
 
             setupUi(quizModel)
         } else { // 기존 퀴즈 확인 모드

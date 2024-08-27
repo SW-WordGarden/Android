@@ -6,10 +6,13 @@
     <color name="gray">#D9D9D9</color>
     <color name="deep_gray">#F2F2F2</color>
     <color name="green">#2A664D</color>
+    <color name="semi_light_green">#5EAB8F</color>
     <color name="light_green">#A0DEC8</color>
     <color name="khaki">#AAC5B2</color>
+    <color name="semi_light_khaki">#9FCBD1</color>
     <color name="light_khaki">#CFE2DB</color>
     <color name="brown">#653407</color>
     <color name="light_pink">#E789A0</color>
     <color name="light_red">#FF8484</color>
+    <color name="red">#C70000</color>
 </resources>

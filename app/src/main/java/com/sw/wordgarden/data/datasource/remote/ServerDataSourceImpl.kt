@@ -1,6 +1,5 @@
 package com.sw.wordgarden.data.datasource.remote
 
-import android.util.Log
 import com.sw.wordgarden.data.datasource.local.LocalDataSource
 import com.sw.wordgarden.data.datasource.remote.retrofit.Service
 import com.sw.wordgarden.data.dto.TreeDto
@@ -135,6 +134,20 @@ class ServerDataSourceImpl @Inject constructor(
                 throw HttpException(response)
             } else {
                 response.body()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            throw e
+        }
+    }
+
+    override suspend fun deleteAccout() {
+        try {
+            val uid = getUid()
+
+            val response = service.deleteAccount(uid!!)
+            if (!response.isSuccessful) {
+                throw HttpException(response)
             }
         } catch (e: Exception) {
             e.printStackTrace()
