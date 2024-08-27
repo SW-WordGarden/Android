@@ -9,9 +9,11 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentHomeBinding
 import com.sw.wordgarden.presentation.event.DefaultEvent
+import com.sw.wordgarden.presentation.ui.garden.GetFlowerImg
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -58,7 +60,10 @@ class HomeFragment : Fragment() {
             viewModel.flowerData.flowWithLifecycle(viewLifecycleOwner.lifecycle).collectLatest { data ->
                 if (data != null) {
                     binding.homeFlowerName.text = data.name
-                }
+                    val img = GetFlowerImg.getFlowerImg(data.growthStage!!, data.growthValue!!)
+                    Glide.with(requireContext())
+                        .load(img)
+                        .into(binding.homeFlower)                }
             }
         }
         viewLifecycleOwner.lifecycleScope.launch {

@@ -92,5 +92,8 @@ class WordFragment : Fragment() {
                 R.id.rb_idiom -> wordAdapter.submitList(idiomWordList)
             }
         }
+        btBack.setOnClickListener {
+            findNavController().navigate(R.id.action_wordFragment_to_homeFragment)
+        }
     }
 }

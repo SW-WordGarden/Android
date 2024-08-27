@@ -33,11 +33,23 @@ class GardenViewModel @Inject constructor(
     private val _gardenEvent = MutableSharedFlow<DefaultEvent>()
     var gardenEvent : SharedFlow<DefaultEvent> = _gardenEvent.asSharedFlow()
 
+    private val _growthEvent = MutableSharedFlow<Int>()
+    var growthEvent : SharedFlow<Int> = _growthEvent.asSharedFlow()
+
     private val _resourceData = MutableStateFlow<UserResponseModel?>(null)
     var resourceData : StateFlow<UserResponseModel?> = _resourceData.asStateFlow()
 
     private val _growData = MutableStateFlow<TreeModel?>(null)
     var growData : StateFlow<TreeModel?> = _growData.asStateFlow()
+
+    private val _flowerName = MutableStateFlow<Int?>(null)
+    var flowerName : StateFlow<Int?> = _flowerName.asStateFlow()
+
+    private val _flowerImg = MutableStateFlow<Array<Int>?>(null)
+    var flowerImg : StateFlow<Array<Int>?> = _flowerImg.asStateFlow()
+
+    private var level = 0
+    private var newLevel = 0
 
     init {
         getGrowInfo()
@@ -46,6 +58,9 @@ class GardenViewModel @Inject constructor(
     fun getGrowInfo() = viewModelScope.launch {
         runCatching {
             val growInfo = getGrowInfoUseCase()?.toTreeModel()
+
+
+
             _growData.update {
                 growInfo
             }
@@ -55,6 +70,35 @@ class GardenViewModel @Inject constructor(
             _gardenEvent.emit(DefaultEvent.Failure(R.string.home_fail_flower))
         }
     }
+
+    fun getFlowerData(stage:Int) = viewModelScope.launch {
+        runCatching {
+            val growInfo = getGrowInfoUseCase()?.toTreeModel()
+
+            if (growInfo != null) {
+                if(stage < growInfo.growthStage!!){
+                    _flowerImg.emit(GetFlowerImg.getFlowerImg(growInfo.growthStage!!))
+                    _flowerName.emit(GetFlowerImg.getFlowerName(growInfo.growthStage!!))
+                }
+                else if ( stage == growInfo.growthStage!! ) {
+                    _flowerImg.emit(
+                        GetFlowerImg.getFlowerImg(growInfo.growthStage!!)
+                            .sliceArray(0..growInfo.growthValue!!)
+                    )
+                    _flowerName.emit(GetFlowerImg.getFlowerName(growInfo.growthStage!!))
+                }
+                else {
+                    _flowerImg.emit(arrayOf())
+                    _flowerName.emit(0)
+                }
+            }
+        }.onSuccess {
+            _gardenEvent.emit(DefaultEvent.Success)
+        }.onFailure {
+            _gardenEvent.emit(DefaultEvent.Failure(R.string.home_fail_flower))
+        }
+    }
+
     fun getUserResource() = viewModelScope.launch {
         runCatching {
             val resourceInfo = getUserResourceUseCase()?.toUserResponseModel()
@@ -85,4 +129,5 @@ class GardenViewModel @Inject constructor(
             _gardenEvent.emit(DefaultEvent.Failure(R.string.garden_use_watering_cans))
         }
     }
+
 }
