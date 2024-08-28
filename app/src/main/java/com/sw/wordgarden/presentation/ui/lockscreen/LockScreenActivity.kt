@@ -28,7 +28,7 @@ class LockScreenActivity : AppCompatActivity() {
     private val binding:ActivityLockScreenBinding by lazy {
         ActivityLockScreenBinding.inflate(layoutInflater)
     }
-    private val viewModel:LockScreenViewModel by viewModels()
+    //private val viewModel:LockScreenViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +37,7 @@ class LockScreenActivity : AppCompatActivity() {
         binding.correctAnswer.visibility = AppCompatTextView.INVISIBLE
 
         setupUi()
-        setUpClock()
+        //setUpClock()
         //initViewModel()
         buttonEvent()
 
@@ -70,17 +70,17 @@ class LockScreenActivity : AppCompatActivity() {
             }, 3000)
         }
     }
-    private fun initViewModel(){
-        lifecycleScope.launch {
-            viewModel.quizData.flowWithLifecycle(lifecycle).collectLatest { data ->
-                if (data != null) {
-                    binding.lockTitle.text = data.title
-                    binding.lockDescription.text = data.question
-                    binding.correctAnswer.text = data.correctAnswer
-                }
-            }
-        }
-    }
+//    private fun initViewModel(){
+//        lifecycleScope.launch {
+//            viewModel.quizData.flowWithLifecycle(lifecycle).collectLatest { data ->
+//                if (data != null) {
+//                    binding.lockTitle.text = data.title
+//                    binding.lockDescription.text = data.question
+//                    binding.correctAnswer.text = data.correctAnswer
+//                }
+//            }
+//        }
+//    }
     private fun setUpClock(){
         while (true){
             Handler(Looper.getMainLooper()).postDelayed({
