@@ -1,5 +1,6 @@
 package com.sw.wordgarden.domain.repository
 
+import com.sw.wordgarden.domain.entity.quiz.OneQuizEntity
 import com.sw.wordgarden.domain.entity.quiz.SqQuestionAnswerEntity
 import com.sw.wordgarden.domain.entity.quiz.QuizSummaryEntity
 import com.sw.wordgarden.domain.entity.quiz.SqCreatedInfoEntity
@@ -29,4 +30,7 @@ interface QuizRepository {
     suspend fun getSolvedSqTitles(): List<QuizSummaryEntity>?
     suspend fun getSolvedSq(title: String): SqEntity?
     suspend fun getSqCreatorInfo(quizId: String): SqCreatorInfoEntity?
+
+    //lockscreen
+    suspend fun getLockQuiz():OneQuizEntity?
 }

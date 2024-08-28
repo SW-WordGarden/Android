@@ -67,6 +67,8 @@ import com.sw.wordgarden.domain.usecase.garden.GetUserResourceUseCase
 import com.sw.wordgarden.domain.usecase.garden.GetUserResourceUseCaseImpl
 import com.sw.wordgarden.domain.usecase.garden.UseWateringCansUseCase
 import com.sw.wordgarden.domain.usecase.garden.UseWateringCansUseCaseImpl
+import com.sw.wordgarden.domain.usecase.quiz.GetOneQuizUseCase
+import com.sw.wordgarden.domain.usecase.quiz.GetOneQuizUseCaseImpl
 import com.sw.wordgarden.domain.usecase.user.AddFriendUseCase
 import com.sw.wordgarden.domain.usecase.user.AddFriendUseCaseImpl
 import com.sw.wordgarden.domain.usecase.user.DeleteAccountUseCase
@@ -388,5 +390,11 @@ abstract class UseCaseModule {
     abstract fun bindGetRandomWord(
         getRandomWordUseCaseImpl: GetRandomWordUseCaseImpl
     ): GetRandomWordUseCase
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindGetOneQuiz(
+        getOneQuizUseCaseImpl: GetOneQuizUseCaseImpl
+    ):GetOneQuizUseCase
 }
 

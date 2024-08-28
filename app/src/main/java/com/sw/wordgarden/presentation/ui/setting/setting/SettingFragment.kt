@@ -1,5 +1,6 @@
 package com.sw.wordgarden.presentation.ui.setting.setting
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,6 +14,8 @@ import androidx.navigation.fragment.findNavController
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentSettingBinding
 import com.sw.wordgarden.presentation.event.DefaultEvent
+import com.sw.wordgarden.presentation.ui.lockscreen.LockScreenActivity
+import com.sw.wordgarden.presentation.ui.lockscreen.LockScreenService
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -53,6 +56,10 @@ class SettingFragment : Fragment() {
         }
         tvSettingWithdrawal.setOnClickListener {
             withdrawal()
+        }
+        swSettingHoldQuiz.setOnCheckedChangeListener { _, isChecked ->
+            if(isChecked) requireActivity().startForegroundService(Intent(requireActivity(), LockScreenService::class.java))
+            else requireActivity().stopService(Intent(requireActivity(), LockScreenService::class.java))
         }
     }
 

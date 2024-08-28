@@ -225,6 +225,10 @@
     <!-- loading -->
     <string name="loading_loading">불러오는 중...</string>
 
+    <!-- lock screen -->
+    <string name="lock_question">문제의 단어와 뜻이 일치하나요?</string>
+    <string name="lock_correct_answer">정답 : </string>
+
     <!-- keys -->
     <string name="naver_client_id">fYtp0C5dQV4enao8hy1Q</string>
     <string name="naver_client_secret">EFmMabs3BG</string>
