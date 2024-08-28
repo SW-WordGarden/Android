@@ -1,11 +1,14 @@
 package com.sw.wordgarden.presentation.ui.garden
 
-import android.content.Context
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
+import android.view.animation.AnimationUtils
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -17,7 +20,7 @@ import com.bumptech.glide.Glide
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentGardenBinding
 import com.sw.wordgarden.presentation.event.DefaultEvent
-import com.sw.wordgarden.presentation.model.TreeModel
+import com.sw.wordgarden.presentation.ui.loading.LoadingDialog
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -29,6 +32,11 @@ class GardenFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel:GardenViewModel by activityViewModels()
     private lateinit var navController: NavController
+
+    private var loadingDialog: LoadingDialog? = null
+
+    private var temp = 0
+    private var level = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -61,20 +69,39 @@ class GardenFragment : Fragment() {
             }
         }
         viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.uiState.flowWithLifecycle(viewLifecycleOwner.lifecycle).collectLatest {   state ->
+                if (state.isLoading) {
+                    if (loadingDialog == null || loadingDialog?.dialog?.isShowing == false) {
+                        loadingDialog = LoadingDialog()
+                        loadingDialog?.show(parentFragmentManager, null)
+                    }
+                } else {
+                    loadingDialog?.dismiss()
+                    loadingDialog = null
+                }
+            }
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.growData.flowWithLifecycle(viewLifecycleOwner.lifecycle).collectLatest {  data ->
                 if (data != null) {
                     tvFlowerName.text = data.name
-                    val img = GetFlowerImg.getFlowerImg(data.growthStage!!, data.growthValue!!)
+                    val img = GetFlowerImg.getFlowerImg(data.plantNum!!, data.growthStage!!)
                     Glide.with(requireContext())
                         .load(img)
                         .into(ivFlower)
+
+                    if(data.growthStage != level && temp !=0 ) levelUp()
+                    else temp++
+
+                    level = data.growthStage
                 }
             }
         }
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.resourceData.flowWithLifecycle(viewLifecycleOwner.lifecycle).collectLatest {  data ->
                 if (data != null) {
-                    btWater.isEnabled = data.plantCount != 0
+                    btWater.isEnabled = data.wateringCans != 0
+                    Log.d("waterEnable", "${data.plantCount}")
 
                     tvCoin.text = data.coins.toString()
                     tvWater.text = data.wateringCans.toString()
@@ -94,11 +121,44 @@ class GardenFragment : Fragment() {
             findNavController().navigate(R.id.action_gardenFragment_to_homeFragment)
         }
         btWater.setOnClickListener {
+            Handler(Looper.getMainLooper()).postDelayed({
+                wateringCan.visibility = AppCompatImageView.VISIBLE
+            }, 100)
+            Handler(Looper.getMainLooper()).postDelayed({
+                wateringCan.setImageResource(R.drawable.ic_water2)
+            }, 400)
+            Handler(Looper.getMainLooper()).postDelayed({
+                wateringCan.setImageResource(R.drawable.ic_water3)
+            }, 700)
+            Handler(Looper.getMainLooper()).postDelayed({
+                wateringCan.setImageResource(R.drawable.ic_water1)
+            }, 1000)
+            Handler(Looper.getMainLooper()).postDelayed({
+                wateringCan.setImageResource(R.drawable.ic_water2)
+            }, 1300)
+            Handler(Looper.getMainLooper()).postDelayed({
+                wateringCan.setImageResource(R.drawable.ic_water3)
+            }, 1600)
+            Handler(Looper.getMainLooper()).postDelayed({
+                wateringCan.setImageResource(R.drawable.ic_water1)
+                wateringCan.visibility = AppCompatImageView.INVISIBLE
+            }, 1900)
+
             viewModel.useWateringCans()
             viewModel.getGrowInfo()
             viewModel.getUserResource()
         }
 
+    }
+    private fun levelUp(){
+            val fadeInAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_in)
+            val fadeOutAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_out)
+            Handler(Looper.getMainLooper()).postDelayed({
+                binding.ivGrowth.startAnimation(fadeInAnimation)
+            }, 100)
+            Handler(Looper.getMainLooper()).postDelayed({
+                binding.ivGrowth.startAnimation(fadeOutAnimation)
+            }, 1000)
     }
 
     override fun onDestroy() {

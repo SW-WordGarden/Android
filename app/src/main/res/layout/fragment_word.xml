@@ -27,7 +27,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/bt_quiz_back"
+            android:id="@+id/bt_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_back"
@@ -40,6 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_menu"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@+id/tv_quiz_title"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tv_quiz_title" />
@@ -95,7 +96,7 @@
                         android:background="@drawable/selector_radio_button"
                         android:gravity="center"
                         android:button="@null"
-                        android:text="@string/category_society"
+                        android:text="@string/category_idiom"
                         android:textSize="@dimen/text_smaller"
                         android:layout_weight="1"
                         android:layout_marginRight="@dimen/margin_small"/>
@@ -119,7 +120,7 @@
                         android:background="@drawable/selector_radio_button"
                         android:gravity="center"
                         android:button="@null"
-                        android:text="@string/category_idiom"
+                        android:text="@string/category_society"
                         android:layout_weight="1"
                         android:textSize="@dimen/text_smaller"/>
                 </RadioGroup>
