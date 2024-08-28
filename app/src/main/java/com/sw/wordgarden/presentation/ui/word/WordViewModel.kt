@@ -12,6 +12,7 @@ import com.sw.wordgarden.domain.usecase.word.GetWordLikedStatusUseCase
 import com.sw.wordgarden.domain.usecase.word.InsertLikedWordUseCase
 import com.sw.wordgarden.presentation.event.DefaultEvent
 import com.sw.wordgarden.presentation.model.WordModel
+import com.sw.wordgarden.presentation.shared.IsLoadingUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -28,25 +29,32 @@ class WordViewModel @Inject constructor(
     private val getWeeklyWordListUseCase: GetWeeklyWordListUseCase,
     private val getWordLikedStatusUseCase: GetWordLikedStatusUseCase,
     private val insertLikedWordUseCase: InsertLikedWordUseCase,
-) : ViewModel(){
+    private val getWeeklyCategoryWordListUseCase: GetWeeklyCategoryWordListUseCase,
+) : ViewModel() {
     private val _wordEvent = MutableSharedFlow<DefaultEvent>()
-    var wordEvent : SharedFlow<DefaultEvent> = _wordEvent.asSharedFlow()
+    var wordEvent: SharedFlow<DefaultEvent> = _wordEvent.asSharedFlow()
+
+    private val _uiState = MutableStateFlow(IsLoadingUiState.init())
+    val uiState: StateFlow<IsLoadingUiState> = _uiState.asStateFlow()
 
     private val _wordListState = MutableStateFlow<List<WordModel>>(emptyList())
-    var wordListState : StateFlow<List<WordModel>> = _wordListState.asStateFlow()
+    var wordListState: StateFlow<List<WordModel>> = _wordListState.asStateFlow()
+
+    private val _wordCListState = MutableStateFlow<List<WordModel>>(emptyList())
+    var wordCListState: StateFlow<List<WordModel>> = _wordCListState.asStateFlow()
 
     private val _wordSelectState = MutableStateFlow<WordModel?>(null)
-    var wordSelectState : StateFlow<WordModel?> = _wordSelectState.asStateFlow()
+    var wordSelectState: StateFlow<WordModel?> = _wordSelectState.asStateFlow()
 
     private val _wordSelectPosition = MutableStateFlow<Int>(-1)
-    var wordSelectPosition : StateFlow<Int> = _wordSelectPosition.asStateFlow()
+    var wordSelectPosition: StateFlow<Int> = _wordSelectPosition.asStateFlow()
 
     private val _wordLikeState = MutableStateFlow<Boolean?>(null)
-    var wordLikeState:StateFlow<Boolean?> = _wordLikeState.asStateFlow()
+    var wordLikeState: StateFlow<Boolean?> = _wordLikeState.asStateFlow()
 
 
-    private lateinit var getWordList : List<WordModel>
-    private lateinit var wordId :String
+    private lateinit var getWordList: List<WordModel>
+    private lateinit var wordId: String
     private var position = -1
 
     init {
@@ -73,6 +81,30 @@ class WordViewModel @Inject constructor(
             _wordEvent.emit(DefaultEvent.Success)
         }.onFailure {
             _wordEvent.emit(DefaultEvent.Failure(R.string.word_unload))
+        }
+    }
+
+    fun getCategoryWordList(category:String) = viewModelScope.launch{
+        _uiState.update { it.copy(isLoading = true) }
+        runCatching {
+            val getCWordList = getWeeklyCategoryWordListUseCase(category)!!.mapIndexed { _, wordEntity ->
+                WordModel(
+                    id = wordEntity.id,
+                    title = wordEntity.title,
+                    description = wordEntity.description,
+                    thumbnail = wordEntity.thumbnail,
+                    category = wordEntity.category
+                )
+            }
+            _wordCListState.update {
+                getCWordList
+            }
+        } .onSuccess {
+            _wordEvent.emit(DefaultEvent.Success)
+            _uiState.update { it.copy(isLoading = false) }
+        }.onFailure {
+            _wordEvent.emit(DefaultEvent.Failure(R.string.word_unload))
+            _uiState.update { it.copy(isLoading = false) }
         }
     }
     fun selectWord(wordData : WordModel) = viewModelScope.launch{

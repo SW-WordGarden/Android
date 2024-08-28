@@ -14,7 +14,6 @@ class WordAdapter( private val onItemClick : (WordModel) -> Unit) : ListAdapter<
         override fun areItemsTheSame(oldItem: WordModel, newItem: WordModel): Boolean {
             return oldItem == newItem
         }
-
         override fun areContentsTheSame(oldItem: WordModel, newItem: WordModel): Boolean {
             return oldItem == newItem
         }

@@ -14,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentDetailWordBinding
+import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -92,6 +93,7 @@ class DetailWordFragment : Fragment() {
         }
         ivHeart.setOnClickListener {
             viewModel.insertLikeState(true)
+            ToastMaker.make(requireContext(), R.string.word_like_success)
         }
         ivFullHeart.setOnClickListener {
             viewModel.insertLikeState(false)

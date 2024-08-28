@@ -90,7 +90,7 @@
                         android:layout_marginRight="@dimen/margin_small"/>
 
                     <androidx.appcompat.widget.AppCompatRadioButton
-                        android:id="@+id/rb_society"
+                        android:id="@+id/rb_idiom"
                         android:layout_width="85dp"
                         android:layout_height="30dp"
                         android:background="@drawable/selector_radio_button"
@@ -114,7 +114,7 @@
                         android:layout_marginRight="@dimen/margin_small"/>
 
                     <androidx.appcompat.widget.AppCompatRadioButton
-                        android:id="@+id/rb_idiom"
+                        android:id="@+id/rb_society"
                         android:layout_width="85dp"
                         android:layout_height="30dp"
                         android:background="@drawable/selector_radio_button"
