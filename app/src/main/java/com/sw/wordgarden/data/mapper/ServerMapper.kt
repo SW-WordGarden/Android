@@ -272,6 +272,7 @@ object ServerMapper {
     //garden
     fun TreeDto.toEntity() = TreeEntity(
         name = name,
+        plantNum = plantNum,
         growthValue = growthValue ,
         growthStage = growthStage,
         date = date

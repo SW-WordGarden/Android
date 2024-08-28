@@ -1,5 +1,6 @@
 package com.sw.wordgarden.presentation.ui.garden
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sw.wordgarden.R
@@ -12,6 +13,7 @@ import com.sw.wordgarden.presentation.mapper.ModelMapper.toTreeModel
 import com.sw.wordgarden.presentation.mapper.ModelMapper.toUserResponseModel
 import com.sw.wordgarden.presentation.model.TreeModel
 import com.sw.wordgarden.presentation.model.UserResponseModel
+import com.sw.wordgarden.presentation.shared.IsLoadingUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -30,6 +32,9 @@ class GardenViewModel @Inject constructor(
     private val buyWateringCansUseCase: BuyWateringCansUseCase,
     private val useWateringCansUseCase: UseWateringCansUseCase,
 ) : ViewModel() {
+    private val _uiState = MutableStateFlow(IsLoadingUiState.init())
+    val uiState: StateFlow<IsLoadingUiState> = _uiState.asStateFlow()
+
     private val _gardenEvent = MutableSharedFlow<DefaultEvent>()
     var gardenEvent : SharedFlow<DefaultEvent> = _gardenEvent.asSharedFlow()
 
@@ -45,56 +50,53 @@ class GardenViewModel @Inject constructor(
     private val _flowerName = MutableStateFlow<Int?>(null)
     var flowerName : StateFlow<Int?> = _flowerName.asStateFlow()
 
-    private val _flowerImg = MutableStateFlow<Array<Int>?>(null)
-    var flowerImg : StateFlow<Array<Int>?> = _flowerImg.asStateFlow()
-
-    private var level = 0
-    private var newLevel = 0
+    private val _flowerImg = MutableStateFlow<List<Int>?>(null)
+    var flowerImg : StateFlow<List<Int>?> = _flowerImg.asStateFlow()
 
     init {
         getGrowInfo()
+        getUserResource()
     }
 
     fun getGrowInfo() = viewModelScope.launch {
+        _uiState.update { it.copy(isLoading = true) }
         runCatching {
             val growInfo = getGrowInfoUseCase()?.toTreeModel()
-
-
-
             _growData.update {
                 growInfo
             }
         }.onSuccess {
             _gardenEvent.emit(DefaultEvent.Success)
+            _uiState.update { it.copy(isLoading = false) }
         }.onFailure {
             _gardenEvent.emit(DefaultEvent.Failure(R.string.home_fail_flower))
+            _uiState.update { it.copy(isLoading = false) }
         }
     }
 
-    fun getFlowerData(stage:Int) = viewModelScope.launch {
+    fun getBookFlowerData(page:Int) = viewModelScope.launch {
+        _uiState.update { it.copy(isLoading = true) }
+
         runCatching {
             val growInfo = getGrowInfoUseCase()?.toTreeModel()
-
             if (growInfo != null) {
-                if(stage < growInfo.growthStage!!){
-                    _flowerImg.emit(GetFlowerImg.getFlowerImg(growInfo.growthStage!!))
-                    _flowerName.emit(GetFlowerImg.getFlowerName(growInfo.growthStage!!))
+                var num = growInfo.plantNum!!
+                var stage = growInfo.growthStage!!
+
+                if(page <= num){
+                    _flowerImg.emit(GetFlowerImg.getFlowerImgList(num, stage))
+                    _flowerName.emit(GetFlowerImg.getFlowerName(num))
                 }
-                else if ( stage == growInfo.growthStage!! ) {
-                    _flowerImg.emit(
-                        GetFlowerImg.getFlowerImg(growInfo.growthStage!!)
-                            .sliceArray(0..growInfo.growthValue!!)
-                    )
-                    _flowerName.emit(GetFlowerImg.getFlowerName(growInfo.growthStage!!))
-                }
-                else {
-                    _flowerImg.emit(arrayOf())
-                    _flowerName.emit(0)
+                else if(page > num){
+                    _flowerImg.emit(listOf())
+                    _flowerName.emit(R.string.book_unknown)
                 }
             }
         }.onSuccess {
+            _uiState.update { it.copy(isLoading = false) }
             _gardenEvent.emit(DefaultEvent.Success)
         }.onFailure {
+            _uiState.update { it.copy(isLoading = false) }
             _gardenEvent.emit(DefaultEvent.Failure(R.string.home_fail_flower))
         }
     }

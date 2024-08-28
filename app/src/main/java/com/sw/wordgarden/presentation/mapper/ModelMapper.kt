@@ -208,6 +208,7 @@ object ModelMapper {
     //home
     fun TreeEntity.toTreeModel() = TreeModel(
         name = name,
+        plantNum = plantNum,
         growthValue = growthValue ,
         growthStage = growthStage,
         date = date

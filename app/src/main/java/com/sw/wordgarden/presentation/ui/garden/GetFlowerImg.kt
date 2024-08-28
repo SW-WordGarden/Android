@@ -1,9 +1,10 @@
 package com.sw.wordgarden.presentation.ui.garden
 
+import android.util.Log
 import com.sw.wordgarden.R
 
 object GetFlowerImg {
-    fun getFlowerImg(stage:Int, value:Int) : Int {
+    fun getFlowerImg(num:Int, stage:Int) : Int {
         val flowerImg = arrayOf(
             arrayOf(R.drawable.tree_apple1_1_,R.drawable.tree_apple2_1_, R.drawable.tree_apple3_1_, R.drawable.tree_apple4_1_ ),
             arrayOf(R.drawable.tree_cherry_blossom1_2_, R.drawable.tree_cherry_blossom2_2_, R.drawable.tree_cherry_blossom3_2_, R.drawable.tree_cherry_blossom4_2_),
@@ -18,10 +19,10 @@ object GetFlowerImg {
             arrayOf(R.drawable.tree_cloud_tree1_11_,R.drawable.tree_cloud_tree2_11_, R.drawable.tree_cloud_tree3_11_, R.drawable.tree_cloud_tree4_11_ ),
             arrayOf(R.drawable.tree_watermelon_tree1_12_,R.drawable.tree_watermelon_tree2_12_, R.drawable.tree_watermelon_tree3_12_, R.drawable.tree_watermelon_tree4_12_ )
         )
-        return flowerImg[stage-1][value]
+        return flowerImg[num-1][stage-1]
     }
 
-    fun getFlowerImg(stage:Int) : Array<Int> {
+    fun getFlowerImgList(num:Int, stage:Int) : List<Int> {
         val flowerImg = arrayOf(
             arrayOf(R.drawable.tree_apple1_1_,R.drawable.tree_apple2_1_, R.drawable.tree_apple3_1_, R.drawable.tree_apple4_1_ ),
             arrayOf(R.drawable.tree_cherry_blossom1_2_, R.drawable.tree_cherry_blossom2_2_, R.drawable.tree_cherry_blossom3_2_, R.drawable.tree_cherry_blossom4_2_),
@@ -36,7 +37,8 @@ object GetFlowerImg {
             arrayOf(R.drawable.tree_cloud_tree1_11_,R.drawable.tree_cloud_tree2_11_, R.drawable.tree_cloud_tree3_11_, R.drawable.tree_cloud_tree4_11_ ),
             arrayOf(R.drawable.tree_watermelon_tree1_12_,R.drawable.tree_watermelon_tree2_12_, R.drawable.tree_watermelon_tree3_12_, R.drawable.tree_watermelon_tree4_12_ )
         )
-        return flowerImg[stage-1]
+
+        return flowerImg[num-1].slice(0..<stage)
     }
     fun getFlowerName(position:Int):Int {
         val nameList = listOf(

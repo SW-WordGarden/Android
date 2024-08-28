@@ -41,6 +41,8 @@ class HomeFragment : Fragment() {
             findNavController().navigate(R.id.action_homeFragment_to_alarmFragment)
         }
 
+        viewModel.getWordData()
+        viewModel.getFlowerData()
         setViewModel()
     }
 
@@ -60,7 +62,7 @@ class HomeFragment : Fragment() {
             viewModel.flowerData.flowWithLifecycle(viewLifecycleOwner.lifecycle).collectLatest { data ->
                 if (data != null) {
                     binding.homeFlowerName.text = data.name
-                    val img = GetFlowerImg.getFlowerImg(data.growthStage!!, data.growthValue!!)
+                    val img = GetFlowerImg.getFlowerImg(data.plantNum!!, data.growthStage!!)
                     Glide.with(requireContext())
                         .load(img)
                         .into(binding.homeFlower)                }

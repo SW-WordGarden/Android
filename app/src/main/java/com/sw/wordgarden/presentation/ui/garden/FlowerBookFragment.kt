@@ -1,6 +1,7 @@
 package com.sw.wordgarden.presentation.ui.garden
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,7 +44,7 @@ class FlowerBookFragment:Fragment() {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
 
-        viewModel.getFlowerData(1)
+        viewModel.getBookFlowerData(1)
         buttonEvent()
         observeViewModel()
     }
@@ -58,7 +59,7 @@ class FlowerBookFragment:Fragment() {
                 bookPage--
                 pageCount.text = "$bookPage"
 
-                viewModel.getFlowerData(bookPage)
+                viewModel.getBookFlowerData(bookPage)
             }
         }
         btRightArrow.setOnClickListener {
@@ -67,7 +68,7 @@ class FlowerBookFragment:Fragment() {
                 bookPage++
                 pageCount.text = "$bookPage"
 
-                viewModel.getFlowerData(bookPage)
+                viewModel.getBookFlowerData(bookPage)
             }
         }
     }
@@ -86,7 +87,7 @@ class FlowerBookFragment:Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.growData.flowWithLifecycle(viewLifecycleOwner.lifecycle).collectLatest {  data ->
                 if (data != null) {
-                    flowerChapter.text = data.growthStage.toString()
+                    flowerChapter.text = data.plantNum.toString()
                 }
             }
         }
@@ -107,23 +108,23 @@ class FlowerBookFragment:Fragment() {
             }
         }
     }
-    private fun setFlowerImg(list : Array<Int>){
+    private fun setFlowerImg(list : List<Int>){
         val size = list.size
+        val setList = list.toMutableList()
         for(i in 1 .. 4){
-            if(i > size)
-                list.plus(R.drawable.ic_book_item_layer2)
+            if(i > size) setList += R.drawable.ic_book_item_layer2
         }
         Glide.with(requireContext())
-            .load(list[0])
+            .load(setList[0])
             .into(binding.itemSmallLayer1)
         Glide.with(requireContext())
-            .load(list[1])
+            .load(setList[1])
             .into(binding.itemSmallLayer2)
         Glide.with(requireContext())
-            .load(list[2])
+            .load(setList[2])
             .into(binding.itemSmallLayer3)
         Glide.with(requireContext())
-            .load(list[3])
+            .load(setList[3])
             .into(binding.itemSmallLayer4)
     }
 

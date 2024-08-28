@@ -54,9 +54,11 @@
         android:layout_marginRight="@dimen/margin_medium"
         android:layout_marginTop="30dp"
         android:id="@+id/iv_today_word"
+        android:layout_marginBottom="20dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_today_word"/>
+        app:layout_constraintTop_toBottomOf="@+id/tv_today_word"
+        app:layout_constraintEnd_toEndOf="@+id/tv_today_word_description"/>
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -67,12 +69,13 @@
         app:layout_constraintTop_toTopOf="@id/iv_today_word"
         app:layout_constraintLeft_toLeftOf="@+id/iv_today_word"/>
     <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:layout_constraintWidth_percent="0.8"
         android:id="@+id/tv_today_word_description"
         android:text="description"
         android:textSize="@dimen/text_caption"
-        android:maxLines="2"
+        android:maxLines="4"
         android:ellipsize="end"
         android:layout_marginTop="@dimen/margin_smaller"
         android:layout_marginLeft="@dimen/margin_medium"

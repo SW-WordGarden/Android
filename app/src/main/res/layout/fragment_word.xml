@@ -96,7 +96,7 @@
                         android:background="@drawable/selector_radio_button"
                         android:gravity="center"
                         android:button="@null"
-                        android:text="@string/category_society"
+                        android:text="@string/category_idiom"
                         android:textSize="@dimen/text_smaller"
                         android:layout_weight="1"
                         android:layout_marginRight="@dimen/margin_small"/>
@@ -120,7 +120,7 @@
                         android:background="@drawable/selector_radio_button"
                         android:gravity="center"
                         android:button="@null"
-                        android:text="@string/category_idiom"
+                        android:text="@string/category_society"
                         android:layout_weight="1"
                         android:textSize="@dimen/text_smaller"/>
                 </RadioGroup>

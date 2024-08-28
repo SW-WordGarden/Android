@@ -155,6 +155,7 @@
     <string name="shop_lake_of_momey">재화가 부족합니다!</string>
     <string name="shop_resource">재화를 불러오는데 실패했어요.</string>
 
+    <string name="book_unknown">\???</string>
     <string name="book_user_book">나의 도감</string>
     <string name="apple">사과 나무</string>
     <string name="cherry_blossom">벚꽃</string>
