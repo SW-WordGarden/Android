@@ -3,6 +3,7 @@ package com.sw.wordgarden.data.repository
 import com.sw.wordgarden.data.datasource.remote.ServerDataSource
 import com.sw.wordgarden.data.mapper.ServerMapper.toDto
 import com.sw.wordgarden.data.mapper.ServerMapper.toEntity
+import com.sw.wordgarden.domain.entity.quiz.OneQuizEntity
 import com.sw.wordgarden.domain.entity.quiz.SqQuestionAnswerEntity
 import com.sw.wordgarden.domain.entity.quiz.QuizSummaryEntity
 import com.sw.wordgarden.domain.entity.quiz.SqCreatedInfoEntity
@@ -76,5 +77,9 @@ class QuizRepositoryImpl @Inject constructor(
 
     override suspend fun getSqCreatorInfo(quizId: String): SqCreatorInfoEntity? {
         return serverDataSource.getSqCreatorInfo(quizId)?.toEntity()
+    }
+
+    override suspend fun getLockQuiz(): OneQuizEntity? {
+        return serverDataSource.getLockQuiz()?.toEntity()
     }
 }

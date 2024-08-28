@@ -1,7 +1,9 @@
 package com.sw.wordgarden.presentation.mapper
 
+import com.sw.wordgarden.data.dto.quiz.OneQuizDto
 import com.sw.wordgarden.domain.entity.TreeEntity
 import com.sw.wordgarden.domain.entity.WordEntity
+import com.sw.wordgarden.domain.entity.quiz.OneQuizEntity
 import com.sw.wordgarden.domain.entity.quiz.SqAnswerEntity
 import com.sw.wordgarden.domain.entity.quiz.SqEntity
 import com.sw.wordgarden.domain.entity.quiz.SqQuestionAnswerEntity
@@ -11,6 +13,7 @@ import com.sw.wordgarden.domain.entity.quiz.WqAnswerEntity
 import com.sw.wordgarden.domain.entity.quiz.WqResponseEntity
 import com.sw.wordgarden.domain.entity.quiz.WqSubmissionEntity
 import com.sw.wordgarden.domain.entity.user.UserResponseEntity
+import com.sw.wordgarden.presentation.model.OneQuizModel
 import com.sw.wordgarden.presentation.model.QAModel
 import com.sw.wordgarden.presentation.model.QuizModel
 import com.sw.wordgarden.presentation.util.Constants.QUIZ_AMOUNT
@@ -224,5 +227,11 @@ object ModelMapper {
         coins = coins,
         wateringCans = wateringCans,
         plantCount = plantCount
+    )
+    fun OneQuizEntity.toOneQuizModel() = OneQuizModel(
+        id = id,
+        question = question,
+        title = title,
+        correctAnswer = correctAnswer
     )
 }

@@ -5,6 +5,7 @@ import com.sw.wordgarden.data.dto.WordDto
 import com.sw.wordgarden.data.dto.alarm.AlarmDetailDto
 import com.sw.wordgarden.data.dto.alarm.AlarmDto
 import com.sw.wordgarden.data.dto.alarm.ShareRequestDto
+import com.sw.wordgarden.data.dto.quiz.OneQuizDto
 import com.sw.wordgarden.data.dto.quiz.QuizSummaryDto
 import com.sw.wordgarden.data.dto.quiz.SqCreatedInfoDto
 import com.sw.wordgarden.data.dto.quiz.SqCreatorInfoDto
@@ -174,4 +175,8 @@ interface Service {
 
     @POST("garden/{uid}/watertree")
     suspend fun useWateringCans(@Path("userId") userId:String) : Response<Unit>
+
+
+    @GET("onequiz/generate/learning?uid={uid}")
+    suspend fun getLockQuiz(@Path("uid")uid : String) : Response<OneQuizDto>
 }

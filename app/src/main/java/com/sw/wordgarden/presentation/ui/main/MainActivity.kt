@@ -1,11 +1,15 @@
 package com.sw.wordgarden.presentation.ui.main
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -23,6 +27,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.ActivityMainBinding
+import com.sw.wordgarden.presentation.ui.lockscreen.LockScreenService
 import com.sw.wordgarden.presentation.ui.main.fcm.FirebaseMessagingService
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -82,6 +87,16 @@ class MainActivity : AppCompatActivity() {
                 )
             }
         }
+        /*if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if(!Settings.canDrawOverlays(this)) {
+                val uri = Uri.fromParts("package", packageName, null)
+                val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, uri)
+                startActivityForResult(intent, 0)
+            } else {
+                val intent = Intent(applicationContext, LockScreenService::class.java)
+                startForegroundService(intent)
+            }
+        }*/
     }
 
     private fun setupFCM() {

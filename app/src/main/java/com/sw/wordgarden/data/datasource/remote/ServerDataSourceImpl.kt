@@ -7,6 +7,7 @@ import com.sw.wordgarden.data.dto.WordDto
 import com.sw.wordgarden.data.dto.alarm.AlarmDetailDto
 import com.sw.wordgarden.data.dto.alarm.AlarmDto
 import com.sw.wordgarden.data.dto.alarm.ShareRequestDto
+import com.sw.wordgarden.data.dto.quiz.OneQuizDto
 import com.sw.wordgarden.data.dto.quiz.QuizSummaryDto
 import com.sw.wordgarden.data.dto.quiz.SqCreatedInfoDto
 import com.sw.wordgarden.data.dto.quiz.SqCreatorInfoDto
@@ -585,6 +586,21 @@ class ServerDataSourceImpl @Inject constructor(
                 response.body()
             }
         } catch (e: Exception) {
+            e.printStackTrace()
+            throw e
+        }
+    }
+
+    override suspend fun getLockQuiz(): OneQuizDto? {
+        return try {
+            val uid = getUid()
+            val response = service.getLockQuiz(uid!!)
+            if (!response.isSuccessful) {
+                throw HttpException(response)
+            } else {
+                response.body()
+            }
+        }catch (e:Exception){
             e.printStackTrace()
             throw e
         }

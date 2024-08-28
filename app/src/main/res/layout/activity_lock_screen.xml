@@ -44,7 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/lock_title"
-        android:text="title"
+        android:text="연리지"
         android:textSize="@dimen/text_headline_big"
         android:textColor="@color/white"
         android:layout_marginBottom="@dimen/margin_larger"
@@ -53,10 +53,13 @@
         app:layout_constraintTop_toBottomOf="@+id/question"
         app:layout_constraintBottom_toTopOf="@+id/lock_description"/>
     <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:layout_constraintWidth_percent="0.8"
         android:id="@+id/lock_description"
-        android:text="description\ndescription"
+        android:text="1. 두 나무의 가지가 서로 맞닿아서 결이
+서로 통한 것. 
+2. 화목(和睦)한 부부(夫婦)나 남녀(男女) 사이를 비유적(比喩的)으로 이르는 말. "
         android:textSize="@dimen/text_caption"
         android:textColor="@color/white"
         android:layout_marginBottom="50dp"

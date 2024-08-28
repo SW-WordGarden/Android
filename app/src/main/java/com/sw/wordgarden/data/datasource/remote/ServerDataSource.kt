@@ -11,6 +11,7 @@ import com.sw.wordgarden.data.dto.user.UserDto
 import com.sw.wordgarden.data.dto.WordDto
 import com.sw.wordgarden.data.dto.alarm.AlarmDetailDto
 import com.sw.wordgarden.data.dto.alarm.AlarmDto
+import com.sw.wordgarden.data.dto.quiz.OneQuizDto
 import com.sw.wordgarden.data.dto.quiz.SqCreatedInfoDto
 import com.sw.wordgarden.data.dto.quiz.WqResponseDto
 import com.sw.wordgarden.data.dto.quiz.WqStateDto
@@ -70,6 +71,9 @@ interface ServerDataSource {
     suspend fun getSolvedSqTitles(): List<QuizSummaryDto>?
     suspend fun getSolvedSq(title: String): SqDto?
     suspend fun getSqCreatorInfo(quizId: String): SqCreatorInfoDto?
+
+    //lockscreen-quiz
+    suspend fun getLockQuiz() : OneQuizDto?
 
 
     //garden
