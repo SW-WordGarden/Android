@@ -2,10 +2,10 @@ package com.sw.wordgarden.presentation.ui.login.login
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -26,6 +26,8 @@ import com.sw.wordgarden.domain.entity.user.LoginRequestEntity
 import com.sw.wordgarden.presentation.event.DefaultEvent
 import com.sw.wordgarden.presentation.event.UserCheckEvent
 import com.sw.wordgarden.presentation.ui.main.MainViewModel
+import com.sw.wordgarden.presentation.util.Constants.TESTER_PROVIDER
+import com.sw.wordgarden.presentation.util.Constants.TESTER_UID
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -61,9 +63,10 @@ class LoginFragment : Fragment() {
         setupObserver()
     }
 
-    private fun setupListener() {
-        binding.llLoginNaver.setOnClickListener { naverLogin() }
-        binding.llLoginKakao.setOnClickListener { kakaoLogin() }
+    private fun setupListener() = with(binding) {
+        llLoginNaver.setOnClickListener { naverLogin() }
+        llLoginKakao.setOnClickListener { kakaoLogin() }
+        tvLoginId.setOnClickListener { idLogin() }
     }
 
     private fun naverLogin() {
@@ -82,7 +85,10 @@ class LoginFragment : Fragment() {
             override fun onFailure(httpStatus: Int, message: String) {
                 val errorCode = NaverIdLoginSDK.getLastErrorCode().code
                 val errorDescription = NaverIdLoginSDK.getLastErrorDescription()
-                Log.e(TAG, "fail to naver login - errorCode:$errorCode, errorDesc:$errorDescription")
+                Log.e(
+                    TAG,
+                    "fail to naver login - errorCode:$errorCode, errorDesc:$errorDescription"
+                )
             }
 
             override fun onSuccess() {
@@ -90,7 +96,10 @@ class LoginFragment : Fragment() {
 
                 NidOAuthLogin().callProfileApi(object : NidProfileCallback<NidProfileResponse> {
                     override fun onSuccess(result: NidProfileResponse) {
-                        Log.i(TAG, "success request for naver user info - user number: ${result.profile?.id}")
+                        Log.i(
+                            TAG,
+                            "success request for naver user info - user number: ${result.profile?.id}"
+                        )
 
                         provider = NAVER
 
@@ -159,7 +168,10 @@ class LoginFragment : Fragment() {
                         if (e != null) {
                             Log.e(TAG, "fail to request for kakao user info", e)
                         } else if (user != null) {
-                            Log.i(TAG, "success request for kakao user info - user number: ${user.id}")
+                            Log.i(
+                                TAG,
+                                "success request for kakao user info - user number: ${user.id}"
+                            )
                             checkMember(user.id.toString())
                         }
                     }
@@ -168,6 +180,11 @@ class LoginFragment : Fragment() {
         } else {
             UserApiClient.instance.loginWithKakaoAccount(requireContext(), callback = callback)
         }
+    }
+
+    private fun idLogin() {
+        provider = TESTER_PROVIDER
+        checkMember(TESTER_UID)
     }
 
     private fun checkMember(uid: String) {
@@ -182,6 +199,7 @@ class LoginFragment : Fragment() {
                     is DefaultEvent.Failure -> {
                         ToastMaker.make(requireContext(), event.msg)
                     }
+
                     DefaultEvent.Success -> {}
                 }
             }
@@ -201,6 +219,7 @@ class LoginFragment : Fragment() {
                     is DefaultEvent.Failure -> {
                         ToastMaker.make(requireContext(), event.msg)
                     }
+
                     DefaultEvent.Success -> {
                         Log.i(TAG, "success delete local UID")
                         viewmodel.checkUserInfo(uid)
@@ -215,9 +234,11 @@ class LoginFragment : Fragment() {
                     is UserCheckEvent.Failure -> {
                         ToastMaker.make(requireContext(), event.msg)
                     }
+
                     is UserCheckEvent.NotFound -> {
                         goOnboarding()
                     }
+
                     UserCheckEvent.Success -> {
                         viewmodel.saveUid(uid)
                     }
@@ -231,6 +252,7 @@ class LoginFragment : Fragment() {
                     is DefaultEvent.Failure -> {
                         ToastMaker.make(requireContext(), event.msg)
                     }
+
                     DefaultEvent.Success -> {
                         Log.i(TAG, "success save local UID")
 
@@ -247,6 +269,7 @@ class LoginFragment : Fragment() {
                         ToastMaker.make(requireContext(), event.msg)
                         Log.i(TAG, "fail update fcm token")
                     }
+
                     DefaultEvent.Success -> {
                         Log.i(TAG, "success update fcm token")
                     }
@@ -278,7 +301,9 @@ class LoginFragment : Fragment() {
             if (currentBackStackEntry?.destination?.id == R.id.onBoardingFragment) {
                 popBackStack(R.id.onBoardingFragment, false)
             } else {
-                val action = LoginFragmentDirections.actionLoginFragmentToOnBoardingFragment(loginRequestEntity)
+                val action = LoginFragmentDirections.actionLoginFragmentToOnBoardingFragment(
+                    loginRequestEntity
+                )
                 navigate(action)
             }
         }
