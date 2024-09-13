@@ -329,13 +329,10 @@
         <action
                 android:id="@+id/action_settingFragment_to_mypageFragment"
                 app:destination="@id/mypageFragment"
-                app:popUpToInclusive="false"
                 app:popUpTo="@id/mypageFragment" />
         <action
                 android:id="@+id/action_settingFragment_to_loginFragment"
-                app:destination="@id/loginFragment"
-                app:popUpToInclusive="false"
-                app:popUpTo="@id/loginFragment" />
+                app:destination="@id/loginFragment" />
     </fragment>
     <fragment
             android:id="@+id/termFragment"

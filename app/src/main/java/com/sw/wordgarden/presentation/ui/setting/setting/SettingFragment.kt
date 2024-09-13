@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentSettingBinding
@@ -124,7 +126,11 @@ class SettingFragment : Fragment() {
     }
 
     private fun goLogin() {
-        findNavController().navigate(R.id.action_settingFragment_to_loginFragment)
+        val navOptions = NavOptions.Builder()
+            .setPopUpTo(R.id.nav_graph, inclusive = true)
+            .build()
+
+        findNavController().navigate(R.id.action_settingFragment_to_loginFragment, null, navOptions)
     }
 
     override fun onDestroyView() {
