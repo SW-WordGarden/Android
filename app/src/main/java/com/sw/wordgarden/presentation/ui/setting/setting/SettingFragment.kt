@@ -45,8 +45,11 @@ class SettingFragment : Fragment() {
         ivSettingBack.setOnClickListener {
             findNavController().navigate(R.id.action_settingFragment_to_mypageFragment)
         }
-        tvSettingAgreement.setOnClickListener {
-            findNavController().navigate(R.id.action_settingFragment_to_agreementFragment)
+        tvSettingTerm.setOnClickListener {
+            findNavController().navigate(R.id.action_settingFragment_to_termFragment)
+        }
+        tvSettingPrivacy.setOnClickListener {
+            findNavController().navigate(R.id.action_settingFragment_to_privacyFragment)
         }
         tvSettingLogout.setOnClickListener {
             logout()

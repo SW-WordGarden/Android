@@ -90,38 +90,60 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_setting_hole_quiz" />
 
         <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_setting_agreement"
+                android:id="@+id/tv_setting_term"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_extra_larger"
                 android:layout_marginStart="@dimen/margin_extra_small"
-                android:text="@string/setting_agreement"
+                android:text="@string/setting_term"
                 android:textSize="@dimen/text_caption"
                 android:textFontWeight="600"
                 app:layout_constraintStart_toStartOf="@+id/tv_setting_hole_quiz"
                 app:layout_constraintTop_toBottomOf="@+id/v_line"
-                app:layout_constraintEnd_toStartOf="@+id/iv_setting_agreement" />
+                app:layout_constraintEnd_toStartOf="@+id/iv_setting_term" />
 
         <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_setting_agreement"
+                android:id="@+id/iv_setting_term"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_arrow_simple"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_setting_agreement"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_setting_term"
                 app:layout_constraintEnd_toEndOf="@+id/sw_setting_hold_quiz"
-                app:layout_constraintTop_toTopOf="@+id/tv_setting_agreement" />
+                app:layout_constraintTop_toTopOf="@+id/tv_setting_term" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_setting_privacy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_extra_small"
+                android:layout_marginTop="@dimen/margin_larger"
+                android:text="@string/setting_privacy"
+                android:textSize="@dimen/text_caption"
+                android:textFontWeight="600"
+                app:layout_constraintStart_toStartOf="@+id/tv_setting_hole_quiz"
+                app:layout_constraintTop_toBottomOf="@+id/tv_setting_term"
+                app:layout_constraintEnd_toStartOf="@+id/iv_setting_term" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_setting_privacy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_simple"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_setting_privacy"
+                app:layout_constraintEnd_toEndOf="@+id/sw_setting_hold_quiz"
+                app:layout_constraintTop_toTopOf="@+id/tv_setting_privacy" />
 
         <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_setting_logout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_extra_larger"
                 android:layout_marginStart="@dimen/margin_extra_small"
+                android:layout_marginTop="@dimen/margin_larger"
                 android:text="@string/setting_logout"
                 android:textSize="@dimen/text_caption"
                 android:textFontWeight="600"
                 app:layout_constraintStart_toStartOf="@+id/tv_setting_hole_quiz"
-                app:layout_constraintTop_toBottomOf="@+id/tv_setting_agreement"
+                app:layout_constraintTop_toBottomOf="@+id/tv_setting_privacy"
                 app:layout_constraintEnd_toStartOf="@+id/iv_setting_logout" />
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -130,7 +152,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_arrow_simple"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_setting_logout"
-                app:layout_constraintEnd_toEndOf="@+id/iv_setting_agreement"
+                app:layout_constraintEnd_toEndOf="@+id/iv_setting_term"
                 app:layout_constraintTop_toTopOf="@+id/tv_setting_logout" />
 
         <androidx.appcompat.widget.AppCompatTextView

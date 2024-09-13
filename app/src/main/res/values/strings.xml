@@ -87,7 +87,8 @@
     <string name="setting_title">설정</string>
     <string name="setting_quiz">퀴즈 설정</string>
     <string name="setting_hold_quiz">잠금화면 문제</string>
-    <string name="setting_agreement">이용 약관</string>
+    <string name="setting_term">이용 약관</string>
+    <string name="setting_privacy">개인정보처리방침</string>
     <string name="setting_logout">로그아웃</string>
     <string name="setting_msg_logout">로그아웃 하시겠습니까?</string>
     <string name="setting_msg_fail_logout">회원 정보 초기화에 실패했습니다.</string>
@@ -99,6 +100,7 @@
     <string name="setting_msg_withdrawal">정말로 탈퇴하시겠습니까?</string>
     <string name="setting_msg_withdrawal_yes">떠날래요</string>
     <string name="setting_msg_withdrawal_no">더 써볼래요</string>
+    <string name="setting_msg_file_error">문서를 읽어오는 데에 실패했어요.</string>
 
     <!-- home -->
     <string name="home_today_word">오늘의 단어를 알아보아요!</string>

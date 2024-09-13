@@ -5,7 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        tools:context=".presentation.ui.setting.agreement.AgreementFragment">
+        tools:context=".presentation.ui.setting.term.TermFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_setting_agreement_bar"
@@ -26,10 +26,10 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-                android:id="@+id/tv_setting_agreement_title"
+                android:id="@+id/tv_setting_term_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/setting_agreement"
+                android:text="@string/setting_term"
                 android:textColor="@color/green"
                 android:textSize="@dimen/text_text"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_setting_agreement_back"
@@ -38,15 +38,28 @@
                 app:layout_constraintTop_toTopOf="@+id/iv_setting_agreement_back" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="@dimen/margin_medium"
-            android:text="@string/setting_agreement"
-            android:textSize="@dimen/text_mini"
+            android:scrollbars="none"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cl_setting_agreement_bar" />
+            app:layout_constraintTop_toBottomOf="@+id/cl_setting_agreement_bar">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_setting_term_contents"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/setting_term"
+                    android:textSize="@dimen/text_mini" />
+        </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
