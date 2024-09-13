@@ -366,6 +366,9 @@
         <action
                 android:id="@+id/action_wordFragment_to_detailWordFragment"
                 app:destination="@+id/detailWordFragment" />
+        <action
+            android:id="@+id/action_wordFragment_to_homeFragment"
+            app:destination="@+id/homeFragment"/>
     </fragment>
 
     <!--alarm-->
@@ -383,5 +386,30 @@
                     app:nullable="true"
                     android:defaultValue="@null" />
         </action>
+    </fragment>
+    <fragment
+        android:id="@+id/gardenFragment"
+        android:name="com.sw.wordgarden.presentation.ui.garden.GardenFragment"
+        android:label="GardenFragment" >
+        <action android:id="@+id/action_gardenFragment_to_shopFragment"
+            app:destination="@+id/shopFragment"/>
+        <action android:id="@+id/action_gardenFragment_to_flowerBookFragment"
+            app:destination="@+id/flowerBookFragment"/>
+        <action android:id="@+id/action_gardenFragment_to_homeFragment"
+            app:destination="@+id/homeFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/shopFragment"
+        android:name="com.sw.wordgarden.presentation.ui.garden.ShopFragment"
+        android:label="ShopFragment">
+        <action android:id="@+id/action_shopFragment_to_gardenFragment"
+            app:destination="@+id/gardenFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/flowerBookFragment"
+        android:name="com.sw.wordgarden.presentation.ui.garden.FlowerBookFragment"
+        android:label="FlowerBookFragment" >
+        <action android:id="@+id/action_flowerBookFragment_to_gardenFragment"
+            app:destination="@+id/gardenFragment"/>
     </fragment>
 </navigation>

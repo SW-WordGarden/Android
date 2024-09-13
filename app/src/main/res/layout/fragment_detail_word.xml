@@ -95,9 +95,10 @@
                 app:layout_constraintTop_toTopOf="@+id/iv_background"
                 app:layout_constraintBottom_toTopOf="@+id/detail_contents"/>
             <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/detail_contents"
+                app:layout_constraintWidth_percent="0.8"
                 android:text="contents"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_caption"

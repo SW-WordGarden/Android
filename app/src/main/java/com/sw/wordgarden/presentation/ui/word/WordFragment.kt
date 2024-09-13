@@ -62,9 +62,9 @@ class WordFragment : Fragment() {
                 if(wordList.isNotEmpty()){
                     weeklyWordList = wordList
                     basicWordList = wordList.slice(0..9)
-                    societyWordList = wordList.slice(10..19)
+                    idiomWordList = wordList.slice(10..19)
                     scienceWordList = wordList.slice(20..29)
-                    idiomWordList = wordList.slice(30..39)
+                    societyWordList = wordList.slice(30..39)
                     wordAdapter.submitList(basicWordList)
                 }
 
@@ -87,10 +87,13 @@ class WordFragment : Fragment() {
         wordRadioGrooup.setOnCheckedChangeListener { _, id ->
             when(id){
                 R.id.rb_basic -> wordAdapter.submitList(basicWordList)
-                R.id.rb_society -> wordAdapter.submitList(societyWordList)
-                R.id.rb_science -> wordAdapter.submitList(scienceWordList)
                 R.id.rb_idiom -> wordAdapter.submitList(idiomWordList)
+                R.id.rb_science -> wordAdapter.submitList(scienceWordList)
+                R.id.rb_society -> wordAdapter.submitList(societyWordList)
             }
+        }
+        btBack.setOnClickListener {
+            findNavController().navigate(R.id.action_wordFragment_to_homeFragment)
         }
     }
 }

@@ -18,6 +18,7 @@ import com.sw.wordgarden.data.dto.quiz.WqSubmissionDto
 import com.sw.wordgarden.data.dto.quiz.WqWrongAnswerDto
 import com.sw.wordgarden.data.dto.user.FriendListDto
 import com.sw.wordgarden.data.dto.user.UserInfoDto
+import com.sw.wordgarden.data.dto.user.UserResourceDto
 import retrofit2.Response
 
 interface ServerDataSource {
@@ -73,4 +74,7 @@ interface ServerDataSource {
 
     //garden
     suspend fun getGrowInfo(): TreeDto?
+    suspend fun getUserResource() :UserResourceDto?
+    suspend fun buyWateringCans()
+    suspend fun useWateringCans()
 }

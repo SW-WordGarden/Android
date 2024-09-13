@@ -1,5 +1,6 @@
 package com.sw.wordgarden.data.datasource.remote
 
+import android.util.Log
 import com.sw.wordgarden.data.datasource.local.LocalDataSource
 import com.sw.wordgarden.data.datasource.remote.retrofit.Service
 import com.sw.wordgarden.data.dto.TreeDto
@@ -24,6 +25,7 @@ import com.sw.wordgarden.data.dto.user.LoginRequestDto
 import com.sw.wordgarden.data.dto.user.ReportInfoDto
 import com.sw.wordgarden.data.dto.user.UserDto
 import com.sw.wordgarden.data.dto.user.UserInfoDto
+import com.sw.wordgarden.data.dto.user.UserResourceDto
 import retrofit2.HttpException
 import retrofit2.Response
 import javax.inject.Inject
@@ -606,9 +608,51 @@ class ServerDataSourceImpl @Inject constructor(
         }
     }
 
+    override suspend fun getUserResource(): UserResourceDto? {
+        return try {
+            val uid = getUid()
+            val response = service.getUserResource(uid!!)
+            if (!response.isSuccessful) {
+                throw HttpException(response)
+            } else {
+                response.body()
+            }
+        }catch (e:Exception){
+            e.printStackTrace()
+            throw e
+        }
+    }
+
+    override suspend fun buyWateringCans() {
+        try {
+            val uid = getUid()
+            val response = service.buyWateringCans(uid!!)
+            if (!response.isSuccessful) {
+                throw HttpException(response)
+            }
+        }catch (e:Exception){
+            e.printStackTrace()
+            throw e
+        }
+    }
+
+    override suspend fun useWateringCans() {
+        try {
+            val uid = getUid()
+            val response = service.useWateringCans(uid!!)
+            if (!response.isSuccessful) {
+                throw HttpException(response)
+            }
+        }catch (e:Exception){
+            e.printStackTrace()
+            throw e
+        }
+    }
+
 
     //not require server connection
     private suspend fun getUid(): String? {
+        Log.d("uiduiduid", "${localDataSource.getUid()}")
         return localDataSource.getUid()
     }
 }

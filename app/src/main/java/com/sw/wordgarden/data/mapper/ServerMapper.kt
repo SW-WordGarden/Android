@@ -1,5 +1,6 @@
 package com.sw.wordgarden.data.mapper
 
+import com.kakao.sdk.user.model.User
 import com.sw.wordgarden.data.dto.TreeDto
 import com.sw.wordgarden.data.dto.WordDto
 import com.sw.wordgarden.data.dto.alarm.AlarmDetailDto
@@ -25,6 +26,7 @@ import com.sw.wordgarden.data.dto.user.LoginRequestDto
 import com.sw.wordgarden.data.dto.user.SolvedQuizDto
 import com.sw.wordgarden.data.dto.user.UserDto
 import com.sw.wordgarden.data.dto.user.UserInfoDto
+import com.sw.wordgarden.data.dto.user.UserResourceDto
 import com.sw.wordgarden.domain.entity.TreeEntity
 import com.sw.wordgarden.domain.entity.WordEntity
 import com.sw.wordgarden.domain.entity.alarm.AlarmDetailEntity
@@ -50,6 +52,7 @@ import com.sw.wordgarden.domain.entity.user.LoginRequestEntity
 import com.sw.wordgarden.domain.entity.user.SolvedQuizEntity
 import com.sw.wordgarden.domain.entity.user.UserEntity
 import com.sw.wordgarden.domain.entity.user.UserInfoEntity
+import com.sw.wordgarden.domain.entity.user.UserResponseEntity
 
 object ServerMapper {
     //user
@@ -269,8 +272,15 @@ object ServerMapper {
     //garden
     fun TreeDto.toEntity() = TreeEntity(
         name = name,
+        plantNum = plantNum,
         growthValue = growthValue ,
         growthStage = growthStage,
         date = date
+    )
+
+    fun UserResourceDto.toEntity() = UserResponseEntity(
+        coins = coins,
+        wateringCans = wateringCans,
+        plantCount = plantCount
     )
 }
