@@ -26,4 +26,12 @@ object Constants {
 
     //user
     const val NICKNAME_LIMIT = 10
+
+    //test account
+    const val TESTER_UID = "tester"
+    const val TESTER_PROVIDER = "WORDGARDEN"
+
+    //file
+    const val USER_TERM = "doc_user_term"
+    const val PRIVACY_RULE = "doc_privacy_rule"
 }

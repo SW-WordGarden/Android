@@ -314,31 +314,36 @@
             android:id="@+id/weeklyQuizCheckFragment"
             android:name="com.sw.wordgarden.presentation.ui.mypage.weeklyquizcheck.WeeklyQuizCheckFragment"
             android:label="fragment_weekly"
-            tools:layout="@layout/fragment_weekly"></fragment>
+            tools:layout="@layout/fragment_weekly" />
     <fragment
             android:id="@+id/settingFragment"
             android:name="com.sw.wordgarden.presentation.ui.setting.setting.SettingFragment"
             android:label="fragment_setting"
             tools:layout="@layout/fragment_setting">
         <action
-                android:id="@+id/action_settingFragment_to_agreementFragment"
-                app:destination="@id/agreementFragment" />
+                android:id="@+id/action_settingFragment_to_termFragment"
+                app:destination="@id/termFragment" />
+        <action
+                android:id="@+id/action_settingFragment_to_privacyFragment"
+                app:destination="@id/privacyFragment" />
         <action
                 android:id="@+id/action_settingFragment_to_mypageFragment"
                 app:destination="@id/mypageFragment"
-                app:popUpToInclusive="false"
                 app:popUpTo="@id/mypageFragment" />
         <action
                 android:id="@+id/action_settingFragment_to_loginFragment"
-                app:destination="@id/loginFragment"
-                app:popUpToInclusive="false"
-                app:popUpTo="@id/loginFragment" />
+                app:destination="@id/loginFragment" />
     </fragment>
     <fragment
-            android:id="@+id/agreementFragment"
-            android:name="com.sw.wordgarden.presentation.ui.setting.agreement.AgreementFragment"
+            android:id="@+id/termFragment"
+            android:name="com.sw.wordgarden.presentation.ui.setting.term.TermFragment"
             android:label="fragment_agreement"
-            tools:layout="@layout/fragment_agreement" />
+            tools:layout="@layout/fragment_term" />
+    <fragment
+            android:id="@+id/privacyFragment"
+            android:name="com.sw.wordgarden.presentation.ui.setting.privacy.PrivacyFragment"
+            android:label="PrivacyFragment"
+            tools:layout="@layout/fragment_privacy"/>
 
     <!--word-->
     <fragment
