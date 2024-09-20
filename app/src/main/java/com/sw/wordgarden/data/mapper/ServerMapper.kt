@@ -1,6 +1,5 @@
 package com.sw.wordgarden.data.mapper
 
-import com.kakao.sdk.user.model.User
 import com.sw.wordgarden.data.dto.TreeDto
 import com.sw.wordgarden.data.dto.WordDto
 import com.sw.wordgarden.data.dto.alarm.AlarmDetailDto
@@ -63,6 +62,7 @@ object ServerMapper {
         uName = uName,
         uImage = uImage,
         uProvider = uProvider,
+        uParticipate = uParticipate,
     )
 
     fun LoginRequestEntity.toDto() = LoginRequestDto(

@@ -6,7 +6,7 @@ import com.sw.wordgarden.R
 import com.sw.wordgarden.domain.usecase.datastore.DeleteUidUseCase
 import com.sw.wordgarden.domain.usecase.datastore.GetUidUseCase
 import com.sw.wordgarden.domain.usecase.datastore.SaveUidUseCase
-import com.sw.wordgarden.domain.usecase.user.GetUserInfoForLoginUseCase
+import com.sw.wordgarden.domain.usecase.user.GetUserInfoUseCase
 import com.sw.wordgarden.domain.usecase.user.UpdateFcmTokenUseCase
 import com.sw.wordgarden.presentation.event.DefaultEvent
 import com.sw.wordgarden.presentation.event.UserCheckEvent
@@ -24,7 +24,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val getUidUseCase: GetUidUseCase,
-    private val getUserInfoForLoginUseCase: GetUserInfoForLoginUseCase,
+    private val getUserInfoUseCase: GetUserInfoUseCase,
     private val deleteUidUseCase: DeleteUidUseCase,
     private val saveUidUseCase: SaveUidUseCase,
     private val updateFcmTokenUseCase: UpdateFcmTokenUseCase,
@@ -73,7 +73,7 @@ class LoginViewModel @Inject constructor(
     fun checkUserInfo(uid: String) {
         viewModelScope.launch {
             runCatching {
-                val result = getUserInfoForLoginUseCase.invoke(uid)
+                val result = getUserInfoUseCase.invoke(uid)
                 if (result != null) { //앱 유저 확인 성공
                     _checkUserEvent.emit(UserCheckEvent.Success)
                 } else {
