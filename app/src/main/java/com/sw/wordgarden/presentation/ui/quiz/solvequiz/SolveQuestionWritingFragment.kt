@@ -2,14 +2,14 @@ package com.sw.wordgarden.presentation.ui.quiz.solvequiz
 
 import android.os.Bundle
 import android.view.KeyEvent
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentSolveQuestionWritingBinding
-import com.sw.wordgarden.presentation.util.Constants
 import com.sw.wordgarden.presentation.util.Constants.QUESTION_WRITE_TITLE
 import com.sw.wordgarden.presentation.util.ToastMaker
 
@@ -23,7 +23,8 @@ class SolveQuestionWritingFragment : Fragment() {
     private lateinit var answer: String
     private var position: Int = 0
 
-    private var onNextClicked: ((position: Int, qid: String, question: String, answer: String, isFull: Boolean) -> Unit)? = null
+    private var onNextClicked: ((position: Int, qid: String, question: String, answer: String, isFull: Boolean, isNext: Boolean) -> Unit)? =
+        null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,25 +69,22 @@ class SolveQuestionWritingFragment : Fragment() {
     }
 
     private fun setupListener() = with(binding) {
-        etSolveQuizItemFillAnswer.setOnEditorActionListener { _, actionId, event ->
-            if (actionId == EditorInfo.IME_ACTION_DONE || event.keyCode == KeyEvent.KEYCODE_ENTER) {
-                val userAnswer = etSolveQuizItemFillAnswer.text.toString()
-                onNextClicked?.invoke(position, qid, question, userAnswer, true)
-                true
-            } else {
-                false
+        etSolveQuizItemFillAnswer.addTextChangedListener {
+            val userAnswer = etSolveQuizItemFillAnswer.text.toString()
+            if (userAnswer.isNotEmpty() && userAnswer.isNotBlank()) {
+                onNextClicked?.invoke(position, qid, question, userAnswer, true, false)
             }
         }
 
         btnSolveQuizSubmit.setOnClickListener {
-            val answer = etSolveQuizItemFillAnswer.text.toString()
+            val userAnswer = etSolveQuizItemFillAnswer.text.toString()
 
-            if (answer.isEmpty()) {
-                onNextClicked?.invoke(position, qid, "", answer, false)
+            if (userAnswer.isEmpty() || userAnswer.isBlank()) {
+                onNextClicked?.invoke(position, qid, "", userAnswer, false, true)
 
                 ToastMaker.make(requireContext(), R.string.solve_quiz_msg_need_answer)
             } else {
-                onNextClicked?.invoke(position, qid, "", answer, true)
+                onNextClicked?.invoke(position, qid, "", userAnswer, true, true)
             }
         }
     }
@@ -101,7 +99,7 @@ class SolveQuestionWritingFragment : Fragment() {
         _binding = null
     }
 
-    fun setOnNextClickedListener(listener: (Int, String, String, String, Boolean) -> Unit) {
+    fun setOnNextClickedListener(listener: (Int, String, String, String, Boolean, Boolean) -> Unit) {
         onNextClicked = listener
     }
 

@@ -86,17 +86,20 @@ class SolveQuizFragment : Fragment() {
 
         val pagerAdapter = SolveQuizAdapter(
             this@SolveQuizFragment,
-            questionList
-        ) { position, qid, question, word, answer, options, isFull ->
+            questionList,
+            enteredAnswers
+        ) { position, qid, question, _, answer, _, isFull, isNext ->
             enteredAnswers[position].question = question
             enteredAnswers[position].userAnswer = answer
             enteredAnswers[position].questionId = qid
 
+            if (isNext) {
+                vpSolveQuiz.setCurrentItem(position + 1, true)
+            }
+
             if (isFull) {
                 indicatorAdapter.markAsFilled(position)
-                if (position < questionList.size - 1) {
-                    vpSolveQuiz.setCurrentItem(position + 1, true)
-                } else {
+                if (position == QUIZ_AMOUNT - 1) {
                     checkQuiz()
                 }
             } else {

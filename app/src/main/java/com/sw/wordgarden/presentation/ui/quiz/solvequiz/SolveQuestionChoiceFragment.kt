@@ -20,10 +20,11 @@ class SolveQuestionChoiceFragment : Fragment() {
     private lateinit var question: String
     private lateinit var word: String
     private lateinit var answer: String
+    private lateinit var enteredAnswer: String
     private lateinit var options: List<String>
     private var position: Int = 0
 
-    private var onNextClicked: ((position: Int, qid: String, question: String, word: String, answer: String, options: List<String>, isFull: Boolean) -> Unit)? =
+    private var onNextClicked: ((position: Int, qid: String, question: String, word: String, answer: String, options: List<String>, isFull: Boolean, isNext: Boolean) -> Unit)? =
         null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,6 +34,7 @@ class SolveQuestionChoiceFragment : Fragment() {
             question = it.getString(QUESTION_KEY).toString()
             word = it.getString(WORD_KEY).toString()
             answer = it.getString(ANSWER_KEY).toString()
+            enteredAnswer = it.getString(ENTERED_ANSWER_KEY).toString()
             options = it.getStringArrayList(OPTIONS_KEY) ?: emptyList()
             position = it.getInt(POSITION_KEY)
         }
@@ -57,6 +59,28 @@ class SolveQuestionChoiceFragment : Fragment() {
         tvSolveQuizItemQuestionChoiceTitle.text = question
         tvSolveQuizItemQuestionChoiceQuestion.text = word
 
+        for (i in 0..3) {
+            if (enteredAnswer == options[i]) {
+                when (i) {
+                    0 -> {
+                        ivSolveQuizItemChoice1.setImageResource(R.drawable.ic_select_checked)
+                    }
+
+                    1 -> {
+                        ivSolveQuizItemChoice2.setImageResource(R.drawable.ic_select_checked)
+                    }
+
+                    2 -> {
+                        ivSolveQuizItemChoice3.setImageResource(R.drawable.ic_select_checked)
+                    }
+
+                    3 -> {
+                        ivSolveQuizItemChoice4.setImageResource(R.drawable.ic_select_checked)
+                    }
+                }
+            }
+        }
+
         if (position < QUIZ_AMOUNT - 1) {
             btnSolveQuizQuestionSubmitChoice.text = getString(R.string.solve_quiz_next)
         } else {
@@ -78,6 +102,8 @@ class SolveQuestionChoiceFragment : Fragment() {
             ivSolveQuizItemChoice2.setImageResource(R.drawable.ic_select_2)
             ivSolveQuizItemChoice3.setImageResource(R.drawable.ic_select_3)
             ivSolveQuizItemChoice4.setImageResource(R.drawable.ic_select_4)
+
+            checkAnswer(checkedItem)
         }
         llSolveQuizItemChoice2.setOnClickListener {
             checkedItem = options[1]
@@ -85,6 +111,8 @@ class SolveQuestionChoiceFragment : Fragment() {
             ivSolveQuizItemChoice2.setImageResource(R.drawable.ic_select_checked)
             ivSolveQuizItemChoice3.setImageResource(R.drawable.ic_select_3)
             ivSolveQuizItemChoice4.setImageResource(R.drawable.ic_select_4)
+
+            checkAnswer(checkedItem)
         }
         llSolveQuizItemChoice3.setOnClickListener {
             checkedItem = options[2]
@@ -92,6 +120,8 @@ class SolveQuestionChoiceFragment : Fragment() {
             ivSolveQuizItemChoice2.setImageResource(R.drawable.ic_select_2)
             ivSolveQuizItemChoice3.setImageResource(R.drawable.ic_select_checked)
             ivSolveQuizItemChoice4.setImageResource(R.drawable.ic_select_4)
+
+            checkAnswer(checkedItem)
         }
         llSolveQuizItemChoice4.setOnClickListener {
             checkedItem = options[3]
@@ -99,15 +129,23 @@ class SolveQuestionChoiceFragment : Fragment() {
             ivSolveQuizItemChoice2.setImageResource(R.drawable.ic_select_2)
             ivSolveQuizItemChoice3.setImageResource(R.drawable.ic_select_3)
             ivSolveQuizItemChoice4.setImageResource(R.drawable.ic_select_checked)
+
+            checkAnswer(checkedItem)
         }
 
         btnSolveQuizQuestionSubmitChoice.setOnClickListener {
             if (checkedItem == "") {
-                onNextClicked?.invoke(position, qid, "", "", checkedItem, emptyList(), false)
+                onNextClicked?.invoke(position, qid, "", "", checkedItem, emptyList(), false, true)
                 ToastMaker.make(requireContext(), R.string.solve_quiz_msg_need_select_answer)
             } else {
-                onNextClicked?.invoke(position, qid, "", "", checkedItem, emptyList(), true)
+                onNextClicked?.invoke(position, qid, "", "", checkedItem, emptyList(), true, true)
             }
+        }
+    }
+
+    private fun checkAnswer(userAnswer: String) {
+        if (userAnswer != "") {
+            onNextClicked?.invoke(position, qid, "", "", userAnswer, emptyList(), true, false)
         }
     }
 
@@ -121,7 +159,7 @@ class SolveQuestionChoiceFragment : Fragment() {
         _binding = null
     }
 
-    fun setOnNextClickedListener(listener: (Int, String, String, String, String, List<String>, Boolean) -> Unit) {
+    fun setOnNextClickedListener(listener: (Int, String, String, String, String, List<String>, Boolean, Boolean) -> Unit) {
         onNextClicked = listener
     }
 
@@ -130,6 +168,7 @@ class SolveQuestionChoiceFragment : Fragment() {
         const val QUESTION_KEY = "QUESTION_KEY"
         const val WORD_KEY = "WORD_KEY"
         const val ANSWER_KEY = "ANSWER_KEY"
+        const val ENTERED_ANSWER_KEY = "ENTERED_ANSWER_KEY"
         const val OPTIONS_KEY = "OPTIONS_KEY"
         const val POSITION_KEY = "POSITION_KEY"
 
@@ -138,6 +177,7 @@ class SolveQuestionChoiceFragment : Fragment() {
             question: String,
             word: String,
             answer: String,
+            enteredAnswer: String,
             options: List<String>,
             position: Int
         ) =
@@ -147,6 +187,7 @@ class SolveQuestionChoiceFragment : Fragment() {
                     putString(QUESTION_KEY, question)
                     putString(WORD_KEY, word)
                     putString(ANSWER_KEY, answer)
+                    putString(ENTERED_ANSWER_KEY, enteredAnswer)
                     putStringArrayList(OPTIONS_KEY, ArrayList(options))
                     putInt(POSITION_KEY, position)
                 }

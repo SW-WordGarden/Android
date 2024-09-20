@@ -23,6 +23,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginEnd="@dimen/margin_medium"
             android:scrollbars="none">
 
         <LinearLayout
@@ -35,7 +37,6 @@
                     android:id="@+id/tv_solve_quiz_item_question_question"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_medium"
                     android:gravity="center"
                     android:text="문제"
                     android:textFontWeight="600"
