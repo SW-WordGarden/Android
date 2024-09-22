@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">WordGarden</string>
+    <string name="app_name">어휘의 정원</string>
 
     <!-- uid -->
     <string name="uid_msg_fail_check">내부 데이터 읽기에 실패했습니다.</string>
