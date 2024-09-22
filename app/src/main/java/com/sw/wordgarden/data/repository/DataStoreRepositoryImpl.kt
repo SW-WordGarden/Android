@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 class DataStoreRepositoryImpl @Inject constructor(
     private val localDataSource: LocalDataSource
-): DataStoreRepository {
+) : DataStoreRepository {
 
     //user
     override suspend fun saveUid(uid: String) {
@@ -23,18 +23,5 @@ class DataStoreRepositoryImpl @Inject constructor(
 
     override suspend fun deleteUid() {
         localDataSource.deleteUid()
-    }
-
-    //quiz
-    override suspend fun saveDailyLimit(count: Int) {
-        localDataSource.saveDailyLimit(count)
-    }
-
-    override suspend fun getDailyLimit(): Int? {
-        return localDataSource.getDailyLimit()
-    }
-
-    override suspend fun deleteDailyLimit() {
-        localDataSource.deleteDailyLimit()
     }
 }

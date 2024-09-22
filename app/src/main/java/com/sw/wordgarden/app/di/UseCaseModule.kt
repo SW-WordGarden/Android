@@ -1,12 +1,7 @@
 package com.sw.wordgarden.app.di
 
-import com.sw.wordgarden.data.dto.WordDto
-import com.sw.wordgarden.domain.usecase.datastore.DeleteDailyLimitUseCase
-import com.sw.wordgarden.domain.usecase.datastore.DeleteDailyLimitUseCaseImpl
 import com.sw.wordgarden.domain.usecase.datastore.DeleteUidUseCase
 import com.sw.wordgarden.domain.usecase.datastore.DeleteUidUseCaseImpl
-import com.sw.wordgarden.domain.usecase.datastore.GetDailyLimitUseCase
-import com.sw.wordgarden.domain.usecase.datastore.GetDailyLimitUseCaseImpl
 import com.sw.wordgarden.domain.usecase.user.GetFriendsUseCase
 import com.sw.wordgarden.domain.usecase.user.GetFriendsUseCaseImpl
 import com.sw.wordgarden.domain.usecase.quiz.sq.GetSqUseCase
@@ -23,14 +18,12 @@ import com.sw.wordgarden.domain.usecase.quiz.sq.GetSolvedSqTitlesUseCase
 import com.sw.wordgarden.domain.usecase.quiz.sq.GetSolvedSqTitlesUseCaseImpl
 import com.sw.wordgarden.domain.usecase.datastore.GetUidUseCase
 import com.sw.wordgarden.domain.usecase.datastore.GetUidUseCaseImpl
-import com.sw.wordgarden.domain.usecase.user.GetUserInfoForLoginUseCase
-import com.sw.wordgarden.domain.usecase.user.GetUserInfoForLoginUseCaseImpl
+import com.sw.wordgarden.domain.usecase.user.GetUserInfoUseCase
+import com.sw.wordgarden.domain.usecase.user.GetUserInfoUseCaseImpl
 import com.sw.wordgarden.domain.usecase.quiz.sq.CreateNewSqUseCase
 import com.sw.wordgarden.domain.usecase.quiz.sq.CreateNewSqUseCaseImpl
 import com.sw.wordgarden.domain.usecase.user.InsertUserUseCase
 import com.sw.wordgarden.domain.usecase.user.InsertUserUseCaseImpl
-import com.sw.wordgarden.domain.usecase.datastore.SaveDailyLimitUseCase
-import com.sw.wordgarden.domain.usecase.datastore.SaveDailyLimitUseCaseImpl
 import com.sw.wordgarden.domain.usecase.datastore.SaveUidUseCase
 import com.sw.wordgarden.domain.usecase.datastore.SaveUidUseCaseImpl
 import com.sw.wordgarden.domain.usecase.user.UpdateFcmTokenUseCase
@@ -98,7 +91,6 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
-import retrofit2.Response
 
 @Module
 @InstallIn(ViewModelComponent::class)
@@ -107,33 +99,15 @@ abstract class UseCaseModule {
     //datastore
     @Binds
     @ViewModelScoped
-    abstract fun bindDeleteDailyLimitUseCase(
-        deleteDailyLimitUseCaseImpl: DeleteDailyLimitUseCaseImpl
-    ): DeleteDailyLimitUseCase
-
-    @Binds
-    @ViewModelScoped
     abstract fun bindDeleteUidUseCase(
         deleteUidUseCaseImpl: DeleteUidUseCaseImpl
     ): DeleteUidUseCase
 
     @Binds
     @ViewModelScoped
-    abstract fun bindGetDailyLimitUseCase(
-        getDailyLimitUseCaseImpl: GetDailyLimitUseCaseImpl
-    ): GetDailyLimitUseCase
-
-    @Binds
-    @ViewModelScoped
     abstract fun bindGetUidUseCase(
         getUidUseCaseImpl: GetUidUseCaseImpl
     ): GetUidUseCase
-
-    @Binds
-    @ViewModelScoped
-    abstract fun bindSaveDailyLimitUseCase(
-        saveDailyLimitUseCaseImpl: SaveDailyLimitUseCaseImpl
-    ): SaveDailyLimitUseCase
 
     @Binds
     @ViewModelScoped
@@ -157,8 +131,8 @@ abstract class UseCaseModule {
     @Binds
     @ViewModelScoped
     abstract fun bindGetUserInfoUseCase(
-        getUserInfoUseCaseImpl: GetUserInfoForLoginUseCaseImpl
-    ): GetUserInfoForLoginUseCase
+        getUserInfoUseCaseImpl: GetUserInfoUseCaseImpl
+    ): GetUserInfoUseCase
 
     @Binds
     @ViewModelScoped

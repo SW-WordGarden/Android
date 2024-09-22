@@ -2,11 +2,10 @@ package com.sw.wordgarden.presentation.ui.quiz.quiz
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -14,7 +13,10 @@ import androidx.navigation.fragment.findNavController
 import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentQuizBinding
 import com.sw.wordgarden.presentation.event.DefaultEvent
+import com.sw.wordgarden.presentation.event.UserCheckEvent
 import com.sw.wordgarden.presentation.model.QuizKey
+import com.sw.wordgarden.presentation.ui.loading.LoadingDialog
+import com.sw.wordgarden.presentation.util.Constants.DAILY_LIMIT
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -26,9 +28,9 @@ class QuizFragment : Fragment() {
     private var _binding: FragmentQuizBinding? = null
     private val binding get() = _binding!!
 
+    private var loadingDialog: LoadingDialog? = null
     private val viewmodel: QuizViewModel by viewModels()
     private var limitCount = 0
-    private val MAX = 3
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,13 +53,9 @@ class QuizFragment : Fragment() {
         }
 
         btnQuizAlone.setOnClickListener {
-            val builder = AlertDialog.Builder(requireActivity())
-            builder.setMessage(R.string.quiz_msg_use_count)
-            builder.setPositiveButton(R.string.common_positive) { _, _ ->
-                viewmodel.saveDailyLimit(limitCount)
+            if (limitCount < DAILY_LIMIT) {
+                goStartQuiz()
             }
-            builder.setNegativeButton(R.string.common_negative) { _, _ -> }
-            builder.show()
         }
 
         btnMakeQuiz.setOnClickListener {
@@ -67,37 +65,52 @@ class QuizFragment : Fragment() {
 
     private fun setupObserver() {
         lifecycleScope.launch {
-            viewmodel.getDailyLimitEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
+            viewmodel.getUidEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
                 when (event) {
                     is DefaultEvent.Failure -> {
                         ToastMaker.make(requireContext(), event.msg)
                     }
 
-                    DefaultEvent.Success -> {
-                        setupUi()
-                    }
+                    DefaultEvent.Success -> {}
                 }
             }
         }
 
         lifecycleScope.launch {
-            viewmodel.getDailyLimit.flowWithLifecycle(lifecycle).collectLatest { count ->
-                if (count != null) {
-                    limitCount = count
+            viewmodel.getUid.flowWithLifecycle(lifecycle).collectLatest { uid ->
+                if (!uid.isNullOrEmpty() && uid.isNotBlank()) {
+                    viewmodel.checkUserInfo(uid)
                 }
             }
         }
 
         lifecycleScope.launch {
-            viewmodel.saveDailyLimitEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
+            viewmodel.checkUserEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
                 when (event) {
-                    is DefaultEvent.Failure -> {
-                        ToastMaker.make(requireContext(), event.msg)
-                    }
+                    is UserCheckEvent.Success -> { }
+                    else -> ToastMaker.make(requireContext(), R.string.quiz_msg_fail_get_user_info)
+                }
+            }
+        }
 
-                    DefaultEvent.Success -> {
-                        goStartQuiz()
-                    }
+        lifecycleScope.launch {
+            viewmodel.getLimit.flowWithLifecycle(lifecycle).collectLatest { limit ->
+                if (limit != null) {
+                    limitCount = limit
+                }
+
+                setupUi()
+            }
+        }
+
+        lifecycleScope.launch {
+            viewmodel.uiState.flowWithLifecycle(lifecycle).collectLatest { state ->
+                if (state.isLoading) {
+                    loadingDialog = LoadingDialog()
+                    loadingDialog?.show(parentFragmentManager, null)
+                } else {
+                    loadingDialog?.dismiss()
+                    loadingDialog = null
                 }
             }
         }
@@ -105,9 +118,9 @@ class QuizFragment : Fragment() {
 
     @SuppressLint("SetTextI18n")
     private fun setupUi() = with(binding) {
-        tvQuizLimit.text = "(${limitCount}/${MAX})"
+        tvQuizLimit.text = "(${limitCount}/${DAILY_LIMIT})"
 
-        if (limitCount >= MAX) { //최대 도달
+        if (limitCount >= DAILY_LIMIT) { //최대 도달
             tvQuizAllClear.visibility = View.VISIBLE
             tvQuizWelcomeUser.visibility = View.INVISIBLE
             tvQuizLimit.visibility = View.INVISIBLE
@@ -116,7 +129,7 @@ class QuizFragment : Fragment() {
 
             tvQuizAllClear.text =
                 "${getString(R.string.quiz_all_clear)}\n" +
-                        "(${MAX}/${MAX})"
+                        "(${DAILY_LIMIT}/${DAILY_LIMIT})"
         } else {
             tvQuizAllClear.visibility = View.INVISIBLE
             tvQuizWelcomeUser.visibility = View.VISIBLE

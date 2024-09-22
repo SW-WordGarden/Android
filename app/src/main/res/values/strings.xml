@@ -123,8 +123,11 @@
     <string name="quiz_all_clear">축하합니다!\n모든 퀴즈를 다 풀었어요!</string>
     <string name="quiz_alone">퀴즈 풀기</string>
     <string name="quiz_custom"><u>퀴즈 만들러 가기</u></string>
+    <string name="quiz_msg_fail_get_uid">회원 번호 받아오기에 실패했어요.</string>
+    <string name="quiz_msg_fail_get_user_info">회원 정보 받아오기에 실패했어요.</string>
     <string name="quiz_msg_fail_get_daily_limit">일일 퀴즈 횟수 받아오기에 실패했어요.</string>
-    <string name="quiz_msg_use_count">일일 퀴즈 횟수가 차감됩니다.\n퀴즈를 받아올까요?</string>
+
+    <string name="solve_quiz_msg_use_count">일일 퀴즈 횟수가 차감됩니다.\n퀴즈를 제출할까요?</string>
 
     <string name="make_quiz_share">친구에게 공유하기</string>
     <string name="make_quiz_title">퀴즈 만들기</string>

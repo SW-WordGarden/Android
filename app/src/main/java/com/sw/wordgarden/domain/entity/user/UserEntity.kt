@@ -7,4 +7,5 @@ data class UserEntity(
     val uName: String?,
     val uImage: String?,
     val uProvider: String?,
+    val uParticipate: Int?,
 )

@@ -23,7 +23,7 @@ class SolveQuestionOXFragment : Fragment() {
     private lateinit var answer: String
     private var position: Int = 0
 
-    private var onNextClicked: ((position: Int, qid: String, question: String, answer: String, isFull: Boolean) -> Unit)? =
+    private var onNextClicked: ((position: Int, qid: String, question: String, answer: String, isFull: Boolean, isNext: Boolean) -> Unit)? =
         null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,19 +65,25 @@ class SolveQuestionOXFragment : Fragment() {
     }
 
     private fun setupListener() = with(binding) {
-        btnSolveQuizQuestionSubmitOx.setOnClickListener {
-            val checkedItem =
+        var checkedItem = ""
+
+        rgSolveQuizItemQuestionOx.setOnCheckedChangeListener { _, _ ->
+            checkedItem =
                 when (rgSolveQuizItemQuestionOx.checkedRadioButtonId) {
                     R.id.rb_solve_quiz_item_question_o -> { QUESTION_O }
                     R.id.rb_solve_quiz_item_question_x -> { QUESTION_X }
                     else -> { "" }
                 }
 
+            onNextClicked?.invoke(position, qid, "", checkedItem, true, false)
+        }
+
+        btnSolveQuizQuestionSubmitOx.setOnClickListener {
             if (checkedItem == "") {
-                onNextClicked?.invoke(position, qid, "", checkedItem, false)
+                onNextClicked?.invoke(position, qid, "", checkedItem, false, true)
                 ToastMaker.make(requireContext(), R.string.solve_quiz_msg_need_select_answer)
             } else {
-                onNextClicked?.invoke(position, qid, "", checkedItem, true)
+                onNextClicked?.invoke(position, qid, "", checkedItem, true, true)
             }
         }
     }
@@ -92,7 +98,7 @@ class SolveQuestionOXFragment : Fragment() {
         _binding = null
     }
 
-    fun setOnNextClickedListener(listener: (Int, String, String, String, Boolean) -> Unit) {
+    fun setOnNextClickedListener(listener: (Int, String, String, String, Boolean, Boolean) -> Unit) {
         onNextClicked = listener
     }
 

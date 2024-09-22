@@ -3,7 +3,6 @@ package com.sw.wordgarden.presentation.ui.setting.setting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sw.wordgarden.R
-import com.sw.wordgarden.domain.usecase.datastore.DeleteDailyLimitUseCase
 import com.sw.wordgarden.domain.usecase.datastore.DeleteUidUseCase
 import com.sw.wordgarden.domain.usecase.user.DeleteAccountUseCase
 import com.sw.wordgarden.presentation.event.DefaultEvent
@@ -23,7 +22,6 @@ import javax.inject.Inject
 class SettingViewModel @Inject constructor(
     private val deleteUidUseCase: DeleteUidUseCase,
     private val deleteAccountUseCase: DeleteAccountUseCase,
-    private val deleteDailyLimitUseCase: DeleteDailyLimitUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(IsLoadingUiState.init())
@@ -66,21 +64,6 @@ class SettingViewModel @Inject constructor(
             }.onSuccess {
                 _uiState.update { it.copy(isLoading = false) }
                 _deleteAccountEvent.emit(DefaultEvent.Success)
-            }
-        }
-    }
-
-    fun deleteDailyLimit() {
-        viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true) }
-            runCatching {
-                deleteDailyLimitUseCase.invoke()
-            }.onFailure {
-                _uiState.update { it.copy(isLoading = false) }
-                _deleteAccountEvent.emit(DefaultEvent.Failure(R.string.setting_msg_fail_limit))
-            }.onSuccess {
-                _uiState.update { it.copy(isLoading = false) }
-                _deleteDailyLimitEvent.emit(DefaultEvent.Success)
             }
         }
     }

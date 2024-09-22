@@ -2,6 +2,6 @@ package com.sw.wordgarden.domain.usecase.user
 
 import com.sw.wordgarden.domain.entity.user.UserEntity
 
-interface GetUserInfoForLoginUseCase {
+interface GetUserInfoUseCase {
     suspend operator fun invoke(uid: String): UserEntity?
 }

@@ -9,4 +9,5 @@ data class UserDto(
     @SerializedName("uName") val uName: String?,
     @SerializedName("uImage") val uImage: String?,
     @SerializedName("uProvider") val uProvider: String?,
+    @SerializedName("uParticipate") val uParticipate: Int?,
 )

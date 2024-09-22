@@ -9,6 +9,7 @@ import com.sw.wordgarden.presentation.util.Constants.QUESTION_TYPE_OX
 class SolveQuizAdapter(
     fragment: Fragment,
     private val quizList: List<QAModel>,
+    private val enteredList: List<QAModel>,
     private val onNextClicked: (
         position: Int,
         qid: String,
@@ -16,7 +17,8 @@ class SolveQuizAdapter(
         word: String,
         answer: String,
         options: List<String>,
-        isFull: Boolean
+        isFull: Boolean,
+        isNext: Boolean
     ) -> Unit
 ) : FragmentStateAdapter(fragment) {
 
@@ -24,6 +26,7 @@ class SolveQuizAdapter(
 
     override fun createFragment(position: Int): Fragment {
         val quizItem = quizList[position]
+        val enteredItem = enteredList[position]
 
         return when (quizItem.questionType) {
             QUESTION_TYPE_OX -> {
@@ -33,8 +36,8 @@ class SolveQuizAdapter(
                     answer = quizItem.userAnswer ?: "",
                     position = position
                 ).apply {
-                    setOnNextClickedListener { position, qid, question, answer, isFull ->
-                        onNextClicked(position, qid, question, "", answer, emptyList(), isFull)
+                    setOnNextClickedListener { position, qid, question, answer,  isFull, isNext ->
+                        onNextClicked(position, qid, question, "", answer, emptyList(), isFull, isNext)
                     }
                 }
             }
@@ -45,11 +48,12 @@ class SolveQuizAdapter(
                     question = quizItem.question ?: "",
                     word = quizItem.word ?: "",
                     answer = quizItem.userAnswer ?: "",
+                    enteredAnswer = enteredItem.userAnswer ?: "",
                     options = quizItem.options ?: emptyList(),
                     position = position
                 ).apply {
-                    setOnNextClickedListener { position, qid, question, word, answer, options, isFull ->
-                        onNextClicked(position, qid, question, word, answer, options, isFull)
+                    setOnNextClickedListener { position, qid, question, word, answer, options, isFull, isNext ->
+                        onNextClicked(position, qid, question, word, answer, options, isFull, isNext)
                     }
                 }
             }
@@ -61,8 +65,8 @@ class SolveQuizAdapter(
                     answer = quizItem.userAnswer ?: "",
                     position = position
                 ).apply {
-                    setOnNextClickedListener { position, qid, question, answer, isFull ->
-                        onNextClicked(position, qid, question, "", answer, emptyList(), isFull)
+                    setOnNextClickedListener { position, qid, question, answer, isFull, isNext ->
+                        onNextClicked(position, qid, question, "", answer, emptyList(), isFull, isNext)
                     }
                 }
             }
