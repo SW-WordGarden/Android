@@ -20,7 +20,7 @@ android {
         minSdk = 28
         targetSdk = 34
         versionCode = 1
-        versionName = "1.0"
+        versionName = "1.0.0-beta"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -42,7 +42,7 @@ android {
         getByName("release") {
             signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = true
-            isDebuggable = true //릴리즈용으로 번들을 추출할 때에는 false로 변경해야함
+            isDebuggable = false //릴리즈용으로 번들을 추출할 때에는 false로 변경해야함
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -124,6 +124,9 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.navigation.testing)
+
+    //release
+    implementation("com.google.android.play:feature-delivery:2.1.0")
 }
 
 kapt {
