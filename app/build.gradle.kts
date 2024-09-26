@@ -19,8 +19,8 @@ android {
         applicationId = "com.sw.wordgarden"
         minSdk = 28
         targetSdk = 34
-        versionCode = 3
-        versionName = "1.0.0-beta-3"
+        versionCode = 5
+        versionName = "1.0.0-beta-5"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

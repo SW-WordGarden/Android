@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
     <domain-config cleartextTrafficPermitted="true">
-<!--        <domain includeSubdomains="true">18.232.77.99</domain>-->
+<!--        <domain includeSubdomains="true">wordss.store</domain>-->
 
 <!--        for local testing-->
         <domain includeSubdomains="true">127.0.0.1</domain>
