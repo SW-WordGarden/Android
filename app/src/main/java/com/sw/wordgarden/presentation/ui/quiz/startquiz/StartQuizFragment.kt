@@ -171,8 +171,7 @@ class StartQuizFragment : Fragment() {
     }
 
     private fun goSolveQuiz() {
-        val action =
-            StartQuizFragmentDirections.actionStartQuizFragmentToSolveQuizFragmentForWq(quiz, true)
+        val action = StartQuizFragmentDirections.actionStartQuizFragmentToSolveQuizFragmentForWq(quiz, true)
         findNavController().navigate(action)
     }
 

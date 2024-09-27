@@ -165,12 +165,9 @@
         </action>
         <action
                 android:id="@+id/action_solveQuizFragment_to_quizFragment"
-                app:destination="@id/quizFragment">
-            <argument
-                    android:name="argsFromQuiz"
-                    app:argType="boolean"
-                    android:defaultValue="false" />
-        </action>
+                app:destination="@id/quizFragment"
+                app:popUpToInclusive="false"
+                app:launchSingleTop="true"/>
         <argument
                 android:name="argsQuizModel"
                 app:argType="com.sw.wordgarden.presentation.model.QuizModel"
