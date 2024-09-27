@@ -88,18 +88,6 @@ class SettingFragment : Fragment() {
                         ToastMaker.make(requireContext(), event.msg)
                     }
 
-                    DefaultEvent.Success -> {}
-                }
-            }
-        }
-
-        lifecycleScope.launch {
-            viewmodel.deleteDailyLimitEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
-                when (event) {
-                    is DefaultEvent.Failure -> {
-                        ToastMaker.make(requireContext(), event.msg)
-                    }
-
                     DefaultEvent.Success -> {
                         viewmodel.deleteUidForLogout()
                     }
