@@ -14,6 +14,7 @@ import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentWeeklyBinding
 import com.sw.wordgarden.presentation.event.DefaultEvent
 import com.sw.wordgarden.presentation.ui.loading.LoadingDialog
+import com.sw.wordgarden.presentation.ui.mypage.myselfquiz.MySelfQuizFragmentDirections
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -64,6 +65,7 @@ class WeeklyQuizCheckFragment : Fragment() {
 
     private fun setupListener() = with(binding) {
         ivMyWeeklyScoreBack.setOnClickListener {
+            ivMyWeeklyScoreBack.isEnabled = false
             goBack()
         }
     }
@@ -109,7 +111,12 @@ class WeeklyQuizCheckFragment : Fragment() {
     }
 
     private fun goBack() {
-        findNavController().navigateUp()
+        val navController = findNavController()
+        val currentDestination = navController.currentDestination?.id
+
+        if (currentDestination == R.id.weeklyQuizCheckFragment) {
+            findNavController().navigateUp()
+        }
     }
 
     override fun onDestroyView() {

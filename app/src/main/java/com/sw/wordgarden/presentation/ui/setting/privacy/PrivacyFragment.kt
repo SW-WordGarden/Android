@@ -49,6 +49,16 @@ class PrivacyFragment : Fragment() {
 
     private fun setupListener() = with(binding) {
         ivSettingAgreementBack.setOnClickListener {
+            ivSettingAgreementBack.isEnabled = false
+            goBack()
+        }
+    }
+
+    private fun goBack() {
+        val navController = findNavController()
+        val currentDestination = navController.currentDestination?.id
+
+        if (currentDestination == R.id.privacyFragment) {
             findNavController().navigateUp()
         }
     }

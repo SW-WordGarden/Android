@@ -75,6 +75,7 @@ class MySolvedQuizFragment : Fragment() {
 
     private fun setupListener() = with(binding) {
         ivMySolvedQuizBack.setOnClickListener {
+            ivMySolvedQuizBack.isEnabled = false
             goBack()
         }
     }
@@ -125,9 +126,12 @@ class MySolvedQuizFragment : Fragment() {
 
     private fun goResultQuiz(quizKey: QuizKey) {
         val navController = findNavController()
-        val action =
-            MySolvedQuizFragmentDirections.actionMySolvedQuizFragmentToResultQuizFragment(quizKey, false)
-        navController.navigate(action)
+        val currentDestination = navController.currentDestination?.id
+        val action = MySolvedQuizFragmentDirections.actionMySolvedQuizFragmentToResultQuizFragment(quizKey, false)
+
+        if (currentDestination == R.id.mySolvedQuizFragment) {
+            navController.navigate(action)
+        }
     }
 
     override fun onDestroyView() {

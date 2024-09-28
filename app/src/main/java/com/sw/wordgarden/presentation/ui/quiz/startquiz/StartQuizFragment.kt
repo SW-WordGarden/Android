@@ -1,6 +1,7 @@
 package com.sw.wordgarden.presentation.ui.quiz.startquiz
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -78,7 +79,8 @@ class StartQuizFragment : Fragment() {
     }
 
     private fun setupListener() = with(binding) {
-        btnStartQuizBack.setOnClickListener {
+        ivStartQuizBack.setOnClickListener {
+            btnStartQuizStart.isEnabled = false
             goBack()
         }
 
@@ -167,7 +169,12 @@ class StartQuizFragment : Fragment() {
     }
 
     private fun goBack() {
-        findNavController().navigateUp()
+        val navController = findNavController()
+        val currentDestination = navController.currentDestination?.id
+
+        if (currentDestination == R.id.startQuizFragment) {
+            findNavController().navigateUp()
+        }
     }
 
     private fun goSolveQuiz() {

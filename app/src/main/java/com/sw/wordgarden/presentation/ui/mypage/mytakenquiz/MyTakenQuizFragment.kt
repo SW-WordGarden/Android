@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.sw.wordgarden.R
 import com.sw.wordgarden.databinding.FragmentMyTakenQuizBinding
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -29,6 +29,7 @@ class QuizFragment : Fragment() {
     private val binding get() = _binding!!
 
     private var loadingDialog: LoadingDialog? = null
+    private var isDialogShowing = false
     private val viewmodel: QuizViewModel by viewModels()
     private var limitCount = 0
 
@@ -87,7 +88,7 @@ class QuizFragment : Fragment() {
         lifecycleScope.launch {
             viewmodel.checkUserEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
                 when (event) {
-                    is UserCheckEvent.Success -> { }
+                    is UserCheckEvent.Success -> {}
                     else -> ToastMaker.make(requireContext(), R.string.quiz_msg_fail_get_user_info)
                 }
             }
@@ -103,17 +104,26 @@ class QuizFragment : Fragment() {
             }
         }
 
-        lifecycleScope.launch {
-            viewmodel.uiState.flowWithLifecycle(lifecycle).collectLatest { state ->
-                if (state.isLoading) {
-                    loadingDialog = LoadingDialog()
-                    loadingDialog?.show(parentFragmentManager, null)
-                } else {
-                    loadingDialog?.dismiss()
-                    loadingDialog = null
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewmodel.uiState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
+                .collectLatest { state ->
+                    if (state.isLoading && !isDialogShowing) {
+                        if (loadingDialog == null || loadingDialog?.isAdded == false) {
+                            loadingDialog = LoadingDialog()
+                            loadingDialog?.show(parentFragmentManager, null)
+                            isDialogShowing = true
+                        }
+                    } else if (!state.isLoading && isDialogShowing) {
+                        hideLoadingDialog()
+                    }
                 }
-            }
         }
+    }
+
+    private fun hideLoadingDialog() {
+        loadingDialog?.dismiss()
+        loadingDialog = null
+        isDialogShowing = false
     }
 
     @SuppressLint("SetTextI18n")
@@ -156,6 +166,7 @@ class QuizFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        hideLoadingDialog()
         _binding = null
     }
 }

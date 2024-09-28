@@ -75,6 +75,7 @@ class MySelfQuizFragment : Fragment() {
 
     private fun setupListener() = with(binding) {
         ivMySelfQuizBack.setOnClickListener {
+            ivMySelfQuizBack.isEnabled = false
             goBack()
         }
     }
@@ -125,8 +126,12 @@ class MySelfQuizFragment : Fragment() {
 
     private fun goMakeQuiz(quizKey: QuizKey) {
         val navController = findNavController()
+        val currentDestination = navController.currentDestination?.id
         val action = MySelfQuizFragmentDirections.actionMySelfQuizFragmentToMakeQuizFragment(quizKey, false)
-        navController.navigate(action)
+
+        if (currentDestination == R.id.myselfQuizFragment) {
+            navController.navigate(action)
+        }
     }
 
     override fun onDestroyView() {

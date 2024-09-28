@@ -92,6 +92,7 @@ class ShareQuizFragment : Fragment() {
 
     private fun setupListener() = with(binding) {
         ivShareQuizBack.setOnClickListener {
+            ivShareQuizBack.isEnabled = false
             goQuizOrBack()
         }
 
