@@ -1,6 +1,7 @@
 package com.sw.wordgarden.presentation.ui.setting.setting
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -111,11 +112,12 @@ class SettingFragment : Fragment() {
     }
 
     private fun goLogin() {
-        val navOptions = NavOptions.Builder()
-            .setPopUpTo(R.id.nav_graph, inclusive = true)
-            .build()
+        val navController = findNavController()
+        val currentDestination = navController.currentDestination?.id
 
-        findNavController().navigate(R.id.action_settingFragment_to_loginFragment, null, navOptions)
+        if (currentDestination == R.id.settingFragment) {
+            navController.navigate(R.id.action_settingFragment_to_loginFragment)
+        }
     }
 
     override fun onDestroyView() {
