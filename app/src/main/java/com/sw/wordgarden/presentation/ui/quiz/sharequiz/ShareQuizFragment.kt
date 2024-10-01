@@ -92,6 +92,7 @@ class ShareQuizFragment : Fragment() {
 
     private fun setupListener() = with(binding) {
         ivShareQuizBack.setOnClickListener {
+            ivShareQuizBack.isEnabled = false
             goQuizOrBack()
         }
 
@@ -162,18 +163,14 @@ class ShareQuizFragment : Fragment() {
     private fun goQuizOrBack() {
         val navController = findNavController()
         if (navController.previousBackStackEntry?.destination?.id == R.id.makeQuizFragment) {
-            val fromQuiz =
-                navController.previousBackStackEntry?.arguments?.getBoolean(ARGS_FROM_QUIZ) ?: false
+            val fromQuiz = navController.previousBackStackEntry?.arguments?.getBoolean(ARGS_FROM_QUIZ) ?: false
             if (fromQuiz) {
                 val navOptions = NavOptions.Builder()
                     .setPopUpTo(R.id.quizFragment, true)
                     .setLaunchSingleTop(true)
                     .build()
-                navController.navigate(
-                    R.id.action_shareQuizFragment_to_quizFragment,
-                    null,
-                    navOptions
-                )
+
+                navController.navigate(R.id.action_shareQuizFragment_to_quizFragment, null, navOptions)
             } else {
                 navController.navigateUp()
             }

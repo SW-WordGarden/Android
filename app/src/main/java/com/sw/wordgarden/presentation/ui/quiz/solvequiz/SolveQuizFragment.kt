@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
@@ -146,6 +145,7 @@ class SolveQuizFragment : Fragment() {
 
     private fun setupListener() = with(binding) {
         btnSolveQuizBack.setOnClickListener {
+            btnSolveQuizBack.isEnabled = false
             goBack()
         }
     }
@@ -185,12 +185,11 @@ class SolveQuizFragment : Fragment() {
 
     private fun goBack() {
         val navController = findNavController()
-        val navOptions = NavOptions.Builder()
-            .setPopUpTo(R.id.quizFragment, true)
-            .setLaunchSingleTop(true)
-            .build()
+        val currentDestination = navController.currentDestination?.id
 
-        navController.navigate(R.id.action_solveQuizFragment_to_quizFragment, null, navOptions)
+        if (currentDestination == R.id.solveQuizFragment) {
+            navController.navigate(R.id.action_solveQuizFragment_to_quizFragment)
+        }
     }
 
     private fun goResult(quizKey: QuizKey) {

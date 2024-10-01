@@ -36,6 +36,7 @@ class MakeQuizFragment : Fragment() {
     private val binding get() = _binding!!
 
     private var loadingDialog: LoadingDialog? = null
+    private var isDialogShowing = false
     private val viewmodel: MakeQuizViewModel by viewModels()
     private var qaModelListForInsert: List<QAModel> = List(QUIZ_AMOUNT) { emptyQAModel() }
     private var enableMode = true
@@ -166,7 +167,8 @@ class MakeQuizFragment : Fragment() {
     }
 
     private fun setUpListener() = with(binding) {
-        btnMakeQuizBack.setOnClickListener {
+        ivMakeQuizBack.setOnClickListener {
+            ivMakeQuizBack.isEnabled = false
             goBack()
         }
     }
@@ -205,18 +207,6 @@ class MakeQuizFragment : Fragment() {
         }
 
         lifecycleScope.launch {
-            viewmodel.uiState.flowWithLifecycle(lifecycle).collectLatest { state ->
-                if (state.isLoading) {
-                    loadingDialog = LoadingDialog()
-                    loadingDialog?.show(parentFragmentManager, null)
-                } else {
-                    loadingDialog?.dismiss()
-                    loadingDialog = null
-                }
-            }
-        }
-
-        lifecycleScope.launch {
             viewmodel.createdSqInfo.flowWithLifecycle(lifecycle).collectLatest { info ->
                 quizKey.qTitle = info?.quizTitle ?: ""
                 quizKey.sqId = info?.sqId ?: ""
@@ -226,10 +216,36 @@ class MakeQuizFragment : Fragment() {
                 }
             }
         }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewmodel.uiState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
+                .collectLatest { state ->
+                    if (state.isLoading && !isDialogShowing) {
+                        if (loadingDialog == null || loadingDialog?.isAdded == false) {
+                            loadingDialog = LoadingDialog()
+                            loadingDialog?.show(parentFragmentManager, null)
+                            isDialogShowing = true
+                        }
+                    } else if (!state.isLoading && isDialogShowing) {
+                        hideLoadingDialog()
+                    }
+                }
+        }
+    }
+
+    private fun hideLoadingDialog() {
+        loadingDialog?.dismiss()
+        loadingDialog = null
+        isDialogShowing = false
     }
 
     private fun goBack() {
-        findNavController().navigateUp()
+        val navController = findNavController()
+        val currentDestination = navController.currentDestination?.id
+
+        if (currentDestination == R.id.makeQuizFragment) {
+            findNavController().navigateUp()
+        }
     }
 
     private fun goShare() {
@@ -239,6 +255,7 @@ class MakeQuizFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        hideLoadingDialog()
         _binding = null
     }
 }

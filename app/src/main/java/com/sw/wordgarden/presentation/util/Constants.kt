@@ -30,6 +30,7 @@ object Constants {
 
     //test account
     const val TESTER_UID = "tester"
+    const val TESTER_NICKNAME = "tester0809"
     const val TESTER_PROVIDER = "WORDGARDEN"
 
     //file

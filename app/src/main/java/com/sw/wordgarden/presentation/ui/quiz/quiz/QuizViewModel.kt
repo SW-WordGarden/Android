@@ -69,13 +69,14 @@ class QuizViewModel @Inject constructor(
             _uiState.update { it.copy(isLoading = true) }
 
             runCatching {
-
                 val result = getUserInfoUseCase.invoke(uid)
+
                 if (result != null) { //앱 유저 확인 성공
+                    _uiState.update { it.copy(isLoading = false) }
                     _getLimit.update { result.uParticipate }
                     _checkUserEvent.emit(UserCheckEvent.Success)
-                    _uiState.update { it.copy(isLoading = false) }
                 } else {
+                    _uiState.update { it.copy(isLoading = false) }
                     _checkUserEvent.emit(UserCheckEvent.NotFound)
                 }
             }.onFailure { throwable ->
@@ -90,7 +91,6 @@ class QuizViewModel @Inject constructor(
                             _checkUserEvent.emit(UserCheckEvent.Failure(R.string.login_msg_fail_check))
                         }
                     }
-
                     else -> {
                         _checkUserEvent.emit(UserCheckEvent.Failure(R.string.login_msg_fail_check))
                     }

@@ -1,6 +1,7 @@
 package com.sw.wordgarden.presentation.ui.setting.setting
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,7 +45,7 @@ class SettingFragment : Fragment() {
 
     private fun setupListener() = with(binding) {
         ivSettingBack.setOnClickListener {
-            findNavController().navigate(R.id.action_settingFragment_to_mypageFragment)
+            goBack()
         }
         tvSettingTerm.setOnClickListener {
             findNavController().navigate(R.id.action_settingFragment_to_termFragment)
@@ -59,6 +60,7 @@ class SettingFragment : Fragment() {
             withdrawal()
         }
     }
+
 
     private fun logout() {
         val builder = AlertDialog.Builder(requireActivity())
@@ -88,18 +90,6 @@ class SettingFragment : Fragment() {
                         ToastMaker.make(requireContext(), event.msg)
                     }
 
-                    DefaultEvent.Success -> {}
-                }
-            }
-        }
-
-        lifecycleScope.launch {
-            viewmodel.deleteDailyLimitEvent.flowWithLifecycle(lifecycle).collectLatest { event ->
-                when (event) {
-                    is DefaultEvent.Failure -> {
-                        ToastMaker.make(requireContext(), event.msg)
-                    }
-
                     DefaultEvent.Success -> {
                         viewmodel.deleteUidForLogout()
                     }
@@ -122,12 +112,22 @@ class SettingFragment : Fragment() {
         }
     }
 
-    private fun goLogin() {
-        val navOptions = NavOptions.Builder()
-            .setPopUpTo(R.id.nav_graph, inclusive = true)
-            .build()
+    private fun goBack() {
+        val navController = findNavController()
+        val currentDestination = navController.currentDestination?.id
 
-        findNavController().navigate(R.id.action_settingFragment_to_loginFragment, null, navOptions)
+        if (currentDestination == R.id.settingFragment) {
+            findNavController().navigateUp()
+        }
+    }
+
+    private fun goLogin() {
+        val navController = findNavController()
+        val currentDestination = navController.currentDestination?.id
+
+        if (currentDestination == R.id.settingFragment) {
+            navController.navigate(R.id.action_settingFragment_to_loginFragment)
+        }
     }
 
     override fun onDestroyView() {

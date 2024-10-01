@@ -22,6 +22,8 @@ import com.sw.wordgarden.domain.entity.user.LoginRequestEntity
 import com.sw.wordgarden.presentation.event.DefaultEvent
 import com.sw.wordgarden.presentation.ui.loading.LoadingDialog
 import com.sw.wordgarden.presentation.util.Constants.NICKNAME_LIMIT
+import com.sw.wordgarden.presentation.util.Constants.TESTER_NICKNAME
+import com.sw.wordgarden.presentation.util.Constants.TESTER_PROVIDER
 import com.sw.wordgarden.presentation.util.ImageConverter.uriToString
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
@@ -110,16 +112,28 @@ class OnBoardingFragment : Fragment() {
             if (nickname == "") {
                 ToastMaker.make(requireContext(), getString(R.string.onboarding_msg_fill))
             } else {
-                loginRequestEntity = loginRequestEntity.copy(
-                    uid = loginRequestEntity.uid,
-                    nickname = nickname ?: "",
-                    provider = loginRequestEntity.provider,
-                    fcmToken = loginRequestEntity.fcmToken
-                )
-
-                viewmodel.deleteUidForStartingSignUp()
+                if (loginRequestEntity.provider == TESTER_PROVIDER) { //TODO: 테스터용 계정 처리 리팩터링
+                    if (nickname == TESTER_NICKNAME) {
+                        signIn()
+                    } else {
+                        ToastMaker.make(requireContext(), getString(R.string.onboarding_msg_for_tester))
+                    }
+                } else {
+                    signIn()
+                }
             }
         }
+    }
+
+    private fun signIn() {
+        loginRequestEntity = loginRequestEntity.copy(
+            uid = loginRequestEntity.uid,
+            nickname = nickname ?: "",
+            provider = loginRequestEntity.provider,
+            fcmToken = loginRequestEntity.fcmToken
+        )
+
+        viewmodel.deleteUidForStartingSignUp()
     }
 
     private fun setupObserver() {

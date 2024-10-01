@@ -17,9 +17,9 @@ import com.sw.wordgarden.databinding.FragmentMypageBinding
 import com.sw.wordgarden.domain.entity.user.FriendEntity
 import com.sw.wordgarden.domain.entity.user.UserInfoEntity
 import com.sw.wordgarden.presentation.event.DefaultEvent
+import com.sw.wordgarden.presentation.ui.loading.LoadingDialog
 import com.sw.wordgarden.presentation.util.ImageConverter.stringToByteArray
 import com.sw.wordgarden.presentation.util.ImageConverter.uriToString
-import com.sw.wordgarden.presentation.ui.loading.LoadingDialog
 import com.sw.wordgarden.presentation.util.ToastMaker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -72,7 +72,7 @@ class MypageFragment : Fragment() {
             galleryLauncher.launch("image/*")
         }
         ivMyBack.setOnClickListener {
-            findNavController().navigateUp()
+            goBack()
         }
         ivMySetting.setOnClickListener {
             findNavController().navigate(R.id.action_mypageFragment_to_settingFragment)
@@ -104,6 +104,7 @@ class MypageFragment : Fragment() {
                             is DefaultEvent.Failure -> {
                                 ToastMaker.make(requireContext(), event.msg)
                             }
+
                             DefaultEvent.Success -> {}
                         }
                     }
@@ -122,6 +123,7 @@ class MypageFragment : Fragment() {
                             is DefaultEvent.Failure -> {
                                 ToastMaker.make(requireContext(), event.msg)
                             }
+
                             DefaultEvent.Success -> {}
                         }
                     }
@@ -166,11 +168,22 @@ class MypageFragment : Fragment() {
         pbMyScore.max = info?.all ?: 0
         pbMyScore.progress = info?.right ?: 0
 
-        tvMySelfQuizTitleName.text = info?.latestCustomQuiz?.sqTitle ?: getString(R.string.mypage_my_self_quiz_no_quiz_list)
-        tvMySolvedQuizTitleName.text = info?.latestSolvedQuiz?.title ?: getString(R.string.mypage_my_solved_quiz_no_quiz_list)
+        tvMySelfQuizTitleName.text =
+            info?.latestCustomQuiz?.sqTitle ?: getString(R.string.mypage_my_self_quiz_no_quiz_list)
+        tvMySolvedQuizTitleName.text =
+            info?.latestSolvedQuiz?.title ?: getString(R.string.mypage_my_solved_quiz_no_quiz_list)
 
         rvMyFriendsList.adapter = adapter
         adapter.submitList(info?.randomFriends)
+    }
+
+    private fun goBack() {
+        val navController = findNavController()
+        val currentDestination = navController.currentDestination?.id
+
+        if (currentDestination == R.id.mypageFragment) {
+            findNavController().navigateUp()
+        }
     }
 
     override fun onResume() {

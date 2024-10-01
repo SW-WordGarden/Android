@@ -33,8 +33,21 @@ class SettingViewModel @Inject constructor(
     private val _deleteAccountEvent = MutableSharedFlow<DefaultEvent>()
     val deleteAccountEvent: SharedFlow<DefaultEvent> = _deleteAccountEvent.asSharedFlow()
 
-    private val _deleteDailyLimitEvent = MutableSharedFlow<DefaultEvent>()
-    val deleteDailyLimitEvent: SharedFlow<DefaultEvent> = _deleteDailyLimitEvent.asSharedFlow()
+    fun deleteAccount() {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true) }
+
+            runCatching {
+                deleteAccountUseCase.invoke()
+            }.onFailure {
+                _uiState.update { it.copy(isLoading = false) }
+                _deleteAccountEvent.emit(DefaultEvent.Failure(R.string.setting_msg_fail_withdrawal))
+            }.onSuccess {
+                _uiState.update { it.copy(isLoading = false) }
+                _deleteAccountEvent.emit(DefaultEvent.Success)
+            }
+        }
+    }
 
     fun deleteUidForLogout() {
         viewModelScope.launch {
@@ -52,19 +65,5 @@ class SettingViewModel @Inject constructor(
         }
     }
 
-    fun deleteAccount() {
-        viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true) }
 
-            runCatching {
-                deleteAccountUseCase.invoke()
-            }.onFailure {
-                _uiState.update { it.copy(isLoading = false) }
-                _deleteAccountEvent.emit(DefaultEvent.Failure(R.string.setting_msg_fail_withdrawal))
-            }.onSuccess {
-                _uiState.update { it.copy(isLoading = false) }
-                _deleteAccountEvent.emit(DefaultEvent.Success)
-            }
-        }
-    }
 }

@@ -134,6 +134,7 @@ class FriendsFragment : Fragment() {
 
     private fun setupListener() = with(binding) {
         ivMyFriendsBack.setOnClickListener {
+            ivMyFriendsBack.isEnabled = false
             goBack()
         }
 
@@ -237,7 +238,12 @@ class FriendsFragment : Fragment() {
     }
 
     private fun goBack() {
-        findNavController().navigateUp()
+        val navController = findNavController()
+        val currentDestination = navController.currentDestination?.id
+
+        if (currentDestination == R.id.friendsFragment) {
+            findNavController().navigateUp()
+        }
     }
 
     override fun onDestroyView() {

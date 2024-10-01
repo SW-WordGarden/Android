@@ -31,6 +31,7 @@
     <string name="onboarding_input_nickname2">시작할래요!</string>
     <string name="onboarding_next">시작하기</string>
     <string name="onboarding_msg_fill">닉네임을 입력해주세요.</string>
+    <string name="onboarding_msg_for_tester">테스터용 닉네임을 입력해주세요.</string>
     <string name="onboarding_msg_fail_signup">회원 가입에 실패했습니다.</string>
     <string name="onboarding_msg_fail_update_image">회원 데이터 처리에 실패했습니다.</string>
 

@@ -34,6 +34,7 @@ class ResultQuizFragment : Fragment() {
     private val binding get() = _binding!!
 
     private var loadingDialog: LoadingDialog? = null
+    private var isDialogShowing = false
     private val viewmodel: ResultQuizViewModel by viewModels()
     private var quizKey = QuizKey("", "", null)
 
@@ -71,7 +72,8 @@ class ResultQuizFragment : Fragment() {
     }
 
     private fun setupListener() = with(binding) {
-        btnResultQuizExit.setOnClickListener {
+        ivResultQuizExit.setOnClickListener {
+            ivResultQuizExit.isEnabled = false
             goQuizOrBack()
         }
 
@@ -101,17 +103,26 @@ class ResultQuizFragment : Fragment() {
             }
         }
 
-        lifecycleScope.launch {
-            viewmodel.uiState.flowWithLifecycle(lifecycle).collectLatest { state ->
-                if (state.isLoading) {
-                    loadingDialog = LoadingDialog()
-                    loadingDialog?.show(parentFragmentManager, null)
-                } else {
-                    loadingDialog?.dismiss()
-                    loadingDialog = null
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewmodel.uiState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
+                .collectLatest { state ->
+                    if (state.isLoading && !isDialogShowing) {
+                        if (loadingDialog == null || loadingDialog?.isAdded == false) {
+                            loadingDialog = LoadingDialog()
+                            loadingDialog?.show(parentFragmentManager, null)
+                            isDialogShowing = true
+                        }
+                    } else if (!state.isLoading && isDialogShowing) {
+                        hideLoadingDialog()
+                    }
                 }
-            }
         }
+    }
+
+    private fun hideLoadingDialog() {
+        loadingDialog?.dismiss()
+        loadingDialog = null
+        isDialogShowing = false
     }
 
     @SuppressLint("SetTextI18n")
@@ -178,6 +189,7 @@ class ResultQuizFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        hideLoadingDialog()
         _binding = null
     }
 }

@@ -165,12 +165,10 @@
         </action>
         <action
                 android:id="@+id/action_solveQuizFragment_to_quizFragment"
-                app:destination="@id/quizFragment">
-            <argument
-                    android:name="argsFromQuiz"
-                    app:argType="boolean"
-                    android:defaultValue="false" />
-        </action>
+                app:destination="@id/quizFragment"
+                app:popUpToInclusive="true"
+                app:launchSingleTop="true"
+                app:popUpTo="@id/quizFragment"/>
         <argument
                 android:name="argsQuizModel"
                 app:argType="com.sw.wordgarden.presentation.model.QuizModel"
@@ -332,7 +330,9 @@
                 app:popUpTo="@id/mypageFragment" />
         <action
                 android:id="@+id/action_settingFragment_to_loginFragment"
-                app:destination="@id/loginFragment" />
+                app:destination="@id/loginFragment"
+                app:popUpToInclusive="true"
+                app:launchSingleTop="true" />
     </fragment>
     <fragment
             android:id="@+id/termFragment"
